@@ -28,7 +28,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
       await login({ email, password });
       toast({
         title: "Login Successful",
-        description: "Welcome to IVINTAGE CBT System",
+        description: "Welcome to the iVintage College portal",
       });
       // Navigation will be handled by the auth state change in App.tsx
     } catch (error: any) {
