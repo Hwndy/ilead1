@@ -7,7 +7,6 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import logoAsset from '@/assets/ivintage-logo.png.asset.json';
 
 
 interface LoginFormProps {
@@ -44,7 +43,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
     <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="text-center space-y-4">
         <img
-          src={logoAsset.url}
+          src={'/ivintage_logo.png'}
           alt="iVintage College"
           className="mx-auto h-20 w-20 object-contain"
         />
