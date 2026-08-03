@@ -74,7 +74,7 @@ serve(async (req) => {
         const link = `${Deno.env.get("SUPABASE_URL")?.replace(/\.supabase\.co.*/, "") || ""}`; // placeholder
         const html = `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-            <div style="background:#0a5c36;color:#fff;padding:20px;text-align:center">
+            <div style="background:#141C2B;color:#fff;padding:20px;text-align:center">
               <h2 style="margin:0">${schoolName}</h2>
               <p style="margin:4px 0 0">${sess?.session_name || ""} • ${term}</p>
             </div>
@@ -82,7 +82,7 @@ serve(async (req) => {
               <p>Dear Parent/Guardian,</p>
               <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""}) — ${cls?.name || ""} — for <strong>${term}</strong> has been published.</p>
               <p>Please log in to the Parent Portal to download the official PDF:</p>
-              <p><a href="https://ilead1.lovable.app" style="background:#0a5c36;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
+              <p><a href="https://ilead1.lovable.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
               <p style="color:#666;font-size:12px;margin-top:24px">If you did not expect this message, please contact ${school?.email || replyTo}.</p>
             </div>
           </div>`;
