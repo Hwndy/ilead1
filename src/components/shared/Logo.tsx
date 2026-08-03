@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import logoSrc from '@/assets/ivintage-logo.png';
+import logoAsset from '@/assets/ivintage-logo.png.asset.json';
+
+const logoSrc = logoAsset.url;
 
 interface LogoProps {
   className?: string;
@@ -31,10 +33,10 @@ export const Logo: React.FC<LogoProps> = ({
       {showText && (
         <div className="flex flex-col">
           <span className="font-bold text-primary text-lg leading-tight">
-            IVINTAGE
+            iVINTAGE
           </span>
           <span className="text-xs text-muted-foreground leading-tight">
-            GROUP OF SCHOOLS
+            COLLEGE
           </span>
         </div>
       )}
