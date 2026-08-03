@@ -43,11 +43,11 @@ export const AboutPage = () => {
     'Our journey has been marked by continuous innovation in teaching methodologies, infrastructure development, and the integration of modern technology into traditional learning approaches.',
   ]);
   const historyImage = settingValue<string>(settings, 'about_history_image', '/ivintage_logo.png');
-  const yearsBadge = settingValue<string>(settings, 'about_years_badge', '22+ Years');
-  // Keep the badge honest: derive from the founding year unless the CMS overrides it.
+  const yearsBadge = settingValue<string>(settings, 'about_years_badge', '');
+  // Keep the badge honest: only show a years figure when the CMS supplies a founding year.
   const foundingYear = Number(settingValue<string>(settings, 'about_founding_year', '')) || 0;
-  const derivedYears = Math.max(1, new Date().getFullYear() - foundingYear);
-  const yearsLabel = yearsBadge && yearsBadge !== '22+ Years' ? yearsBadge : `${derivedYears}+ Years`;
+  const yearsLabel = yearsBadge || (foundingYear ? `${Math.max(1, new Date().getFullYear() - foundingYear)}+ Years` : 'Ikorodu, Lagos');
+
   const vision = settingValue<string>(settings, 'about_vision',
     'To be the leading educational institution in Nigeria, recognized for academic excellence, character development, and the production of well-rounded individuals who contribute positively to society.');
   const mission = settingValue<string>(settings, 'about_mission',
