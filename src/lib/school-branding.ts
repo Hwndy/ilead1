@@ -12,7 +12,7 @@ export interface SchoolBranding {
 
 export const DEFAULT_SCHOOL_BRANDING: SchoolBranding = {
   name: 'iVintage College',
-  address: 'Lagos, Nigeria',
+  address: 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos',
   phone: '',
   email: '',
   motto: '',

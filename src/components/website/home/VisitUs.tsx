@@ -8,7 +8,7 @@ export const VisitUs: React.FC = () => {
   const { info } = useSchoolInfo();
   const { settings } = useWebsiteSettings();
 
-  const address = info.address || 'Lagos, Nigeria';
+  const address = info.address || 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos';
   const hours = settingValue<string>(settings, 'office_hours', 'Monday – Friday, 8:00am – 4:00pm');
   const mapQuery = encodeURIComponent(`${info.name || 'iVintage College'} ${address}`);
   const heading = settingValue<string>(settings, 'home_visit_heading', 'Come and see the school');
