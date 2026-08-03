@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "5fe05427-7253-4d80-9bf2-ca75a2a096e5",
-  "project_id": "def176ba-5aaa-4bf2-a711-588b116fc44e",
-  "url": "/__l5e/assets-v1/5fe05427-7253-4d80-9bf2-ca75a2a096e5/albari-letterhead.png",
-  "r2_key": "a/v1/def176ba-5aaa-4bf2-a711-588b116fc44e/5fe05427-7253-4d80-9bf2-ca75a2a096e5/albari-letterhead.png",
-  "original_filename": "albari-letterhead.png",
-  "size": 677799,
   "content_type": "image/png",
-  "created_at": "2026-07-21T20:12:39Z"
+  "created_at": "2026-07-21T20:12:39Z",
+  "original_filename": "albari-letterhead.png",
+  "project_id": "e8206054-d204-4810-9570-cc61b0b83582",
+  "r2_key": "a/v1/e8206054-d204-4810-9570-cc61b0b83582/5fe05427-7253-4d80-9bf2-ca75a2a096e5/albari-letterhead.png",
+  "size": 677799,
+  "url": "/__l5e/assets-v1/5fe05427-7253-4d80-9bf2-ca75a2a096e5/albari-letterhead.png",
+  "version": 1
 }
