@@ -7,6 +7,8 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
+import logoAsset from '@/assets/ivintage-logo.png.asset.json';
+
 
 interface LoginFormProps {
   onToggleMode: () => void;
