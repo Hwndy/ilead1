@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import logoSrc from '@/assets/albari-logo.png';
+import logoSrc from '@/assets/ivintage-logo.png';
 
 interface LogoProps {
   className?: string;
@@ -25,13 +25,13 @@ export const Logo: React.FC<LogoProps> = ({
     <div className={cn('flex items-center gap-3', className)}>
       <img 
         src={logoSrc}
-        alt="Al-Bari Group of Schools" 
+        alt="iVintage College" 
         className={cn('object-contain bg-transparent', sizeClasses[size])}
       />
       {showText && (
         <div className="flex flex-col">
           <span className="font-bold text-primary text-lg leading-tight">
-            AL-BARI
+            IVINTAGE
           </span>
           <span className="text-xs text-muted-foreground leading-tight">
             GROUP OF SCHOOLS

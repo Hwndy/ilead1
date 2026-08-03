@@ -1,11 +1,11 @@
-const CACHE_NAME = 'albari-exam-hub-v3';
-const STATIC_CACHE_NAME = 'albari-static-v3';
+const CACHE_NAME = 'ivintage-exam-hub-v3';
+const STATIC_CACHE_NAME = 'ivintage-static-v3';
 
 // Core assets to cache immediately
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
-  '/albari_logo.jpg'
+  '/ivintage_logo.png'
 ];
 
 // Install event - cache core resources
@@ -190,10 +190,10 @@ async function syncExamSubmissions() {
 // Push notification handler
 self.addEventListener('push', (event) => {
   let data = {
-    title: 'AlbariExam',
+    title: 'iVintageExam',
     body: 'New notification',
-    icon: '/albari_logo.jpg',
-    badge: '/albari_logo.jpg',
+    icon: '/ivintage_logo.png',
+    badge: '/ivintage_logo.png',
     url: '/'
   };
 
@@ -207,8 +207,8 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: data.body,
-    icon: data.icon || '/albari_logo.jpg',
-    badge: data.badge || '/albari_logo.jpg',
+    icon: data.icon || '/ivintage_logo.png',
+    badge: data.badge || '/ivintage_logo.png',
     vibrate: [100, 50, 100],
     data: {
       url: data.url || '/',
@@ -218,7 +218,7 @@ self.addEventListener('push', (event) => {
       {
         action: 'open',
         title: 'Open',
-        icon: '/albari_logo.jpg'
+        icon: '/ivintage_logo.png'
       },
       {
         action: 'close',

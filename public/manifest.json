@@ -1,6 +1,6 @@
 {
-  "name": "Albari Exam Hub",
-  "short_name": "AlbariExam",
+  "name": "iVintage Exam Hub",
+  "short_name": "iVintageExam",
   "description": "Complete Computer-Based Testing (CBT) platform for educational institutions",
   "start_url": "/",
   "display": "standalone",

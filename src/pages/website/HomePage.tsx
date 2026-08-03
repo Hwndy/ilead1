@@ -22,7 +22,7 @@ import { useWebsiteSettings, useSchoolInfo, settingValue } from '@/hooks/useCms'
 
 // Fallback hero image slideshow when nothing is configured in the CMS.
 const DEFAULT_HERO_IMAGES = [
-  '/albari-campus.png',      // Your cleaned up campus image
+  '/campus.png',      // Your cleaned up campus image
   '/img1.png',       // Placeholder: Add your second image here
   '/img2.png',
   '/img3.png',        // Placeholder: Add your third image here
@@ -60,34 +60,34 @@ export const HomePage = () => {
   return (
     <div className="space-y-0">
       <Helmet>
-        <title>Al-Bari Group of Schools — Excellence in Education Since 2004</title>
+        <title>iVintage College — Excellence in Education Since 2004</title>
         <meta
           name="description"
-          content="Al-Bari Group of Schools offers nursery, primary and secondary education in Nigeria, nurturing future leaders through academic excellence and character building."
+          content="iVintage College offers nursery, primary and secondary education in Nigeria, nurturing future leaders through academic excellence and character building."
         />
-        <link rel="canonical" href="https://www.albari.com.ng/" />
-        <meta property="og:title" content="Al-Bari Group of Schools — Excellence in Education Since 2004" />
+        <link rel="canonical" href="https://ilead1.lovable.app/" />
+        <meta property="og:title" content="iVintage College — Excellence in Education Since 2004" />
         <meta
           property="og:description"
           content="Nursery, primary and secondary education with a strong tradition of academic excellence, character and faith."
         />
-        <meta property="og:url" content="https://www.albari.com.ng/" />
+        <meta property="og:url" content="https://ilead1.lovable.app/" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
-          name: "Al-Bari Group of Schools",
-          alternateName: "Al-Bari Group of Schools",
-          url: "https://www.albari.com.ng/",
-          logo: "https://www.albari.com.ng/albari_logo.jpg",
+          name: "iVintage College",
+          alternateName: "iVintage College",
+          url: "https://ilead1.lovable.app/",
+          logo: "https://ilead1.lovable.app/ivintage_logo.png",
           foundingDate: "2004",
           description:
-            "Al-Bari Group of Schools provides nursery, primary and secondary education in Nigeria with a focus on academic excellence, character and faith.",
+            "iVintage College provides nursery, primary and secondary education in Nigeria with a focus on academic excellence, character and faith.",
           address: {
             "@type": "PostalAddress",
             addressCountry: "NG"
           },
-          sameAs: ["https://www.albari.com.ng/"]
+          sameAs: ["https://ilead1.lovable.app/"]
         })}</script>
       </Helmet>
 
@@ -100,7 +100,7 @@ export const HomePage = () => {
             <img
               key={imageSrc}
               src={imageSrc}
-              alt={`Al-Bari Group of Schools Slideshow Background ${index + 1}`}
+              alt={`iVintage College Slideshow Background ${index + 1}`}
               className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
@@ -244,7 +244,7 @@ export const HomePage = () => {
       <section className="py-16 bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Ready to Join Al-Bari Group of Schools?
+            Ready to Join iVintage College?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Take the first step towards an exceptional education. Apply now and become part of our 

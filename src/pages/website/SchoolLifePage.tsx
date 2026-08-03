@@ -80,13 +80,13 @@ export const SchoolLifePage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="School Life — Al-Bari Group of Schools"
-        description="Discover academic tracks, clubs, sports, and student life experiences that shape well-rounded scholars at Al-Bari Group of Schools."
+        title="School Life — iVintage College"
+        description="Discover academic tracks, clubs, sports, and student life experiences that shape well-rounded scholars at iVintage College."
         path="/website/school-life"
       />
       {/* Hero Section */}
       <PageHero
-        eyebrow="School Life at Al-Bari"
+        eyebrow="School Life at iVintage"
         title="Academic Excellence &"
         highlight="Holistic Development"
         subtitle="Experience a vibrant school life that combines rigorous academics with character development, extracurricular activities, and a supportive community environment."
@@ -203,7 +203,7 @@ export const SchoolLifePage = () => {
       {/* Daily schedule */}
       <SectionBand>
         <SectionHeading
-          eyebrow="A day at Al-Bari"
+          eyebrow="A day at iVintage"
           title="Typical school day"
           intro="A structured day that balances academics, worship, rest and play."
         />

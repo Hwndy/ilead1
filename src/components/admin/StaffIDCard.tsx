@@ -39,7 +39,7 @@ const CARD_H = 605;
 /** Single-face portrait staff ID card, matching the student card system. */
 export const StaffIDCard: React.FC<Props> = ({ staff, school }) => {
   const [qrSrc, setQrSrc] = useState<string>('');
-  const logoSrc = school.logo_url || '/albari_logo.jpg';
+  const logoSrc = school.logo_url || '/ivintage_logo.png';
 
   useEffect(() => {
     const payload = staff.employee_id || staff.user_id;

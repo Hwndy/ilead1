@@ -19,7 +19,7 @@ export const LatestNews: React.FC = () => {
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground">News & Events</h2>
             <p className="text-muted-foreground max-w-xl">
-              Announcements, achievements and moments from the Al-Bari community.
+              Announcements, achievements and moments from the iVintage community.
             </p>
           </div>
           <Button variant="outline" asChild className="self-start md:self-auto border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground">

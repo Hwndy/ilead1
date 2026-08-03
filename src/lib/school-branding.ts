@@ -11,12 +11,12 @@ export interface SchoolBranding {
 }
 
 export const DEFAULT_SCHOOL_BRANDING: SchoolBranding = {
-  name: 'Al-Bari Group of Schools',
+  name: 'iVintage College',
   address: 'Lagos, Nigeria',
   phone: '',
   email: '',
   motto: '',
-  logo_url: '/albari_logo.jpg',
+  logo_url: '/ivintage_logo.png',
   principal_name: '',
 };
 

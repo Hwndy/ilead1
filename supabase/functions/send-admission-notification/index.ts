@@ -4,9 +4,9 @@ import { Resend } from "npm:resend@2.0.0";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
-const ALLOWED_EMAIL_DOMAIN = "albari.com.ng";
-const DEFAULT_SENDER_EMAIL = "admissions@albari.com.ng";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@albari.com.ng";
+const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 
@@ -89,7 +89,7 @@ interface NotificationRequest {
 const SCHOOL_SIGNOFF = `
       <p style="margin-top:24px;">Yours faithfully,<br><br>
         <strong>Admissions Officer</strong><br>
-        <span style="color:#6b7280;font-size:13px;">Al-Bari College, 1 Al-Bari Close, Behind UBA, Badagry Market Road, Badagry, Lagos &middot; 08028152097</span>
+        <span style="color:#6b7280;font-size:13px;">iVintage College, 1 iVintage Close, Behind UBA, Badagry Market Road, Badagry, Lagos &middot; 08028152097</span>
       </p>`;
 
 const emailTemplates: Record<string, (data: any) => { subject: string; html: string }> = {
@@ -97,7 +97,7 @@ const emailTemplates: Record<string, (data: any) => { subject: string; html: str
     subject: `Application received - ${data.application_number}`,
     html: `
       <p>Dear ${data.first_name} ${data.last_name},</p>
-      <p>Your application to Al-Bari College has been received and entered into our records. Please quote the reference below in any correspondence.</p>
+      <p>Your application to iVintage College has been received and entered into our records. Please quote the reference below in any correspondence.</p>
       <p><strong>Application number:</strong> ${data.application_number}</p>
       <p>The admissions team will review the application and contact you about the entrance assessment and interview. You can also check progress at any time using the application number on our website.</p>
       ${SCHOOL_SIGNOFF}
@@ -119,7 +119,7 @@ const emailTemplates: Record<string, (data: any) => { subject: string; html: str
       <p>
         <strong>Date:</strong> ${data.interview_date || 'To be confirmed'}<br>
         <strong>Time:</strong> ${data.interview_time || 'To be confirmed'}<br>
-        <strong>Venue:</strong> ${data.interview_location || 'Al-Bari College, Badagry, Lagos'}
+        <strong>Venue:</strong> ${data.interview_location || 'iVintage College, Badagry, Lagos'}
       </p>
       <p>Please arrive fifteen minutes early with a valid means of identification, the original academic records and the birth certificate submitted with the application.</p>
       ${SCHOOL_SIGNOFF}
@@ -129,7 +129,7 @@ const emailTemplates: Record<string, (data: any) => { subject: string; html: str
     subject: `Offer of provisional admission - ${data.application_number}`,
     html: `
       <p>Dear ${data.first_name} ${data.last_name},</p>
-      <p>Following the assessment of your application, a place has been offered to you in ${data.class_name || 'the class applied for'} at Al-Bari College for the ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session.</p>
+      <p>Following the assessment of your application, a place has been offered to you in ${data.class_name || 'the class applied for'} at iVintage College for the ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session.</p>
       <p><strong>Application number:</strong> ${data.application_number}</p>
       <p>The offer is provisional until the acceptance fee is paid and your original documents are sighted at the school office. The formal offer letter, with the fee and the payment deadline, follows in a separate message.</p>
       ${SCHOOL_SIGNOFF}
@@ -139,14 +139,14 @@ const emailTemplates: Record<string, (data: any) => { subject: string; html: str
     subject: `Outcome of your application - ${data.application_number}`,
     html: `
       <p>Dear ${data.first_name} ${data.last_name},</p>
-      <p>Thank you for applying to Al-Bari College. After reviewing application ${data.application_number}, the admissions committee is unable to offer you a place for this session.</p>
+      <p>Thank you for applying to iVintage College. After reviewing application ${data.application_number}, the admissions committee is unable to offer you a place for this session.</p>
       <p>The decision reflects the number of places available in the class applied for and does not prevent you from applying again in a future admission cycle. We wish you every success.</p>
       ${SCHOOL_SIGNOFF}
     `,
   }),
   enrolled: (data: any) => {
     const s = data.enrollment_settings || {};
-    const portal = String(s.portal_url || "https://www.albari.com.ng/login").replace(/\/$/, "");
+    const portal = String(s.portal_url || "https://ilead1.lovable.app/login").replace(/\/$/, "");
     const actions: Array<{ label: string; url?: string }> = Array.isArray(s.required_actions) && s.required_actions.length
       ? s.required_actions
       : [
@@ -212,7 +212,7 @@ const subjectTable = (data: any) => {
 };
 
 emailTemplates.parent_welcome = (data: any) => ({
-  subject: "Access to the Al-Bari parent portal",
+  subject: "Access to the iVintage parent portal",
   html: `
     <p>Dear Parent/Guardian,</p>
     <p>A parent account has been created for you so that you can follow your ${
@@ -266,7 +266,7 @@ emailTemplates.exam_resit = (data: any) => ({
       <strong>Application number:</strong> ${data.application_number}<br>
       ${data.score != null ? `<strong>Previous score:</strong> ${data.score}${data.max_score ? ` / ${data.max_score}` : ""}${data.percentage != null ? ` (${data.percentage}%)` : ""}<br>` : ""}
       <strong>Resit date:</strong> ${data.resit_date || "To be communicated"}<br>
-      <strong>Venue:</strong> ${data.resit_venue || "Al-Bari College, Badagry, Lagos"}
+      <strong>Venue:</strong> ${data.resit_venue || "iVintage College, Badagry, Lagos"}
     </p>
     ${data.comment ? `<p><strong>Examiner's remark:</strong> ${data.comment}</p>` : ""}
     <p>Please arrive thirty minutes early with a valid means of identification and your application number.</p>
@@ -339,7 +339,7 @@ serve(async (req) => {
     try {
       // Send email with retry
       emailResult = await sendEmailWithRetry(resend, {
-        from: `Al-Bari Group of Schools <${SENDER_EMAIL}>`,
+        from: `iVintage College <${SENDER_EMAIL}>`,
         to: [application.email],
         reply_to: REPLY_TO,
         subject: template.subject,

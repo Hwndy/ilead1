@@ -10,7 +10,7 @@ export const VisitUs: React.FC = () => {
 
   const address = info.address || 'Lagos, Nigeria';
   const hours = settingValue<string>(settings, 'office_hours', 'Monday – Friday, 8:00am – 4:00pm');
-  const mapQuery = encodeURIComponent(`${info.name || 'Al-Bari Group of Schools'} ${address}`);
+  const mapQuery = encodeURIComponent(`${info.name || 'iVintage College'} ${address}`);
   const heading = settingValue<string>(settings, 'home_visit_heading', 'Come and see the school');
   const intro = settingValue<string>(
     settings,
@@ -77,7 +77,7 @@ export const VisitUs: React.FC = () => {
           <Reveal delay={100} className="min-h-[320px]">
             <div className="h-full overflow-hidden rounded-2xl border border-border shadow-sm">
               <iframe
-                title={`Map showing ${info.name || 'Al-Bari Group of Schools'}`}
+                title={`Map showing ${info.name || 'iVintage College'}`}
                 src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

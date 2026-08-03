@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export const SITE_URL = 'https://www.albari.com.ng';
+export const SITE_URL = 'https://ilead1.lovable.app';
 
 interface SEOProps {
   title: string;
@@ -15,7 +15,7 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({ title, description, path, image, type = 'website', jsonLd, noindex }) => {
   const url = `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
-  const img = image || `${SITE_URL}/albari_logo.jpg`;
+  const img = image || `${SITE_URL}/ivintage_logo.png`;
   const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   return (
     <Helmet>

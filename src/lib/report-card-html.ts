@@ -297,7 +297,7 @@ export function renderReportCardBody(
 
   const logo = absoluteUrl(schoolInfo.logo_url);
   const photo = absoluteUrl(card.photo_url);
-  const schoolName = esc(schoolInfo.name || 'Al-Bari Group of Schools');
+  const schoolName = esc(schoolInfo.name || 'iVintage College');
 
   const contactLine = [
     schoolInfo.address ? esc(schoolInfo.address) : '',

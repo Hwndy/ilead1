@@ -147,8 +147,8 @@ export async function checkPushSubscription(userId: string): Promise<boolean> {
 export function sendLocalNotification(title: string, options?: NotificationOptions): void {
   if (Notification.permission === 'granted') {
     new Notification(title, {
-      icon: '/albari_logo.jpg',
-      badge: '/albari_logo.jpg',
+      icon: '/ivintage_logo.png',
+      badge: '/ivintage_logo.png',
       ...options,
     });
   }

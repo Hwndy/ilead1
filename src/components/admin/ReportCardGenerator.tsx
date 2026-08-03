@@ -129,7 +129,7 @@ const DEFAULT_AUTOMATION: AutomationSettings = {
   show_parent_signature: false,
 };
 
-// Al-Bari A-F Grading Scale
+// iVintage A-F Grading Scale
 const GRADING_SCALE = [
   { min: 70, max: 100, grade: 'A', remark: 'Excellent' },
   { min: 60, max: 69, grade: 'B', remark: 'Very Good' },
@@ -561,12 +561,12 @@ export const ReportCardGenerator: React.FC = () => {
   };
 
   const brandingForPrint = () => ({
-    name: schoolInfo?.name || 'Al-Bari Group of Schools',
+    name: schoolInfo?.name || 'iVintage College',
     address: schoolInfo?.address || '',
     phone: schoolInfo?.phone || '',
     email: schoolInfo?.email || '',
     motto: schoolInfo?.motto || '',
-    logo_url: schoolInfo?.logo_url || '/albari_logo.jpg',
+    logo_url: schoolInfo?.logo_url || '/ivintage_logo.png',
     principal_name: schoolInfo?.principal_name || '',
   });
 
@@ -603,7 +603,7 @@ export const ReportCardGenerator: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold">Report Card Generator</h2>
-          <p className="text-muted-foreground">Generate Al-Bari format report cards with TEST 1, TEST 2 & EXAM scores</p>
+          <p className="text-muted-foreground">Generate iVintage format report cards with TEST 1, TEST 2 & EXAM scores</p>
         </div>
       </div>
 

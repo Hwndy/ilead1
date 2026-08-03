@@ -32,7 +32,7 @@ export const StaffIDCardGenerator: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Row | null>(null);
   const [checked, setChecked] = useState<string[]>([]);
-  const [school, setSchool] = useState<StaffIDCardSchool>({ name: 'Al-Bari Group of Schools' });
+  const [school, setSchool] = useState<StaffIDCardSchool>({ name: 'iVintage College' });
   const [downloading, setDownloading] = useState(false);
   const [batching, setBatching] = useState(false);
   const [issuing, setIssuing] = useState(false);

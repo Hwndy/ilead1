@@ -41,7 +41,7 @@ const CARD_H = 605;
 /** Single-face portrait student ID card (54 x 85.6mm print ratio). */
 export const StudentIDCard: React.FC<Props> = ({ student, school }) => {
   const [qrSrc, setQrSrc] = useState<string>('');
-  const logoSrc = school.logo_url || '/albari_logo.jpg';
+  const logoSrc = school.logo_url || '/ivintage_logo.png';
 
   useEffect(() => {
     const payload = student.qr_token

@@ -33,7 +33,7 @@ export const AdmissionsPage = () => {
     {
       step: 4,
       title: "Resume Classes",
-      description: "Join your assigned class and begin your Al-Bari journey",
+      description: "Join your assigned class and begin your iVintage journey",
       icon: CheckCircle
     }
   ];
@@ -60,13 +60,13 @@ export const AdmissionsPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Admissions — Al-Bari Group of Schools"
-        description="Admission requirements, process, and important dates for Al-Bari Group of Schools. Apply online for nursery, primary, and secondary placement."
+        title="Admissions — iVintage College"
+        description="Admission requirements, process, and important dates for iVintage College. Apply online for nursery, primary, and secondary placement."
         path="/website/admissions"
       />
       {/* Hero Section */}
       <PageHero
-        eyebrow="Join Al-Bari Group of Schools"
+        eyebrow="Join iVintage College"
         title="Begin Your Journey to"
         highlight="Academic Excellence"
         subtitle="We welcome bright, motivated students who are ready to embrace our culture of excellence, integrity, and character development. Start your application today."
@@ -85,7 +85,7 @@ export const AdmissionsPage = () => {
       {/* Why choose us */}
       <SectionBand>
         <SectionHeading
-          eyebrow="Why Al-Bari"
+          eyebrow="Why iVintage"
           title="Why families choose us"
           intro="The advantages that make us a preferred choice for quality education."
         />
@@ -181,7 +181,7 @@ export const AdmissionsPage = () => {
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
               { label: 'Admissions office', value: '+234 802 815 2097' },
-              { label: 'Email', value: 'admissions@albari.com.ng' },
+              { label: 'Email', value: 'admissions@ilead1.lovable.app' },
               { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
             ].map((c) => (
               <div key={c.label} className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">

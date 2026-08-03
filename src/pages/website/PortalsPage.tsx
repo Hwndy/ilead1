@@ -38,14 +38,14 @@ export const PortalsPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Portals — Al-Bari Group of Schools"
-        description="Sign in to the Al-Bari student, parent, teacher, or admin portal to access grades, results, fees, communications, and school resources."
+        title="Portals — iVintage College"
+        description="Sign in to the iVintage student, parent, teacher, or admin portal to access grades, results, fees, communications, and school resources."
         path="/website/portals"
       />
       <PageHero
         eyebrow="Portals"
         title="Access Your Portal"
-        subtitle="Choose your portal to access personalised features and stay connected with Al-Bari Group of Schools."
+        subtitle="Choose your portal to access personalised features and stay connected with iVintage College."
         crumbs={[{ label: 'Portals' }]}
       />
 

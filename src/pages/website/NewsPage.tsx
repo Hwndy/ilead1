@@ -29,9 +29,9 @@ function buildIcs(item: NewsItem): string {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Al-Bari//Events//EN',
+    'PRODID:-//iVintage//Events//EN',
     'BEGIN:VEVENT',
-    `UID:${item.id}@albari.com.ng`,
+    `UID:${item.id}@ilead1.lovable.app`,
     `DTSTAMP:${fmt(new Date())}`,
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,
@@ -85,8 +85,8 @@ const NewsList: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="News & Events — Al-Bari Group of Schools"
-        description="Latest news, events, and announcements from Al-Bari Group of Schools."
+        title="News & Events — iVintage College"
+        description="Latest news, events, and announcements from iVintage College."
         path="/website/news"
       />
 
@@ -94,7 +94,7 @@ const NewsList: React.FC = () => {
         eyebrow="News & Events"
         title="Stay Updated"
         highlight="Latest News"
-        subtitle="Keep up with the latest happenings, events, and announcements at Al-Bari Group of Schools."
+        subtitle="Keep up with the latest happenings, events, and announcements at iVintage College."
         crumbs={[{ label: 'News & Events' }]}
       />
 
@@ -241,7 +241,7 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   if (!article) {
     return (
       <div className="container mx-auto px-4 py-24 text-center space-y-4">
-        <SEO title="Article not found — Al-Bari" description="The requested article was not found." path={`/website/news/${slug}`} noindex />
+        <SEO title="Article not found — iVintage" description="The requested article was not found." path={`/website/news/${slug}`} noindex />
         <h1 className="text-3xl font-bold">Article not found</h1>
         <Button asChild><Link to="/website/news"><ArrowLeft className="mr-2 h-4 w-4" />Back to news</Link></Button>
       </div>
@@ -265,7 +265,7 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   return (
     <article className="space-y-0">
       <SEO
-        title={`${article.title} — Al-Bari Group of Schools`}
+        title={`${article.title} — iVintage College`}
         description={article.excerpt || article.title}
         path={`/website/news/${article.slug}`}
         image={article.featured_image || undefined}
@@ -281,8 +281,8 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
           url,
           publisher: {
             '@type': 'Organization',
-            name: 'Al-Bari Group of Schools',
-            logo: { '@type': 'ImageObject', url: `${SITE_URL}/albari_logo.jpg` },
+            name: 'iVintage College',
+            logo: { '@type': 'ImageObject', url: `${SITE_URL}/ivintage_logo.png` },
           },
         }}
       />

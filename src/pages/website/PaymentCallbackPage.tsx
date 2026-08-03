@@ -137,7 +137,7 @@ export const PaymentCallbackPage = () => {
                         className="h-14 mx-auto mb-3 object-contain"
                       />
                     )}
-                    <p className="font-semibold uppercase">{school?.name || 'Al-Bari Group of Schools'}</p>
+                    <p className="font-semibold uppercase">{school?.name || 'iVintage College'}</p>
                     {school?.address && (
                       <p className="text-xs text-muted-foreground">{school.address}</p>
                     )}

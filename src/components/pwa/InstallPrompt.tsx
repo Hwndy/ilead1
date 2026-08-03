@@ -65,7 +65,7 @@ export const InstallPrompt: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Smartphone className="h-10 w-10 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold">Install AlbariExam</p>
+                  <p className="font-semibold">Install iVintageExam</p>
                   <p className="text-sm opacity-90 truncate">
                     Get quick access from your home screen
                   </p>
@@ -103,7 +103,7 @@ export const InstallPrompt: React.FC = () => {
               <div className="flex items-start gap-3">
                 <Monitor className="h-8 w-8 text-primary flex-shrink-0" />
                 <div className="flex-1">
-                  <p className="font-semibold">Install AlbariExam</p>
+                  <p className="font-semibold">Install iVintageExam</p>
                   <p className="text-sm text-muted-foreground">
                     Install for faster access and offline support
                   </p>
@@ -129,7 +129,7 @@ export const InstallPrompt: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Install on iOS</DialogTitle>
             <DialogDescription>
-              Follow these steps to add AlbariExam to your home screen
+              Follow these steps to add iVintageExam to your home screen
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">

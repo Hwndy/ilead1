@@ -10,7 +10,7 @@ export const PrincipalWelcome: React.FC = () => {
   const message = settingValue<string>(
     settings,
     'principal_message',
-    "For over two decades, Al-Bari Group of Schools has been a sanctuary where bright minds are nurtured into principled leaders."
+    "For over two decades, iVintage College has been a sanctuary where bright minds are nurtured into principled leaders."
   );
   const paragraphs = message.split(/\n{2,}/);
   return (

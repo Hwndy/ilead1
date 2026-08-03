@@ -29,7 +29,7 @@ const DEFAULT_PILLARS: Pillar[] = [
 export const WhyChooseUs: React.FC = () => {
   const { settings } = useWebsiteSettings();
   const pillars = settingValue<Pillar[]>(settings, 'home_pillars', DEFAULT_PILLARS);
-  const heading = settingValue<string>(settings, 'home_pillars_heading', 'Why families choose Al-Bari');
+  const heading = settingValue<string>(settings, 'home_pillars_heading', 'Why families choose iVintage');
   const intro = settingValue<string>(
     settings,
     'home_pillars_intro',
@@ -52,7 +52,7 @@ export const WhyChooseUs: React.FC = () => {
             <Reveal key={p.title} delay={i * 90}>
               <article className="group relative h-full min-h-[320px] overflow-hidden rounded-2xl border border-border shadow-sm">
                 <img
-                  src={p.image || '/albari-campus.png'}
+                  src={p.image || '/campus.png'}
                   alt={p.title}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"

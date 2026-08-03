@@ -528,7 +528,7 @@ export const AdmissionForm = () => {
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-green-600 mb-2">Application Submitted Successfully!</h2>
             <p className="text-muted-foreground mb-4">
-              Thank you for applying to Al-Bari Group of Schools. Your application has been received and is being processed.
+              Thank you for applying to iVintage College. Your application has been received and is being processed.
             </p>
             <div className="bg-muted p-4 rounded-lg mb-6">
               <p className="font-semibold">Application Number:</p>
@@ -564,7 +564,7 @@ export const AdmissionForm = () => {
     <div className="max-w-4xl mx-auto p-0 sm:p-2">
       <Card className="border-0 sm:border shadow-none sm:shadow-sm">
         <CardHeader className="px-3 sm:px-6 pt-4 sm:pt-6">
-          <CardTitle className="text-center text-base sm:text-xl">Al-Bari Group of Schools Admission Application</CardTitle>
+          <CardTitle className="text-center text-base sm:text-xl">iVintage College Admission Application</CardTitle>
           <div className="space-y-4">
             <Progress value={progress} className="w-full" />
             <div className="flex justify-between items-center text-xs sm:text-sm">
@@ -1263,7 +1263,7 @@ export const AdmissionForm = () => {
                     className="mt-1"
                   />
                   <label htmlFor="declaration" className="text-sm">
-                    <strong>Declaration:</strong> I hereby declare that all information provided in this application is true and accurate to the best of my knowledge. I understand that any false information may result in the rejection of this application or cancellation of admission. I agree to abide by the rules and regulations of Al-Bari Group of Schools.
+                    <strong>Declaration:</strong> I hereby declare that all information provided in this application is true and accurate to the best of my knowledge. I understand that any false information may result in the rejection of this application or cancellation of admission. I agree to abide by the rules and regulations of iVintage College.
                   </label>
                 </div>
               </div>

@@ -26,7 +26,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
       await login({ email, password });
       toast({
         title: "Login Successful",
-        description: "Welcome to ALBARI CBT System",
+        description: "Welcome to IVINTAGE CBT System",
       });
       // Navigation will be handled by the auth state change in App.tsx
     } catch (error: any) {
@@ -44,7 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
         <div className="mx-auto w-20 h-20 bg-primary rounded-full flex items-center justify-center">
           <span className="text-2xl font-bold text-primary-foreground">A</span>
         </div>
-        <CardTitle className="text-2xl font-bold text-primary">ALBARI</CardTitle>
+        <CardTitle className="text-2xl font-bold text-primary">IVINTAGE</CardTitle>
         <p className="text-muted-foreground">Computer Based Test System</p>
       </CardHeader>
       <CardContent>

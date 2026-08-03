@@ -29,14 +29,14 @@ export const CareersPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Careers — Al-Bari Group of Schools"
-        description="Join our team. Explore teaching and support staff opportunities at Al-Bari Group of Schools."
+        title="Careers — iVintage College"
+        description="Join our team. Explore teaching and support staff opportunities at iVintage College."
         path="/website/careers"
       />
       <PageHero
         eyebrow="Work with us"
-        title="Careers at Al-Bari"
-        subtitle="Passionate educators and dedicated staff make Al-Bari what it is. Explore current openings below."
+        title="Careers at iVintage"
+        subtitle="Passionate educators and dedicated staff make iVintage what it is. Explore current openings below."
         crumbs={[{ label: 'Careers' }]}
       />
 
@@ -54,7 +54,7 @@ export const CareersPage: React.FC = () => {
             description="New roles are posted here as soon as they open. In the meantime, you are welcome to send us a speculative application."
           >
             <Button asChild className="rounded-full px-6">
-              <a href="mailto:careers@albari.com.ng?subject=Speculative%20application">Email careers@albari.com.ng</a>
+              <a href="mailto:careers@ilead1.lovable.app?subject=Speculative%20application">Email careers@ilead1.lovable.app</a>
             </Button>
           </EmptyState>
         ) : (

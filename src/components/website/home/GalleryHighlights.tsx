@@ -34,7 +34,7 @@ export const GalleryHighlights: React.FC = () => {
             >
               <img
                 src={it.image_url}
-                alt={it.alt_text || it.title || 'Al-Bari gallery photo'}
+                alt={it.alt_text || it.title || 'iVintage gallery photo'}
                 loading="lazy"
                 className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

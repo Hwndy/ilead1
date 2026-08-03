@@ -247,7 +247,7 @@ export const AcceptOfferPage = () => {
                 Congratulations!
               </CardTitle>
               <CardDescription>
-                You have been offered admission to Al-Bari Group of Schools
+                You have been offered admission to iVintage College
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

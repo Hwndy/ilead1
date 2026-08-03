@@ -31,7 +31,7 @@ serve(async (req) => {
     const { data: parents } = parentIds.length ? await supabase.from("parents").select("id, user_id").in("id", parentIds) : { data: [] as any };
     const parentUidById = new Map((parents || []).map((p: any) => [p.id, p.user_id]));
 
-    const from = `Al-Bari Model Schools <admissions@albari.com.ng>`;
+    const from = `iVintage College <admissions@ilead1.lovable.app>`;
     const replyTo = Deno.env.get("REPLY_TO_EMAIL")?.trim() || "suleayo04@gmail.com";
     let sent = 0;
 
@@ -47,7 +47,7 @@ serve(async (req) => {
         await resend.emails.send({
           from, to: [email], reply_to: replyTo,
           subject: `Absence notice — ${name} (${today})`,
-          html: `<p>Dear Parent/Guardian,</p><p>This is to inform you that <strong>${name}</strong> was marked absent from school today, ${today}.</p><p>If this is unexpected, please contact the school.</p><p>Al-Bari Model Schools</p>`,
+          html: `<p>Dear Parent/Guardian,</p><p>This is to inform you that <strong>${name}</strong> was marked absent from school today, ${today}.</p><p>If this is unexpected, please contact the school.</p><p>iVintage College</p>`,
         });
         sent++;
       } catch (_) { /* continue */ }

@@ -14,7 +14,7 @@
 
 .print-only { display: none; }
 
-/* ALBARI CBT System Design System - Professional Academic Theme */
+/* IVINTAGE CBT System Design System - Professional Academic Theme */
 
 @layer base {
   :root {
@@ -28,7 +28,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 22% 22%;
     
-    /* Primary - ALBARI Brand Green */
+    /* Primary - IVINTAGE Brand Green */
     --primary: 142 61% 30%;
     --primary-hover: 142 61% 25%;
     --primary-foreground: 0 0% 100%;
