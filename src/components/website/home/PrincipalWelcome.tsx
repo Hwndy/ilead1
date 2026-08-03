@@ -6,11 +6,11 @@ export const PrincipalWelcome: React.FC = () => {
   const { settings } = useWebsiteSettings();
   const name = settingValue<string>(settings, 'principal_name', 'Dr. Awe');
   const title = settingValue<string>(settings, 'principal_title', 'Director of Academics');
-  const photo = settingValue<string>(settings, 'principal_photo_url', '/awe.png');
+  const photo = settingValue<string>(settings, 'principal_photo_url', '');
   const message = settingValue<string>(
     settings,
     'principal_message',
-    "For over two decades, iVintage College has been a sanctuary where bright minds are nurtured into principled leaders."
+    "At iVintage College, bright minds are nurtured into principled leaders — in the classroom, in the boarding house and in the Tahfeedh school."
   );
   const paragraphs = message.split(/\n{2,}/);
   return (

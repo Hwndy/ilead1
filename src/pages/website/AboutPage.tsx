@@ -28,27 +28,24 @@ const DEFAULT_VALUES: Value[] = [
   { title: 'Community', description: 'We foster a supportive and inclusive environment where every member feels valued and respected.', icon: 'Users' },
 ];
 
-const DEFAULT_LEADERS: Leader[] = [
-  { name: 'HON. SULAIMON RASAQ', role: 'Proprietor', bio: '20+ years of experience in educational leadership.', image: '/rsk.png' },
-  { name: 'Dr. Sulaimon Dhikroh Awe', role: 'Director of Studies (D.O.S)', bio: 'PhD. Mathematics, dedicated to academic excellence and innovation.', image: '/awe.png' },
-];
+const DEFAULT_LEADERS: Leader[] = [];
 
 export const AboutPage = () => {
   const { settings } = useWebsiteSettings();
   const heroImage = settingValue<string>(settings, 'about_hero_image', '/campus.png');
   const heroTitle = settingValue<string>(settings, 'about_hero_title', 'Excellence in Education');
-  const heroHighlight = settingValue<string>(settings, 'about_hero_highlight', 'Since 2004');
+  const heroHighlight = settingValue<string>(settings, 'about_hero_highlight', 'Ikorodu, Lagos');
   const heroSubtitle = settingValue<string>(settings, 'about_hero_subtitle',
-    'For over a decade, iVintage College has been at the forefront of educational excellence, nurturing young minds and shaping future leaders through innovative teaching methods and character development.');
+    'iVintage College brings together a day school, a boarding house and the iLead Tahfeedh School on one campus in Ikorodu, nurturing young minds and shaping future leaders through strong teaching and character development.');
   const historyParagraphs = settingValue<string[]>(settings, 'about_history_paragraphs', [
-    "iVintage College was founded in 2004 with a vision to provide quality education that combines academic excellence with moral values. What started as a small institution with just 50 students has grown into one of Lagos' most respected educational establishments.",
+    'iVintage College was established with a vision to provide quality education that combines academic excellence with moral values, serving families across Ikorodu and the wider Lagos area.',
     'Over the years, we have consistently maintained our commitment to excellence, producing graduates who have gone on to achieve success in various fields including medicine, engineering, law, and business.',
     'Our journey has been marked by continuous innovation in teaching methodologies, infrastructure development, and the integration of modern technology into traditional learning approaches.',
   ]);
   const historyImage = settingValue<string>(settings, 'about_history_image', '/ivintage_logo.png');
   const yearsBadge = settingValue<string>(settings, 'about_years_badge', '22+ Years');
   // Keep the badge honest: derive from the founding year unless the CMS overrides it.
-  const foundingYear = Number(settingValue<string>(settings, 'about_founding_year', '2004')) || 2004;
+  const foundingYear = Number(settingValue<string>(settings, 'about_founding_year', '')) || 0;
   const derivedYears = Math.max(1, new Date().getFullYear() - foundingYear);
   const yearsLabel = yearsBadge && yearsBadge !== '22+ Years' ? yearsBadge : `${derivedYears}+ Years`;
   const vision = settingValue<string>(settings, 'about_vision',

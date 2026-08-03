@@ -40,7 +40,7 @@ export const HomePage = () => {
     return Array.isArray(raw) && raw.length > 0 ? raw : DEFAULT_HERO_IMAGES;
   }, [settings]);
 
-  const heroBadge = settingValue<string>(settings, 'hero_badge', 'Excellence in Education Since 2004');
+  const heroBadge = settingValue<string>(settings, 'hero_badge', 'Day School | Boarding | Tahfeedh');
   const heroTitle = settingValue<string>(settings, 'hero_title', 'Rigorous academics.');
   const heroTitleHighlight = settingValue<string>(settings, 'hero_title_highlight', 'Rooted character.');
   const heroSubtitle = settingValue<string>(settings, 'hero_subtitle',
@@ -60,13 +60,13 @@ export const HomePage = () => {
   return (
     <div className="space-y-0">
       <Helmet>
-        <title>iVintage College — Excellence in Education Since 2004</title>
+        <title>iVintage College — Day School, Boarding & Tahfeedh, Ikorodu</title>
         <meta
           name="description"
           content="iVintage College offers nursery, primary and secondary education in Nigeria, nurturing future leaders through academic excellence and character building."
         />
         <link rel="canonical" href="https://ilead1.lovable.app/" />
-        <meta property="og:title" content="iVintage College — Excellence in Education Since 2004" />
+        <meta property="og:title" content="iVintage College — Day School, Boarding & Tahfeedh, Ikorodu" />
         <meta
           property="og:description"
           content="Nursery, primary and secondary education with a strong tradition of academic excellence, character and faith."
@@ -80,7 +80,7 @@ export const HomePage = () => {
           alternateName: "iVintage College",
           url: "https://ilead1.lovable.app/",
           logo: "https://ilead1.lovable.app/ivintage_logo.png",
-          foundingDate: "2004",
+          
           description:
             "iVintage College provides nursery, primary and secondary education in Nigeria with a focus on academic excellence, character and faith.",
           address: {
