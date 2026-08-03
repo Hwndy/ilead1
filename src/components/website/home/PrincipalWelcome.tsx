@@ -58,10 +58,10 @@ export const PrincipalWelcome: React.FC = () => {
             <div className="flex items-center gap-6 pt-2">
               <div className="h-1 w-12 bg-gold rounded-full" />
               <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">22+ years</span> of guiding Nigeria's
-                next generation.
+                Day school, boarding house and Tahfeedh school on one campus in Ikorodu, Lagos.
               </p>
             </div>
+
           </div>
         </div>
       </div>
