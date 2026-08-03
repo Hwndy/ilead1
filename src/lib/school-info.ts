@@ -1,6 +1,6 @@
-// Static school information for Al-Bari Model Schools (single-tenant app).
+// Static school information for iVintage College (single-tenant app).
 export const SCHOOL_INFO = {
-  name: 'Al-Bari Model Schools',
+  name: 'iVintage College',
   address: '',
   contact_phone: '',
   contact_email: '',

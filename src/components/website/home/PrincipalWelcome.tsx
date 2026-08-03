@@ -4,13 +4,14 @@ import { useWebsiteSettings, settingValue } from '@/hooks/useCms';
 
 export const PrincipalWelcome: React.FC = () => {
   const { settings } = useWebsiteSettings();
-  const name = settingValue<string>(settings, 'principal_name', 'Dr. Awe');
-  const title = settingValue<string>(settings, 'principal_title', 'Director of Academics');
-  const photo = settingValue<string>(settings, 'principal_photo_url', '/awe.png');
+  const name = settingValue<string>(settings, 'principal_name', 'The Principal');
+  const title = settingValue<string>(settings, 'principal_title', 'iVintage College');
+
+  const photo = settingValue<string>(settings, 'principal_photo_url', '');
   const message = settingValue<string>(
     settings,
     'principal_message',
-    "For over two decades, Al-Bari Group of Schools has been a sanctuary where bright minds are nurtured into principled leaders."
+    "At iVintage College, bright minds are nurtured into principled leaders — in the classroom, in the boarding house and in the Tahfeedh school."
   );
   const paragraphs = message.split(/\n{2,}/);
   return (
@@ -58,10 +59,10 @@ export const PrincipalWelcome: React.FC = () => {
             <div className="flex items-center gap-6 pt-2">
               <div className="h-1 w-12 bg-gold rounded-full" />
               <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">22+ years</span> of guiding Nigeria's
-                next generation.
+                Day school, boarding house and Tahfeedh school on one campus in Ikorodu, Lagos.
               </p>
             </div>
+
           </div>
         </div>
       </div>

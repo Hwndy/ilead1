@@ -30,9 +30,9 @@ interface Props {
   showBack?: boolean;
 }
 
-const GREEN = '#0a6b39';
-const GREEN_DEEP = '#054027';
-const LEMON = '#f2ec1f';
+const GREEN = '#141C2B';
+const GREEN_DEEP = '#0b1220';
+const LEMON = '#c6d92d';
 const CHARCOAL = '#2f3130';
 const INK = '#111111';
 const CARD_W = 360;
@@ -41,7 +41,7 @@ const CARD_H = 605;
 /** Single-face portrait student ID card (54 x 85.6mm print ratio). */
 export const StudentIDCard: React.FC<Props> = ({ student, school }) => {
   const [qrSrc, setQrSrc] = useState<string>('');
-  const logoSrc = school.logo_url || '/albari_logo.jpg';
+  const logoSrc = school.logo_url || '/ivintage_logo.png';
 
   useEffect(() => {
     const payload = student.qr_token

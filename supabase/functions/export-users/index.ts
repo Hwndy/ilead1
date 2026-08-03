@@ -118,7 +118,7 @@ Deno.serve(async (req) => {
         full_name: profile.full_name,
         email,
         role,
-        school: 'Al-Bari Model Schools',
+        school: 'iVintage College',
         class_name: className,
         created_at: profile.created_at
       };

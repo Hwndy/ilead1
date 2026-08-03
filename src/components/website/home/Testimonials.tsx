@@ -12,7 +12,7 @@ export const Testimonials: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
             <span className="h-px w-8 bg-gold" />
-            Voices of Al-Bari
+            Voices of iVintage
             <span className="h-px w-8 bg-gold" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">

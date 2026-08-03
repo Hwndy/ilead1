@@ -52,7 +52,7 @@ export const InstallPage: React.FC = () => {
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
             <h1 className="text-2xl font-bold">App Installed!</h1>
             <p className="text-muted-foreground">
-              AlbariExam is already installed on your device. Open it from your home screen for the best experience.
+              iVintageExam is already installed on your device. Open it from your home screen for the best experience.
             </p>
             <Button asChild className="w-full">
               <Link to="/login">Go to Login</Link>
@@ -69,7 +69,7 @@ export const InstallPage: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <Logo size="lg" className="justify-center mb-4" />
-          <h1 className="text-3xl font-bold mb-2">Install AlbariExam</h1>
+          <h1 className="text-3xl font-bold mb-2">Install iVintageExam</h1>
           <p className="text-muted-foreground">
             Get the best experience with our installable app
           </p>
@@ -146,7 +146,7 @@ export const InstallPage: React.FC = () => {
                 {isInstallable ? (
                   <Button onClick={handleInstall} className="w-full gap-2" size="lg">
                     <Download className="h-5 w-5" />
-                    Install AlbariExam
+                    Install iVintageExam
                   </Button>
                 ) : (
                   <div className="text-center p-4 bg-muted rounded-lg">

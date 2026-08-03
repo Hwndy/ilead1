@@ -20,15 +20,15 @@ export const TestimonialsPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Testimonials — Al-Bari Group of Schools"
-        description="Read what students, parents, alumni and staff say about their experience at Al-Bari Group of Schools."
+        title="Testimonials — iVintage College"
+        description="Read what students, parents, alumni and staff say about their experience at iVintage College."
         path="/website/testimonials"
       />
 
       <PageHero
-        eyebrow="Voices of Al-Bari"
+        eyebrow="Voices of iVintage"
         title="What Our Community Says"
-        subtitle="Real stories from the students, families and educators who call Al-Bari home."
+        subtitle="Real stories from the students, families and educators who call iVintage home."
         crumbs={[{ label: 'Testimonials' }]}
       />
 

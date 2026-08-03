@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
 
+
 interface LoginFormProps {
   onToggleMode: () => void;
   onForgotPassword: () => void;
@@ -26,7 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
       await login({ email, password });
       toast({
         title: "Login Successful",
-        description: "Welcome to ALBARI CBT System",
+        description: "Welcome to the iVintage College portal",
       });
       // Navigation will be handled by the auth state change in App.tsx
     } catch (error: any) {
@@ -41,11 +42,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
   return (
     <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="text-center space-y-4">
-        <div className="mx-auto w-20 h-20 bg-primary rounded-full flex items-center justify-center">
-          <span className="text-2xl font-bold text-primary-foreground">A</span>
-        </div>
-        <CardTitle className="text-2xl font-bold text-primary">ALBARI</CardTitle>
-        <p className="text-muted-foreground">Computer Based Test System</p>
+        <img
+          src={'/ivintage_logo.png'}
+          alt="iVintage College"
+          className="mx-auto h-20 w-20 object-contain"
+        />
+        <CardTitle className="text-2xl font-bold text-primary">iVintage College</CardTitle>
+        <p className="text-muted-foreground">School Portal</p>
+
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">

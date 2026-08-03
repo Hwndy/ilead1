@@ -34,7 +34,7 @@ export const AdmissionSettingsEditor: React.FC = () => {
   const [note, setNote] = useState(DEFAULT_NOTE);
   const [orientationDate, setOrientationDate] = useState('');
   const [firstDay, setFirstDay] = useState('');
-  const [portalUrl, setPortalUrl] = useState('https://www.albari.com.ng/auth');
+  const [portalUrl, setPortalUrl] = useState('https://ilead1.lovable.app/auth');
   const [intro, setIntro] = useState(DEFAULT_INTRO);
   const [calendarUrl, setCalendarUrl] = useState('');
   const [supportLine, setSupportLine] = useState('');
@@ -230,7 +230,7 @@ export const AdmissionSettingsEditor: React.FC = () => {
             id="calendar-url"
             value={calendarUrl}
             onChange={(e) => setCalendarUrl(e.target.value)}
-            placeholder="https://www.albari.com.ng/school-life"
+            placeholder="https://ilead1.lovable.app/school-life"
           />
         </div>
 

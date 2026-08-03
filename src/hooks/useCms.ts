@@ -10,12 +10,12 @@ export interface SchoolInfoMap {
 }
 
 const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
-  name: 'Al-Bari Group of Schools',
+  name: 'iVintage College',
   motto: 'Building Tomorrow\u2019s Leaders Today',
-  address: 'Lagos, Nigeria',
-  contact_phone: '+234 802 815 2097',
-  contact_email: 'info@albari.com.ng',
-  whatsapp_number: '2348028152097',
+  address: 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos',
+  contact_phone: '+234 813 418 7710',
+  contact_email: 'ileadvintagecollege@gmail.com',
+  whatsapp_number: '2348134187710',
   facebook_url: '',
   twitter_url: '',
   instagram_url: '',
@@ -25,7 +25,7 @@ const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
   stat_teachers: '60+',
   stat_years: '22+',
   stat_success_rate: '98%',
-  logo_url: '/albari_logo.jpg',
+  logo_url: '/ivintage_logo.png',
 };
 
 export function useSchoolInfo() {

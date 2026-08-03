@@ -13,7 +13,7 @@ interface Step { n: string; icon?: string; title: string; body: string }
 const DEFAULTS: Step[] = [
   { n: '01', icon: 'FileText', title: 'Submit Application', body: "Complete the online application with your child's details and upload required documents." },
   { n: '02', icon: 'CreditCard', title: 'Entrance Assessment', body: 'Pay the application fee and attend the scheduled entrance examination and interview.' },
-  { n: '03', icon: 'GraduationCap', title: 'Accept Your Offer', body: 'Receive your offer letter, pay acceptance fees and join the Al-Bari family.' },
+  { n: '03', icon: 'GraduationCap', title: 'Accept Your Offer', body: 'Receive your offer letter, pay acceptance fees and join the iVintage family.' },
 ];
 
 export const HowToApply: React.FC = () => {
@@ -29,7 +29,7 @@ export const HowToApply: React.FC = () => {
             <span className="h-px w-8 bg-gold" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            Three steps to becoming an Al-Bari Student
+            Three steps to becoming an iVintage Student
           </h2>
         </div>
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -87,7 +87,7 @@ export const NotificationSettings: React.FC = () => {
 
   const handleTestNotification = () => {
     sendLocalNotification('Test Notification', {
-      body: 'This is a test notification from AlbariExam',
+      body: 'This is a test notification from iVintageExam',
       tag: 'test',
     });
     toast.success('Test notification sent!');

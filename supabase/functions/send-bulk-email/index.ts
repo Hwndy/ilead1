@@ -4,9 +4,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const ALLOWED_EMAIL_DOMAIN = "albari.com.ng";
-const DEFAULT_SENDER_EMAIL = "admissions@albari.com.ng";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@albari.com.ng";
+const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
 
 function getSafeSchoolEmail(envName: string, fallback: string): string {
   const configured = Deno.env.get(envName)?.trim() || fallback;

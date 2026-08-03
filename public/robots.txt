@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.albari.com.ng/sitemap.xml
+Sitemap: https://ilead1.lovable.app/sitemap.xml

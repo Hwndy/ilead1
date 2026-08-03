@@ -105,7 +105,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             <Link to="/website" className="flex items-center gap-3 min-w-0 shrink-0">
               <Logo size="md" showText={false} />
               <div className="min-w-0 hidden sm:block">
-                <span className="block text-[15px] font-bold text-foreground leading-tight whitespace-nowrap">{info.name || 'Al-Bari Group of Schools'}</span>
+                <span className="block text-[15px] font-bold text-foreground leading-tight whitespace-nowrap">{info.name || 'iVintage College'}</span>
                 <span className="block text-[11px] uppercase tracking-[0.14em] text-muted-foreground leading-tight truncate">{info.motto || 'Excellence in Education'}</span>
               </div>
             </Link>
@@ -156,7 +156,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 <SheetContent side="right" className="w-[85vw] max-w-sm p-0 flex flex-col">
                   <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
                     <Logo size="sm" showText={false} />
-                    <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'Al-Bari Group of Schools'}</span>
+                    <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'iVintage College'}</span>
                   </div>
                   <nav className="flex-1 overflow-y-auto px-3 py-3">
                     {navigation.map((item) => (

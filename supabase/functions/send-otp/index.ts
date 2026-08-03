@@ -3,9 +3,9 @@ import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-const ALLOWED_EMAIL_DOMAIN = "albari.com.ng";
-const DEFAULT_SENDER_EMAIL = "admissions@albari.com.ng";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@albari.com.ng";
+const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 const MAX_RETRIES = 3;
@@ -127,7 +127,7 @@ const handler = async (req: Request): Promise<Response> => {
     let htmlContent: string;
     
     if (type === 'reset_password') {
-      subject = "Password Reset Code - ALBARI CBT System";
+      subject = "Password Reset Code - IVINTAGE CBT System";
       htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -141,7 +141,7 @@ const handler = async (req: Request): Promise<Response> => {
               <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #10b981); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
                 <span style="color: white; font-size: 32px; font-weight: bold;">A</span>
               </div>
-              <h1 style="color: #059669; margin: 0;">ALBARI CBT System</h1>
+              <h1 style="color: #059669; margin: 0;">IVINTAGE CBT System</h1>
               <p style="color: #6b7280; margin: 5px 0 30px;">Computer Based Test System</p>
             </div>
             
@@ -161,7 +161,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
               <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                This is an automated message from ALBARI CBT System.<br>
+                This is an automated message from IVINTAGE CBT System.<br>
                 Please do not reply to this email.
               </p>
             </div>
@@ -169,7 +169,7 @@ const handler = async (req: Request): Promise<Response> => {
         </html>
       `;
     } else {
-      subject = "Email Verification Code - ALBARI CBT System";
+      subject = "Email Verification Code - IVINTAGE CBT System";
       htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -183,7 +183,7 @@ const handler = async (req: Request): Promise<Response> => {
               <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #10b981); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
                 <span style="color: white; font-size: 32px; font-weight: bold;">A</span>
               </div>
-              <h1 style="color: #059669; margin: 0;">ALBARI CBT System</h1>
+              <h1 style="color: #059669; margin: 0;">IVINTAGE CBT System</h1>
               <p style="color: #6b7280; margin: 5px 0 30px;">Computer Based Test System</p>
             </div>
             
@@ -202,7 +202,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
               <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                This is an automated message from ALBARI CBT System.<br>
+                This is an automated message from IVINTAGE CBT System.<br>
                 Please do not reply to this email.
               </p>
             </div>
@@ -222,7 +222,7 @@ const handler = async (req: Request): Promise<Response> => {
     try {
       // Send email with retry via Resend
       const emailResponse = await sendEmailWithRetry({
-        from: `Al-Bari Group of Schools <${SENDER_EMAIL}>`,
+        from: `iVintage College <${SENDER_EMAIL}>`,
         to: [email],
         reply_to: REPLY_TO,
         subject: subject,

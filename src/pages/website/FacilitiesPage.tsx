@@ -9,7 +9,7 @@ import { SectionBand, SectionHeading } from '@/components/website/Section';
 import { Reveal } from '@/components/website/Reveal';
 
 // Rotating campus imagery so each facility card is photo-led rather than icon-led.
-const CARD_IMAGES = ['/albari-campus.png', '/img1.png', '/img2.png', '/img3.png'];
+const CARD_IMAGES = ['/campus.png', '/img1.png', '/img2.png', '/img3.png'];
 
 const ICONS: Record<string, React.ComponentType<any>> = {
   BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap,
@@ -35,8 +35,8 @@ export const FacilitiesPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Facilities — Al-Bari Group of Schools"
-        description="Explore Al-Bari's world-class facilities: modern classrooms, science labs, library, computer lab, sports complex, cafeteria, and safe transportation."
+        title="Facilities — iVintage College"
+        description="Explore iVintage's world-class facilities: modern classrooms, science labs, library, computer lab, sports complex, cafeteria, and safe transportation."
         path="/website/facilities"
       />
       <PageHero

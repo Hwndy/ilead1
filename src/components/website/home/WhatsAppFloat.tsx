@@ -3,10 +3,10 @@ import { useSchoolInfo } from '@/hooks/useCms';
 
 export const WhatsAppFloat: React.FC<{ phone?: string; message?: string }> = ({
   phone,
-  message = "Hello Al-Bari Group of Schools, I'd like to know more about admissions.",
+  message = "Hello iVintage College, I'd like to know more about admissions.",
 }) => {
   const { info } = useSchoolInfo();
-  const resolvedPhone = (phone || info.whatsapp_number || '2348028152097').replace(/\D/g, '');
+  const resolvedPhone = (phone || info.whatsapp_number || '2348134187710').replace(/\D/g, '');
   if (!resolvedPhone) return null;
   const href = `https://wa.me/${resolvedPhone}?text=${encodeURIComponent(message)}`;
   return (

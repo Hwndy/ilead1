@@ -20,7 +20,7 @@ export const GalleryPage: React.FC = () => {
   const jsonLd = useMemo(() => ({
     '@context': 'https://schema.org',
     '@type': 'ImageGallery',
-    name: 'Al-Bari Group of Schools — Photo Gallery',
+    name: 'iVintage College — Photo Gallery',
     url: `${SITE_URL}/website/gallery`,
     image: items.slice(0, 12).map((i) => i.image_url),
   }), [items]);
@@ -45,8 +45,8 @@ export const GalleryPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Photo Gallery — Al-Bari Group of Schools"
-        description="Explore campus facilities, events, and student activities at Al-Bari Group of Schools through our photo gallery."
+        title="Photo Gallery — iVintage College"
+        description="Explore campus facilities, events, and student activities at iVintage College through our photo gallery."
         path="/website/gallery"
         jsonLd={jsonLd}
       />
@@ -54,7 +54,7 @@ export const GalleryPage: React.FC = () => {
       <PageHero
         eyebrow="Gallery"
         title="Moments from Campus"
-        subtitle="A visual journey through the life, learning and celebrations at Al-Bari Group of Schools."
+        subtitle="A visual journey through the life, learning and celebrations at iVintage College."
         crumbs={[{ label: 'Gallery' }]}
       />
 
@@ -94,7 +94,7 @@ export const GalleryPage: React.FC = () => {
                 >
                   <img
                     src={item.image_url}
-                    alt={item.alt_text || item.title || 'Al-Bari gallery photo'}
+                    alt={item.alt_text || item.title || 'iVintage gallery photo'}
                     loading="lazy"
                     className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   />
@@ -126,7 +126,7 @@ export const GalleryPage: React.FC = () => {
               </button>
               <img
                 src={active.image_url}
-                alt={active.alt_text || active.title || 'Al-Bari gallery photo'}
+                alt={active.alt_text || active.title || 'iVintage gallery photo'}
                 className="w-full max-h-[85vh] object-contain bg-black"
               />
               {(active.title || active.description) && (

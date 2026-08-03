@@ -17,8 +17,8 @@ export const NotFoundPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-24">
       <SEO
-        title="Page Not Found — Al-Bari Group of Schools"
-        description="The page you were looking for could not be found on the Al-Bari Group of Schools website."
+        title="Page Not Found — iVintage College"
+        description="The page you were looking for could not be found on the iVintage College website."
         path={location.pathname}
         noindex
       />

@@ -3,7 +3,7 @@ import { writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { createClient } from '@supabase/supabase-js';
 
-const BASE_URL = 'https://www.albari.com.ng';
+const BASE_URL = 'https://ilead1.lovable.app';
 const SUPABASE_URL = 'https://irrxmoqbgygyyzozifdl.supabase.co';
 const SUPABASE_ANON =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlycnhtb3FiZ3lneXl6b3ppZmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1MzcyMTQsImV4cCI6MjA3MzExMzIxNH0.u5i3-16-lIy3ffHrWonw5fR1NSU608MezMqCZQtt6Xw';

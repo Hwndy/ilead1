@@ -82,8 +82,8 @@ serve(async (req: Request) => {
     const payload = JSON.stringify({
       title,
       body,
-      icon: '/albari_logo.jpg',
-      badge: '/albari_logo.jpg',
+      icon: '/ivintage_logo.png',
+      badge: '/ivintage_logo.png',
       url: url || '/',
       data: data || {},
       timestamp: new Date().toISOString(),

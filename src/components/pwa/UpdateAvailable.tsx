@@ -12,7 +12,7 @@ export const UpdateAvailable: React.FC = () => {
     if (isUpdateAvailable && !shown) {
       setShown(true);
       toast('Update Available', {
-        description: 'A new version of AlbariExam is available',
+        description: 'A new version of iVintageExam is available',
         duration: Infinity,
         action: {
           label: 'Update Now',

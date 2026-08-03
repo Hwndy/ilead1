@@ -10,14 +10,14 @@ const corsHeaders = {
 };
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://www.albari.com.ng").replace(/\/+$/, "");
+const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ilead1.lovable.app").replace(/\/+$/, "");
 // NOTE: the custom domain serves index.html for /__l5e/* paths, so assets must be
 // loaded from the Lovable asset host (or an explicit ASSET_BASE_URL secret).
 const ASSET_BASE_URL = (Deno.env.get("ASSET_BASE_URL") || "https://id-preview--def176ba-5aaa-4bf2-a711-588b116fc44e.lovable.app").replace(/\/+$/, "");
-const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/5fe05427-7253-4d80-9bf2-ca75a2a096e5/albari-letterhead.png`;
-const ALLOWED_EMAIL_DOMAIN = "albari.com.ng";
-const DEFAULT_SENDER_EMAIL = "admissions@albari.com.ng";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@albari.com.ng";
+const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/f210aa1b-7164-4673-a0da-2e0eb697e3a9/ivintage-letterhead.png`;
+const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 const MAX_RETRIES = 3;
@@ -160,7 +160,7 @@ async function generateOfferLetterPDF(
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("AL-BARI COLLEGE", pageWidth / 2, 16, { align: "center" });
+    doc.text("IVINTAGE COLLEGE", pageWidth / 2, 16, { align: "center" });
     doc.setTextColor(0, 0, 0);
     doc.setFillColor(21, 128, 61);
     doc.rect(0, pageHeight - 10, pageWidth, 10, "F");
@@ -231,7 +231,7 @@ async function generateOfferLetterPDF(
   write(`Dear ${application.first_name},`, { gap: 3 });
 
   write(
-    `Following the assessment of your application, I am pleased to confirm that you have been admitted to ${className} at Al-Bari Group of Schools for the ${session} academic session. The offer is provisional until the acceptance fee is paid and your original documents are sighted at the school office.`,
+    `Following the assessment of your application, I am pleased to confirm that you have been admitted to ${className} at iVintage College for the ${session} academic session. The offer is provisional until the acceptance fee is paid and your original documents are sighted at the school office.`,
     { gap: classInfo.changed ? 3 : 5 },
   );
 
@@ -268,7 +268,7 @@ async function generateOfferLetterPDF(
   ensureSpace(26);
   write("Yours faithfully,", { gap: 12 });
   write("Admissions Officer", { bold: true, gap: 1 });
-  write("For: Al-Bari College, Badagry, Lagos", { size: 10, colour: [75, 85, 99], gap: 0 });
+  write("For: iVintage College, Badagry, Lagos", { size: 10, colour: [75, 85, 99], gap: 0 });
 
   return doc.output("arraybuffer") as Uint8Array;
 }
@@ -506,7 +506,7 @@ serve(async (req) => {
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="620"
                    style="width:620px;max-width:100%;background-color:#ffffff;border-radius:6px;overflow:hidden;font-family:Georgia,'Times New Roman',serif;color:#111827;">
               <tr><td style="background:#15803d;padding:22px 56px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;">
-                <div style="font-size:18px;font-weight:bold;letter-spacing:0.3px;">Al-Bari Group of Schools</div>
+                <div style="font-size:18px;font-weight:bold;letter-spacing:0.3px;">iVintage College</div>
                 <div style="font-size:12px;opacity:0.9;margin-top:4px;">Office of Admissions &middot; Badagry, Lagos</div>
               </td></tr>
               <tr><td style="padding:24px 56px 8px 56px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4b5563;">
@@ -524,7 +524,7 @@ serve(async (req) => {
 
                 <p style="margin:0 0 18px 0;">
                   Following the assessment of your application, I am pleased to confirm that you have been admitted to
-                  <strong>${admittedClassName}</strong> at Al-Bari Group of Schools for the
+                  <strong>${admittedClassName}</strong> at iVintage College for the
                   ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session. The offer is provisional
                   until the acceptance fee is paid and your original documents are sighted at the school office.
                 </p>
@@ -557,16 +557,16 @@ serve(async (req) => {
                 <p style="margin:0 0 18px 0;">
                   The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
                   the offer should be sent to
-                  <a href="mailto:admissions@albari.com.ng" style="color:#15803d;">admissions@albari.com.ng</a>.
+                  <a href="mailto:admissions@ilead1.lovable.app" style="color:#15803d;">admissions@ilead1.lovable.app</a>.
                 </p>
 
                 <p style="margin:0 0 32px 0;">Yours faithfully,<br><br>
                   <strong>Admissions Officer</strong><br>
-                  <span style="font-size:13px;color:#6b7280;">For: Al-Bari Group of Schools, Badagry, Lagos</span>
+                  <span style="font-size:13px;color:#6b7280;">For: iVintage College, Badagry, Lagos</span>
                 </p>
               </td></tr>
               <tr><td style="padding:16px 56px;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6b7280;">
-                Al-Bari Group of Schools &middot; admissions@albari.com.ng
+                iVintage College &middot; admissions@ilead1.lovable.app
               </td></tr>
             </table>
           </td></tr>
@@ -596,7 +596,7 @@ serve(async (req) => {
       const pdfBase64 = btoa(pdfBinary);
       
       emailResult = await sendEmailWithRetry({
-        from: `Al-Bari Group of Schools <${SENDER_EMAIL}>`,
+        from: `iVintage College <${SENDER_EMAIL}>`,
         to: [application.email],
         reply_to: REPLY_TO,
         subject: emailSubject,

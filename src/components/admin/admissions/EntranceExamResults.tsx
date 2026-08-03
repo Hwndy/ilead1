@@ -447,7 +447,7 @@ export const EntranceExamResults = ({
               <Input
                 value={resitVenue}
                 onChange={(e) => setResitVenue(e.target.value)}
-                placeholder="Al-Bari Group of Schools Campus"
+                placeholder="iVintage College Campus"
               />
             </div>
             <div className="flex justify-end gap-2">

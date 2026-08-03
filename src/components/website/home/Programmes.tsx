@@ -35,7 +35,7 @@ const DEFAULT_PROGRAMMES: Programme[] = [
     title: 'Senior Secondary',
     ages: 'SSS 1 – 3',
     description: 'Science, Commercial and Arts tracks with focused WAEC, NECO and university-entrance preparation.',
-    image: '/albari-campus.png',
+    image: '/campus.png',
   },
 ];
 
@@ -69,8 +69,8 @@ export const Programmes: React.FC = () => {
               >
                 <div className="relative h-40 overflow-hidden">
                   <img
-                    src={p.image || '/albari-campus.png'}
-                    alt={`${p.title} at Al-Bari Group of Schools`}
+                    src={p.image || '/campus.png'}
+                    alt={`${p.title} at iVintage College`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

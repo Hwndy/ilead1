@@ -127,7 +127,7 @@ export const ApplicationTracker = () => {
         icon: CheckCircle,
         color: 'text-green-600',
         label: 'Enrolled',
-        description: 'You are now enrolled. Welcome to Al-Bari Group of Schools!',
+        description: 'You are now enrolled. Welcome to iVintage College!',
       },
       withdrawn: {
         icon: XCircle,

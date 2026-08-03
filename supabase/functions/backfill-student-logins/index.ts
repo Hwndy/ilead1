@@ -38,7 +38,7 @@ serve(async (req) => {
 
     const { data: domainSetting } = await supabase
       .from('app_settings').select('setting_value').eq('setting_key', 'student_login_domain').maybeSingle();
-    const portalUrl = `${(Deno.env.get('FRONTEND_URL') ?? 'https://www.albari.com.ng').replace(/\/+$/, '')}/login?portal=true&role=parent`;
+    const portalUrl = `${(Deno.env.get('FRONTEND_URL') ?? 'https://ilead1.lovable.app').replace(/\/+$/, '')}/login?portal=true&role=parent`;
 
     const notifyParent = async (applicationId: string, payload: Record<string, unknown>) => {
       try {
@@ -57,7 +57,7 @@ serve(async (req) => {
     };
 
     const raw = domainSetting?.setting_value as unknown;
-    const loginDomain = (typeof raw === 'string' ? raw : String(raw ?? '')) || 'students.albari.com.ng';
+    const loginDomain = (typeof raw === 'string' ? raw : String(raw ?? '')) || 'students.ilead1.lovable.app';
 
     const { data: list } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
     const users = list?.users ?? [];
@@ -155,7 +155,7 @@ serve(async (req) => {
             const { data: linkData } = await supabase.auth.admin.generateLink({
               type: 'recovery',
               email: parentEmail,
-              options: { redirectTo: `${(Deno.env.get('FRONTEND_URL') ?? 'https://www.albari.com.ng').replace(/\/+$/, '')}/reset-password` },
+              options: { redirectTo: `${(Deno.env.get('FRONTEND_URL') ?? 'https://ilead1.lovable.app').replace(/\/+$/, '')}/reset-password` },
             });
             const actionLink = (linkData as any)?.properties?.action_link;
             if (actionLink && await notifyParent(app.id, {

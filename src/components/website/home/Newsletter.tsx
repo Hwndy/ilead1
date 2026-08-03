@@ -29,7 +29,7 @@ export const Newsletter: React.FC = () => {
             <Mail className="h-6 w-6 text-gold" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold">
-            Stay close to the Al-Bari community
+            Stay close to the iVintage community
           </h2>
           <p className="text-primary-foreground/80 text-lg">
             Termly newsletters with academic highlights, upcoming events and admission deadlines \u2014
