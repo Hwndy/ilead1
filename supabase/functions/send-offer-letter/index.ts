@@ -14,7 +14,7 @@ const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ilead1.lovable.ap
 // NOTE: the custom domain serves index.html for /__l5e/* paths, so assets must be
 // loaded from the Lovable asset host (or an explicit ASSET_BASE_URL secret).
 const ASSET_BASE_URL = (Deno.env.get("ASSET_BASE_URL") || "https://id-preview--def176ba-5aaa-4bf2-a711-588b116fc44e.lovable.app").replace(/\/+$/, "");
-const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/5fe05427-7253-4d80-9bf2-ca75a2a096e5/ivintage-letterhead.png`;
+const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/f210aa1b-7164-4673-a0da-2e0eb697e3a9/ivintage-letterhead.png`;
 const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
 const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
 const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
