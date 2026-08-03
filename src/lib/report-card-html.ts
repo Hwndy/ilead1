@@ -100,9 +100,9 @@ export function getReportCardGrade(percentage: number) {
 }
 
 const BRAND = {
-  green: '#0a5c36',
-  greenDark: '#064225',
-  gold: '#c9a227',
+  green: '#141C2B',
+  greenDark: '#0b1220',
+  gold: '#c6d92d',
   ink: '#1c1c1c',
   soft: '#f4f7f5',
   line: '#c8d5cd',
