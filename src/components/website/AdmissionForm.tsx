@@ -552,7 +552,7 @@ export const AdmissionForm = () => {
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>• You will receive a confirmation email within 24 hours</p>
               <p>• Entrance examination dates will be communicated via email/phone</p>
-              <p>• Contact our admissions office for any inquiries: +234 802 815 2097</p>
+              <p>• Contact our admissions office for any inquiries: +234 813 418 7710</p>
             </div>
           </CardContent>
         </Card>

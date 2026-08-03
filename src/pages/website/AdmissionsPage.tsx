@@ -180,7 +180,7 @@ export const AdmissionsPage = () => {
 
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
-              { label: 'Admissions office', value: '+234 802 815 2097' },
+              { label: 'Admissions office', value: '+234 813 418 7710' },
               { label: 'Email', value: 'admissions@ilead1.lovable.app' },
               { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
             ].map((c) => (

@@ -49,8 +49,8 @@ export const ApplyPage = () => {
                 admissions@ilead1.lovable.app
               </a>
               {' '}or call{' '}
-              <a href="tel:+2348028152097" className="text-primary hover:underline whitespace-nowrap">
-                +234 802 815 2097
+              <a href="tel:+2348134187710" className="text-primary hover:underline whitespace-nowrap">
+                +234 813 418 7710
               </a>
             </p>
           </div>
