@@ -10659,3 +10659,38 @@ BEGIN
   ) RETURNING id, application_number INTO v_new_id, v_app_no;
   RETURN jsonb_build_object('id', v_new_id, 'application_number', v_app_no);
 END $$;
+
+-- ============================================================
+-- Data API grants (required: Supabase does not grant these by default)
+-- ============================================================
+DO $grants$
+DECLARE t record;
+BEGIN
+  FOR t IN SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+           WHERE c.relkind IN ('r','v') AND n.nspname='public'
+  LOOP
+    EXECUTE format('GRANT SELECT, INSERT, UPDATE, DELETE ON public.%I TO authenticated', t.relname);
+    EXECUTE format('GRANT ALL ON public.%I TO service_role', t.relname);
+  END LOOP;
+END;
+$grants$;
+
+-- Public website / applicant-facing reads
+DO $anon$
+DECLARE t text;
+BEGIN
+  FOREACH t IN ARRAY ARRAY[
+    'website_pages','website_sections','website_settings','school_info',
+    'news_articles','gallery','testimonials','job_openings',
+    'academic_calendar','classes','subjects','admission_sessions','app_settings'
+  ] LOOP
+    IF EXISTS (SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+               WHERE n.nspname='public' AND c.relname=t) THEN
+      EXECUTE format('GRANT SELECT ON public.%I TO anon', t);
+    END IF;
+  END LOOP;
+END;
+$anon$;
+
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO authenticated, service_role;
