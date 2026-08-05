@@ -312,7 +312,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       // Clear localStorage items that might persist session data
       localStorage.removeItem('supabase.auth.token');
-      localStorage.removeItem('sb-irrxmoqbgygyyzozifdl-auth-token');
+      localStorage.removeItem(`sb-${SUPABASE_PROJECT_REF}-auth-token`);
+
       
       // Check if we have a session before attempting logout
       const { data: { session } } = await supabase.auth.getSession();
