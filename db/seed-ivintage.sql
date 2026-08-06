@@ -4,20 +4,6 @@
 -- Safe to re-run (upserts only).
 -- ============================================================
 
--- --- Tenant row -------------------------------------------------------------
-UPDATE public.schools
-SET name = 'iVintage College',
-    contact_email = 'ileadvintagecollege@gmail.com',
-    contact_phone = '+234 813 418 7710',
-    primary_color = '#141C2B',
-    secondary_color = '#C6D92D',
-    is_active = true
-WHERE subdomain = 'default';
-
-INSERT INTO public.schools (name, subdomain, contact_email, contact_phone, primary_color, secondary_color, is_active, registration_token)
-SELECT 'iVintage College', 'default', 'ileadvintagecollege@gmail.com', '+234 813 418 7710', '#141C2B', '#C6D92D', true, '4250645'
-WHERE NOT EXISTS (SELECT 1 FROM public.schools WHERE subdomain = 'default');
-
 -- --- Portal settings --------------------------------------------------------
 INSERT INTO public.app_settings (setting_key, setting_value) VALUES
   ('school_name', '"iVintage College"'),
