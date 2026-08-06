@@ -4,10 +4,10 @@ import { resolve } from 'path';
 import { createClient } from '@supabase/supabase-js';
 
 const BASE_URL = process.env.VITE_FRONTEND_URL || 'https://ilead1.lovable.app';
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://irrxmoqbgygyyzozifdl.supabase.co';
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://trtuqzdsutmindcjbkvj.supabase.co';
 const SUPABASE_ANON =
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlycnhtb3FiZ3lneXl6b3ppZmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1MzcyMTQsImV4cCI6MjA3MzExMzIxNH0.u5i3-16-lIy3ffHrWonw5fR1NSU608MezMqCZQtt6Xw';
+  'sb_publishable_6WHJnH9aYbEnuk8pLCUz3Q_EowZpmTS';
 
 
 interface Entry { path: string; lastmod?: string; changefreq?: string; priority?: string; }

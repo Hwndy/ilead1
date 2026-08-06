@@ -1,4 +1,4 @@
-project_id = "irrxmoqbgygyyzozifdl"
+project_id = "trtuqzdsutmindcjbkvj"
 
 [functions.initialize-admission-payment]
 verify_jwt = false
