@@ -157,29 +157,25 @@ $pol$;
 DROP POLICY IF EXISTS "rate_limits_service_only" ON public.rate_limits;
 CREATE POLICY "rate_limits_service_only" ON public.rate_limits FOR ALL TO service_role USING (true) WITH CHECK (true);
 
--- --- Repairs after the migration replay -------------------------------------
-DO $repair$
-DECLARE s_id uuid;
-BEGIN
-  SELECT id INTO s_id FROM public.schools WHERE subdomain = 'default' LIMIT 1;
-  IF s_id IS NULL THEN
-    INSERT INTO public.schools (name, subdomain, is_active, registration_token)
-    VALUES ('iVintage College', 'default', true, '4250645')
-    RETURNING id INTO s_id;
-  END IF;
+-- --- Student-scoped timetable read policy -----------------------------------
+DROP POLICY IF EXISTS "class_timetables_read" ON public.class_timetables;
+CREATE POLICY "Students can view their class timetable"
+ON public.class_timetables FOR SELECT
+USING (
+  class_id IN (
+    SELECT ca.class_id FROM public.class_assignments ca
+    WHERE ca.student_id = auth.uid()
+       OR ca.student_id IN (SELECT s.id FROM public.students s WHERE s.user_id = auth.uid())
+  )
+  OR teacher_id = auth.uid()
+  OR public.has_role(auth.uid(), 'admin'::app_role)
+  OR public.has_role(auth.uid(), 'teacher'::app_role)
+);
 
-  UPDATE public.classes SET school_id = s_id WHERE school_id IS NULL;
-  UPDATE public.subjects SET school_id = s_id WHERE school_id IS NULL;
-  UPDATE public.app_settings SET school_id = s_id WHERE school_id IS NULL;
-  UPDATE public.school_info SET school_id = s_id WHERE school_id IS NULL;
-  UPDATE public.website_settings SET school_id = s_id WHERE school_id IS NULL;
-EXCEPTION WHEN undefined_column THEN
-  NULL;
-END;
-$repair$;
-
-ALTER TABLE public.classes ALTER COLUMN school_id SET NOT NULL;
-ALTER TABLE public.subjects ALTER COLUMN school_id SET NOT NULL;
+-- --- Storage bucket used by assignments --------------------------------------
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('assignments','assignments',false)
+ON CONFLICT (id) DO NOTHING;
 
 -- Grants for the newly created tables
 DO $grants$
