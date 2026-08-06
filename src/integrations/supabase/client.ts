@@ -4,10 +4,11 @@ import type { Database } from './types';
 // Backend target. Override these in `.env` to point the app at a different
 // Supabase project (see db/README.md).
 const SUPABASE_URL =
-  import.meta.env.VITE_SUPABASE_URL ?? "https://irrxmoqbgygyyzozifdl.supabase.co";
+  import.meta.env.VITE_SUPABASE_URL ?? "https://trtuqzdsutmindcjbkvj.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY =
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlycnhtb3FiZ3lneXl6b3ppZmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1MzcyMTQsImV4cCI6MjA3MzExMzIxNH0.u5i3-16-lIy3ffHrWonw5fR1NSU608MezMqCZQtt6Xw";
+  "sb_publishable_6WHJnH9aYbEnuk8pLCUz3Q_EowZpmTS";
+
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
