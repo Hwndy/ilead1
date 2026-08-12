@@ -78,7 +78,7 @@ export const IDCardGenerator: React.FC = () => {
     try {
       const branding = await fetchSchoolBranding();
       setSchool({
-        id: 'al-bari',
+        id: 'ivintage',
         name: branding.name,
         address: branding.address || '',
         logo_url: branding.logo_url || '',

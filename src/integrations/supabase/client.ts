@@ -3,11 +3,9 @@ import type { Database } from './types';
 
 // Backend target. Override these in `.env` to point the app at a different
 // Supabase project (see db/README.md).
-const SUPABASE_URL =
-  import.meta.env.VITE_SUPABASE_URL ?? "https://trtuqzdsutmindcjbkvj.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY =
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
-  "sb_publishable_6WHJnH9aYbEnuk8pLCUz3Q_EowZpmTS";
+// Pinned to the project's own Supabase backend (see db/README.md).
+const SUPABASE_URL = "https://trtuqzdsutmindcjbkvj.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_6WHJnH9aYbEnuk8pLCUz3Q_EowZpmTS";
 
 
 // Import the supabase client like this:
