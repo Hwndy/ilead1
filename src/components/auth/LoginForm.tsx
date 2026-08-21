@@ -31,9 +31,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
       });
       // Navigation will be handled by the auth state change in App.tsx
     } catch (error: any) {
+      const raw = String(error?.message ?? '');
+      const isNetworkError =
+        error instanceof TypeError ||
+        /failed to fetch|network ?error|load failed|networkerror/i.test(raw);
+
       toast({
-        title: "Login Failed",
-        description: error.message || "Please check your credentials and try again.",
+        title: isNetworkError ? "Can't reach the school server" : "Login Failed",
+        description: isNetworkError
+          ? "The portal could not connect to the school server. Please check your internet connection and try again shortly."
+          : raw || "Please check your credentials and try again.",
         variant: "destructive",
       });
     }
