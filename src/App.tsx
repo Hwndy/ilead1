@@ -98,7 +98,7 @@ const App = () => (
                   
                   <Routes>
                     {/* Redirect root to dashboard */}
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/" element={<Navigate to="/website" replace />} />
                     
                     {/* Login route */}
                     <Route path="/login" element={<AuthPage />} />
