@@ -63,7 +63,7 @@ export const SchoolLifePage = () => {
   const extracurricular = [
     "Debate Club", "Science Club", "Literature Society", "Mathematics Club",
     "Football Team", "Basketball Team", "Athletics", "Table Tennis",
-    "Quranic Recitation", "Arabic Calligraphy"
+    "Quranic Recitation", "Arabic Calligraphy", "ICT & Coding Club", "Leadership Development"
   ];
 
   const classStructure = [
@@ -104,7 +104,7 @@ export const SchoolLifePage = () => {
           title="Academic programmes"
           intro="Comprehensive tracks designed to prepare students for higher education and career success."
         />
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {academicPrograms.map((program, index) => (
             <Reveal key={program.title} delay={index * 90}>
               <article className="relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -139,7 +139,7 @@ export const SchoolLifePage = () => {
         <SectionHeading
           eyebrow="Structure"
           title="From Junior to senior secondary"
-          intro="Two campus, one continuous journey  with small classes at every stage."
+          intro="Two campuses, one continuous journey  with small classes at every stage."
         />
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {classStructure.map((c, i) => (
@@ -232,7 +232,7 @@ export const SchoolLifePage = () => {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Give your child this school day</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Applications are open across Nursery, Primary and Secondary.
+            Applications are open across Junior and Senior Secondary, day and boarding.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button size="lg" className="rounded-full px-7" asChild>
