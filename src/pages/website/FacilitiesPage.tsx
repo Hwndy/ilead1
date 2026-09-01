@@ -20,7 +20,7 @@ interface Facility { title: string; description: string; icon?: string }
 const DEFAULT_FACILITIES: Facility[] = [
   { title: 'iLead Vintage College (Day School)', description: 'Purpose-built classrooms on the Akinsanya Estate campus, with small class sizes and dedicated subject teachers.', icon: 'School' },
   { title: 'iLead Vintage Boarding House', description: 'Supervised boarding with structured prep, morning and evening prayers, and full-time house parents.', icon: 'Home' },
-  { title: 'iLead Tahfeedh School', description: 'Dedicated Qur\u2019an memorisation and Arabic programme running alongside the academic curriculum.', icon: 'BookOpen' },
+  { title: 'iLead Tahfeedh School', description: 'Dedicated Qur’an memorisation and Arabic programme running alongside the academic curriculum.', icon: 'BookOpen' },
   { title: 'ICT and Coding Laboratory', description: 'Networked computer lab where every student learns digital literacy, coding and problem solving.', icon: 'Monitor' },
   { title: 'Science Laboratories', description: 'Equipped Biology, Chemistry and Physics laboratories for practical work and WAEC/NECO preparation.', icon: 'Microscope' },
   { title: 'Library and Resource Centre', description: 'Reference books, past questions and quiet study space for private and supervised reading.', icon: 'BookOpen' },
