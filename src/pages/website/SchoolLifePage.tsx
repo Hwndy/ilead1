@@ -24,11 +24,18 @@ export const SchoolLifePage = () => {
     },
     {
       title: "Arts Track",
-      description: "Liberal arts program fostering critical thinking and cultural awareness",
+      description: "Liberal arts programme fostering critical thinking, language and cultural awareness",
       icon: Palette,
       subjects: ["Literature", "Government", "History", "Islamic Studies", "Arabic"]
+    },
+    {
+      title: "Tahfeedh & Arabic",
+      description: "Qur'an memorisation and Arabic proficiency running alongside the academic curriculum",
+      icon: BookOpen,
+      subjects: ["Hifdhul Qur'an", "Tajweed", "Arabic Language", "Islamic Studies"]
     }
   ];
+
 
   const facilities = [
     {
