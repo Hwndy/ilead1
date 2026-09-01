@@ -273,15 +273,21 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               <h3 className="font-semibold text-foreground mb-4">Contact Info</h3>
               <div className="space-y-3 text-muted-foreground">
                 {info.address && (
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-4 w-4 text-primary" />
+                  <div className="flex items-start space-x-2">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <span>{info.address}</span>
+                  </div>
+                )}
+                {info.address_alt && (
+                  <div className="flex items-start space-x-2">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span>{info.address_alt}</span>
                   </div>
                 )}
                 {info.contact_phone && (
                   <div className="flex items-center space-x-2">
                     <Phone className="h-4 w-4 text-primary" />
-                    <span>{info.contact_phone}</span>
+                    <span>{[info.contact_phone, info.contact_phone_alt].filter(Boolean).join(', ')}</span>
                   </div>
                 )}
                 {info.contact_email && (
@@ -290,6 +296,13 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <span className="break-all">{info.contact_email}</span>
                   </div>
                 )}
+                {info.contact_email_alt && (
+                  <div className="flex items-center space-x-2">
+                    <Mail className="h-4 w-4 text-primary" />
+                    <span className="break-all">{info.contact_email_alt}</span>
+                  </div>
+                )}
+
                 <div className="flex items-start space-x-2">
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>Mon – Fri, 8:00am – 4:00pm</span>

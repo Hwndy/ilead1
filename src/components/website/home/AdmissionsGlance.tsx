@@ -19,9 +19,9 @@ const ICONS: Record<string, React.ComponentType<any>> = {
 };
 
 const DEFAULT_DATES: KeyDate[] = [
-  { label: 'Applications open', value: 'Now accepting', icon: 'ClipboardList' },
-  { label: 'Entrance examination', value: 'Scheduled on application', icon: 'FileCheck2' },
-  { label: 'Application deadline', value: 'Two weeks before resumption', icon: 'CalendarDays' },
+  { label: 'Applications', value: 'Now open', icon: 'ClipboardList' },
+  { label: 'Entrance examination', value: 'Every Saturday, 10am prompt', icon: 'FileCheck2' },
+  { label: 'Enquiry lines', value: '+234 818 803 2057, +234 805 317 1279', icon: 'CalendarDays' },
   { label: 'New session begins', value: 'September', icon: 'GraduationCap' },
 ];
 
@@ -32,8 +32,9 @@ export const AdmissionsGlance: React.FC = () => {
   const note = settingValue<string>(
     settings,
     'home_key_dates_note',
-    'Applications are reviewed on a rolling basis. Apply early \u2014 places in each class are limited.',
+    'Entrance examinations hold every Saturday at 10am prompt. Apply early \u2014 places in each class are limited.',
   );
+
 
   if (!dates?.length) return null;
 

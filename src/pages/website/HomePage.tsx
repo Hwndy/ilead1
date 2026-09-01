@@ -41,10 +41,11 @@ export const HomePage = () => {
   }, [settings]);
 
   const heroBadge = settingValue<string>(settings, 'hero_badge', 'Day School | Boarding | Tahfeedh');
-  const heroTitle = settingValue<string>(settings, 'hero_title', 'Rigorous academics.');
-  const heroTitleHighlight = settingValue<string>(settings, 'hero_title_highlight', 'Rooted character.');
+  const heroTitle = settingValue<string>(settings, 'hero_title', '\u2026redefining western and');
+  const heroTitleHighlight = settingValue<string>(settings, 'hero_title_highlight', 'Islamic intellectualism');
   const heroSubtitle = settingValue<string>(settings, 'hero_subtitle',
-    'Nursery through senior secondary in one campus \u2014 small classes, qualified teachers, and a Qur\u2019anic and moral foundation that runs through every school day.');
+    'We deliver a perfect blend of western and Islamic education as well as proficiency in ICT, with coding being a major component.');
+
   const heroCtaPrimary = settingValue<string>(settings, 'hero_cta_primary_label', 'Apply Now');
   const heroCtaSecondary = settingValue<string>(settings, 'hero_cta_secondary_label', 'Learn More');
 
@@ -122,7 +123,7 @@ export const HomePage = () => {
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight max-w-[15ch]">
               {heroTitle}
-              <span className="block mt-1 text-primary drop-shadow-sm">{heroTitleHighlight}</span>
+              <span className="block mt-1 text-accent drop-shadow-sm">{heroTitleHighlight}</span>
             </h1>
             
             <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed">
@@ -162,7 +163,8 @@ export const HomePage = () => {
                     { value: info.stat_teachers, label: 'Teachers' },
                     { value: info.stat_success_rate, label: 'Success rate' },
                     { value: info.stat_years, label: 'Years of excellence' },
-                  ].map((s) => (
+                  ].filter((s) => !!s.value).map((s) => (
+
                     <div key={s.label} className="rounded-xl bg-white/10 border border-white/10 px-4 py-3">
                       <div className="text-2xl font-bold text-white leading-none">{s.value}</div>
                       <div className="mt-1 text-[11px] uppercase tracking-wide text-white/70">{s.label}</div>

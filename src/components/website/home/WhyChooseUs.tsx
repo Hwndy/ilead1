@@ -11,30 +11,36 @@ interface Pillar {
 const DEFAULT_PILLARS: Pillar[] = [
   {
     title: 'Academic excellence',
-    description: 'Small classes, continuous assessment and consistent credit passes in WAEC, NECO and BECE.',
+    description: 'Sound, highly qualitative western education, with distinction scores maintained in both internal and external examinations.',
     image: '/img1.png',
   },
   {
-    title: 'Character and faith',
-    description: 'Qur\u2019anic and moral instruction woven into daily school life, not treated as an add-on.',
+    title: 'ICT and coding',
+    description: 'Proficiency in Microsoft Office (Word, Excel, PowerPoint, Access), basic programming and coding, and robotics.',
+    image: '/img3.png',
+  },
+  {
+    title: 'Hifdhul Qur\u2019an, Islamic education and Arabic',
+    description: 'Qur\u2019an memorisation \u2014 at least a quarter of the whole Qur\u2019an \u2014 Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.',
     image: '/img2.png',
   },
   {
-    title: 'Teachers who know your child',
-    description: 'Qualified, long-serving staff with termly parent conferences and open reporting through the parent portal.',
-    image: '/img3.png',
+    title: 'Leadership development',
+    description: 'Leadership training classes, mentoring and coaching programmes, clubs and associations (literacy and debating, book readers, karate and more), plus guidance and counselling.',
+    image: '/campus.png',
   },
 ];
 
 export const WhyChooseUs: React.FC = () => {
   const { settings } = useWebsiteSettings();
   const pillars = settingValue<Pillar[]>(settings, 'home_pillars', DEFAULT_PILLARS);
-  const heading = settingValue<string>(settings, 'home_pillars_heading', 'Why families choose iVintage');
+  const heading = settingValue<string>(settings, 'home_pillars_heading', 'A perfect blend of western and Islamic education');
   const intro = settingValue<string>(
     settings,
     'home_pillars_intro',
-    'Three things parents tell us keep them here \u2014 and keep them recommending us.',
+    'Four pillars shape every child who passes through iVintage College \u2014 with coding a major component.',
   );
+
 
   if (!pillars?.length) return null;
 
@@ -47,22 +53,25 @@ export const WhyChooseUs: React.FC = () => {
           <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 90}>
-              <article className="group relative h-full min-h-[320px] overflow-hidden rounded-2xl border border-border shadow-sm">
-                <img
-                  src={p.image || '/campus.png'}
-                  alt={p.title}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-                <div className="relative flex h-full flex-col justify-end p-6">
-                  <h3 className="text-xl font-bold text-white">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-200">{p.description}</p>
+              <article className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <div className="relative h-40 w-full overflow-hidden">
+                  <img
+                    src={p.image || '/campus.png'}
+                    alt={p.title}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
                 </div>
               </article>
+
             </Reveal>
           ))}
         </div>
