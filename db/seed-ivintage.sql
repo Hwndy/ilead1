@@ -66,8 +66,9 @@ INSERT INTO public.website_settings (setting_key, setting_value, description) VA
 ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, description = EXCLUDED.description;
 
 -- --- Student testimonials from the previous site ----------------------------
-INSERT INTO public.testimonials (name, role, content, rating, is_featured, is_published)
-SELECT v.name, v.role, v.content, 5, true, true
+INSERT INTO public.testimonials (name, role, content, rating, is_featured, is_published, created_by)
+SELECT v.name, v.role, v.content, 5, true, true,
+       (SELECT ur.user_id FROM public.user_roles ur WHERE ur.role = 'admin' ORDER BY ur.created_at LIMIT 1)
 FROM (VALUES
   ('Orelesi Al Aameen', 'Student', 'iLead is a school of many experiences for everyone; it is one of the best schools in Ikorodu.'),
   ('Lekki Farraj', 'Student', 'iLead College is a school of prestige — a place for diverse Islamic intellectualism and a fountain of knowledge beyond measure.'),
