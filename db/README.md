@@ -26,7 +26,14 @@ To re-run from scratch on another project:
 psql "$DB_URL" -f db/setup.sql
 psql "$DB_URL" -f db/setup-part2.sql
 psql "$DB_URL" -f db/seed-ivintage.sql
+psql "$DB_URL" -f db/seed-operational.sql
 ```
+
+`db/seed-operational.sql` (idempotent) adds the operational defaults: an active
+2026/2027 admission session, per-class fee structures for the three terms, the
+academic calendar, eight email/SMS notification templates, report-card automation
+defaults, and the public `media` storage bucket with its policies.
+
 
 ## Remaining step: edge functions
 
