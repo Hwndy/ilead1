@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap } from 'lucide-react';
+import { BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap, School } from 'lucide-react';
 import { useWebsiteSettings, useGallery, settingValue } from '@/hooks/useCms';
 import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
@@ -12,20 +12,21 @@ import { Reveal } from '@/components/website/Reveal';
 const CARD_IMAGES = ['/campus.png', '/img1.png', '/img2.png', '/img3.png'];
 
 const ICONS: Record<string, React.ComponentType<any>> = {
-  BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap,
+  BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap, School,
 };
 
 interface Facility { title: string; description: string; icon?: string }
 
 const DEFAULT_FACILITIES: Facility[] = [
-  { title: 'Modern Library', description: 'Extensive collection of books, digital resources, and quiet study spaces for enhanced learning.', icon: 'BookOpen' },
-  { title: 'Science Laboratories', description: 'Fully equipped labs for Biology, Chemistry, and Physics with modern equipment and safety measures.', icon: 'Microscope' },
-  { title: 'Computer Laboratory', description: 'State-of-the-art computers with high-speed internet for digital literacy and research.', icon: 'Monitor' },
-  { title: 'Sports Complex', description: 'Indoor and outdoor facilities including basketball court, football field, and athletics track.', icon: 'Trophy' },
-  { title: 'Cafeteria', description: 'Hygienic food service providing nutritious meals and refreshments for students and staff.', icon: 'Utensils' },
-  { title: 'Transportation', description: 'Safe and reliable school bus services covering major routes across Lagos.', icon: 'Bus' },
+  { title: 'iLead Vintage College (Day School)', description: 'Purpose-built classrooms on the Akinsanya Estate campus, with small class sizes and dedicated subject teachers.', icon: 'School' },
+  { title: 'iLead Vintage Boarding House', description: 'Supervised boarding with structured prep, morning and evening prayers, and full-time house parents.', icon: 'Home' },
+  { title: 'iLead Tahfeedh School', description: 'Dedicated Qur\u2019an memorisation and Arabic programme running alongside the academic curriculum.', icon: 'BookOpen' },
+  { title: 'ICT and Coding Laboratory', description: 'Networked computer lab where every student learns digital literacy, coding and problem solving.', icon: 'Monitor' },
+  { title: 'Science Laboratories', description: 'Equipped Biology, Chemistry and Physics laboratories for practical work and WAEC/NECO preparation.', icon: 'Microscope' },
+  { title: 'Library and Resource Centre', description: 'Reference books, past questions and quiet study space for private and supervised reading.', icon: 'BookOpen' },
+  { title: 'Sports and Recreation', description: 'Football, basketball, athletics and table tennis, with inter-house competitions each session.', icon: 'Trophy' },
+  { title: 'Kitchen and Dining', description: 'Hygienic kitchen serving balanced meals for boarders and day students.', icon: 'Utensils' },
 ];
-
 export const FacilitiesPage = () => {
   const { settings } = useWebsiteSettings();
   const intro = settingValue<string>(settings, 'facilities_intro', 'Modern infrastructure designed to support effective teaching, learning, and character development');
