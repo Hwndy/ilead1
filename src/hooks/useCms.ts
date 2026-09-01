@@ -27,7 +27,7 @@ const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
   tiktok_url: '',
   stat_students: '600+',
   stat_teachers: '60+',
-  stat_years: '22+',
+  stat_years: '',
   stat_success_rate: '98%',
   logo_url: '/ivintage_logo.png',
 };
