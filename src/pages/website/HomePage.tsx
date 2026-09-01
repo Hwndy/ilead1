@@ -163,7 +163,8 @@ export const HomePage = () => {
                     { value: info.stat_teachers, label: 'Teachers' },
                     { value: info.stat_success_rate, label: 'Success rate' },
                     { value: info.stat_years, label: 'Years of excellence' },
-                  ].map((s) => (
+                  ].filter((s) => !!s.value).map((s) => (
+
                     <div key={s.label} className="rounded-xl bg-white/10 border border-white/10 px-4 py-3">
                       <div className="text-2xl font-bold text-white leading-none">{s.value}</div>
                       <div className="mt-1 text-[11px] uppercase tracking-wide text-white/70">{s.label}</div>
