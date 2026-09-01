@@ -41,10 +41,11 @@ export const HomePage = () => {
   }, [settings]);
 
   const heroBadge = settingValue<string>(settings, 'hero_badge', 'Day School | Boarding | Tahfeedh');
-  const heroTitle = settingValue<string>(settings, 'hero_title', 'Rigorous academics.');
-  const heroTitleHighlight = settingValue<string>(settings, 'hero_title_highlight', 'Rooted character.');
+  const heroTitle = settingValue<string>(settings, 'hero_title', '\u2026redefining western and');
+  const heroTitleHighlight = settingValue<string>(settings, 'hero_title_highlight', 'Islamic intellectualism');
   const heroSubtitle = settingValue<string>(settings, 'hero_subtitle',
-    'Nursery through senior secondary in one campus \u2014 small classes, qualified teachers, and a Qur\u2019anic and moral foundation that runs through every school day.');
+    'We deliver a perfect blend of western and Islamic education as well as proficiency in ICT, with coding being a major component.');
+
   const heroCtaPrimary = settingValue<string>(settings, 'hero_cta_primary_label', 'Apply Now');
   const heroCtaSecondary = settingValue<string>(settings, 'hero_cta_secondary_label', 'Learn More');
 
