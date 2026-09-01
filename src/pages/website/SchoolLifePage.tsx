@@ -131,8 +131,8 @@ export const SchoolLifePage = () => {
       <SectionBand tone="muted">
         <SectionHeading
           eyebrow="Structure"
-          title="From creche to senior secondary"
-          intro="One campus, one continuous journey — with small classes at every stage."
+          title="From Junior to senior secondary"
+          intro="Two campus, one continuous journey — with small classes at every stage."
         />
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {classStructure.map((c, i) => (
