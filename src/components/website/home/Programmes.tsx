@@ -41,14 +41,14 @@ export const Programmes: React.FC = () => {
 
   return (
     <section className="py-16 sm:py-20">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-18">
         <Reveal className="mx-auto mb-12 max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Programmes</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{heading}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2">
           {programmes.map((p, i) => (
             <Reveal key={p.title} delay={i * 80}>
               <Link

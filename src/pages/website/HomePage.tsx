@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PrincipalWelcome } from '@/components/website/home/PrincipalWelcome';
-import { Accreditations } from '@/components/website/home/Accreditations';
+// import { Accreditations } from '@/components/website/home/Accreditations';
 import { LatestNews } from '@/components/website/home/LatestNews';
 import { Testimonials } from '@/components/website/home/Testimonials';
 import { HowToApply } from '@/components/website/home/HowToApply';
@@ -207,7 +207,7 @@ export const HomePage = () => {
       </section>
 
       {/* Accreditations strip */}
-      <Accreditations />
+      {/* <Accreditations /> */}
 
       {/* Academic programmes */}
       <Programmes />
