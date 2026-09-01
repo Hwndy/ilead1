@@ -123,7 +123,7 @@ export const HomePage = () => {
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight max-w-[15ch]">
               {heroTitle}
-              <span className="block mt-1 text-primary drop-shadow-sm">{heroTitleHighlight}</span>
+              <span className="block mt-1 text-accent drop-shadow-sm">{heroTitleHighlight}</span>
             </h1>
             
             <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed">
