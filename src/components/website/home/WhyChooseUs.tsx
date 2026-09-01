@@ -11,30 +11,36 @@ interface Pillar {
 const DEFAULT_PILLARS: Pillar[] = [
   {
     title: 'Academic excellence',
-    description: 'Small classes, continuous assessment and consistent credit passes in WAEC, NECO and BECE.',
+    description: 'Sound, highly qualitative western education, with distinction scores maintained in both internal and external examinations.',
     image: '/img1.png',
   },
   {
-    title: 'Character and faith',
-    description: 'Qur\u2019anic and moral instruction woven into daily school life, not treated as an add-on.',
+    title: 'ICT and coding',
+    description: 'Proficiency in Microsoft Office (Word, Excel, PowerPoint, Access), basic programming and coding, and robotics.',
+    image: '/img3.png',
+  },
+  {
+    title: 'Hifdhul Qur\u2019an, Islamic education and Arabic',
+    description: 'Qur\u2019an memorisation \u2014 at least a quarter of the whole Qur\u2019an \u2014 Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.',
     image: '/img2.png',
   },
   {
-    title: 'Teachers who know your child',
-    description: 'Qualified, long-serving staff with termly parent conferences and open reporting through the parent portal.',
-    image: '/img3.png',
+    title: 'Leadership development',
+    description: 'Leadership training classes, mentoring and coaching programmes, clubs and associations (literacy and debating, book readers, karate and more), plus guidance and counselling.',
+    image: '/campus.png',
   },
 ];
 
 export const WhyChooseUs: React.FC = () => {
   const { settings } = useWebsiteSettings();
   const pillars = settingValue<Pillar[]>(settings, 'home_pillars', DEFAULT_PILLARS);
-  const heading = settingValue<string>(settings, 'home_pillars_heading', 'Why families choose iVintage');
+  const heading = settingValue<string>(settings, 'home_pillars_heading', 'A perfect blend of western and Islamic education');
   const intro = settingValue<string>(
     settings,
     'home_pillars_intro',
-    'Three things parents tell us keep them here \u2014 and keep them recommending us.',
+    'Four pillars shape every child who passes through iVintage College \u2014 with coding a major component.',
   );
+
 
   if (!pillars?.length) return null;
 
