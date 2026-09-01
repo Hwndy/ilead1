@@ -123,7 +123,7 @@ export const AboutPage = () => {
       <SectionBand tone="muted" className="pt-24">
         <SectionHeading
           eyebrow="Direction"
-          title="Our vision & mission"
+          title="Our vision, mission & target"
           intro="Guiding principles that drive our commitment to educational excellence."
         />
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2">
@@ -145,7 +145,19 @@ export const AboutPage = () => {
               <p className="mt-3 leading-relaxed text-background/75">{mission}</p>
             </article>
           </Reveal>
+          {target && (
+            <Reveal delay={160} className="md:col-span-2">
+              <article className="h-full rounded-2xl border border-border bg-card p-8">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Landmark className="h-6 w-6" />
+                </span>
+                <h3 className="mt-6 text-2xl font-bold text-foreground">Our target</h3>
+                <p className="mt-3 leading-relaxed text-muted-foreground">{target}</p>
+              </article>
+            </Reveal>
+          )}
         </div>
+
       </SectionBand>
 
       {/* Core values */}
