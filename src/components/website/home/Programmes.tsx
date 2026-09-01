@@ -14,18 +14,6 @@ interface Programme {
 
 const DEFAULT_PROGRAMMES: Programme[] = [
   {
-    title: 'Nursery',
-    ages: 'Ages 2 – 5',
-    description: 'Play-led early years learning that builds confidence, curiosity and strong literacy and numeracy foundations.',
-    image: '/img1.png',
-  },
-  {
-    title: 'Primary',
-    ages: 'Ages 6 – 11',
-    description: 'A broad primary curriculum with daily reading, mathematics, Qur\u2019anic and moral studies, and creative subjects.',
-    image: '/img2.png',
-  },
-  {
     title: 'Junior Secondary',
     ages: 'JSS 1 – 3',
     description: 'Core academics, sciences and vocational exposure preparing every student for the BECE and senior school.',

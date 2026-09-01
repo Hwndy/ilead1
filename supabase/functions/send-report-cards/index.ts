@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "suleayo04@gmail.com";
 
 function safeSender(): string {

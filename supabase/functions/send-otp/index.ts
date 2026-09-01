@@ -4,8 +4,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 const MAX_RETRIES = 3;

@@ -16,8 +16,8 @@ const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ilead1.lovable.ap
 const ASSET_BASE_URL = (Deno.env.get("ASSET_BASE_URL") || "https://id-preview--def176ba-5aaa-4bf2-a711-588b116fc44e.lovable.app").replace(/\/+$/, "");
 const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/f210aa1b-7164-4673-a0da-2e0eb697e3a9/ivintage-letterhead.png`;
 const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ilead1.lovable.app";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@ilead1.lovable.app";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
+const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 const MAX_RETRIES = 3;
@@ -557,7 +557,7 @@ serve(async (req) => {
                 <p style="margin:0 0 18px 0;">
                   The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
                   the offer should be sent to
-                  <a href="mailto:admissions@ilead1.lovable.app" style="color:#15803d;">admissions@ilead1.lovable.app</a>.
+                  <a href="mailto:admissions@ivintagecollege.com" style="color:#15803d;">admissions@ivintagecollege.com</a>.
                 </p>
 
                 <p style="margin:0 0 32px 0;">Yours faithfully,<br><br>
@@ -566,7 +566,7 @@ serve(async (req) => {
                 </p>
               </td></tr>
               <tr><td style="padding:16px 56px;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6b7280;">
-                iVintage College &middot; admissions@ilead1.lovable.app
+                iVintage College &middot; admissions@ivintagecollege.com
               </td></tr>
             </table>
           </td></tr>

@@ -181,7 +181,7 @@ export const AdmissionsPage = () => {
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
               { label: 'Admissions office', value: '+234 813 418 7710' },
-              { label: 'Email', value: 'admissions@ilead1.lovable.app' },
+              { label: 'Email', value: 'admissions@ivintagecollege.com' },
               { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
             ].map((c) => (
               <div key={c.label} className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
