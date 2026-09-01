@@ -56,19 +56,22 @@ export const WhyChooseUs: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 90}>
-              <article className="group relative h-full min-h-[320px] overflow-hidden rounded-2xl border border-border shadow-sm">
-                <img
-                  src={p.image || '/campus.png'}
-                  alt={p.title}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-                <div className="relative flex h-full flex-col justify-end p-6">
-                  <h3 className="text-xl font-bold text-white">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-200">{p.description}</p>
+              <article className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <div className="relative h-40 w-full overflow-hidden">
+                  <img
+                    src={p.image || '/campus.png'}
+                    alt={p.title}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
                 </div>
               </article>
+
             </Reveal>
           ))}
         </div>
