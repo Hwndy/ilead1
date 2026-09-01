@@ -111,7 +111,7 @@ const App = () => (
                     {/* Install page for PWA */}
                     <Route path="/install" element={<InstallPage />} />
 
-                    {/* QR scan landing — requires teacher/admin login */}
+                    {/* QR scan landing  requires teacher/admin login */}
                     <Route
                       path="/scan/:token"
                       element={

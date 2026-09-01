@@ -1,4 +1,4 @@
-# School Management System — Full Application Breakdown
+# School Management System  Full Application Breakdown
 
 _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`, `supabase/functions/`, and live DB schema._
 
@@ -39,7 +39,7 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 ### 1.3 Student Management (Spec §4.1)
 - Registration via admissions pipeline OR direct admin creation (`create-student` edge function)
 - Auto-generated admission numbers (`generate_application_number`)
-- Student profiles with bio, class, guardian, medical (`students` table — 19 columns)
+- Student profiles with bio, class, guardian, medical (`students` table  19 columns)
 - `SMS/StudentManagement.tsx` for admin CRUD + bulk import
 - `SMS/StudentPromotion.tsx` for batch promotion / graduation / retention (uses `promotion_history`)
 - Student-parent links (`student_parent_relationships`)
@@ -53,15 +53,15 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 - Subject allocation: `subject_assignments` table
 
 ### 1.5 Class & Academic Structure (Spec §4.3)
-- `ClassManagement.tsx` — classes, arms, streams (`classes` table)
-- `SubjectManagement.tsx` — subjects (`subjects` table)
+- `ClassManagement.tsx`  classes, arms, streams (`classes` table)
+- `SubjectManagement.tsx`  subjects (`subjects` table)
 - Periods & rooms (`periods`, `rooms` tables)
-- `TimetableManager.tsx` — manual builder with conflict checking (`check_timetable_conflict` function, `class_timetables`, `timetable_templates`)
+- `TimetableManager.tsx`  manual builder with conflict checking (`check_timetable_conflict` function, `class_timetables`, `timetable_templates`)
 - Student/Teacher timetable views (`StudentTimetable.tsx`, `TeacherTimetable.tsx`)
 - `academic_calendar` table + parent calendar view
 
 ### 1.6 Attendance Management (Spec §4.4)
-- `AttendanceSystem.tsx` (teacher) — daily class attendance
+- `AttendanceSystem.tsx` (teacher)  daily class attendance
 - `student_attendance` + `attendance_sessions` tables
 - `attendance_summary` aggregation table
 - Parent `AttendanceMonitor.tsx`
@@ -82,9 +82,9 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 - Result history: `AdminStudentResults`, `AdminResultsModal`, `EnhancedExamResults`, `StudentResultDetails`
 
 ### 1.8 Fees & Accounting (Spec §4.6)
-- `SMS/FeeManagement.tsx` — fee structure CRUD per class (`fee_structures`)
-- Payment tracking (`fee_payments`) — cash, transfer, online (Paystack)
-- Installment plan tables (`fee_installment_plans`, `fee_installments`) — schema only
+- `SMS/FeeManagement.tsx`  fee structure CRUD per class (`fee_structures`)
+- Payment tracking (`fee_payments`)  cash, transfer, online (Paystack)
+- Installment plan tables (`fee_installment_plans`, `fee_installments`)  schema only
 - Fee reminder logs (`fee_reminder_logs`)
 - Receipt PDF generator (`FeeReceiptGenerator.tsx`)
 - Parent fee views: `parent/FeeManagement.tsx`, `parent/FeeManagementEnhanced.tsx`
@@ -107,13 +107,13 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 - Edge functions: `initialize-admission-payment`, `verify-admission-payment`, `initialize-acceptance-payment`, `verify-acceptance-payment`, `send-offer-letter`, `send-admission-notification`, `accept-offer`, `track-application`
 
 ### 1.11 Library Management
-- `LibraryManager.tsx` (admin) — catalog CRUD + issue/return
-- `LibraryCatalog.tsx` (student) — browse
+- `LibraryManager.tsx` (admin)  catalog CRUD + issue/return
+- `LibraryCatalog.tsx` (student)  browse
 - Tables: `library_books`, `book_issues`
 
 ### 1.12 Notifications
-- `BulkNotificationSender.tsx` — multi-channel (email + SMS + push)
-- `NotificationSettings.tsx` — per-user preferences
+- `BulkNotificationSender.tsx`  multi-channel (email + SMS + push)
+- `NotificationSettings.tsx`  per-user preferences
 - Edge functions: `send-bulk-email`, `send-bulk-sms`, `send-push-notification`
 - Tables: `notification_templates`, `notification_queue`, `push_subscriptions`, `email_logs`
 - `EmailLogsViewer.tsx`, `EmailTestingPanel.tsx`
@@ -123,7 +123,7 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 - `public/sw.js`, `public/manifest.json`
 - `InstallPrompt.tsx`, `OfflineIndicator.tsx`, `UpdateAvailable.tsx`
 - `usePWA` hook + `PWAProvider` context
-- `InstallPage.tsx` — per-platform install guide
+- `InstallPage.tsx`  per-platform install guide
 - `pushNotifications.ts` service
 
 ### 1.14 Website CMS (Public-Facing Site)
@@ -138,11 +138,11 @@ _Generated: 2026-06-06 · Based on direct scan of `src/`, `supabase/migrations/`
 
 ---
 
-## 2. 🟡 Partial — Built But Not Wired / Missing UI Coverage
+## 2. 🟡 Partial  Built But Not Wired / Missing UI Coverage
 
 ### 🚨 Critical integration gaps (built components NOT mounted)
 
-The following components exist in code but are **not registered in `AdminSidebar`** and have **no rendering branch in `AdminDashboard.tsx`** — meaning the user cannot reach them from the UI:
+The following components exist in code but are **not registered in `AdminSidebar`** and have **no rendering branch in `AdminDashboard.tsx`**  meaning the user cannot reach them from the UI:
 
 | Component | File | Status |
 |---|---|---|
@@ -170,7 +170,7 @@ The following components exist in code but are **not registered in `AdminSidebar
 | Teacher attendance modes | Manual marking via `StaffAttendance.tsx` | No biometric / QR / geofencing |
 | Student attendance modes | Manual via `AttendanceSystem.tsx` | No QR / biometric / parent app-based |
 | Library fines | `book_issues` has dates | No fine calculation / collection |
-| Notification prefs | `NotificationSettings.tsx` exists | Not enforced — bulk senders ignore per-user opt-outs |
+| Notification prefs | `NotificationSettings.tsx` exists | Not enforced  bulk senders ignore per-user opt-outs |
 | Push subscriptions | `push_subscriptions` table + service | Service worker `push` event handler is bare; no rich notifications, no action buttons |
 | Report cards | Single-student PDF works | No bulk class-wide batch generation, no email-to-parent flow |
 | Email custom domain | Resend integration via `RESEND_API_KEY` | No domain verification UI |
@@ -181,18 +181,18 @@ The following components exist in code but are **not registered in `AdminSidebar
 
 ---
 
-## 3. ❌ Not Built — Spec & Roadmap Gaps
+## 3. ❌ Not Built  Spec & Roadmap Gaps
 
 ### Core SMS modules absent
-- **Transport** — routes, vehicles, drivers, student bus assignments, GPS tracking
-- **Hostel / Boarding** — rooms, allocations, attendance, fees
-- **Inventory / Asset management** — stationery, lab equipment, lifecycle
-- **Cafeteria / Meal management** — menus, allergies, billing
-- **Medical / Health records** — vaccinations, visits, allergies (only a basic `medical_info` field exists on students)
-- **Disciplinary records** — incident log, demerits, suspensions
-- **Alumni management** — graduates, contact, events
-- **HR / Payroll** — leave management, payroll runs, payslips (only `salary` field, no run cycle)
-- **Auto timetable generator** — current is manual only
+- **Transport**  routes, vehicles, drivers, student bus assignments, GPS tracking
+- **Hostel / Boarding**  rooms, allocations, attendance, fees
+- **Inventory / Asset management**  stationery, lab equipment, lifecycle
+- **Cafeteria / Meal management**  menus, allergies, billing
+- **Medical / Health records**  vaccinations, visits, allergies (only a basic `medical_info` field exists on students)
+- **Disciplinary records**  incident log, demerits, suspensions
+- **Alumni management**  graduates, contact, events
+- **HR / Payroll**  leave management, payroll runs, payslips (only `salary` field, no run cycle)
+- **Auto timetable generator**  current is manual only
 - **Inter-school comparison** for super admin
 
 ### Communication
@@ -202,13 +202,13 @@ The following components exist in code but are **not registered in `AdminSidebar
 - **SMS/Email/WhatsApp templates UI** (templates table exists, no editor)
 
 ### Intelligence
-- **AI analytics** — predictive performance, dropout risk, recommendations
+- **AI analytics**  predictive performance, dropout risk, recommendations
 - **AI-assisted question generation**
 - **Auto-grading for essay questions**
 - **Plagiarism detection**
 
 ### Platform
-- **Internationalization (i18n)** — no `react-i18next`, English only
+- **Internationalization (i18n)**  no `react-i18next`, English only
 - **Multi-currency** support
 - **Dark mode toggle** (CSS supports it, no UI toggle)
 - **Native mobile shell** via Capacitor (PWA only today)
@@ -221,41 +221,41 @@ The following components exist in code but are **not registered in `AdminSidebar
 ## 4. 🐛 Fixes Required
 
 ### 4.1 Critical (block features)
-1. **Orphaned components (§2)** — wire `StudentManagement`, `StudentPromotion`, `StaffManagement`, `StaffAttendance`, `FeeReceiptGenerator` into sidebar + dashboard router. Without this, the recent migrations create unused tables.
-2. **`src/lib/school-utils.ts` hard-coded domain map** — multi-tenancy will route every new school to "Albari Model Schools" by default until replaced with a DB lookup.
-3. **Push notification handler in `public/sw.js`** is incomplete — `push` events need proper `event.waitUntil(showNotification(...))` wiring.
+1. **Orphaned components (§2)**  wire `StudentManagement`, `StudentPromotion`, `StaffManagement`, `StaffAttendance`, `FeeReceiptGenerator` into sidebar + dashboard router. Without this, the recent migrations create unused tables.
+2. **`src/lib/school-utils.ts` hard-coded domain map**  multi-tenancy will route every new school to "Albari Model Schools" by default until replaced with a DB lookup.
+3. **Push notification handler in `public/sw.js`** is incomplete  `push` events need proper `event.waitUntil(showNotification(...))` wiring.
 
 ### 4.2 Type & code quality
-4. `BulkNotificationSender.tsx` and `LibraryManager.tsx` use `(supabase as any)` casts — types should regenerate cleanly now that migrations are applied. Remove casts.
-5. Many components use `any` for Supabase rows — tighten with `Database['public']['Tables'][...]['Row']`.
-6. `AdminDashboard.tsx` is **551 lines** — split into smaller route components.
-7. `src/integrations/supabase/types.ts` was hand-edited at points in history — confirm it matches DB regeneration.
+4. `BulkNotificationSender.tsx` and `LibraryManager.tsx` use `(supabase as any)` casts  types should regenerate cleanly now that migrations are applied. Remove casts.
+5. Many components use `any` for Supabase rows  tighten with `Database['public']['Tables'][...]['Row']`.
+6. `AdminDashboard.tsx` is **551 lines**  split into smaller route components.
+7. `src/integrations/supabase/types.ts` was hand-edited at points in history  confirm it matches DB regeneration.
 
 ### 4.3 Performance
-8. **Bundle size 5MB+** — `vite-plugin-pwa` precache raised to 6MB as workaround. Real fix: route-level code splitting with `React.lazy` on every page (`App.tsx` lines 17-30) and `Suspense` boundaries.
+8. **Bundle size 5MB+**  `vite-plugin-pwa` precache raised to 6MB as workaround. Real fix: route-level code splitting with `React.lazy` on every page (`App.tsx` lines 17-30) and `Suspense` boundaries.
 9. Admin Dashboard loads 30+ component modules eagerly even when on `overview`.
 10. No image optimization pipeline; gallery uploads stored raw.
-11. No pagination on `LibraryManager`, `StudentManagement`, `AuditLogs` — will hit Supabase 1000-row default.
+11. No pagination on `LibraryManager`, `StudentManagement`, `AuditLogs`  will hit Supabase 1000-row default.
 
 ### 4.4 Security & Supabase config
-12. **Leaked Password Protection disabled** in Supabase Auth — enable in dashboard.
+12. **Leaked Password Protection disabled** in Supabase Auth  enable in dashboard.
 13. **MFA / 2FA not configured.**
-14. `send-fee-reminders` has `verify_jwt = true` but no cron schedule defined — needs `pg_cron` or external scheduler.
+14. `send-fee-reminders` has `verify_jwt = true` but no cron schedule defined  needs `pg_cron` or external scheduler.
 15. Cron also missing for `cleanup_expired_otps()` and `cleanup_old_rate_limits()`.
 16. Verify GRANTs exist on every table created in the 2026-01-04 migration batch (`promotion_history`, `staff_details`, `staff_attendance`, `fee_installment_plans`, `fee_installments`, `fee_reminder_logs`, `push_subscriptions`, `student_id_cards`, `library_books`, `book_issues`).
-17. `auto_assign_teacher_class` trigger is a no-op (returns `NEW` only) — either implement or drop.
+17. `auto_assign_teacher_class` trigger is a no-op (returns `NEW` only)  either implement or drop.
 
 ### 4.5 UX / functional bugs to verify
-18. `DashboardRouter` (App.tsx) shows two consecutive spinners (`isLoading` then `checkingSuperAdmin`) — merge into one.
-19. `StudentDashboard` tab labels render as empty (icons only) — check `TabsTrigger` children at lines 18-23 of grep output.
-20. Logout in `AuthContext.tsx` manually removes `localStorage.removeItem('sb-irrxmoqbgygyyzozifdl-auth-token')` — project-ref hardcoded; use `import.meta.env.VITE_SUPABASE_PROJECT_ID`.
-21. `AdminDashboard.fetchDashboardData` does `withSchoolFilter(profiles).then(.map)` — for super admin returning ALL profiles, this could be >1000 rows and silently truncate the stat counts.
+18. `DashboardRouter` (App.tsx) shows two consecutive spinners (`isLoading` then `checkingSuperAdmin`)  merge into one.
+19. `StudentDashboard` tab labels render as empty (icons only)  check `TabsTrigger` children at lines 18-23 of grep output.
+20. Logout in `AuthContext.tsx` manually removes `localStorage.removeItem('sb-irrxmoqbgygyyzozifdl-auth-token')`  project-ref hardcoded; use `import.meta.env.VITE_SUPABASE_PROJECT_ID`.
+21. `AdminDashboard.fetchDashboardData` does `withSchoolFilter(profiles).then(.map)`  for super admin returning ALL profiles, this could be >1000 rows and silently truncate the stat counts.
 22. Toast spam on long save operations in several admin forms.
 
 ### 4.6 Database integrity
-23. No soft-delete columns — cascading deletes lose history.
+23. No soft-delete columns  cascading deletes lose history.
 24. `subjects` references `school_id` but `subject_assignments` lacks a unique constraint on `(user_id, subject_id, class_id)` (verify).
-25. Storage bucket `admission-documents` is **public** — confirm intentional (signed URLs preferred for PII).
+25. Storage bucket `admission-documents` is **public**  confirm intentional (signed URLs preferred for PII).
 
 ---
 
@@ -280,25 +280,25 @@ The following components exist in code but are **not registered in `AdminSidebar
 
 ## 6. 📋 Recommended Next-Step Priorities
 
-**Sprint 1 — Ship what's already built (1-2 days)**
+**Sprint 1  Ship what's already built (1-2 days)**
 1. Wire orphaned components into `AdminSidebar` + `AdminDashboard.tsx` (Students, Promotion, Staff, Staff Attendance, Receipts, Settings).
 2. Add `/settings` route with `NotificationSettings.tsx`.
 3. Build minimal Installments UI inside `FeeManagement` so the tables aren't dead.
 4. Schedule the cron for `send-fee-reminders`.
 
-**Sprint 2 — Fix multi-tenancy & performance (2-3 days)**
+**Sprint 2  Fix multi-tenancy & performance (2-3 days)**
 5. Replace hard-coded school detection with `schools.custom_domain` lookup.
-6. Code-split routes with `React.lazy` — target <1 MB initial JS.
+6. Code-split routes with `React.lazy`  target <1 MB initial JS.
 7. Add pagination to long lists.
 
-**Sprint 3 — Close core spec gaps (1 week)**
+**Sprint 3  Close core spec gaps (1 week)**
 8. Bulk Excel student import.
 9. Financial reports dashboard.
 10. Bulk class-wide report cards.
 11. Library fines.
 12. Enable Supabase Auth hardening (leaked passwords + MFA).
 
-**Sprint 4 — Phase 5 modules (prioritize per business need)**
+**Sprint 4  Phase 5 modules (prioritize per business need)**
 13. Transport OR Hostel (pick highest demand).
 14. Real-time chat (Supabase Realtime).
 15. i18n (`react-i18next`) for multi-language schools.
@@ -307,4 +307,4 @@ The following components exist in code but are **not registered in `AdminSidebar
 
 ---
 
-_End of breakdown — total scan: 145 source files, 20 edge functions, 20 migrations, 68 tables._
+_End of breakdown  total scan: 145 source files, 20 edge functions, 20 migrations, 68 tables._

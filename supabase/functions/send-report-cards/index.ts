@@ -80,7 +80,7 @@ serve(async (req) => {
             </div>
             <div style="padding:20px">
               <p>Dear Parent/Guardian,</p>
-              <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""}) — ${cls?.name || ""} — for <strong>${term}</strong> has been published.</p>
+              <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""})  ${cls?.name || ""}  for <strong>${term}</strong> has been published.</p>
               <p>Please log in to the Parent Portal to download the official PDF:</p>
               <p><a href="https://ilead1.lovable.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
               <p style="color:#666;font-size:12px;margin-top:24px">If you did not expect this message, please contact ${school?.email || replyTo}.</p>
@@ -89,7 +89,7 @@ serve(async (req) => {
 
         await resend.emails.send({
           from, to: emails, reply_to: replyTo,
-          subject: `${term} Report Card — ${prof?.full_name || student.admission_number}`,
+          subject: `${term} Report Card  ${prof?.full_name || student.admission_number}`,
           html,
         });
 

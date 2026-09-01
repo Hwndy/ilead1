@@ -471,14 +471,14 @@ export const PayrollHub: React.FC = () => {
                   <h2 style={{ margin: 0, textTransform: 'uppercase' }}>{branding.name}</h2>
                   {branding.address && <p style={{ margin: '2px 0', fontSize: 12 }}>{branding.address}</p>}
                   <p style={{ marginTop: 8, fontWeight: 700, letterSpacing: 1 }}>
-                    PAYSLIP — {format(new Date(openPeriod.period_month), 'MMMM yyyy').toUpperCase()}
+                    PAYSLIP  {format(new Date(openPeriod.period_month), 'MMMM yyyy').toUpperCase()}
                   </p>
                 </div>
                 <hr />
                 <table style={{ width: '100%', fontSize: 12, marginBottom: 12 }}>
                   <tbody>
-                    <tr><td><strong>Staff:</strong> {i.full_name}</td><td><strong>Employee ID:</strong> {i.employee_id || '—'}</td></tr>
-                    <tr><td><strong>Role:</strong> {i.designation || '—'}</td><td><strong>Bank:</strong> {i.bank_name || '—'} {i.bank_account || ''}</td></tr>
+                    <tr><td><strong>Staff:</strong> {i.full_name}</td><td><strong>Employee ID:</strong> {i.employee_id || ''}</td></tr>
+                    <tr><td><strong>Role:</strong> {i.designation || ''}</td><td><strong>Bank:</strong> {i.bank_name || ''} {i.bank_account || ''}</td></tr>
                   </tbody>
                 </table>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
@@ -548,7 +548,7 @@ export const PayrollHub: React.FC = () => {
                           <TableCell>
                             <Badge variant={p.status === 'paid' ? 'default' : p.status === 'closed' ? 'outline' : 'secondary'} className="capitalize">{p.status}</Badge>
                           </TableCell>
-                          <TableCell>{p.pay_date ? format(new Date(p.pay_date), 'dd MMM yyyy') : '—'}</TableCell>
+                          <TableCell>{p.pay_date ? format(new Date(p.pay_date), 'dd MMM yyyy') : ''}</TableCell>
                           <TableCell className="space-x-2 whitespace-nowrap">
                             <Button size="sm" variant="outline" onClick={() => openDetail(p)}>Open</Button>
                             {STATUS_FLOW[p.status]?.next && (
@@ -619,7 +619,7 @@ export const PayrollHub: React.FC = () => {
                       <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-6">No recurring components yet.</TableCell></TableRow>
                     ) : components.map(c => (
                       <TableRow key={c.id}>
-                        <TableCell>{staffOptions.find(s => s.user_id === c.staff_id)?.full_name || '—'}</TableCell>
+                        <TableCell>{staffOptions.find(s => s.user_id === c.staff_id)?.full_name || ''}</TableCell>
                         <TableCell>{c.name}</TableCell>
                         <TableCell className="capitalize">{c.kind}</TableCell>
                         <TableCell>{c.is_percentage ? `${num(c.amount)}% of basic` : NGN(num(c.amount))}</TableCell>

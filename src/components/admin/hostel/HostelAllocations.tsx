@@ -204,9 +204,9 @@ export const HostelAllocations: React.FC = () => {
                         {x.student!.full_name}
                         <div className="text-xs text-muted-foreground">{x.student!.admission_number}</div>
                       </TableCell>
-                      <TableCell>{x.student!.class_name || '—'}</TableCell>
-                      <TableCell>{x.hostel?.name || '—'}</TableCell>
-                      <TableCell>{x.room?.room_number || '—'}{x.a.bed_label ? ` · ${x.a.bed_label}` : ''}</TableCell>
+                      <TableCell>{x.student!.class_name || ''}</TableCell>
+                      <TableCell>{x.hostel?.name || ''}</TableCell>
+                      <TableCell>{x.room?.room_number || ''}{x.a.bed_label ? ` · ${x.a.bed_label}` : ''}</TableCell>
                       <TableCell>{x.a.allocated_on}</TableCell>
                       <TableCell className="whitespace-nowrap">
                         <Button size="sm" variant="ghost" onClick={() => openAllocate(x.a.student_id, x.a)}>
@@ -260,7 +260,7 @@ export const HostelAllocations: React.FC = () => {
                 <SelectContent>
                   {availableRooms.map(r => (
                     <SelectItem key={r.id} value={r.id} disabled={freeBeds(r.id) <= 0}>
-                      {r.room_number} — {freeBeds(r.id)} bed(s) free
+                      {r.room_number}  {freeBeds(r.id)} bed(s) free
                     </SelectItem>
                   ))}
                 </SelectContent>

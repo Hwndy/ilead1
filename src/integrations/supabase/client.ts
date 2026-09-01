@@ -19,5 +19,5 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
   }
 });
 
-// Project ref derived from the URL — used for building function URLs.
+// Project ref derived from the URL  used for building function URLs.
 export const SUPABASE_PROJECT_REF = SUPABASE_URL.replace(/^https?:\/\//, '').split('.')[0];

@@ -71,11 +71,11 @@ export const PaymentsList: React.FC = () => {
             <TableBody>
               {filtered.map((p: any) => (
                 <TableRow key={p.id}>
-                  <TableCell>{p.payment_date ? format(new Date(p.payment_date), 'PP') : '—'}</TableCell>
-                  <TableCell><div className="font-medium">{p.students?.profiles?.full_name || '—'}</div><div className="text-xs text-muted-foreground">{p.students?.admission_number}</div></TableCell>
-                  <TableCell>{p.fee_structures?.fee_type || '—'}</TableCell>
-                  <TableCell className="font-mono text-xs">{p.receipt_number || '—'}</TableCell>
-                  <TableCell className="capitalize">{p.payment_method || '—'}</TableCell>
+                  <TableCell>{p.payment_date ? format(new Date(p.payment_date), 'PP') : ''}</TableCell>
+                  <TableCell><div className="font-medium">{p.students?.profiles?.full_name || ''}</div><div className="text-xs text-muted-foreground">{p.students?.admission_number}</div></TableCell>
+                  <TableCell>{p.fee_structures?.fee_type || ''}</TableCell>
+                  <TableCell className="font-mono text-xs">{p.receipt_number || ''}</TableCell>
+                  <TableCell className="capitalize">{p.payment_method || ''}</TableCell>
                   <TableCell className="text-right">{NGN(Number(p.amount_paid))}</TableCell>
                   <TableCell><Badge variant={p.status === 'completed' ? 'default' : 'outline'}>{p.status}</Badge></TableCell>
                 </TableRow>

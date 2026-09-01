@@ -90,7 +90,7 @@ export const AssetsHub: React.FC = () => {
                     <TableRow key={a.id}>
                       <TableCell className="font-mono text-xs">{a.asset_tag}</TableCell>
                       <TableCell>{a.name}</TableCell>
-                      <TableCell>{a.location || '—'}</TableCell>
+                      <TableCell>{a.location || ''}</TableCell>
                       <TableCell><Badge variant="outline" className="capitalize">{a.condition}</Badge></TableCell>
                       <TableCell>
                         <Select value={a.status} onValueChange={(v) => updateStatus(a.id, v)}>
@@ -98,7 +98,7 @@ export const AssetsHub: React.FC = () => {
                           <SelectContent>{STATUSES.map(s => <SelectItem key={s} value={s} className="capitalize">{s.replace('_',' ')}</SelectItem>)}</SelectContent>
                         </Select>
                       </TableCell>
-                      <TableCell>{a.cost ? `₦${Number(a.cost).toLocaleString()}` : '—'}</TableCell>
+                      <TableCell>{a.cost ? `₦${Number(a.cost).toLocaleString()}` : ''}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

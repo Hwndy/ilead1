@@ -6,7 +6,7 @@ Add a complete boarding module to the admin dashboard, and capture boarding inte
 
 - New required choice on the application form (Academic step): **Day student / Boarding student**.
 - Value is saved with the application, shown in the review step, and displayed in Admission Management, the Decision Board and the offer/enrolment views so admins know who needs a bed.
-- No allocation at offer stage — boarding interest is only a flag.
+- No allocation at offer stage  boarding interest is only a flag.
 
 ## 2. Hostel module (admin)
 

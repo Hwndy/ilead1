@@ -26,7 +26,7 @@ export interface IDCardSchool {
 interface Props {
   student: IDCardStudent;
   school: IDCardSchool;
-  /** Deprecated — the card is now a single face. Kept for call-site compatibility. */
+  /** Deprecated  the card is now a single face. Kept for call-site compatibility. */
   showBack?: boolean;
 }
 
@@ -231,7 +231,7 @@ export const StudentIDCard: React.FC<Props> = ({ student, school }) => {
         </p>
         <p style={{ fontSize: 15, marginTop: 2, letterSpacing: 0.3 }}>
           <span style={{ color: '#3f463f' }}>ID: </span>
-          <span className="font-bold">{student.admission_number || '—'}</span>
+          <span className="font-bold">{student.admission_number || ''}</span>
         </p>
       </div>
 

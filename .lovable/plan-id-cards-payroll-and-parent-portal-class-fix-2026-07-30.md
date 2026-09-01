@@ -1,6 +1,6 @@
 # ID cards, payroll and parent-portal class fix
 
-## 1. Student ID card — remove class and session
+## 1. Student ID card  remove class and session
 Drop the class/session line from the card face and re-balance the layout so the QR code sits higher and the card reads evenly (photo → name → admission number → QR). Nothing else about the design changes.
 
 ## 2. Parent portal shows "Not assigned"
@@ -8,7 +8,7 @@ Confirmed cause: the newly enrolled student (ALB/2026/0365) has a class assignme
 
 Fix: update the parent-children function to match a class assignment on either identifier, and de-duplicate so one child appears once. This also fixes every other enrolled-through-payment student with the same mismatch.
 
-## 3. Payroll — make it work like a real payroll system
+## 3. Payroll  make it work like a real payroll system
 Rebuild the payroll module around a proper period lifecycle:
 - Create period for a month, with pay date and notes.
 - Populate staff automatically from staff records, pulling base salary from each staff profile.

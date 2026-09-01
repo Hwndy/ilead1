@@ -94,8 +94,8 @@ export const HostelWardens: React.FC = () => {
               <TableBody>
                 {wardens.map(w => (
                   <TableRow key={w.id}>
-                    <TableCell>{hostels.find(h => h.id === w.hostel_id)?.name || '—'}</TableCell>
-                    <TableCell>{staff.find(s => s.user_id === w.user_id)?.full_name || '—'}</TableCell>
+                    <TableCell>{hostels.find(h => h.id === w.hostel_id)?.name || ''}</TableCell>
+                    <TableCell>{staff.find(s => s.user_id === w.user_id)?.full_name || ''}</TableCell>
                     <TableCell className="capitalize">{w.role}</TableCell>
                     <TableCell><Button size="icon" variant="ghost" onClick={() => remove(w.id)}><Trash2 className="h-4 w-4" /></Button></TableCell>
                   </TableRow>

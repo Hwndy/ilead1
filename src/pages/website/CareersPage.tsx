@@ -29,7 +29,7 @@ export const CareersPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Careers — iVintage College"
+        title="Careers  iVintage College"
         description="Join our team. Explore teaching and support staff opportunities at iVintage College."
         path="/website/careers"
       />

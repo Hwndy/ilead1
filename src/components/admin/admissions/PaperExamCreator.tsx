@@ -91,7 +91,7 @@ export const PaperExamCreator = ({ onCreated, trigger }: Props) => {
         <DialogHeader>
           <DialogTitle>New Paper Exam Sitting</DialogTitle>
           <DialogDescription>
-            For entrance exams written physically at the school. No questions needed — you enter
+            For entrance exams written physically at the school. No questions needed  you enter
             the marked scores afterwards.
           </DialogDescription>
         </DialogHeader>

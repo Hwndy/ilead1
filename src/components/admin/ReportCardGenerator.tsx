@@ -756,7 +756,7 @@ export const ReportCardGenerator: React.FC = () => {
                 <TagExamsDialog />
               </div>
               <p className="text-xs mt-3">
-                Tip: most schools already have completed online exams — tag them above to start populating report cards immediately.
+                Tip: most schools already have completed online exams  tag them above to start populating report cards immediately.
               </p>
             </div>
           )}

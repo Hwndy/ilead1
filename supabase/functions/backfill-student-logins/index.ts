@@ -150,7 +150,7 @@ serve(async (req) => {
               children: [`${app.first_name} ${app.last_name}`],
             })) row.changes.push('parent_credentials_emailed');
           } else if (!(parentUser as any).last_sign_in_at) {
-            // Account exists but was never used — send a set-password link instead
+            // Account exists but was never used  send a set-password link instead
             // of a password we cannot recover.
             const { data: linkData } = await supabase.auth.admin.generateLink({
               type: 'recovery',

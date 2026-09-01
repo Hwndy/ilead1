@@ -59,8 +59,8 @@ export const StudentReportCards: React.FC = () => {
         session_id: p.session_id,
         term: p.term,
         published_at: p.published_at,
-        class_name: classMap.get(p.class_id) ?? '—',
-        session_name: sessMap.get(p.session_id) ?? '—',
+        class_name: classMap.get(p.class_id) ?? '',
+        session_name: sessMap.get(p.session_id) ?? '',
       })));
       setLoading(false);
     })();

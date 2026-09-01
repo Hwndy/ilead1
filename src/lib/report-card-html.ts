@@ -369,13 +369,13 @@ export function renderReportCardBody(
           <div class="rc-field"><span class="k">Name</span><span class="v"><strong>${esc(card.student_name)}</strong></span></div>
           <div class="rc-field"><span class="k">Adm. No</span><span class="v">${esc(card.registration_number)}</span></div>
           <div class="rc-field"><span class="k">Class</span><span class="v">${esc(card.class_name)}${card.section ? ` (${esc(card.section)})` : ''}</span></div>
-          <div class="rc-field"><span class="k">Session</span><span class="v">${esc(card.academic_year || '—')}</span></div>
+          <div class="rc-field"><span class="k">Session</span><span class="v">${esc(card.academic_year || '')}</span></div>
           <div class="rc-field"><span class="k">Term</span><span class="v">${esc(card.term)}</span></div>
           <div class="rc-field"><span class="k">Position</span><span class="v">${card.position} of ${card.total_students}</span></div>
-          <div class="rc-field"><span class="k">Age</span><span class="v">${card.age ? `${card.age} yrs` : '—'}</span></div>
-          <div class="rc-field"><span class="k">Gender</span><span class="v">${esc(card.gender || '—')}</span></div>
-          <div class="rc-field"><span class="k">Weight</span><span class="v">${card.weight ? `${card.weight} kg` : '—'}</span></div>
-          <div class="rc-field"><span class="k">Height</span><span class="v">${card.height ? `${card.height} cm` : '—'}</span></div>
+          <div class="rc-field"><span class="k">Age</span><span class="v">${card.age ? `${card.age} yrs` : ''}</span></div>
+          <div class="rc-field"><span class="k">Gender</span><span class="v">${esc(card.gender || '')}</span></div>
+          <div class="rc-field"><span class="k">Weight</span><span class="v">${card.weight ? `${card.weight} kg` : ''}</span></div>
+          <div class="rc-field"><span class="k">Height</span><span class="v">${card.height ? `${card.height} cm` : ''}</span></div>
         </div>
       </div>
 

@@ -60,8 +60,8 @@ export const ChildLinks: React.FC = () => {
         const cls = classes?.find((c: any) => c.id === ca?.class_id);
         return {
           id: r.id,
-          parent_name: pprof?.find((x: any) => x.user_id === p?.user_id)?.full_name || '—',
-          student_name: sprof?.find((x: any) => x.user_id === s?.user_id)?.full_name || s?.admission_number || '—',
+          parent_name: pprof?.find((x: any) => x.user_id === p?.user_id)?.full_name || '',
+          student_name: sprof?.find((x: any) => x.user_id === s?.user_id)?.full_name || s?.admission_number || '',
           admission_number: s?.admission_number || null,
           class_name: cls?.name || null,
           relationship_type: r.relationship_type,
@@ -132,7 +132,7 @@ export const ChildLinks: React.FC = () => {
                   <TableRow key={r.id}>
                     <TableCell className="font-medium">{r.parent_name}</TableCell>
                     <TableCell>{r.student_name}</TableCell>
-                    <TableCell>{r.admission_number || '—'}</TableCell>
+                    <TableCell>{r.admission_number || ''}</TableCell>
                     <TableCell>{r.class_name || <span className="text-muted-foreground">Not assigned</span>}</TableCell>
                     <TableCell><Badge variant="outline">{r.relationship_type}</Badge></TableCell>
                     <TableCell>

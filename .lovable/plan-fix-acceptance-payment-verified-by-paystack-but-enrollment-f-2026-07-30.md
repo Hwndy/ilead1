@@ -6,7 +6,7 @@ Your payment went through at Paystack, but the enrollment step that runs right a
 
 Confirmed from the function logs and the database:
 
-- The student admission number is generated as `ALB/<year>/<count of all students + 1>`. There are 363 students, so it produced `ALB/2026/0364` — which already exists (numbering has drifted from the row count). The insert failed with a duplicate-key error and the whole request returned an error.
+- The student admission number is generated as `ALB/<year>/<count of all students + 1>`. There are 363 students, so it produced `ALB/2026/0364`  which already exists (numbering has drifted from the row count). The insert failed with a duplicate-key error and the whole request returned an error.
 - The student login `abdulhakeem.sulaimon@students.albari.com.ng` was already created by an earlier attempt, so the retry loop also logged "user already registered".
 - Application `APP2026-000029` is still `accepted` with no `student_id`, i.e. the applicant paid but is not enrolled.
 

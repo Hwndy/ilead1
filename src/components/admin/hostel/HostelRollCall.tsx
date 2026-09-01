@@ -63,7 +63,7 @@ export const HostelRollCall: React.FC = () => {
       setRows(((alloc || []) as any[]).map(a => ({
         student_id: a.student_id,
         full_name: names.get(userByStudent.get(a.student_id)) || 'Unnamed student',
-        room: roomNumber.get(a.room_id) || '—',
+        room: roomNumber.get(a.room_id) || '',
         status: marked.get(a.student_id) || (onExeat.has(a.student_id) ? 'exeat' : 'present'),
         onExeat: onExeat.has(a.student_id),
       })).sort((x, y) => x.full_name.localeCompare(y.full_name)));

@@ -35,7 +35,7 @@ export const FacilitiesPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Facilities — iVintage College"
+        title="Facilities  iVintage College"
         description="Explore iVintage's world-class facilities: modern classrooms, science labs, library, computer lab, sports complex, cafeteria, and safe transportation."
         path="/website/facilities"
       />
@@ -50,7 +50,7 @@ export const FacilitiesPage = () => {
         <SectionHeading
           eyebrow="Facilities"
           title="Built for how children actually learn"
-          intro="Every space on campus is there for a reason — study, science, sport, safety and rest."
+          intro="Every space on campus is there for a reason  study, science, sport, safety and rest."
         />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {facilities.map((facility, index) => {

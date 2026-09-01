@@ -103,7 +103,7 @@ export const AssignAdmissionNumbersDialog: React.FC<Props> = ({
         .map((a: any) => ({
           user_id: a.student_id,
           full_name: pMap.get(a.student_id) || 'Unknown',
-          class_name: (classMap.get(a.class_id) as string) || '—',
+          class_name: (classMap.get(a.class_id) as string) || '',
           current: sMap.get(a.student_id) ?? null,
         }))
         .filter(c => !c.current)

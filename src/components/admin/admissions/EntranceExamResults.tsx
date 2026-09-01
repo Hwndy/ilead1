@@ -242,7 +242,7 @@ export const EntranceExamResults = ({
       await sendEmail(r, "result");
     }
     const resits = targets.filter((t) => t.result_status === "resit").length;
-    if (resits) toast.info(`${resits} resit candidate(s) skipped — send those individually with a date.`);
+    if (resits) toast.info(`${resits} resit candidate(s) skipped  send those individually with a date.`);
   };
 
   const exportCsv = () => {
@@ -435,7 +435,7 @@ export const EntranceExamResults = ({
       <Dialog open={!!resitTarget} onOpenChange={(o) => !o && setResitTarget(null)}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Resit details — {resitTarget?.full_name}</DialogTitle>
+            <DialogTitle>Resit details  {resitTarget?.full_name}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">

@@ -122,7 +122,7 @@ export const AttendanceReports: React.FC = () => {
                       <TableRow key={r.student_id}>
                         <TableCell className="font-medium">{r.full_name}</TableCell>
                         <TableCell>{r.admission_number}</TableCell>
-                        <TableCell>{r.class_name || '—'}</TableCell>
+                        <TableCell>{r.class_name || ''}</TableCell>
                         <TableCell className="text-right">{r.present}</TableCell>
                         <TableCell className="text-right">{r.late}</TableCell>
                         <TableCell className="text-right">{r.absent}</TableCell>

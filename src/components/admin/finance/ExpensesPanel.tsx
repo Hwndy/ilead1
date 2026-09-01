@@ -175,8 +175,8 @@ export const ExpensesPanel: React.FC = () => {
                     <TableRow key={r.id}>
                       <TableCell className="whitespace-nowrap">{r.expense_date}</TableCell>
                       <TableCell>{catName(r.category_id)}</TableCell>
-                      <TableCell>{r.payee || '—'}</TableCell>
-                      <TableCell className="max-w-[220px] truncate">{r.description || '—'}</TableCell>
+                      <TableCell>{r.payee || ''}</TableCell>
+                      <TableCell className="max-w-[220px] truncate">{r.description || ''}</TableCell>
                       <TableCell className="text-right font-medium">{NGN(Number(r.amount))}</TableCell>
                       <TableCell className="capitalize">{r.payment_method?.replace('_', ' ')}</TableCell>
                       <TableCell><Badge variant={badge(r.status) as any} className="capitalize">{r.status}</Badge></TableCell>

@@ -5,13 +5,13 @@ Override with `.env` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`) to s
 
 ## What has already been done
 
-1. `db/setup.sql` — full schema rebuilt from the 118 migrations (96 tables, functions,
+1. `db/setup.sql`  full schema rebuilt from the 118 migrations (96 tables, functions,
    triggers, 259 RLS policies, reference data).
-2. `db/setup-part2.sql` — tables that existed live but had no migration file
+2. `db/setup-part2.sql`  tables that existed live but had no migration file
    (`timetable_templates`, `periods`, `rooms`, `class_timetables`, `assessment_types`,
    `assessments`, `grades`, `grade_comments`, `rate_limits`), their RLS policies,
    the `assignments` storage bucket, and Data-API grants.
-3. `db/seed-ivintage.sql` — iVintage College branding, contact details and CMS settings.
+3. `db/seed-ivintage.sql`  iVintage College branding, contact details and CMS settings.
 4. Storage buckets: `question-media`, `exam-attachments`, `admission-documents` (public),
    `assignments`.
 5. First admin account created (`suleayo04@gmail.com`) with a forced password change on

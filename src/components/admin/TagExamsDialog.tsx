@@ -252,7 +252,7 @@ export const TagExamsDialog: React.FC<Props> = ({ trigger, onTagged }) => {
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{e.title}</div>
                     <div className="text-xs text-muted-foreground">
-                      {e.subject_name || '—'} • {e.class_name || '—'}
+                      {e.subject_name || ''} • {e.class_name || ''}
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1 justify-end">

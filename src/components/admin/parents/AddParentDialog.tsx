@@ -69,7 +69,7 @@ export const AddParentDialog: React.FC<Props> = ({ open, onOpenChange, onCreated
             <Select value={form.studentId || 'none'} onValueChange={v => setForm(f => ({ ...f, studentId: v === 'none' ? '' : v }))}>
               <SelectTrigger><SelectValue placeholder="Select student" /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">— None —</SelectItem>
+                <SelectItem value="none"> None </SelectItem>
                 {students.map(s => <SelectItem key={s.id} value={s.id}>{s.full_name} {s.admission_number ? `(${s.admission_number})` : ''}</SelectItem>)}
               </SelectContent>
             </Select>

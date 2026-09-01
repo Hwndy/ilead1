@@ -20,7 +20,7 @@ export const TestimonialsPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Testimonials — iVintage College"
+        title="Testimonials  iVintage College"
         description="Read what students, parents, alumni and staff say about their experience at iVintage College."
         path="/website/testimonials"
       />

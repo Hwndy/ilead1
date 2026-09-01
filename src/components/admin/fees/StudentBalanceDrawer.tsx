@@ -98,7 +98,7 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, onClose
                 <div><Label>Fee</Label>
                   <Select value={form.fee_structure_id} onValueChange={v => setForm({ ...form, fee_structure_id: v })}>
                     <SelectTrigger><SelectValue placeholder="Select fee"/></SelectTrigger>
-                    <SelectContent>{structures.map(s => <SelectItem key={s.id} value={s.id}>{s.fee_type} — {NGN(Number(s.amount))}</SelectItem>)}</SelectContent>
+                    <SelectContent>{structures.map(s => <SelectItem key={s.id} value={s.id}>{s.fee_type}  {NGN(Number(s.amount))}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
                 <div><Label>Amount</Label><Input type="number" value={form.amount} onChange={e => setForm({ ...form, amount: e.target.value })}/></div>
@@ -125,9 +125,9 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, onClose
                 <TableBody>
                   {payments.map(p => (
                     <TableRow key={p.id}>
-                      <TableCell>{p.payment_date ? format(new Date(p.payment_date), 'PP') : '—'}</TableCell>
-                      <TableCell>{p.fee_structure?.fee_type || '—'}</TableCell>
-                      <TableCell className="font-mono text-xs">{p.receipt_number || '—'}</TableCell>
+                      <TableCell>{p.payment_date ? format(new Date(p.payment_date), 'PP') : ''}</TableCell>
+                      <TableCell>{p.fee_structure?.fee_type || ''}</TableCell>
+                      <TableCell className="font-mono text-xs">{p.receipt_number || ''}</TableCell>
                       <TableCell className="capitalize">{p.payment_method}</TableCell>
                       <TableCell className="text-right">{NGN(Number(p.amount_paid))}</TableCell>
                       <TableCell><Badge variant={p.status === 'completed' ? 'default' : 'outline'}>{p.status}</Badge></TableCell>

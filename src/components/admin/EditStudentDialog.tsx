@@ -182,7 +182,7 @@ export const EditStudentDialog: React.FC<EditStudentDialogProps> = ({
                 <Select value={gender || 'unset'} onValueChange={v => setGender(v === 'unset' ? '' : v)}>
                   <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="unset">—</SelectItem>
+                    <SelectItem value="unset"></SelectItem>
                     <SelectItem value="male">Male</SelectItem>
                     <SelectItem value="female">Female</SelectItem>
                   </SelectContent>

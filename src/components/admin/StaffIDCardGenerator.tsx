@@ -63,7 +63,7 @@ export const StaffIDCardGenerator: React.FC = () => {
           date_of_joining: s.join_date,
           blood_group: s.blood_group,
           phone: s.phone,
-          full_name: nameMap.get(s.user_id) || '—',
+          full_name: nameMap.get(s.user_id) || '',
           photo_url: s.photo_url,
         })),
       );
@@ -226,8 +226,8 @@ export const StaffIDCardGenerator: React.FC = () => {
                         <Checkbox checked={checked.includes(r.user_id)} onCheckedChange={() => toggle(r.user_id)} />
                       </TableCell>
                       <TableCell className="font-medium">{r.full_name}</TableCell>
-                      <TableCell>{r.employee_id || '—'}</TableCell>
-                      <TableCell>{r.designation || '—'}</TableCell>
+                      <TableCell>{r.employee_id || ''}</TableCell>
+                      <TableCell>{r.designation || ''}</TableCell>
                       <TableCell className="text-right">
                         <Button size="sm" variant="outline" onClick={() => setSelected(r)}>Preview</Button>
                       </TableCell>

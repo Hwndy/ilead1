@@ -457,7 +457,7 @@ export const StudentPromotion = () => {
                           </div>
                         </TableCell>
                         <TableCell>{record.from_class?.name || "N/A"}</TableCell>
-                        <TableCell>{record.to_class?.name || "—"}</TableCell>
+                        <TableCell>{record.to_class?.name || ""}</TableCell>
                         <TableCell>{getPromotionBadge(record.promotion_type)}</TableCell>
                         <TableCell>{record.academic_year}</TableCell>
                         <TableCell>

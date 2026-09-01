@@ -113,9 +113,9 @@ export const ParentDetail: React.FC<Props> = ({ parentUserId, onBack }) => {
       <Card>
         <CardHeader><CardTitle>{profile?.full_name || 'Parent'}</CardTitle></CardHeader>
         <CardContent className="grid gap-2 sm:grid-cols-3 text-sm">
-          <div><div className="text-muted-foreground">Phone</div><div>{parent?.phone_primary || '—'}</div></div>
+          <div><div className="text-muted-foreground">Phone</div><div>{parent?.phone_primary || ''}</div></div>
           <div><div className="text-muted-foreground">Children linked</div><div>{children.length}</div></div>
-          <div><div className="text-muted-foreground">Account created</div><div>{profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : '—'}</div></div>
+          <div><div className="text-muted-foreground">Account created</div><div>{profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : ''}</div></div>
         </CardContent>
       </Card>
 
@@ -136,7 +136,7 @@ export const ParentDetail: React.FC<Props> = ({ parentUserId, onBack }) => {
               ) : children.map(c => (
                 <TableRow key={c.relationship_id}>
                   <TableCell className="font-medium">{c.full_name}</TableCell>
-                  <TableCell>{c.admission_number || '—'}</TableCell>
+                  <TableCell>{c.admission_number || ''}</TableCell>
                   <TableCell>{c.class_name || <span className="text-muted-foreground">Not assigned</span>}</TableCell>
                   <TableCell><Badge variant="outline">{c.relationship_type}</Badge></TableCell>
                   <TableCell>
@@ -173,10 +173,10 @@ export const ParentDetail: React.FC<Props> = ({ parentUserId, onBack }) => {
                 return (
                   <TableRow key={p.id}>
                     <TableCell className="text-sm">{new Date(p.created_at).toLocaleDateString()}</TableCell>
-                    <TableCell>{child?.full_name || '—'}</TableCell>
+                    <TableCell>{child?.full_name || ''}</TableCell>
                     <TableCell>₦{Number(p.amount || 0).toLocaleString()}</TableCell>
                     <TableCell><Badge variant={p.status === 'success' ? 'default' : 'secondary'}>{p.status}</Badge></TableCell>
-                    <TableCell className="text-sm">{p.receipt_number || '—'}</TableCell>
+                    <TableCell className="text-sm">{p.receipt_number || ''}</TableCell>
                   </TableRow>
                 );
               })}

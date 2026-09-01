@@ -48,7 +48,7 @@ export const ResetPasswordPage: React.FC = () => {
         .eq('user_id', u.user.id)
         .select('user_id, must_change_password');
       // An update that matches zero rows is not an error, but it would send the
-      // student straight back into this screen — treat it as a failure.
+      // student straight back into this screen  treat it as a failure.
       if (flagError || !updated?.length || updated[0].must_change_password !== false) {
         setSaving(false);
         toast.error(

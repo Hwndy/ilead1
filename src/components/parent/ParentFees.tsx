@@ -181,7 +181,7 @@ export const ParentFees: React.FC = () => {
         <Card><CardHeader className="pb-2"><CardDescription>Total Billed</CardDescription><CardTitle>{NGN(totalBilled)}</CardTitle></CardHeader></Card>
         <Card><CardHeader className="pb-2"><CardDescription>Total Paid</CardDescription><CardTitle className="text-green-600">{NGN(totalPaid)}</CardTitle></CardHeader></Card>
         <Card><CardHeader className="pb-2"><CardDescription>Outstanding</CardDescription><CardTitle className={outstanding ? 'text-red-600' : 'text-green-600'}>{NGN(outstanding)}</CardTitle></CardHeader></Card>
-        <Card><CardHeader className="pb-2"><CardDescription>Next Due</CardDescription><CardTitle className="text-base">{nextDue?.due_date ? format(new Date(nextDue.due_date), 'PP') : '—'}</CardTitle></CardHeader></Card>
+        <Card><CardHeader className="pb-2"><CardDescription>Next Due</CardDescription><CardTitle className="text-base">{nextDue?.due_date ? format(new Date(nextDue.due_date), 'PP') : ''}</CardTitle></CardHeader></Card>
       </div>
 
       <Card>
@@ -218,7 +218,7 @@ export const ParentFees: React.FC = () => {
                     <TableRow key={f.id}>
                       <TableCell className="font-medium">{f.fee_type}</TableCell>
                       <TableCell>{f.academic_year}</TableCell>
-                      <TableCell>{f.due_date ? format(new Date(f.due_date), 'PP') : '—'}</TableCell>
+                      <TableCell>{f.due_date ? format(new Date(f.due_date), 'PP') : ''}</TableCell>
                       <TableCell className="text-right">{NGN(Number(f.amount))}</TableCell>
                       <TableCell className="text-right text-green-600">{NGN(paid + credit)}</TableCell>
                       <TableCell className="text-right">{NGN(balance)}</TableCell>
@@ -300,8 +300,8 @@ export const ParentFees: React.FC = () => {
                 {payments.map(p => (
                   <TableRow key={p.id}>
                     <TableCell>{format(new Date(p.paid_at || p.payment_date), 'PP')}</TableCell>
-                    <TableCell className="font-mono text-xs">{p.payment_reference || '—'}</TableCell>
-                    <TableCell className="font-mono text-xs">{p.receipt_number || '—'}</TableCell>
+                    <TableCell className="font-mono text-xs">{p.payment_reference || ''}</TableCell>
+                    <TableCell className="font-mono text-xs">{p.receipt_number || ''}</TableCell>
                     <TableCell className="text-right">{NGN(Number(p.amount_paid))}</TableCell>
                     <TableCell><Badge variant={p.status === 'completed' ? 'secondary' : 'outline'}>{p.status}</Badge></TableCell>
                     <TableCell className="text-right">

@@ -77,7 +77,7 @@ export const SchoolLifePage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="School Life — iVintage College"
+        title="School Life  iVintage College"
         description="Discover academic tracks, clubs, sports, and student life experiences that shape well-rounded scholars at iVintage College."
         path="/website/school-life"
       />
@@ -132,7 +132,7 @@ export const SchoolLifePage = () => {
         <SectionHeading
           eyebrow="Structure"
           title="From Junior to senior secondary"
-          intro="Two campus, one continuous journey — with small classes at every stage."
+          intro="Two campus, one continuous journey  with small classes at every stage."
         />
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {classStructure.map((c, i) => (

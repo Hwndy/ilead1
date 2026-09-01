@@ -76,8 +76,8 @@ const RoutesTab: React.FC = () => {
                   {routes.map((r) => (
                     <TableRow key={r.id}>
                       <TableCell className="font-medium">{r.name}</TableCell>
-                      <TableCell>{r.driver_name || '—'}<br/><span className="text-xs text-muted-foreground">{r.driver_phone || ''}</span></TableCell>
-                      <TableCell>{r.vehicle_reg || '—'}</TableCell>
+                      <TableCell>{r.driver_name || ''}<br/><span className="text-xs text-muted-foreground">{r.driver_phone || ''}</span></TableCell>
+                      <TableCell>{r.vehicle_reg || ''}</TableCell>
                       <TableCell>{r.capacity}</TableCell>
                       <TableCell>₦{Number(r.monthly_fee).toLocaleString()}</TableCell>
                       <TableCell>

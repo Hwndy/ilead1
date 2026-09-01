@@ -91,21 +91,21 @@ export const InterviewsTab: React.FC = () => {
                     <div className="font-medium">
                       {row.admission_applications
                         ? `${row.admission_applications.first_name} ${row.admission_applications.last_name}`
-                        : '—'}
+                        : ''}
                     </div>
                     <div className="text-xs text-muted-foreground">
                       {row.admission_applications?.application_number}
                     </div>
                   </TableCell>
                   <TableCell>{format(new Date(row.scheduled_date), 'PPp')}</TableCell>
-                  <TableCell className="capitalize">{row.interview_type ?? '—'}</TableCell>
+                  <TableCell className="capitalize">{row.interview_type ?? ''}</TableCell>
                   <TableCell>
                     {row.location ? (
                       <span className="flex items-center gap-1 text-sm">
                         <MapPin className="h-3 w-3" /> {row.location}
                       </span>
                     ) : (
-                      '—'
+                      ''
                     )}
                   </TableCell>
                   <TableCell>

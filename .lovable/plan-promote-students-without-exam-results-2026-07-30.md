@@ -20,7 +20,7 @@ The panel auto-selects Manual and shows a short notice when the selected class/s
 
 **3. Safer, complete promotion action**
 - Students with no class assignment row get one created instead of being silently skipped (the current update-only query misses them).
-- Each move is written to `promotion_history` (from class, to class, academic year, type `promoted`, promoted_by, notes) so there's an audit trail — nothing is recorded today.
+- Each move is written to `promotion_history` (from class, to class, academic year, type `promoted`, promoted_by, notes) so there's an audit trail  nothing is recorded today.
 - Moves run as a single batched operation with a summary toast ("28 students promoted to JSS 2 A").
 - Confirmation dialog listing count, source and destination class before anything is written.
 
@@ -31,6 +31,6 @@ The panel auto-selects Manual and shows a short notice when the selected class/s
 - A "Keep in current class" action that marks unselected students as `repeated` in the history without moving them, so the session's roster decisions are fully recorded.
 
 ## Technical notes
-- All work is in `src/components/admin/results/PromotionPanel.tsx`; no schema changes needed — `promotion_history` and `class_assignments` already have the required columns.
+- All work is in `src/components/admin/results/PromotionPanel.tsx`; no schema changes needed  `promotion_history` and `class_assignments` already have the required columns.
 - `class_assignments.student_id` holds the student's auth `user_id`, while `promotion_history.student_id` holds the `students.id`; the panel already resolves both and will keep them straight.
 - Bulk writes use `upsert`/`insert` in chunks rather than the current per-student loop.

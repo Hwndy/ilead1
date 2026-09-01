@@ -1,6 +1,6 @@
 
 -- ============================================================
--- ACADEMIC FLOW OVERHAUL — Phase 1: Sessions/Terms spine,
+-- ACADEMIC FLOW OVERHAUL  Phase 1: Sessions/Terms spine,
 -- assessment categories, question taxonomy, unified results view
 -- ============================================================
 

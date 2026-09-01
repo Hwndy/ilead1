@@ -8,7 +8,7 @@ import { LinkChildDialog } from './LinkChildDialog';
 import { UserPlus, GraduationCap, Calendar, Loader2, User } from 'lucide-react';
 
 const age = (dob?: string | null) => {
-  if (!dob) return '—';
+  if (!dob) return '';
   const d = new Date(dob); const t = new Date();
   let a = t.getFullYear() - d.getFullYear();
   if (t.getMonth() < d.getMonth() || (t.getMonth() === d.getMonth() && t.getDate() < d.getDate())) a--;

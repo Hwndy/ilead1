@@ -58,7 +58,7 @@ export const ParentsList: React.FC<Props> = ({ onView }) => {
         const parent = parents?.find(p => p.user_id === uid);
         return {
           user_id: uid,
-          full_name: profs?.find(p => p.user_id === uid)?.full_name || '—',
+          full_name: profs?.find(p => p.user_id === uid)?.full_name || '',
           email: emailMap[uid] || null,
           phone: parent?.phone_primary || null,
           child_count: parent ? (countByParent[parent.id] || 0) : 0,
@@ -166,10 +166,10 @@ export const ParentsList: React.FC<Props> = ({ onView }) => {
                 ) : filtered.map(r => (
                   <TableRow key={r.user_id}>
                     <TableCell className="font-medium">{r.full_name}</TableCell>
-                    <TableCell className="text-muted-foreground">{r.email || '—'}</TableCell>
-                    <TableCell>{r.phone || '—'}</TableCell>
+                    <TableCell className="text-muted-foreground">{r.email || ''}</TableCell>
+                    <TableCell>{r.phone || ''}</TableCell>
                     <TableCell><Badge variant={r.child_count > 0 ? 'default' : 'secondary'}>{r.child_count}</Badge></TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{r.created_at ? new Date(r.created_at).toLocaleDateString() : '—'}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground">{r.created_at ? new Date(r.created_at).toLocaleDateString() : ''}</TableCell>
                     <TableCell className="text-right">
                       <div className="inline-flex gap-1">
                         <Button size="sm" variant="ghost" onClick={() => onView(r.user_id)}><Eye className="h-4 w-4" /></Button>

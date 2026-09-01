@@ -22,7 +22,7 @@ export const PastStudents: React.FC = () => {
       const { data: profs } = await supabase.from('profiles').select('user_id,full_name').in('user_id', uids);
       (profs || []).forEach((p: any) => nameMap.set(p.user_id, p.full_name));
     }
-    setRows((studs || []).map((s: any) => ({ ...s, name: nameMap.get(s.user_id) || '—' })));
+    setRows((studs || []).map((s: any) => ({ ...s, name: nameMap.get(s.user_id) || '' })));
     setLoading(false);
   };
 
@@ -53,8 +53,8 @@ export const PastStudents: React.FC = () => {
               {rows.map(r => (
                 <TableRow key={r.id}>
                   <TableCell className="font-medium">{r.name}</TableCell>
-                  <TableCell>{r.registration_number || '—'}</TableCell>
-                  <TableCell>{r.archived_reason || '—'}</TableCell>
+                  <TableCell>{r.registration_number || ''}</TableCell>
+                  <TableCell>{r.archived_reason || ''}</TableCell>
                   <TableCell>{new Date(r.archived_at).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
                     <Button size="sm" variant="outline" onClick={() => restore(r.id)}>

@@ -373,7 +373,7 @@ export const StaffAttendance = () => {
                   <TableRow key={staff.id}>
                     <TableCell className="font-medium">{staff.employee_id}</TableCell>
                     <TableCell>{staff.profile?.full_name || "N/A"}</TableCell>
-                    <TableCell>{staff.department || "—"}</TableCell>
+                    <TableCell>{staff.department || ""}</TableCell>
                     <TableCell>
                       <Select
                         value={attendanceRecords[staff.user_id]?.status || ""}

@@ -236,7 +236,7 @@ const SubmissionsDialog: React.FC<{ assignment: Assignment; onClose: () => void 
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader><DialogTitle>Submissions — {assignment.title}</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle>Submissions  {assignment.title}</DialogTitle></DialogHeader>
         {loading ? <div className="flex justify-center p-8"><Loader2 className="animate-spin h-6 w-6" /></div> :
           subs.length === 0 ? <p className="text-center text-muted-foreground py-6">No submissions yet.</p> :
           <div className="space-y-3">

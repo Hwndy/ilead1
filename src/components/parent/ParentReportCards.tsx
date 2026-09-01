@@ -62,7 +62,7 @@ export const ParentReportCards: React.FC<{ onViewResults?: () => void }> = ({ on
 
       const nameByStudent = new Map<string, string>();
       (studs.data || []).forEach((s: any) => {
-        const n = (profs || []).find((p: any) => p.user_id === s.user_id)?.full_name || '—';
+        const n = (profs || []).find((p: any) => p.user_id === s.user_id)?.full_name || '';
         nameByStudent.set(s.id, n);
       });
       const classMap = new Map<string, string>((classes.data || []).map((c: any) => [c.id, c.name as string]));
@@ -75,9 +75,9 @@ export const ParentReportCards: React.FC<{ onViewResults?: () => void }> = ({ on
         session_id: p.session_id,
         term: p.term,
         published_at: p.published_at,
-        student_name: nameByStudent.get(p.student_id) || '—',
-        class_name: classMap.get(p.class_id) ?? '—',
-        session_name: sessMap.get(p.session_id) ?? '—',
+        student_name: nameByStudent.get(p.student_id) || '',
+        class_name: classMap.get(p.class_id) ?? '',
+        session_name: sessMap.get(p.session_id) ?? '',
       })));
       setLoading(false);
     })();

@@ -101,7 +101,7 @@ export const PromotionPanel: React.FC = () => {
         return {
           id: s.id,
           user_id: s.user_id,
-          name: uToName.get(s.user_id) || '—',
+          name: uToName.get(s.user_id) || '',
           average: t && t.n ? Math.round((t.sum / t.n) * 10) / 10 : null,
         };
       }).sort((a, b) => a.name.localeCompare(b.name)));
@@ -212,7 +212,7 @@ export const PromotionPanel: React.FC = () => {
 
   const runRepeat = async () => {
     const list = rows.filter(r => !effectiveSelected.has(r.id));
-    if (!list.length) { toast({ title: 'Everyone is selected — no one to keep back' }); return; }
+    if (!list.length) { toast({ title: 'Everyone is selected  no one to keep back' }); return; }
     setWorking(true);
     try {
       await logHistory(list, classId, 'repeated', `Repeating ${className(classId)}`);
@@ -227,7 +227,7 @@ export const PromotionPanel: React.FC = () => {
   const confirmText: Record<Action, { title: string; body: string; run: () => Promise<void> }> = {
     promote: {
       title: 'Promote students?',
-      body: `${selectedRows.length} student(s) will be moved from ${className(classId) || 'the current class'} to ${className(nextClassId) || '—'}.`,
+      body: `${selectedRows.length} student(s) will be moved from ${className(classId) || 'the current class'} to ${className(nextClassId) || ''}.`,
       run: runPromote,
     },
     graduate: {

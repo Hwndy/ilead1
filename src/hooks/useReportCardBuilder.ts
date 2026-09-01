@@ -40,7 +40,7 @@ export function useReportCardBuilder() {
     ]);
 
     const academicYear = sessionRes.data?.academic_year || '';
-    const className = classRes.data?.name || '—';
+    const className = classRes.data?.name || '';
 
     // Student profile + academic details
     const { data: studentRow } = await supabase
@@ -175,7 +175,7 @@ export function useReportCardBuilder() {
     const overallGrade = getReportCardGrade(average).grade;
 
     const card: ReportCardData = {
-      student_name: prof?.full_name || '—',
+      student_name: prof?.full_name || '',
       registration_number: studentRow.admission_number || 'N/A',
       class_name: className,
       section: (studentRow as any).section || '',
@@ -214,7 +214,7 @@ export function useReportCardBuilder() {
     const html = generateReportCardHTML(card, school, automation);
     const safeName = (prof?.full_name || 'student').replace(/[^a-z0-9]+/gi, '_');
     const filename = `${(studentRow as any).admission_number || studentId}_${safeName}.pdf`;
-    return { html, filename, studentName: prof?.full_name || '—', admissionNumber: (studentRow as any).admission_number || '' };
+    return { html, filename, studentName: prof?.full_name || '', admissionNumber: (studentRow as any).admission_number || '' };
   }, []);
 
   const buildAndPrint = useCallback(async (args: Args) => {

@@ -102,13 +102,13 @@ export const HostelInspections: React.FC = () => {
                   {rows.map(r => (
                     <TableRow key={r.id}>
                       <TableCell>{r.inspection_date}</TableCell>
-                      <TableCell>{hostels.find(h => h.id === r.hostel_id)?.name || '—'}</TableCell>
+                      <TableCell>{hostels.find(h => h.id === r.hostel_id)?.name || ''}</TableCell>
                       <TableCell>{rooms.find(x => x.id === r.room_id)?.room_number || 'Whole hostel'}</TableCell>
-                      <TableCell>{r.cleanliness_score ?? '—'}</TableCell>
-                      <TableCell>{r.discipline_score ?? '—'}</TableCell>
+                      <TableCell>{r.cleanliness_score ?? ''}</TableCell>
+                      <TableCell>{r.discipline_score ?? ''}</TableCell>
                       <TableCell className="max-w-xs truncate">
                         {r.follow_up_required && <Badge variant="destructive" className="mr-2">Follow-up</Badge>}
-                        {r.notes || '—'}
+                        {r.notes || ''}
                       </TableCell>
                     </TableRow>
                   ))}

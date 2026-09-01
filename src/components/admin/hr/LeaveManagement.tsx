@@ -82,7 +82,7 @@ export const LeaveManagement: React.FC = () => {
                       <TableCell className="whitespace-nowrap">
                         {format(new Date(r.start_date), 'MMM d')} – {format(new Date(r.end_date), 'MMM d, yyyy')}
                       </TableCell>
-                      <TableCell className="max-w-xs truncate" title={r.reason || ''}>{r.reason || '—'}</TableCell>
+                      <TableCell className="max-w-xs truncate" title={r.reason || ''}>{r.reason || ''}</TableCell>
                       <TableCell>
                         <Badge variant={
                           r.status === 'approved' ? 'default'

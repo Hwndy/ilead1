@@ -21,7 +21,7 @@ Replace all Al-Bari branding across the website, portals, printed documents, ema
 Retheme `src/index.css` and `tailwind.config.ts`:
 - Primary: lime-green from the logo (~#C6D92D) with dark navy (~#141C2B) as the deep/contrast tone.
 - Update accent, ring, gradients, shadows and the dark-mode variants to match; the existing "gold" accent token becomes the lime accent.
-- Card components (student/staff ID cards, report card HTML) use hard-coded green/lemon hex values — these get updated to the new navy/lime pair so print output matches.
+- Card components (student/staff ID cards, report card HTML) use hard-coded green/lemon hex values  these get updated to the new navy/lime pair so print output matches.
 
 ## 3. Text and metadata
 
@@ -42,4 +42,4 @@ Replace the Al-Bari campus/gallery/testimonial photos with neutral generated sch
 ## Notes
 
 - Historic SQL migration files keep their original text (rewriting them would break migration history). Any school-name rows currently stored in the `school_info` table are updated with a new migration so the database matches the new brand.
-- No functional/business-logic changes — this is branding, copy and theme only.
+- No functional/business-logic changes  this is branding, copy and theme only.

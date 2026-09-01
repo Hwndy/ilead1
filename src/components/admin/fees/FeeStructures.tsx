@@ -105,11 +105,11 @@ export const FeeStructures: React.FC = () => {
               {items.map(s => (
                 <TableRow key={s.id}>
                   <TableCell className="font-medium">{s.fee_type}</TableCell>
-                  <TableCell>{s.class_id ? (classes.find(c => c.id === s.class_id)?.name || '—') : <Badge variant="outline">All classes</Badge>}</TableCell>
+                  <TableCell>{s.class_id ? (classes.find(c => c.id === s.class_id)?.name || '') : <Badge variant="outline">All classes</Badge>}</TableCell>
                   <TableCell>{s.academic_year}</TableCell>
-                  <TableCell>{s.term || '—'}</TableCell>
+                  <TableCell>{s.term || ''}</TableCell>
                   <TableCell className="text-right">{NGN(Number(s.amount))}</TableCell>
-                  <TableCell>{s.due_date ? format(new Date(s.due_date), 'PP') : '—'}</TableCell>
+                  <TableCell>{s.due_date ? format(new Date(s.due_date), 'PP') : ''}</TableCell>
                   <TableCell>{s.is_mandatory ? <Badge>Yes</Badge> : <Badge variant="outline">No</Badge>}</TableCell>
                   <TableCell className="text-right">
                     <Button size="icon" variant="ghost" onClick={() => openEdit(s)}><Pencil className="h-4 w-4"/></Button>

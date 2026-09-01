@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(true);
   const [mustChangePassword, setMustChangePassword] = useState(false);
 
-  // Sprint E: idle timeout — auto sign-out after 30 min of inactivity.
+  // Sprint E: idle timeout  auto sign-out after 30 min of inactivity.
   useEffect(() => {
     if (!session) return;
     const IDLE_MS = 30 * 60 * 1000;

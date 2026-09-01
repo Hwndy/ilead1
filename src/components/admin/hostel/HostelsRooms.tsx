@@ -136,7 +136,7 @@ export const HostelsRooms: React.FC = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Rooms {selected ? `— ${hostels.find(h => h.id === selected)?.name ?? ''}` : ''}</CardTitle>
+          <CardTitle>Rooms {selected ? ` ${hostels.find(h => h.id === selected)?.name ?? ''}` : ''}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {!selected ? (

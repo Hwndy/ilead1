@@ -46,7 +46,7 @@ serve(async (req) => {
       try {
         await resend.emails.send({
           from, to: [email], reply_to: replyTo,
-          subject: `Absence notice — ${name} (${today})`,
+          subject: `Absence notice  ${name} (${today})`,
           html: `<p>Dear Parent/Guardian,</p><p>This is to inform you that <strong>${name}</strong> was marked absent from school today, ${today}.</p><p>If this is unexpected, please contact the school.</p><p>iVintage College</p>`,
         });
         sent++;

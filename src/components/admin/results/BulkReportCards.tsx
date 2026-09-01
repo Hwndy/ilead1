@@ -60,7 +60,7 @@ export const BulkReportCards: React.FC = () => {
       const { data: profs } = uids.length ? await supabase.from('profiles').select('user_id, full_name').in('user_id', uids) : { data: [] as any };
       const nameMap = new Map<string, string>((profs || []).map((p: any) => [p.user_id, p.full_name]));
       const rows: StudentRow[] = (sts || []).map((s: any) => ({
-        id: s.id, admission_number: s.admission_number || '—', full_name: nameMap.get(s.user_id) || '—',
+        id: s.id, admission_number: s.admission_number || '', full_name: nameMap.get(s.user_id) || '',
       })).sort((a, b) => a.full_name.localeCompare(b.full_name));
       setStudents(rows);
       setSelected(Object.fromEntries(rows.map(r => [r.id, true])));

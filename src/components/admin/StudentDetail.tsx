@@ -262,7 +262,7 @@ export const StudentDetail: React.FC = () => {
             <Row label="Application #" value={application?.application_number} />
             <p className="text-xs text-muted-foreground pt-2 border-t">
               The login ID is issued by the school and is unique per student. The contact email may be
-              shared by siblings — all school mail goes there.
+              shared by siblings  all school mail goes there.
             </p>
           </CardContent>
         </Card>
@@ -323,10 +323,10 @@ export const StudentDetail: React.FC = () => {
                   <TableRow key={e.id}>
                     <TableCell className="font-medium">{e.title}</TableCell>
                     <TableCell>{e.total_score ?? 0} / {e.max_score ?? 0}</TableCell>
-                    <TableCell>{e.percentage != null ? `${Number(e.percentage).toFixed(1)}%` : '—'}</TableCell>
+                    <TableCell>{e.percentage != null ? `${Number(e.percentage).toFixed(1)}%` : ''}</TableCell>
                     <TableCell>
                       <Badge variant={e.passed ? 'default' : 'secondary'}>
-                        {e.passed ? 'Passed' : e.status || '—'}
+                        {e.passed ? 'Passed' : e.status || ''}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">
@@ -358,10 +358,10 @@ export const StudentDetail: React.FC = () => {
                 {payments.map((p: any) => (
                   <TableRow key={p.id}>
                     <TableCell className="font-medium">₦{Number(p.amount_paid ?? 0).toLocaleString()}</TableCell>
-                    <TableCell><Badge variant={p.status === 'success' ? 'default' : 'secondary'}>{p.status || '—'}</Badge></TableCell>
-                    <TableCell className="text-xs">{p.receipt_number || p.transaction_id || '—'}</TableCell>
+                    <TableCell><Badge variant={p.status === 'success' ? 'default' : 'secondary'}>{p.status || ''}</Badge></TableCell>
+                    <TableCell className="text-xs">{p.receipt_number || p.transaction_id || ''}</TableCell>
                     <TableCell className="text-xs text-muted-foreground">
-                      {p.payment_date ? new Date(p.payment_date).toLocaleDateString() : '—'}
+                      {p.payment_date ? new Date(p.payment_date).toLocaleDateString() : ''}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -386,7 +386,7 @@ export const StudentDetail: React.FC = () => {
 const Row: React.FC<{ label: string; value: any; icon?: React.ReactNode }> = ({ label, value, icon }) => (
   <div className="flex items-start justify-between gap-3">
     <span className="text-muted-foreground flex items-center gap-1">{icon}{label}</span>
-    <span className="font-medium text-right">{value || '—'}</span>
+    <span className="font-medium text-right">{value || ''}</span>
   </div>
 );
 const Stat: React.FC<{ label: string; value: number }> = ({ label, value }) => (

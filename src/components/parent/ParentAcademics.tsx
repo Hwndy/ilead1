@@ -121,9 +121,9 @@ export const ParentAcademics: React.FC = () => {
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-2 text-xs text-muted-foreground">
-                      <div>Test 1: <span className="font-semibold text-foreground">{r.test1 ?? '—'}</span></div>
-                      <div>Test 2: <span className="font-semibold text-foreground">{r.test2 ?? '—'}</span></div>
-                      <div>Exam: <span className="font-semibold text-foreground">{r.exam_score ?? '—'}</span></div>
+                      <div>Test 1: <span className="font-semibold text-foreground">{r.test1 ?? ''}</span></div>
+                      <div>Test 2: <span className="font-semibold text-foreground">{r.test2 ?? ''}</span></div>
+                      <div>Exam: <span className="font-semibold text-foreground">{r.exam_score ?? ''}</span></div>
                     </div>
                   </div>
                 );

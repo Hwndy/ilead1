@@ -216,7 +216,7 @@ serve(async (req) => {
               break;
             }
             if (!existing) throw authError;
-            // Someone else holds this login — try the next suffix.
+            // Someone else holds this login  try the next suffix.
           }
           if (!userId) throw new Error("Could not allocate a student login ID");
 
@@ -425,7 +425,7 @@ serve(async (req) => {
         }
       }
       } catch (enrollError: any) {
-        // The money is confirmed at this point — never fail the receipt because
+        // The money is confirmed at this point  never fail the receipt because
         // a post-payment step broke. Flag it so admin can complete enrolment.
         console.error("Enrollment failed after successful payment:", enrollError);
         enrollmentPending = true;

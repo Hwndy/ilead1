@@ -61,13 +61,13 @@ export const HomePage = () => {
   return (
     <div className="space-y-0">
       <Helmet>
-        <title>iVintage College — Day School, Boarding & Tahfeedh, Ikorodu</title>
+        <title>iVintage College  Day School, Boarding & Tahfeedh, Ikorodu</title>
         <meta
           name="description"
           content="iVintage College offers nursery, primary and secondary education in Nigeria, nurturing future leaders through academic excellence and character building."
         />
         <link rel="canonical" href="https://ilead1.lovable.app/" />
-        <meta property="og:title" content="iVintage College — Day School, Boarding & Tahfeedh, Ikorodu" />
+        <meta property="og:title" content="iVintage College  Day School, Boarding & Tahfeedh, Ikorodu" />
         <meta
           property="og:description"
           content="Nursery, primary and secondary education with a strong tradition of academic excellence, character and faith."
@@ -218,7 +218,7 @@ export const HomePage = () => {
       {/* Principal's Welcome */}
       <PrincipalWelcome />
 
-      {/* Why families choose us — photo led */}
+      {/* Why families choose us  photo led */}
       <WhyChooseUs />
 
       {/* Results and achievements */}

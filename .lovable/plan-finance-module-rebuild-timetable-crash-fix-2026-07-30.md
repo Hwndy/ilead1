@@ -14,18 +14,18 @@ Delete the Analytics entry from the admin sidebar, its route case in the dashboa
 ## 3. Fee management → full Finance module
 Rename the "Fees" area to **Finance** with these sections:
 
-**Income (fees)** — keeps and repairs what exists:
+**Income (fees)**  keeps and repairs what exists:
 - Fix the Overview: it still uses a broken student/profile join, so defaulter names fail. Rebuild the numbers as Billed / Collected / Outstanding / Collection rate, with month-on-month collection trend and class-level breakdown.
 - Fee structures, student balances, installment plans, payments, receipts, reminders, reconciliation stay as tabs.
 
-**Expenses** — new:
+**Expenses**  new:
 - Expense categories (salaries, utilities, maintenance, supplies, transport, etc.)
 - Expense records: date, category, payee/vendor, description, amount, payment method, reference, receipt attachment, status (pending/approved/paid), recorded-by and approved-by.
 - List with filters (date range, category, status), approve/mark-paid actions, CSV export.
 
-**Other revenue** — new: income that is not school fees (uniforms, books, events, donations, rent), with category, date, source, amount, reference.
+**Other revenue**  new: income that is not school fees (uniforms, books, events, donations, rent), with category, date, source, amount, reference.
 
-**Financial reports** — new:
+**Financial reports**  new:
 - Income vs expenses summary for a chosen period (term, month, custom range)
 - Profit/surplus figure, expense breakdown by category, revenue breakdown by source
 - Cash-flow style monthly table and CSV export

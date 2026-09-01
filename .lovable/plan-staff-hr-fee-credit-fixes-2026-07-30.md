@@ -1,14 +1,14 @@
 # Staff HR + Fee Credit Fixes
 
 ## 1. Duplicate staff IDs (confirmed)
-All 51 staff rows currently carry the same ID `ALB/STF/0001`. The sync ran `next_employee_id()` 51 times in a loop *before* inserting anything, and that function derives the next number from rows already in the table — so it returned `0001` every time.
+All 51 staff rows currently carry the same ID `ALB/STF/0001`. The sync ran `next_employee_id()` 51 times in a loop *before* inserting anything, and that function derives the next number from rows already in the table  so it returned `0001` every time.
 
 Fix:
 - Replace `next_employee_id()` with a real Postgres sequence-backed generator (no dependency on existing rows), keeping the `ALB/STF/0000` format.
 - One-off backfill migration: re-issue unique IDs to every existing staff row (ordered by join date/creation) and add a unique index on `employee_id` so this can never repeat.
 - Change the sync/add flow to let the database assign the ID (default/trigger) instead of pre-computing it client-side.
 
-## 2. Staff Directory — full functionality
+## 2. Staff Directory  full functionality
 In `StaffManagement.tsx`:
 - Edit staff dialog (department, designation, employment type, join date, salary, bank details, emergency contact, qualifications) with save.
 - Activate / deactivate (status) and role badge display.
@@ -16,7 +16,7 @@ In `StaffManagement.tsx`:
 - View profile drawer showing full record + link to Staff ID card generator.
 - Export directory to CSV.
 
-## 3. Staff Attendance — full functionality
+## 3. Staff Attendance  full functionality
 In `StaffAttendance.tsx`:
 - Mark present/absent/late/leave per staff for a chosen date, with check-in/check-out times and notes, saved via upsert on (staff_id, date).
 - Bulk actions: "Mark all present", clear day.

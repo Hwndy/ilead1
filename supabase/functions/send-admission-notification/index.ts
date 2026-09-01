@@ -37,7 +37,7 @@ async function sendEmailWithRetry(resend: any, emailData: any, maxRetries = MAX_
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
       const result = await resend.emails.send(emailData);
-      // Resend SDK returns { data, error } — treat error payload as a real failure.
+      // Resend SDK returns { data, error }  treat error payload as a real failure.
       if (result && (result as any).error) {
         const err = (result as any).error;
         const message = err.message || err.name || JSON.stringify(err);

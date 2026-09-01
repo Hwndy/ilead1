@@ -2,15 +2,15 @@
 
 ## How the Payroll page works today
 Payroll (HR > Payroll) is currently only a **period tracker**:
-- You pick a month and click Create — this makes one payroll period row with status `draft`.
+- You pick a month and click Create  this makes one payroll period row with status `draft`.
 - The list shows each month with a status badge and one action button that walks the status forward: draft -> processing -> paid -> closed.
 - That is all it does. There is a `payroll_items` table (per-staff gross salary, allowances, deductions, net pay, status, notes) but **no screen writes to it, and it holds 0 rows**. So no salaries, no staff lines, no totals, no payslips.
 
 ## What is actually broken (verified)
 1. **Student dropdowns are empty everywhere in Fees.** Queries embed `profiles!students_user_id_fkey`, but that foreign key points to `auth.users`, not `profiles`. The embed is invalid, so the whole request fails and returns nothing. This affects: Installment Plans (student dropdown), Payments tab (5 payments exist in the database but the tab shows "No payments"), Student Balances, Reminders, Receipt Generator.
 2. **Library "Issue Book" student dropdown empty.** It filters `profiles` by a `role` column that no longer exists (roles moved to `user_roles`), so the query errors and the list stays empty.
-3. **Attendance Reports fails** with `operator does not exist: record ->> unknown` — the `get_attendance_summary` function sorts a row type with `->>` instead of converting it to JSON first.
-4. **Timetable entry save fails** with the `day_of_week` check violation — the grid uses 0-based day indexes (Monday = 0) while the table requires 1-7.
+3. **Attendance Reports fails** with `operator does not exist: record ->> unknown`  the `get_attendance_summary` function sorts a row type with `->>` instead of converting it to JSON first.
+4. **Timetable entry save fails** with the `day_of_week` check violation  the grid uses 0-based day indexes (Monday = 0) while the table requires 1-7.
 
 ## Fixes
 **Data access (frontend)**
@@ -31,4 +31,4 @@ Payroll (HR > Payroll) is currently only a **period tracker**:
 
 ## Technical notes
 - One migration: replace `get_attendance_summary` (same signature, security definer, `search_path = public`).
-- No schema changes needed for payroll — `payroll_items` already exists; its RLS/grants are checked before wiring the UI.
+- No schema changes needed for payroll  `payroll_items` already exists; its RLS/grants are checked before wiring the UI.

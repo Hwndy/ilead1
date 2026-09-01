@@ -1,6 +1,6 @@
 # Bring inner website pages up to the home page's visual standard
 
-The home page now uses a consistent language: photo-led hero, eyebrow + heading + intro block, scroll reveals, count-up numbers, photo cards over plain icon cards, and alternating section surfaces. The inner pages already share `PageHero` but still sit on the older look — centered lucide-icon cards, flat `py-16` sections, no motion.
+The home page now uses a consistent language: photo-led hero, eyebrow + heading + intro block, scroll reveals, count-up numbers, photo cards over plain icon cards, and alternating section surfaces. The inner pages already share `PageHero` but still sit on the older look  centered lucide-icon cards, flat `py-16` sections, no motion.
 
 ## What changes per page
 
@@ -37,7 +37,7 @@ The home page now uses a consistent language: photo-led hero, eyebrow + heading 
 
 ## Technical notes
 
-- Presentation only — no data, routing, or CMS-schema changes. Existing `settingValue` keys and defaults stay as they are.
+- Presentation only  no data, routing, or CMS-schema changes. Existing `settingValue` keys and defaults stay as they are.
 - All colours come from existing semantic tokens; no hardcoded colour utilities.
 - New shared components live in `src/components/website/`.
 - Motion respects `prefers-reduced-motion` via the existing hook.

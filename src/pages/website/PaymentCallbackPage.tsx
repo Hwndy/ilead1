@@ -25,7 +25,7 @@ interface Receipt {
 }
 
 const formatMoney = (amount?: number | null, currency?: string | null) => {
-  if (amount == null) return '—';
+  if (amount == null) return '';
   try {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -195,7 +195,7 @@ export const PaymentCallbackPage = () => {
                     {isEnrollment && (
                       <p className="text-xs text-muted-foreground pt-2 border-t mt-2">
                         Sign in with the Student Login ID above (it is issued by the school and is unique to
-                        this student — siblings can share one contact email). The temporary password has been
+                        this student  siblings can share one contact email). The temporary password has been
                         emailed to the contact address, along with the parent portal login. Please change the
                         password after the first sign in. This acceptance fee has been credited towards school fees.
                       </p>

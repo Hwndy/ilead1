@@ -27,7 +27,7 @@ export const FeePaymentCallback = () => {
       else {
         setState('success');
         setResult({ reference, ...data });
-        setMessage(`Payment confirmed${data.receipt_number ? ` — receipt ${data.receipt_number}` : ''}.`);
+        setMessage(`Payment confirmed${data.receipt_number ? `  receipt ${data.receipt_number}` : ''}.`);
       }
     });
   }, [params]);

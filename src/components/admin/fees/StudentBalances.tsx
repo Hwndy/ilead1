@@ -41,10 +41,10 @@ export const StudentBalances: React.FC = () => {
     const out: Row[] = (sts || []).map((s: any) => {
       const ca = s.class_assignments?.[0];
       const classId = ca?.class_id || null;
-      const className = ca?.classes?.name || '—';
+      const className = ca?.classes?.name || '';
       const billed = (fs || []).filter((f: any) => !f.class_id || f.class_id === classId).reduce((a: number, b: any) => a + Number(b.amount), 0);
       const paid = paidMap[s.id] || 0;
-      return { id: s.id, name: nameMap.get(s.user_id) || 'Unknown', admission: s.admission_number || '—', class_id: classId, class_name: className, billed, paid, outstanding: Math.max(0, billed - paid) };
+      return { id: s.id, name: nameMap.get(s.user_id) || 'Unknown', admission: s.admission_number || '', class_id: classId, class_name: className, billed, paid, outstanding: Math.max(0, billed - paid) };
     });
     setRows(out); setLoading(false);
   };

@@ -170,7 +170,7 @@ export const OfferLetterGenerator: React.FC<OfferLetterGeneratorProps> = ({
       checkExistingOffer(); // Refresh offer status
     } catch (error: any) {
       console.error('Error sending offer:', error);
-      // Edge function errors arrive as FunctionsHttpError — extract real body.
+      // Edge function errors arrive as FunctionsHttpError  extract real body.
       let description = error?.message || 'Failed to send offer letter';
       try {
         if (error?.context?.json) {

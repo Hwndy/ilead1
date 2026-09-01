@@ -431,7 +431,7 @@ export const AdminDashboard = () => {
           {/* Main Content */}
           <main className="flex-1 overflow-auto">
             <div className="container mx-auto p-4 lg:p-6 space-y-6">
-              {/* Compact KPI row — only on Overview */}
+              {/* Compact KPI row  only on Overview */}
               {activeTab === 'overview' && (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
                   {[
@@ -449,7 +449,7 @@ export const AdminDashboard = () => {
                           <Icon className="h-3.5 w-3.5" />
                           <span className="text-[11px] uppercase tracking-wide truncate">{label}</span>
                         </div>
-                        <p className="text-xl font-bold mt-1">{isLoading ? '—' : value}</p>
+                        <p className="text-xl font-bold mt-1">{isLoading ? '' : value}</p>
                       </CardContent>
                     </Card>
                   ))}

@@ -11,7 +11,7 @@ export const PrincipalWelcome: React.FC = () => {
   const message = settingValue<string>(
     settings,
     'principal_message',
-    "At iVintage College, bright minds are nurtured into principled leaders — in the classroom, in the boarding house and in the Tahfeedh school."
+    "At iVintage College, bright minds are nurtured into principled leaders  in the classroom, in the boarding house and in the Tahfeedh school."
   );
   const paragraphs = message.split(/\n{2,}/);
   return (
@@ -25,7 +25,7 @@ export const PrincipalWelcome: React.FC = () => {
               <div className="relative h-full w-full rounded-2xl overflow-hidden border-4 border-gold/30 shadow-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center">
                 <img
                   src={photo}
-                  alt={`${name} — ${title}`}
+                  alt={`${name}  ${title}`}
                   loading="lazy"
                   className="h-full w-full object-cover"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}

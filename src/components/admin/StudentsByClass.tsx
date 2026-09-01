@@ -362,8 +362,8 @@ export const StudentsByClass: React.FC = () => {
                                 {s.full_name}
                               </button>
                             </TableCell>
-                            <TableCell>{s.admission_number || '—'}</TableCell>
-                            <TableCell className="capitalize">{s.gender || '—'}</TableCell>
+                            <TableCell>{s.admission_number || ''}</TableCell>
+                            <TableCell className="capitalize">{s.gender || ''}</TableCell>
                             <TableCell>
                               <Badge variant={s.status === 'active' ? 'default' : 'secondary'}>
                                 {s.status || 'active'}
@@ -464,11 +464,11 @@ export const StudentsByClass: React.FC = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div><span className="text-muted-foreground">Gender: </span>{viewStudent.gender || '—'}</div>
-                <div><span className="text-muted-foreground">DOB: </span>{viewStudent.date_of_birth || '—'}</div>
-                <div><span className="text-muted-foreground">Status: </span>{viewStudent.status || '—'}</div>
+                <div><span className="text-muted-foreground">Gender: </span>{viewStudent.gender || ''}</div>
+                <div><span className="text-muted-foreground">DOB: </span>{viewStudent.date_of_birth || ''}</div>
+                <div><span className="text-muted-foreground">Status: </span>{viewStudent.status || ''}</div>
                 <div><span className="text-muted-foreground">Class: </span>
-                  {classes.find(c => c.id === viewStudent.class_id)?.name || '—'}</div>
+                  {classes.find(c => c.id === viewStudent.class_id)?.name || ''}</div>
               </div>
             </div>
           )}
@@ -524,7 +524,7 @@ export const StudentsByClass: React.FC = () => {
                 <Button
                   onClick={() =>
                     printNode(document.getElementById('student-id-card'), {
-                      title: `ID Card — ${idCardStudent.full_name}`,
+                      title: `ID Card  ${idCardStudent.full_name}`,
                       pageSize: '95.3mm 160mm',
                       pageMargin: '0',
                     })
@@ -580,7 +580,7 @@ export const StudentsByClass: React.FC = () => {
         singleStudent={singleAssign ? {
           user_id: singleAssign.user_id,
           full_name: singleAssign.full_name,
-          class_name: classes.find(c => c.id === singleAssign.class_id)?.name || '—',
+          class_name: classes.find(c => c.id === singleAssign.class_id)?.name || '',
           current: singleAssign.admission_number,
         } : undefined}
         onDone={fetchAll}

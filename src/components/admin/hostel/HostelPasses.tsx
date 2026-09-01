@@ -131,7 +131,7 @@ export const HostelPasses: React.FC = () => {
                 <TableBody>
                   {passes.map(p => (
                     <TableRow key={p.id} className={isOverdue(p) ? 'bg-destructive/5' : ''}>
-                      <TableCell className="font-medium">{nameById.get(p.student_id) || '—'}</TableCell>
+                      <TableCell className="font-medium">{nameById.get(p.student_id) || ''}</TableCell>
                       <TableCell className="capitalize">{p.pass_type}</TableCell>
                       <TableCell>{new Date(p.out_at).toLocaleString()}</TableCell>
                       <TableCell>{new Date(p.expected_back_at).toLocaleString()}</TableCell>

@@ -2,7 +2,7 @@
 
 ## 1. Enrollment email always carries the student password
 
-Today the welcome email only prints a temporary password when a brand-new login is created. If the login already existed from an earlier failed attempt, the code sets the password to `null` and the email silently says "issued separately by the admissions office" — which is what you saw.
+Today the welcome email only prints a temporary password when a brand-new login is created. If the login already existed from an earlier failed attempt, the code sets the password to `null` and the email silently says "issued separately by the admissions office"  which is what you saw.
 
 Change: when the student has not yet signed in (their profile is still flagged "must change password"), always issue a fresh temporary password and reset it on the account, so the email always contains working credentials. Only when the student has already set their own password do we omit it and instead point to the password-reset link.
 
@@ -30,6 +30,6 @@ Fix the first-login change so it completes cleanly:
 ## Technical notes
 
 - `supabase/functions/verify-acceptance-payment/index.ts`: drop the parent block (lines ~344-435) and the parent fields in the notification payload / response; add a temp-password reset via `auth.admin.updateUserById` when reusing an existing login whose profile still has `must_change_password = true`.
-- `supabase/functions/send-admission-notification/index.ts`: rewrite the `enrolled` template — remove the parent-portal card and `parent_temporary_password`, keep the student card, add the parent self-registration line.
+- `supabase/functions/send-admission-notification/index.ts`: rewrite the `enrolled` template  remove the parent-portal card and `parent_temporary_password`, keep the student card, add the parent self-registration line.
 - `src/pages/ResetPasswordPage.tsx`: confirm the flag cleared by re-select, branch first-login vs recovery on sign-out/redirect.
 - No database migration required.

@@ -1,6 +1,6 @@
 
 -- ============================================================
--- 1. Backfill orphan school_id values (defensive — current data shows 0)
+-- 1. Backfill orphan school_id values (defensive  current data shows 0)
 -- ============================================================
 UPDATE public.admission_applications a
 SET school_id = c.school_id

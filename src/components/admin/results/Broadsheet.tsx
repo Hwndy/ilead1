@@ -177,7 +177,7 @@ export const Broadsheet: React.FC = () => {
               </div>
               <div className="overflow-x-auto" ref={printRef}>
                 <div className="px-4 pt-4 hidden print:block">
-                  <h2 className="text-lg font-bold">Broadsheet — {className}</h2>
+                  <h2 className="text-lg font-bold">Broadsheet  {className}</h2>
                   <p className="text-sm">{term}, {sessionName}</p>
                 </div>
                 <Table>
@@ -200,17 +200,17 @@ export const Broadsheet: React.FC = () => {
                           )}
                         </TableCell>
                         {r.scores.map((v, i) => (
-                          <TableCell key={i} className="text-center">{typeof v === 'number' ? v : '—'}</TableCell>
+                          <TableCell key={i} className="text-center">{typeof v === 'number' ? v : ''}</TableCell>
                         ))}
-                        <TableCell className="text-center font-semibold">{r.recorded ? r.total : '—'}</TableCell>
-                        <TableCell className="text-center">{r.recorded ? `${r.avg}%` : '—'}</TableCell>
-                        <TableCell className="text-center">{r.position ?? '—'}</TableCell>
+                        <TableCell className="text-center font-semibold">{r.recorded ? r.total : ''}</TableCell>
+                        <TableCell className="text-center">{r.recorded ? `${r.avg}%` : ''}</TableCell>
+                        <TableCell className="text-center">{r.position ?? ''}</TableCell>
                       </TableRow>
                     ))}
                     <TableRow className="bg-muted/50">
                       <TableCell className="font-semibold">Class average</TableCell>
                       {subjectAverages.map((v, i) => (
-                        <TableCell key={i} className="text-center">{v ?? '—'}</TableCell>
+                        <TableCell key={i} className="text-center">{v ?? ''}</TableCell>
                       ))}
                       <TableCell />
                       <TableCell />

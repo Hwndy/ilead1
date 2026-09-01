@@ -95,7 +95,7 @@ export const LeaveRequestForm: React.FC = () => {
                       <TableCell className="capitalize">{r.leave_type}</TableCell>
                       <TableCell className="whitespace-nowrap">{format(new Date(r.start_date), 'MMM d')} – {format(new Date(r.end_date), 'MMM d, yyyy')}</TableCell>
                       <TableCell><Badge variant={r.status === 'approved' ? 'default' : r.status === 'rejected' ? 'destructive' : 'secondary'}>{r.status}</Badge></TableCell>
-                      <TableCell className="max-w-xs truncate">{r.decision_notes || '—'}</TableCell>
+                      <TableCell className="max-w-xs truncate">{r.decision_notes || ''}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

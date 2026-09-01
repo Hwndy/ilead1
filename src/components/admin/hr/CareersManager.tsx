@@ -94,9 +94,9 @@ export const CareersManager: React.FC = () => {
                 {rows.map((r) => (
                   <TableRow key={r.id}>
                     <TableCell className="font-medium">{r.title}</TableCell>
-                    <TableCell>{r.department || '—'}</TableCell>
+                    <TableCell>{r.department || ''}</TableCell>
                     <TableCell className="capitalize">{r.employment_type.replace('_',' ')}</TableCell>
-                    <TableCell>{r.closes_on || '—'}</TableCell>
+                    <TableCell>{r.closes_on || ''}</TableCell>
                     <TableCell>
                       <Badge variant={r.is_open ? 'default' : 'secondary'} className="cursor-pointer" onClick={() => toggle(r)}>
                         {r.is_open ? 'Open' : 'Closed'}

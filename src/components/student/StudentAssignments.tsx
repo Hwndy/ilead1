@@ -120,7 +120,7 @@ const SubmitDialog: React.FC<{ assignment: any; studentId: string; existing: any
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="max-w-lg">
-        <DialogHeader><DialogTitle>Submit — {assignment.title}</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle>Submit  {assignment.title}</DialogTitle></DialogHeader>
         <div className="space-y-3">
           <div><Label>Your work</Label><Textarea rows={6} value={content} onChange={(e) => setContent(e.target.value)} /></div>
           <div><Label>Attachment (optional, max 10MB)</Label>

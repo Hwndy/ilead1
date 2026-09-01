@@ -146,8 +146,8 @@ export const OtherRevenuePanel: React.FC = () => {
                     <TableRow key={r.id}>
                       <TableCell className="whitespace-nowrap">{r.revenue_date}</TableCell>
                       <TableCell>{catName(r.category_id)}</TableCell>
-                      <TableCell>{r.source || '—'}</TableCell>
-                      <TableCell className="max-w-[220px] truncate">{r.description || '—'}</TableCell>
+                      <TableCell>{r.source || ''}</TableCell>
+                      <TableCell className="max-w-[220px] truncate">{r.description || ''}</TableCell>
                       <TableCell className="text-right font-medium">{NGN(Number(r.amount))}</TableCell>
                       <TableCell className="capitalize">{r.payment_method?.replace('_', ' ')}</TableCell>
                       <TableCell className="text-right">

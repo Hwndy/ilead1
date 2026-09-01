@@ -45,7 +45,7 @@ export const GlobalSearch: React.FC = () => {
             {results.students.map((s) => (
               <CommandItem key={s.id} onSelect={() => go(`/admin?tab=academic&subtab=student-detail&id=${s.id}`)}>
                 <span className="font-medium">{s.full_name || 'Unknown'}</span>
-                <span className="ml-2 text-xs text-muted-foreground">{s.admission_number} • {s.class_name || '—'}</span>
+                <span className="ml-2 text-xs text-muted-foreground">{s.admission_number} • {s.class_name || ''}</span>
               </CommandItem>
             ))}
           </CommandGroup>

@@ -20,7 +20,7 @@ export const GalleryPage: React.FC = () => {
   const jsonLd = useMemo(() => ({
     '@context': 'https://schema.org',
     '@type': 'ImageGallery',
-    name: 'iVintage College — Photo Gallery',
+    name: 'iVintage College  Photo Gallery',
     url: `${SITE_URL}/website/gallery`,
     image: items.slice(0, 12).map((i) => i.image_url),
   }), [items]);
@@ -45,7 +45,7 @@ export const GalleryPage: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Photo Gallery — iVintage College"
+        title="Photo Gallery  iVintage College"
         description="Explore campus facilities, events, and student activities at iVintage College through our photo gallery."
         path="/website/gallery"
         jsonLd={jsonLd}

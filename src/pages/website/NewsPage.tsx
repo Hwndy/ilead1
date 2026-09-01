@@ -85,7 +85,7 @@ const NewsList: React.FC = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="News & Events — iVintage College"
+        title="News & Events  iVintage College"
         description="Latest news, events, and announcements from iVintage College."
         path="/website/news"
       />
@@ -241,7 +241,7 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   if (!article) {
     return (
       <div className="container mx-auto px-4 py-24 text-center space-y-4">
-        <SEO title="Article not found — iVintage" description="The requested article was not found." path={`/website/news/${slug}`} noindex />
+        <SEO title="Article not found  iVintage" description="The requested article was not found." path={`/website/news/${slug}`} noindex />
         <h1 className="text-3xl font-bold">Article not found</h1>
         <Button asChild><Link to="/website/news"><ArrowLeft className="mr-2 h-4 w-4" />Back to news</Link></Button>
       </div>
@@ -265,7 +265,7 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   return (
     <article className="space-y-0">
       <SEO
-        title={`${article.title} — iVintage College`}
+        title={`${article.title}  iVintage College`}
         description={article.excerpt || article.title}
         path={`/website/news/${article.slug}`}
         image={article.featured_image || undefined}

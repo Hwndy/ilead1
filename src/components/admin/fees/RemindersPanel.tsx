@@ -60,8 +60,8 @@ export const RemindersPanel: React.FC = () => {
             <TableBody>
               {logs.map((l: any) => (
                 <TableRow key={l.id}>
-                  <TableCell>{l.sent_at ? format(new Date(l.sent_at), 'PPp') : '—'}</TableCell>
-                  <TableCell>{l.students?.profiles?.full_name || '—'} <span className="text-xs text-muted-foreground">{l.students?.admission_number}</span></TableCell>
+                  <TableCell>{l.sent_at ? format(new Date(l.sent_at), 'PPp') : ''}</TableCell>
+                  <TableCell>{l.students?.profiles?.full_name || ''} <span className="text-xs text-muted-foreground">{l.students?.admission_number}</span></TableCell>
                   <TableCell className="capitalize">{l.reminder_type}</TableCell>
                   <TableCell><Badge variant={l.status === 'sent' ? 'default' : 'outline'}>{l.status || 'pending'}</Badge></TableCell>
                 </TableRow>

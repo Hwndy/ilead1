@@ -306,7 +306,7 @@ export const AdmissionManagement = () => {
             <DialogDescription>
               Each enrolled student now has a unique school-issued login ID, and the family email is
               linked as a parent account. Parents who had no account are created here and emailed
-              their sign-in details automatically — share the temporary passwords below as a backup.
+              their sign-in details automatically  share the temporary passwords below as a backup.
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-[60vh] overflow-auto space-y-3 text-sm">

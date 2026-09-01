@@ -112,12 +112,12 @@ async function getLetterheadDataUrl(): Promise<string | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Offer letter PDF — the letter is typeset INSIDE the official letterhead page.
+// Offer letter PDF  the letter is typeset INSIDE the official letterhead page.
 // The letterhead PNG is a full-page design (crest + address band at the top,
 // watermark in the middle, colour bars at the foot), so it is drawn as the page
 // background and all text is laid out inside a safe area between the two.
 // ---------------------------------------------------------------------------
-const PAGE_FORMAT = "letter";      // 215.9mm x 279.4mm — matches the artwork ratio
+const PAGE_FORMAT = "letter";      // 215.9mm x 279.4mm  matches the artwork ratio
 const SAFE_TOP = 60;               // below the address band
 const SAFE_BOTTOM = 258;           // above the footer colour bars
 const SAFE_LEFT = 25;

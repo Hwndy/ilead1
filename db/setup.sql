@@ -5734,7 +5734,7 @@ CREATE INDEX idx_fee_reminder_logs_school ON fee_reminder_logs(school_id);
 -- ===== 20260607202400_dbfd647c-84c3-4b9c-9b0e-b4c5e5e18c39.sql =====
 
 -- ============================================================
--- 1. Backfill orphan school_id values (defensive — current data shows 0)
+-- 1. Backfill orphan school_id values (defensive  current data shows 0)
 -- ============================================================
 UPDATE public.admission_applications a
 SET school_id = c.school_id
@@ -6255,7 +6255,7 @@ WHERE application_number IS NULL OR application_number = '';
 -- ===== 20260615204435_af19a0be-e9a9-49b4-b40e-c52194bc8ce8.sql =====
 
 -- ============================================================
--- ACADEMIC FLOW OVERHAUL — Phase 1: Sessions/Terms spine,
+-- ACADEMIC FLOW OVERHAUL  Phase 1: Sessions/Terms spine,
 -- assessment categories, question taxonomy, unified results view
 -- ============================================================
 

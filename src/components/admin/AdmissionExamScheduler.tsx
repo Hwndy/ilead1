@@ -330,7 +330,7 @@ export const AdmissionExamScheduler = () => {
       <Dialog open={!!resultsExam} onOpenChange={(open) => !open && setResultsExam(null)}>
         <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{resultsExam?.title} — Results</DialogTitle>
+            <DialogTitle>{resultsExam?.title}  Results</DialogTitle>
           </DialogHeader>
           {resultsExam && (
             <EntranceExamResults

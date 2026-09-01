@@ -60,7 +60,7 @@ export const AdmissionsPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="Admissions — iVintage College"
+        title="Admissions  iVintage College"
         description="Admission requirements, process, and important dates for iVintage College. Apply online for nursery, primary, and secondary placement."
         path="/website/admissions"
       />

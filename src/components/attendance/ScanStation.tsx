@@ -24,7 +24,7 @@ interface ScanResult {
 
 const ERROR_MESSAGES: Record<string, string> = {
   unknown_reference: 'No QR value provided',
-  token_revoked: 'This card has been reissued — please reprint',
+  token_revoked: 'This card has been reissued  please reprint',
   student_not_found: 'No student matches this card or admission number',
   staff_not_found: 'No staff member matches this card or employee ID',
   not_authorized: 'Only authorized teachers and administrators can record scans',
@@ -324,7 +324,7 @@ const VisitorPanel: React.FC<{ onDone: () => void }> = ({ onDone }) => {
             <div key={v.id} className="flex items-center justify-between py-2 text-sm">
               <div>
                 <p className="font-medium">{v.full_name} <span className="text-muted-foreground">({v.badge_no})</span></p>
-                <p className="text-xs text-muted-foreground">{v.purpose} • host: {v.host_name || '—'} • in: {new Date(v.signed_in_at).toLocaleTimeString()}</p>
+                <p className="text-xs text-muted-foreground">{v.purpose} • host: {v.host_name || ''} • in: {new Date(v.signed_in_at).toLocaleTimeString()}</p>
               </div>
               <Button size="sm" variant="outline" onClick={() => signOut(v.id)}><LogOut className="h-4 w-4 mr-1" /> Sign out</Button>
             </div>

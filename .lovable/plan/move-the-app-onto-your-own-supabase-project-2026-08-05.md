@@ -1,17 +1,17 @@
 # Move the app onto your own Supabase project
 
-Goal: point this project at a separate Supabase database you own, with every feature still working — portal login, admissions, exams, fees/Paystack, report cards, hostel, library, HR/payroll, CMS website, PWA push.
+Goal: point this project at a separate Supabase database you own, with every feature still working  portal login, admissions, exams, fees/Paystack, report cards, hostel, library, HR/payroll, CMS website, PWA push.
 
 ## What has to move
 
 The app depends on four things in the backend, not just the tables:
 
-1. **Schema** — 90+ tables plus enums, views, triggers, `SECURITY DEFINER` functions (`has_role`, `get_user_school_id`, `create_teacher_class_assignments`, etc.), RLS policies and Data-API grants. All of it already exists as 118 migration files in `supabase/migrations`.
-2. **Storage buckets** — `admission-documents`, `assignments`, and the media/CMS buckets, with their policies.
-3. **Edge functions** — 28 functions (Paystack init/verify + webhook, offer letters, OTP, bulk email/SMS, report cards, staff/student/parent account creation, push, fee reminders) plus their `verify_jwt` settings in `supabase/config.toml`.
-4. **Secrets** — new values you'll supply for `PAYSTACK_SECRET_KEY`, `RESEND_API_KEY`, `SENDER_EMAIL`, `REPLY_TO_EMAIL`, `FRONTEND_URL`, `STAFF_REGISTRATION_CODE`, and the push/VAPID keys.
+1. **Schema**  90+ tables plus enums, views, triggers, `SECURITY DEFINER` functions (`has_role`, `get_user_school_id`, `create_teacher_class_assignments`, etc.), RLS policies and Data-API grants. All of it already exists as 118 migration files in `supabase/migrations`.
+2. **Storage buckets**  `admission-documents`, `assignments`, and the media/CMS buckets, with their policies.
+3. **Edge functions**  28 functions (Paystack init/verify + webhook, offer letters, OTP, bulk email/SMS, report cards, staff/student/parent account creation, push, fee reminders) plus their `verify_jwt` settings in `supabase/config.toml`.
+4. **Secrets**  new values you'll supply for `PAYSTACK_SECRET_KEY`, `RESEND_API_KEY`, `SENDER_EMAIL`, `REPLY_TO_EMAIL`, `FRONTEND_URL`, `STAFF_REGISTRATION_CODE`, and the push/VAPID keys.
 
-Auth users do **not** carry over (you chose reference data only), so the new database starts with zero accounts — a first admin has to be created.
+Auth users do **not** carry over (you chose reference data only), so the new database starts with zero accounts  a first admin has to be created.
 
 ## Steps
 
@@ -28,7 +28,7 @@ Replay the existing migration history into the new database, then verify: every 
 Update `src/integrations/supabase/client.ts` (URL + publishable key), `supabase/config.toml` (`project_id`), `.env` / `VITE_FRONTEND_URL`, and the few remaining hardcoded `irrxmoqbgygyyzozifdl` strings in `src/contexts/AuthContext.tsx` (localStorage key), `scripts/generate-sitemap.ts` and the docs files. Regenerate `src/integrations/supabase/types.ts` from the new schema.
 
 **5. Deploy the 28 edge functions and set secrets**
-Deploy with the same `verify_jwt` config, then I'll request the new secret values through the secure form. Paystack webhook URL changes with the project ref — you'll need to update it in the Paystack dashboard.
+Deploy with the same `verify_jwt` config, then I'll request the new secret values through the secure form. Paystack webhook URL changes with the project ref  you'll need to update it in the Paystack dashboard.
 
 **6. Seed reference data**
 Classes, subjects, `school_info` / `website_settings` / `website_pages` / `website_sections` (iVintage branding, contacts, CMS copy), notification templates, fee structures, grading/result-automation settings, revenue & expense categories. No students, staff, parents, exams, results or payment records.

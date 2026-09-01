@@ -126,7 +126,7 @@ serve(async (req) => {
     if (body.action === "mark_failed") {
       const { data: payment } = await service.from("fee_payments").select("id, notes").eq("id", body.payment_id).maybeSingle();
       if (!payment) return json({ error: "Payment not found" }, 404);
-      const note = `${payment.notes ? payment.notes + "\n" : ""}Marked failed by admin ${userId} @ ${new Date().toISOString()}${body.reason ? ` — ${body.reason}` : ""}`;
+      const note = `${payment.notes ? payment.notes + "\n" : ""}Marked failed by admin ${userId} @ ${new Date().toISOString()}${body.reason ? `  ${body.reason}` : ""}`;
       const { error: updErr } = await service.from("fee_payments").update({ status: "failed", notes: note }).eq("id", body.payment_id);
       if (updErr) return json({ error: "Update failed", details: updErr.message }, 500);
       return json({ success: true });

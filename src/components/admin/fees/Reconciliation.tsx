@@ -264,10 +264,10 @@ export const Reconciliation: React.FC = () => {
                   {visible.map(r => (
                     <TableRow key={r.key}>
                       <TableCell>{klassBadge(r.klass)}</TableCell>
-                      <TableCell className="font-mono text-xs">{r.ps?.reference || r.local?.payment_reference || '—'}</TableCell>
-                      <TableCell className="text-right">{r.ps ? NGN(r.ps.amount) : '—'}<div className="text-xs text-muted-foreground">{r.ps?.status || ''}</div></TableCell>
-                      <TableCell className="text-right">{r.local ? NGN(Number(r.local.amount_paid)) : '—'}<div className="text-xs text-muted-foreground">{r.local?.status || ''}</div></TableCell>
-                      <TableCell className="text-xs">{r.ps?.paid_at ? format(new Date(r.ps.paid_at), 'PP') : r.local?.paid_at ? format(new Date(r.local.paid_at), 'PP') : '—'}</TableCell>
+                      <TableCell className="font-mono text-xs">{r.ps?.reference || r.local?.payment_reference || ''}</TableCell>
+                      <TableCell className="text-right">{r.ps ? NGN(r.ps.amount) : ''}<div className="text-xs text-muted-foreground">{r.ps?.status || ''}</div></TableCell>
+                      <TableCell className="text-right">{r.local ? NGN(Number(r.local.amount_paid)) : ''}<div className="text-xs text-muted-foreground">{r.local?.status || ''}</div></TableCell>
+                      <TableCell className="text-xs">{r.ps?.paid_at ? format(new Date(r.ps.paid_at), 'PP') : r.local?.paid_at ? format(new Date(r.local.paid_at), 'PP') : ''}</TableCell>
                       <TableCell className="text-xs text-muted-foreground">{r.reason || ''}</TableCell>
                       <TableCell className="text-right">
                         {r.klass === 'needs_update' && r.ps && (

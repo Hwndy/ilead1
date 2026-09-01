@@ -2,7 +2,7 @@
 
 ## What is wrong today
 
-- `school_info` is a **key/value** table (`info_key` / `info_value`). The report card builder reads it as if it had columns (`.name`, `.logo_url`, `.address`), so every branding field comes back empty — that is why the school name and logo never appear on the report card.
+- `school_info` is a **key/value** table (`info_key` / `info_value`). The report card builder reads it as if it had columns (`.name`, `.logo_url`, `.address`), so every branding field comes back empty  that is why the school name and logo never appear on the report card.
 - The Students page reads the key `school_name`, which currently holds "Al-Bari College", so ID cards show the wrong name. The correct value lives under the `name` key: "Al-Bari Group of Schools".
 - The printable report card itself is a plain black-bordered table with no school identity, no watermark, and no branded layout.
 
@@ -14,7 +14,7 @@
 2. **Fully redesigned printable report card** (A4, print-ready)
    - Branded header band: crest/logo left, school name in large caps, address, phone, email, motto line, and the term/session ribbon.
    - Student identity strip: passport photo, full name, admission number, class/section, age, gender, position.
-   - Results table in school colours: Test 1 (20), Test 2 (20), Exam (60), Total (100), Grade, Subject position, Class average, Highest, Lowest, Remark — with a totals row.
+   - Results table in school colours: Test 1 (20), Test 2 (20), Exam (60), Total (100), Grade, Subject position, Class average, Highest, Lowest, Remark  with a totals row.
    - Summary cards: total score, average %, class position, overall grade.
    - Attendance block, grading-scale legend.
    - Remarks blocks for class teacher, head teacher, principal (auto-remark when blank), and signature lines carrying the principal name from settings.

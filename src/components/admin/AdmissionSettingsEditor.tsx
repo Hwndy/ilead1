@@ -23,7 +23,7 @@ const DEFAULT_INTRO =
   'Your enrollment is now complete! Here are your login credentials for the student portal.';
 
 /**
- * Admissions defaults — acceptance fee amount and the note shown to parents.
+ * Admissions defaults  acceptance fee amount and the note shown to parents.
  * Stored in app_settings so offers and the public acceptance page stay in sync.
  */
 export const AdmissionSettingsEditor: React.FC = () => {

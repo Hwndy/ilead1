@@ -30,4 +30,4 @@
 
 - Files touched: `src/components/website/WebsiteLayout.tsx` (header/nav), `src/components/shared/Logo.tsx` (transparent asset + icon-only mode), `src/pages/website/HomePage.tsx` (hero), plus a new transparent logo asset in `src/assets`.
 - Colours use existing semantic tokens (`primary`, `background`, `foreground`, `muted-foreground`); no hardcoded hex outside the hero's over-image treatment.
-- Nav content is unchanged data — only grouping and presentation change. No routing, CMS or backend changes.
+- Nav content is unchanged data  only grouping and presentation change. No routing, CMS or backend changes.

@@ -2,7 +2,7 @@
 
 ## What's wrong today (verified)
 
-- **Teachers cannot read student names.** The `profiles` table only allows a user to read their own row (or an admin to read any). Teachers are excluded. Every staff screen that builds a roster from `profiles` therefore comes back empty — this is why "Enter Scores" shows "Select a class, subject, term and session to begin" even after all four filters are chosen, and why broadsheet names would render as dashes.
+- **Teachers cannot read student names.** The `profiles` table only allows a user to read their own row (or an admin to read any). Teachers are excluded. Every staff screen that builds a roster from `profiles` therefore comes back empty  this is why "Enter Scores" shows "Select a class, subject, term and session to begin" even after all four filters are chosen, and why broadsheet names would render as dashes.
 - **Score entry drops students without a profile row.** The roster is built from `profiles` first and then filtered against `students`, so any student missing a profile row silently disappears instead of showing with their admission number.
 - **Broadsheet has no data to show.** Only 2 rows exist in `gradebook_entries` for the whole school, so the broadsheet is empty by data, not only by permissions. It also has no subject columns fallback, no export, and no "no results yet" explanation.
 - **Gradebook tab** duplicates Results Management: it is a second, older way to record per-assessment scores that does not feed the report card pipeline (`v_student_term_scores` reads the Test 1 / Test 2 / Exam columns written by Results Management).
@@ -11,7 +11,7 @@
 ## What will change
 
 ### 1. Remove the Gradebook tab
-Drop the Gradebook tab and `GradebookSystem` from the teacher dashboard. The `gradebook_entries` table stays — it is the storage behind Results Management and report cards; only the duplicate UI goes.
+Drop the Gradebook tab and `GradebookSystem` from the teacher dashboard. The `gradebook_entries` table stays  it is the storage behind Results Management and report cards; only the duplicate UI goes.
 
 ### 2. Staff can see their students
 - Add a read policy so staff (teacher or admin) can read `profiles`. Student, parent and self access rules are unchanged.

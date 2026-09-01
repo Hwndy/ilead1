@@ -96,7 +96,7 @@ export async function buildBrandedReceipt(data: ReceiptData, brandingOverride?: 
   doc.setFont('helvetica', 'normal');
   doc.text('Receipt No:', 14, 60);
   doc.setFont('helvetica', 'bold');
-  doc.text(data.receiptNumber || '—', 40, 60);
+  doc.text(data.receiptNumber || '', 40, 60);
   doc.setFont('helvetica', 'normal');
   doc.text('Date:', w / 2 + 20, 60);
   doc.setFont('helvetica', 'bold');
@@ -152,7 +152,7 @@ export async function buildBrandedReceipt(data: ReceiptData, brandingOverride?: 
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.text(
-    data.footerNote || `${school.name} — this is a computer-generated receipt and is valid without a signature.`,
+    data.footerNote || `${school.name}  this is a computer-generated receipt and is valid without a signature.`,
     w / 2,
     pageH - 6,
     { align: 'center' }

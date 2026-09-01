@@ -24,7 +24,7 @@ export interface StaffIDCardSchool {
 interface Props {
   staff: StaffIDCardData;
   school: StaffIDCardSchool;
-  /** Deprecated — the card is now a single face. Kept for call-site compatibility. */
+  /** Deprecated  the card is now a single face. Kept for call-site compatibility. */
   showBack?: boolean;
 }
 
@@ -122,7 +122,7 @@ export const StaffIDCard: React.FC<Props> = ({ staff, school }) => {
         </p>
         <p style={{ fontSize: 14, marginTop: 2, letterSpacing: 0.3 }}>
           <span style={{ color: '#3f463f' }}>ID: </span>
-          <span className="font-bold">{staff.employee_id || '—'}</span>
+          <span className="font-bold">{staff.employee_id || ''}</span>
         </p>
         {(staff.designation || staff.department) && (
           <p className="font-semibold uppercase" style={{ fontSize: 10, color: GREEN, marginTop: 3, letterSpacing: 1.2 }}>

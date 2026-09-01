@@ -517,12 +517,12 @@ export const StaffManagement = () => {
                         </p>
                       </div>
                     </TableCell>
-                    <TableCell>{staff.department || "—"}</TableCell>
-                    <TableCell>{staff.designation || "—"}</TableCell>
+                    <TableCell>{staff.department || ""}</TableCell>
+                    <TableCell>{staff.designation || ""}</TableCell>
                     <TableCell>
                       {staff.join_date
                         ? format(new Date(staff.join_date), "MMM dd, yyyy")
-                        : "—"}
+                        : ""}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="capitalize">
@@ -744,18 +744,18 @@ export const StaffManagement = () => {
                   </div>
                   <div>
                     <label className="text-sm text-muted-foreground">Department</label>
-                    <p className="font-medium">{selectedStaff.department || "—"}</p>
+                    <p className="font-medium">{selectedStaff.department || ""}</p>
                   </div>
                   <div>
                     <label className="text-sm text-muted-foreground">Designation</label>
-                    <p className="font-medium">{selectedStaff.designation || "—"}</p>
+                    <p className="font-medium">{selectedStaff.designation || ""}</p>
                   </div>
                   <div>
                     <label className="text-sm text-muted-foreground">Join Date</label>
                     <p className="font-medium">
                       {selectedStaff.join_date
                         ? format(new Date(selectedStaff.join_date), "MMM dd, yyyy")
-                        : "—"}
+                        : ""}
                     </p>
                   </div>
                   <div>

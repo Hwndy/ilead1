@@ -97,7 +97,7 @@ export const InstallmentPlans: React.FC = () => {
               {plans.map((p: any) => {
                 const paid = (p.fee_installments || []).reduce((a: number, b: any) => a + Number(b.paid_amount || 0), 0);
                 return <TableRow key={p.id}>
-                  <TableCell><div className="font-medium">{p.students?.profiles?.full_name || '—'}</div><div className="text-xs text-muted-foreground">{p.students?.admission_number}</div></TableCell>
+                  <TableCell><div className="font-medium">{p.students?.profiles?.full_name || ''}</div><div className="text-xs text-muted-foreground">{p.students?.admission_number}</div></TableCell>
                   <TableCell>{p.fee_structures?.fee_type} ({p.fee_structures?.academic_year})</TableCell>
                   <TableCell>{NGN(Number(p.total_amount))}</TableCell>
                   <TableCell>{NGN(paid)} / {p.number_of_installments} parts</TableCell>
@@ -123,7 +123,7 @@ export const InstallmentPlans: React.FC = () => {
             <div><Label>Fee</Label>
               <Select value={form.fee_structure_id} onValueChange={v => { const f = structures.find((x: any) => x.id === v); setForm({ ...form, fee_structure_id: v, total_amount: f ? String(f.amount) : form.total_amount }); }}>
                 <SelectTrigger><SelectValue placeholder="Choose fee"/></SelectTrigger>
-                <SelectContent>{structures.map((f: any) => <SelectItem key={f.id} value={f.id}>{f.fee_type} — {NGN(Number(f.amount))}</SelectItem>)}</SelectContent>
+                <SelectContent>{structures.map((f: any) => <SelectItem key={f.id} value={f.id}>{f.fee_type}  {NGN(Number(f.amount))}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="grid grid-cols-2 gap-3">

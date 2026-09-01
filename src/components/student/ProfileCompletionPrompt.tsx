@@ -71,7 +71,7 @@ export const ProfileCompletionPrompt: React.FC = () => {
         })
         .eq('user_id', user.id);
       if (error) throw error;
-      toast({ title: 'Profile updated', description: 'Thanks — your student profile is up to date.' });
+      toast({ title: 'Profile updated', description: 'Thanks  your student profile is up to date.' });
       await load();
     } catch (e: any) {
       toast({ title: 'Could not save', description: e.message, variant: 'destructive' });

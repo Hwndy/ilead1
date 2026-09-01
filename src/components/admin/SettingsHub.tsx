@@ -8,7 +8,7 @@ import { AdmissionSettingsEditor } from '@/components/admin/AdmissionSettingsEdi
 import { School, Globe, Users, GraduationCap, Receipt } from 'lucide-react';
 
 /**
- * Admin Settings hub — brings school profile, website settings and staff HR-facing
+ * Admin Settings hub  brings school profile, website settings and staff HR-facing
  * config into one place so admins don't need to hunt around the sidebar.
  */
 export const SettingsHub: React.FC = () => {

@@ -186,7 +186,7 @@ export const TeacherStudentsList: React.FC = () => {
                           <span className="font-medium">{s.full_name}</span>
                         </div>
                       </TableCell>
-                      <TableCell>{s.admission_number || '—'}</TableCell>
+                      <TableCell>{s.admission_number || ''}</TableCell>
                       <TableCell>
                         <Badge variant={s.status === 'active' || !s.status ? 'secondary' : 'outline'}>
                           {s.status || 'active'}

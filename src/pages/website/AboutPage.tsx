@@ -61,7 +61,7 @@ export const AboutPage = () => {
   return (
     <div className="space-y-0">
       <SEO
-        title="About Us — iVintage College"
+        title="About Us  iVintage College"
         description="Learn about iVintage College: our vision, mission, core values, and leadership team shaping the next generation of Nigerian leaders."
         path="/website/about"
       />
@@ -74,7 +74,7 @@ export const AboutPage = () => {
         crumbs={[{ label: 'About Us' }]}
       />
 
-      {/* History — asymmetric image + text */}
+      {/* History  asymmetric image + text */}
       <SectionBand>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
@@ -119,7 +119,7 @@ export const AboutPage = () => {
         </div>
       </SectionBand>
 
-      {/* Vision & Mission — contrasting panels */}
+      {/* Vision & Mission  contrasting panels */}
       <SectionBand tone="muted" className="pt-24">
         <SectionHeading
           eyebrow="Direction"
@@ -226,7 +226,7 @@ export const AboutPage = () => {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Come and see the school for yourself</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Book a campus tour or start an application — we would love to meet your family.
+            Book a campus tour or start an application  we would love to meet your family.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button size="lg" className="rounded-full px-7" asChild>

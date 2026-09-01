@@ -9,7 +9,7 @@ export const ApplyPage = () => {
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-b from-background to-card/20">
       <SEO
-        title="Apply Online — iVintage College Admissions"
+        title="Apply Online  iVintage College Admissions"
         description="Start your child's iVintage journey. Complete the online admission form to apply for nursery, primary or secondary school placement."
         path="/website/admissions/apply"
       />

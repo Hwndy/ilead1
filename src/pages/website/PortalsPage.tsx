@@ -32,13 +32,13 @@ export const PortalsPage = () => {
   const { settings } = useWebsiteSettings();
   const portals = settingValue<Portal[]>(settings, 'portals', DEFAULTS).filter((p) => p.enabled !== false);
 
-  // Every portal card points at the plain sign-in route — no query parameters,
+  // Every portal card points at the plain sign-in route  no query parameters,
   // whatever the CMS has stored for the card link.
   const LOGIN_PATH = '/login';
   return (
     <div className="space-y-0">
       <SEO
-        title="Portals — iVintage College"
+        title="Portals  iVintage College"
         description="Sign in to the iVintage student, parent, teacher, or admin portal to access grades, results, fees, communications, and school resources."
         path="/website/portals"
       />
@@ -53,7 +53,7 @@ export const PortalsPage = () => {
         <SectionHeading
           eyebrow="Sign in"
           title="Four portals, one school"
-          intro="Each portal gives you exactly what you need — nothing you don't."
+          intro="Each portal gives you exactly what you need  nothing you don't."
         />
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
           {portals.map((portal, idx) => {

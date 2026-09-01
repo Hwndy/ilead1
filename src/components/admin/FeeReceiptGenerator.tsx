@@ -190,7 +190,7 @@ export const FeeReceiptGenerator = () => {
               <TableBody>
                 {payments.map((payment) => (
                   <TableRow key={payment.id}>
-                    <TableCell className="font-medium">{payment.receipt_number || "—"}</TableCell>
+                    <TableCell className="font-medium">{payment.receipt_number || ""}</TableCell>
                     <TableCell>
                       <div>
                         <p className="font-medium">{payment.student?.profile?.full_name || "N/A"}</p>
@@ -199,14 +199,14 @@ export const FeeReceiptGenerator = () => {
                         </p>
                       </div>
                     </TableCell>
-                    <TableCell>{payment.fee_structure?.fee_type || "—"}</TableCell>
+                    <TableCell>{payment.fee_structure?.fee_type || ""}</TableCell>
                     <TableCell>₦{payment.amount_paid.toLocaleString()}</TableCell>
                     <TableCell>
                       {payment.payment_date
                         ? format(new Date(payment.payment_date), "MMM dd, yyyy")
-                        : "—"}
+                        : ""}
                     </TableCell>
-                    <TableCell className="capitalize">{payment.payment_method || "—"}</TableCell>
+                    <TableCell className="capitalize">{payment.payment_method || ""}</TableCell>
                     <TableCell>
                       <div className="flex gap-2">
                         <Button

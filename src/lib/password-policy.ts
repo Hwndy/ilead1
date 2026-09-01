@@ -14,7 +14,7 @@ export function checkPassword(pwd: string): PasswordCheck {
   if (!/[A-Z]/.test(pwd)) errors.push('Add an uppercase letter');
   if (!/[0-9]/.test(pwd)) errors.push('Add a number');
   if (/(.)\1{3,}/.test(pwd)) errors.push('Avoid 4+ repeated characters');
-  if (COMMON.has(pwd.toLowerCase())) errors.push('Too common — pick something unique');
+  if (COMMON.has(pwd.toLowerCase())) errors.push('Too common  pick something unique');
 
   let score = 0;
   if (pwd.length >= 10) score += 1;
