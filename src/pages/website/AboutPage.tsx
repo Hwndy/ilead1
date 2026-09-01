@@ -36,10 +36,10 @@ export const AboutPage = () => {
   const heroTitle = settingValue<string>(settings, 'about_hero_title', 'Excellence in Education');
   const heroHighlight = settingValue<string>(settings, 'about_hero_highlight', 'Ikorodu, Lagos');
   const heroSubtitle = settingValue<string>(settings, 'about_hero_subtitle',
-    'iVintage College brings together a day school, a boarding house and the iLead Tahfeedh School on one campus in Ikorodu \u2014 redefining western and Islamic intellectualism, with ICT and coding at the core.');
+    'iVintage College brings together a day school, a boarding house and the iLead Tahfeedh School on one campus in Ikorodu  redefining western and Islamic intellectualism, with ICT and coding at the core.');
   const historyParagraphs = settingValue<string[]>(settings, 'about_history_paragraphs', [
     'iVintage College was established to deliver a perfect blend of western and Islamic education, as well as proficiency in ICT with coding as a major component, serving families across Ikorodu and the wider Lagos area.',
-    'Our pupils combine a sound, highly qualitative western curriculum with Hifdhul Qur\u2019an, Arabic literacy and Islamic education \u2014 memorising at least a quarter of the Qur\u2019an while maintaining distinction scores in internal and external examinations.',
+    'Our pupils combine a sound, highly qualitative western curriculum with Hifdhul Qur\u2019an, Arabic literacy and Islamic education  memorising at least a quarter of the Qur\u2019an while maintaining distinction scores in internal and external examinations.',
     'Alongside academics, we run leadership training classes, mentoring and coaching, clubs and associations, and guidance and counselling, so every child leaves with character as well as certificates.',
   ]);
   const historyImage = settingValue<string>(settings, 'about_history_image', '/ivintage_logo.png');

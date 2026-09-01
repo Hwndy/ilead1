@@ -34,7 +34,7 @@ export const Programmes: React.FC = () => {
   const intro = settingValue<string>(
     settings,
     'home_programmes_intro',
-    'One school, one standard \u2014 from the first day of nursery to the final senior secondary examination.',
+    'One school, one standard  from the first day to the final senior secondary examination.',
   );
 
   if (!programmes?.length) return null;

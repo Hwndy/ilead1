@@ -32,7 +32,7 @@ export const AdmissionsGlance: React.FC = () => {
   const note = settingValue<string>(
     settings,
     'home_key_dates_note',
-    'Entrance examinations hold every Saturday at 10am prompt. Apply early \u2014 places in each class are limited.',
+    'Entrance examinations hold every Saturday at 10am prompt. Apply early  places in each class are limited.',
   );
 
 

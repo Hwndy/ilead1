@@ -21,7 +21,7 @@ const DEFAULT_PILLARS: Pillar[] = [
   },
   {
     title: 'Hifdhul Qur\u2019an, Islamic education and Arabic',
-    description: 'Qur\u2019an memorisation \u2014 at least a quarter of the whole Qur\u2019an \u2014 Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.',
+    description: 'Qur\u2019an memorisation  at least a quarter of the whole Qur\u2019an  Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.',
     image: '/img2.png',
   },
   {
@@ -38,7 +38,7 @@ export const WhyChooseUs: React.FC = () => {
   const intro = settingValue<string>(
     settings,
     'home_pillars_intro',
-    'Four pillars shape every child who passes through iVintage College \u2014 with coding a major component.',
+    'Four pillars shape every child who passes through iVintage College  with coding a major component.',
   );
 
 

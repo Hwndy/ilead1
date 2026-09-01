@@ -32,14 +32,14 @@ export const Newsletter: React.FC = () => {
             Stay close to the iVintage community
           </h2>
           <p className="text-primary-foreground/80 text-lg">
-            Termly newsletters with academic highlights, upcoming events and admission deadlines \u2014
+            Termly newsletters with academic highlights, upcoming events and admission deadlines 
             delivered to your inbox.
           </p>
 
           {submitted ? (
             <div className="inline-flex items-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-6 py-3">
               <CheckCircle2 className="h-5 w-5 text-gold" />
-              <span className="font-medium">Thank you \u2014 you\u2019re subscribed.</span>
+              <span className="font-medium">Thank you  you\u2019re subscribed.</span>
             </div>
           ) : (
             <form
