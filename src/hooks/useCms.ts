@@ -11,14 +11,18 @@ export interface SchoolInfoMap {
 
 const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
   name: 'iVintage College',
-  motto: 'Building Tomorrow\u2019s Leaders Today',
-  address: 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos',
+  motto: '\u2026redefining western and Islamic intellectualism',
+  address: 'iLead Vintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos',
+  address_alt: '28, Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos',
   contact_phone: '+234 813 418 7710',
+  contact_phone_alt: '0705 427 3127, 0802 322 6806',
   contact_email: 'ileadvintagecollege@gmail.com',
+  contact_email_alt: 'info@ileadcollege.com',
   whatsapp_number: '2348134187710',
   facebook_url: '',
   twitter_url: '',
   instagram_url: '',
+
   youtube_url: '',
   tiktok_url: '',
   stat_students: '600+',
