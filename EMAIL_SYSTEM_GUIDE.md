@@ -20,7 +20,7 @@ Complete email functionality has been implemented for the Al-Bari Group of Schoo
    - `send-admission-notification`
    - `send-otp`
 
-3. ✅ **Added User-Facing Error Messages**
+3. ✅ **Added User-Facing Error Messages**.
    - `AdmissionForm.tsx` - Shows if confirmation email fails
    - `AdmissionManagement.tsx` - Warns admin if notification fails
    - `InterviewScheduler.tsx` - Indicates email send status
