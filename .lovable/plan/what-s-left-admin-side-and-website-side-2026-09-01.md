@@ -1,4 +1,4 @@
-# What's left — admin side and website side
+# What's left  admin side and website side
 
 Verified against your live database (`trtuqzdsutmindcjbkvj`) and the code, here is the honest state and the remaining work.
 
@@ -11,7 +11,7 @@ Deploying needs the Supabase CLI with your access token (commands are in `db/REA
 
 **2. No public storage bucket for media.** Only `question-media`, `exam-attachments`, `admission-documents`, `assignments` exist. CMS image uploads (gallery, news covers, principal photo, student passports) need a public `media` bucket with policies.
 
-## Admin side — empty tables that need setup or seeding
+## Admin side  empty tables that need setup or seeding
 
 | Area | State | Needed |
 |---|---|---|
@@ -29,13 +29,13 @@ Also worth a pass: confirm timetable periods/rooms, and run one end-to-end smoke
 
 ## Website side
 
-- **News: 0 articles, Gallery: 0 images, Job openings: 0** — those pages currently render empty states. Needs real content, which needs the media bucket first.
-- **`website_pages` / `website_sections` are empty** — the CMS page builder has nothing in it; pages run purely on `website_settings` defaults. Either seed page rows or accept settings-only editing.
+- **News: 0 articles, Gallery: 0 images, Job openings: 0**  those pages currently render empty states. Needs real content, which needs the media bucket first.
+- **`website_pages` / `website_sections` are empty**  the CMS page builder has nothing in it; pages run purely on `website_settings` defaults. Either seed page rows or accept settings-only editing.
 - **Imagery is still AI-generated stock** (`/campus.png`, `/img1-3.png`, hero slides). Replace with real photos from the school.
-- **Facilities / School Life / Careers pages** still carry generic copy — the old WordPress snapshots only covered home, pillars, admissions, testimonials and contact. Needs real text for the three campuses (Day School, Boarding House, Tahfeedh School).
-- **Social links empty** (`facebook_url`, `instagram_url`, etc. blank) — footer icons point nowhere.
-- **Stats are placeholders** (600+ students, 60+ teachers, 98% success rate) — confirm or correct.
-- **Principal photo/name** — `principal_name` set generically; needs the real principal and a photo.
+- **Facilities / School Life / Careers pages** still carry generic copy  the old WordPress snapshots only covered home, pillars, admissions, testimonials and contact. Needs real text for the three campuses (Day School, Boarding House, Tahfeedh School).
+- **Social links empty** (`facebook_url`, `instagram_url`, etc. blank)  footer icons point nowhere.
+- **Stats are placeholders** (600+ students, 60+ teachers, 98% success rate)  confirm or correct.
+- **Principal photo/name**  `principal_name` set generically; needs the real principal and a photo.
 - **SEO**: sitemap regeneration and canonical paths should be re-checked after content lands; `og:image` for social sharing.
 - **Admissions online payment** won't function until the Paystack functions are deployed and keys set.
 
