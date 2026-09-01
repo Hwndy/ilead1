@@ -10,12 +10,12 @@ const corsHeaders = {
 };
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ilead1.lovable.app").replace(/\/+$/, "");
+const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ivintage.vercel.app").replace(/\/+$/, "");
 // NOTE: the custom domain serves index.html for /__l5e/* paths, so assets must be
-// loaded from the Lovable asset host (or an explicit ASSET_BASE_URL secret).
+// loaded from the asset host (or an explicit ASSET_BASE_URL secret).
 const ASSET_BASE_URL = (Deno.env.get("ASSET_BASE_URL") || "https://id-preview--def176ba-5aaa-4bf2-a711-588b116fc44e.lovable.app").replace(/\/+$/, "");
 const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/f210aa1b-7164-4673-a0da-2e0eb697e3a9/ivintage-letterhead.png`;
-const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
 const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);

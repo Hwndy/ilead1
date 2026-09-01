@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export const SITE_URL = 'https://ilead1.lovable.app';
+export const SITE_URL = 'https://ivintage.vercel.app';
 
 interface SEOProps {
   title: string;

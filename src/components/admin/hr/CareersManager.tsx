@@ -20,7 +20,7 @@ export const CareersManager: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
   const [form, setForm] = useState({
     title: '', department: '', employment_type: 'full_time', location: '',
-    description: '', requirements: '', apply_email: 'careers@ilead1.lovable.app', closes_on: '',
+    description: '', requirements: '', apply_email: 'careers@ilead1..app', closes_on: '',
   });
 
   const load = async () => {
@@ -37,7 +37,7 @@ export const CareersManager: React.FC = () => {
     if (error) toast({ title: 'Failed', description: error.message, variant: 'destructive' });
     else {
       toast({ title: 'Job posted' });
-      setForm({ title: '', department: '', employment_type: 'full_time', location: '', description: '', requirements: '', apply_email: 'careers@ilead1.lovable.app', closes_on: '' });
+      setForm({ title: '', department: '', employment_type: 'full_time', location: '', description: '', requirements: '', apply_email: 'careers@ivintage.vercel.app', closes_on: '' });
       load();
     }
   };

@@ -4,7 +4,7 @@ import { Resend } from "npm:resend@2.0.0";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
-const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
 const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
@@ -146,7 +146,7 @@ const emailTemplates: Record<string, (data: any) => { subject: string; html: str
   }),
   enrolled: (data: any) => {
     const s = data.enrollment_settings || {};
-    const portal = String(s.portal_url || "https://ilead1.lovable.app/login").replace(/\/$/, "");
+    const portal = String(s.portal_url || "https://ivintage.vercel.app/login").replace(/\/$/, "");
     const actions: Array<{ label: string; url?: string }> = Array.isArray(s.required_actions) && s.required_actions.length
       ? s.required_actions
       : [

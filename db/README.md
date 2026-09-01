@@ -53,5 +53,5 @@ Supabase automatically.
 
 In Authentication → URL Configuration set:
 
-- Site URL: `https://ilead1.lovable.app`
-- Redirect URLs: `https://ilead1.lovable.app/**`, `http://localhost:8080/**`
+- Site URL: `https://ivintage.vercel.app`
+- Redirect URLs: `https://ivintage.vercel.app/**`, `http://localhost:8080/**`

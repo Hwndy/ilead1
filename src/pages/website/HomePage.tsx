@@ -66,21 +66,21 @@ export const HomePage = () => {
           name="description"
           content="iVintage College offers nursery, primary and secondary education in Nigeria, nurturing future leaders through academic excellence and character building."
         />
-        <link rel="canonical" href="https://ilead1.lovable.app/" />
+        <link rel="canonical" href="https://ivintage.vercel.app/" />
         <meta property="og:title" content="iVintage College  Day School, Boarding & Tahfeedh, Ikorodu" />
         <meta
           property="og:description"
           content="Nursery, primary and secondary education with a strong tradition of academic excellence, character and faith."
         />
-        <meta property="og:url" content="https://ilead1.lovable.app/" />
+        <meta property="og:url" content="https://ivintage.vercel.app/" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
           name: "iVintage College",
           alternateName: "iVintage College",
-          url: "https://ilead1.lovable.app/",
-          logo: "https://ilead1.lovable.app/ivintage_logo.png",
+          url: "https://ivintage.vercel.app/",
+          logo: "https://ivintage.vercel.app/ivintage_logo.png",
           
           description:
             "iVintage College provides nursery, primary and secondary education in Nigeria with a focus on academic excellence, character and faith.",
@@ -88,7 +88,7 @@ export const HomePage = () => {
             "@type": "PostalAddress",
             addressCountry: "NG"
           },
-          sameAs: ["https://ilead1.lovable.app/"]
+          sameAs: ["https://ivintage.vercel.app/"]
         })}</script>
       </Helmet>
 

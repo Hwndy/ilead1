@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ilead1.lovable.app/</loc>
+    <loc>https://ivintage.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website</loc>
+    <loc>https://ivintage.vercel.app/website</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/about</loc>
+    <loc>https://ivintage.vercel.app/website/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/school-life</loc>
+    <loc>https://ivintage.vercel.app/website/school-life</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/admissions</loc>
+    <loc>https://ivintage.vercel.app/website/admissions</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/admissions/apply</loc>
+    <loc>https://ivintage.vercel.app/website/admissions/apply</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/track-application</loc>
+    <loc>https://ivintage.vercel.app/website/track-application</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/facilities</loc>
+    <loc>https://ivintage.vercel.app/website/facilities</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/news</loc>
+    <loc>https://ivintage.vercel.app/website/news</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/gallery</loc>
+    <loc>https://ivintage.vercel.app/website/gallery</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/testimonials</loc>
+    <loc>https://ivintage.vercel.app/website/testimonials</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ilead1.lovable.app/website/portals</loc>
+    <loc>https://ivintage.vercel.app/website/portals</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>

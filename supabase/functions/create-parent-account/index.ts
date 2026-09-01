@@ -53,7 +53,7 @@ serve(async (req) => {
       if (!student) return json({ error: "Selected student was not found" }, 404);
     }
 
-    const redirectTo = `${req.headers.get("origin") || "https://ilead1.lovable.app"}/login`;
+    const redirectTo = `${req.headers.get("origin") || "https://ivintage.vercel.app"}/login`;
     const { data: invited, error: inviteError } = await adminClient.auth.admin.inviteUserByEmail(input.email, {
       redirectTo,
       data: { full_name: input.fullName, role: "parent", phone: input.phone },

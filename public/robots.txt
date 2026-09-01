@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ilead1.lovable.app/sitemap.xml
+Sitemap: https://ivintage.vercel.app/sitemap.xml

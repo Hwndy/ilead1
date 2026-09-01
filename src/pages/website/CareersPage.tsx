@@ -54,7 +54,7 @@ export const CareersPage: React.FC = () => {
             description="New roles are posted here as soon as they open. In the meantime, you are welcome to send us a speculative application."
           >
             <Button asChild className="rounded-full px-6">
-              <a href="mailto:careers@ilead1.lovable.app?subject=Speculative%20application">Email careers@ilead1.lovable.app</a>
+              <a href="mailto:careers@ivintage.vercel.app?subject=Speculative%20application">Email careers@ivintage.vercel.app</a>
             </Button>
           </EmptyState>
         ) : (

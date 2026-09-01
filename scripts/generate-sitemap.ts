@@ -3,7 +3,7 @@ import { writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { createClient } from '@supabase/supabase-js';
 
-const BASE_URL = process.env.VITE_FRONTEND_URL || 'https://ilead1.lovable.app';
+const BASE_URL = process.env.VITE_FRONTEND_URL || 'https://ivintage.vercel.app';
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://trtuqzdsutmindcjbkvj.supabase.co';
 const SUPABASE_ANON =
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||

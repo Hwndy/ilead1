@@ -31,7 +31,7 @@ function buildIcs(item: NewsItem): string {
     'VERSION:2.0',
     'PRODID:-//iVintage//Events//EN',
     'BEGIN:VEVENT',
-    `UID:${item.id}@ilead1.lovable.app`,
+    `UID:${item.id}@ivintage.vercel.app`,
     `DTSTAMP:${fmt(new Date())}`,
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,

@@ -117,7 +117,7 @@ serve(async (req) => {
           const rawDomain = domainSetting?.setting_value;
           const loginDomain =
             (typeof rawDomain === "string" ? rawDomain : rawDomain?.toString?.()) ||
-            "students.ilead1.lovable.app";
+            "students.ivintage.vercel.app";
           const slug = (value: string) =>
             String(value ?? "")
               .normalize("NFD")

@@ -7,7 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ALLOWED_EMAIL_DOMAIN = "ilead1.lovable.app";
+const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
 const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "suleayo04@gmail.com";
 
@@ -82,7 +82,7 @@ serve(async (req) => {
               <p>Dear Parent/Guardian,</p>
               <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""})  ${cls?.name || ""}  for <strong>${term}</strong> has been published.</p>
               <p>Please log in to the Parent Portal to download the official PDF:</p>
-              <p><a href="https://ilead1.lovable.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
+              <p><a href="https://ivintage.vercel.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
               <p style="color:#666;font-size:12px;margin-top:24px">If you did not expect this message, please contact ${school?.email || replyTo}.</p>
             </div>
           </div>`;
