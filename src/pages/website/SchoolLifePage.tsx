@@ -60,9 +60,6 @@ export const SchoolLifePage = () => {
   ];
 
   const classStructure = [
-    { level: 'CRECHE', title: 'Your babies in safe hands', description: 'Warm, supervised care with early sensory play and routine building.' },
-    { level: 'KG – NURSERY', title: 'Kindergarten', description: 'Foundation years building literacy, numeracy and social confidence.' },
-    { level: 'PRY 1 – 6', title: 'Primary', description: 'Core competencies across all subject areas with continuous assessment.' },
     { level: 'JSS 1 – 3', title: 'Junior Secondary', description: 'Broad curriculum leading to BECE, with early subject guidance.' },
     { level: 'SSS 1 – 3', title: 'Senior Secondary', description: 'Specialised tracks preparing students for WAEC, NECO and JAMB.' },
     { level: '20–25', title: 'Class size', description: 'Small classes so every child is known, tracked and supported.' },
