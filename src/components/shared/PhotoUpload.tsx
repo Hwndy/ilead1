@@ -15,7 +15,7 @@ interface PhotoUploadProps {
   id?: string;
 }
 
-const BUCKET = 'admission-documents';
+const BUCKET = 'media';
 
 /** Passport photo picker with preview. Uploads to public storage and returns the URL. */
 export const PhotoUpload = ({ value, onChange, folder, label = 'Passport Photo', id }: PhotoUploadProps) => {

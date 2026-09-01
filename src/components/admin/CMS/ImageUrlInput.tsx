@@ -18,7 +18,7 @@ interface ImageUrlInputProps {
 
 // Reuses the public 'admission-documents' bucket under a website/<folder>/ prefix.
 // Admins have full manage rights; the bucket is public-read so URLs work on the site.
-const BUCKET = 'admission-documents';
+const BUCKET = 'media';
 
 export const ImageUrlInput = ({
   value,
