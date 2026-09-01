@@ -33,7 +33,7 @@ export const UpdateAvailable: React.FC = () => {
         <div className="flex items-center gap-3">
           <RefreshCw className="h-5 w-5 text-primary animate-spin" />
           <div className="flex-1">
-            <p className="font-medium">Update Available</p>
+            <p className="font-medium">Update Available.</p>
             <p className="text-sm text-muted-foreground">
               Refresh to get the latest version
             </p>
