@@ -36,11 +36,11 @@ export const AboutPage = () => {
   const heroTitle = settingValue<string>(settings, 'about_hero_title', 'Excellence in Education');
   const heroHighlight = settingValue<string>(settings, 'about_hero_highlight', 'Ikorodu, Lagos');
   const heroSubtitle = settingValue<string>(settings, 'about_hero_subtitle',
-    'iVintage College brings together a day school, a boarding house and the iLead Tahfeedh School on one campus in Ikorodu, nurturing young minds and shaping future leaders through strong teaching and character development.');
+    'iVintage College brings together a day school, a boarding house and the iLead Tahfeedh School on one campus in Ikorodu \u2014 redefining western and Islamic intellectualism, with ICT and coding at the core.');
   const historyParagraphs = settingValue<string[]>(settings, 'about_history_paragraphs', [
-    'iVintage College was established with a vision to provide quality education that combines academic excellence with moral values, serving families across Ikorodu and the wider Lagos area.',
-    'Over the years, we have consistently maintained our commitment to excellence, producing graduates who have gone on to achieve success in various fields including medicine, engineering, law, and business.',
-    'Our journey has been marked by continuous innovation in teaching methodologies, infrastructure development, and the integration of modern technology into traditional learning approaches.',
+    'iVintage College was established to deliver a perfect blend of western and Islamic education, as well as proficiency in ICT with coding as a major component, serving families across Ikorodu and the wider Lagos area.',
+    'Our pupils combine a sound, highly qualitative western curriculum with Hifdhul Qur\u2019an, Arabic literacy and Islamic education \u2014 memorising at least a quarter of the Qur\u2019an while maintaining distinction scores in internal and external examinations.',
+    'Alongside academics, we run leadership training classes, mentoring and coaching, clubs and associations, and guidance and counselling, so every child leaves with character as well as certificates.',
   ]);
   const historyImage = settingValue<string>(settings, 'about_history_image', '/ivintage_logo.png');
   const yearsBadge = settingValue<string>(settings, 'about_years_badge', '');
@@ -49,11 +49,14 @@ export const AboutPage = () => {
   const yearsLabel = yearsBadge || (foundingYear ? `${Math.max(1, new Date().getFullYear() - foundingYear)}+ Years` : 'Ikorodu, Lagos');
 
   const vision = settingValue<string>(settings, 'about_vision',
-    'To be the leading educational institution in Nigeria, recognized for academic excellence, character development, and the production of well-rounded individuals who contribute positively to society.');
+    'To be the largest network of Neighbourhood Schools of Choice in Nigeria.');
   const mission = settingValue<string>(settings, 'about_mission',
-    'To provide quality education that nurtures intellectual growth, moral development, and practical skills, preparing students to excel in their chosen careers while maintaining the highest ethical standards.');
+    'To nurture leaders who are committed to excellence and imbued with a perfect blend of Western and Islamic education with a solid foundation in ICT.');
+  const target = settingValue<string>(settings, 'about_target',
+    'To establish a network of schools with branches in all 20 Local Governments in Lagos, and all 774 Local Governments in Nigeria.');
   const values = settingValue<Value[]>(settings, 'about_values', DEFAULT_VALUES);
   const leaders = settingValue<Leader[]>(settings, 'about_leaders', DEFAULT_LEADERS);
+
 
   return (
     <div className="space-y-0">
