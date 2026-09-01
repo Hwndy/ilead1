@@ -53,7 +53,7 @@ export const WhyChooseUs: React.FC = () => {
           <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 90}>
               <article className="group relative h-full min-h-[320px] overflow-hidden rounded-2xl border border-border shadow-sm">
