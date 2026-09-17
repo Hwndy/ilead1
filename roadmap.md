@@ -23,10 +23,10 @@
 - [x] FeeRules, BillingRun, InvoicesList screens
 
 ## Phase 5 — Admissions and enrolment reliability
-- [ ] NIN capture + compulsory documents
-- [ ] Document verification states with rejection reasons
-- [ ] Shared enroll-applicant routine, idempotent, used by all payment paths
-- [ ] Offline acceptance payment (edge function + admin dialog)
+- [x] NIN capture + compulsory documents
+- [x] Document verification states with rejection reasons
+- [x] Shared enroll_applicant routine, idempotent (SQL, used by admin + payment paths)
+- [x] Offline acceptance payment (RPC + admin dialog)
 
 ## Phase 6 — Staff, users, admin home
 - [ ] create-staff-user edge function + Staff Management rework
@@ -35,4 +35,4 @@
 
 ## Blocked / needs the user
 - Edge functions are not deployed to the connected Supabase project; server-side items stay inactive until deployed.
-- SQL migrations in `db/` must be run in the Supabase SQL editor (no direct DB access from here).
+- SQL migrations in `db/` must be run in the Supabase SQL editor: phase1-finance, phase3-structure, phase4-billing, phase5-admissions.
