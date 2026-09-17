@@ -252,10 +252,13 @@ export const StudentDetail: React.FC = () => {
         <Card>
           <CardHeader><CardTitle className="flex items-center gap-2"><GraduationCap className="h-4 w-4" />Academic</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm">
+            <Row label="Campus" value={placement.campus_name || 'Not placed'} />
             <Row label="Class" value={className} />
+            <Row label="Arm" value={placement.arm_name || 'Not placed'} />
             <Row label="Section" value={student?.section} />
             <Row label="Admission Date" value={student?.admission_date} />
             <Row label="Registration #" value={student?.registration_number || student?.admission_number} />
+            <Row label="NIN" value={student?.nin} />
           </CardContent>
         </Card>
 
