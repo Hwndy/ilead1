@@ -48,6 +48,7 @@ export const StudentDetail: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [student, setStudent] = useState<any>(null);
   const [className, setClassName] = useState<string | null>(null);
+  const [placement, setPlacement] = useState<Placement>(EMPTY_PLACEMENT);
   const [exams, setExams] = useState<any[]>([]);
   const [attendance, setAttendance] = useState<any | null>(null);
   const [payments, setPayments] = useState<any[]>([]);
