@@ -30,10 +30,29 @@ export const AdmissionPaymentVerification = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
+  const [candidates, setCandidates] = useState<Array<{ id: string; label: string }>>([]);
+  const [selectedApp, setSelectedApp] = useState<string>("");
+  const [offlineOpen, setOfflineOpen] = useState(false);
 
   useEffect(() => {
     fetchPayments();
   }, [filter]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("admission_applications")
+        .select("id, application_number, first_name, last_name, status")
+        .in("status", ["accepted", "payment_pending"] as any)
+        .order("application_number");
+      setCandidates(
+        (data || []).map((a: any) => ({
+          id: a.id,
+          label: `${a.application_number} — ${a.first_name} ${a.last_name}`,
+        })),
+      );
+    })();
+  }, []);
 
   const fetchPayments = async () => {
     try {
