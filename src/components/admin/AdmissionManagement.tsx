@@ -37,6 +37,7 @@ interface Application {
   applying_for_class_id: string | null;
   parent_guardian_info: any;
   address: any;
+  nin?: string | null;
 }
 
 export const AdmissionManagement = () => {
