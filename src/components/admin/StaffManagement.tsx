@@ -561,7 +561,17 @@ export const StaffManagement = () => {
         </CardContent>
       </Card>
 
+      <CreateStaffAccountDialog
+        open={showCreateAccount}
+        onOpenChange={setShowCreateAccount}
+        onCreated={() => {
+          fetchStaffMembers();
+          fetchTeachers();
+        }}
+      />
+
       {/* Add Staff Dialog */}
+
       <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
         <DialogContent>
           <DialogHeader>
