@@ -54,6 +54,7 @@ export const AdminOverview = () => {
   const [snap, setSnap] = useState<Snapshot>(EMPTY);
   const [recentPayments, setRecentPayments] = useState<any[]>([]);
   const [recentApplications, setRecentApplications] = useState<any[]>([]);
+  const [campusCounts, setCampusCounts] = useState<{ name: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
   const [problem, setProblem] = useState<string | null>(null);
 
