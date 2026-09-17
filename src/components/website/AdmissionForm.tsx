@@ -1175,7 +1175,7 @@ export const AdmissionForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="passport_photos">Passport Photographs (4 copies)</Label>
+                  <Label htmlFor="passport_photos">Passport Photographs (4 copies) *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
