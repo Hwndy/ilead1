@@ -33,8 +33,9 @@ export const PaymentsList: React.FC = () => {
         students: r.students ? { ...r.students, profiles: { full_name: nameMap.get(r.students.user_id) || 'Unknown' } } : null,
       })));
       setLoading(false);
-    })();
-  }, []);
+    }
+  };
+  useEffect(() => { load(); }, []);
 
   const filtered = useMemo(() => payments.filter((p: any) =>
     !q || (p.students?.profiles?.full_name || '').toLowerCase().includes(q.toLowerCase())
