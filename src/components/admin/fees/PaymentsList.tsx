@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Download, Search } from 'lucide-react';
+import { Loader2, Download, Search, Banknote } from 'lucide-react';
 import { format } from 'date-fns';
+import { RecordCashPaymentDialog } from './RecordCashPaymentDialog';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -14,13 +15,15 @@ export const PaymentsList: React.FC = () => {
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
+  const [payOpen, setPayOpen] = useState(false);
 
-  useEffect(() => {
-    (async () => {
+  const load = async () => {
+    {
+      setLoading(true);
       const { data } = await supabase.from('fee_payments')
-        .select('*, students(id, user_id, admission_number), fee_structures(fee_type,academic_year)')
+        .select('*, students(id, user_id, admission_number, archived_at), fee_structures(fee_type,academic_year)')
         .order('created_at', { ascending: false }).limit(500);
-      const rows = (data || []) as any[];
+      const rows = ((data || []) as any[]).filter(r => !r.students?.archived_at);
       const userIds = [...new Set(rows.map(r => r.students?.user_id).filter(Boolean))];
       let nameMap = new Map<string, string>();
       if (userIds.length) {
@@ -32,8 +35,9 @@ export const PaymentsList: React.FC = () => {
         students: r.students ? { ...r.students, profiles: { full_name: nameMap.get(r.students.user_id) || 'Unknown' } } : null,
       })));
       setLoading(false);
-    })();
-  }, []);
+    }
+  };
+  useEffect(() => { load(); }, []);
 
   const filtered = useMemo(() => payments.filter((p: any) =>
     !q || (p.students?.profiles?.full_name || '').toLowerCase().includes(q.toLowerCase())
@@ -62,6 +66,7 @@ export const PaymentsList: React.FC = () => {
         <div className="flex gap-2">
           <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/><Input className="pl-9 w-64" placeholder="Search..." value={q} onChange={e => setQ(e.target.value)}/></div>
           <Button variant="outline" onClick={exportCsv}><Download className="h-4 w-4 mr-1"/>CSV</Button>
+          <Button onClick={() => setPayOpen(true)}><Banknote className="h-4 w-4 mr-1"/>Record payment</Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -84,6 +89,7 @@ export const PaymentsList: React.FC = () => {
             </TableBody>
           </Table>
         )}
+        <RecordCashPaymentDialog open={payOpen} onOpenChange={setPayOpen} onSaved={load} />
       </CardContent>
     </Card>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Wallet, TrendingUp, AlertTriangle, CalendarClock } from 'lucide-react';
+import { fetchStudentClassMap } from '@/lib/class-roster';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -15,19 +16,21 @@ export const FeeOverview: React.FC = () => {
     setLoading(true);
     try {
       const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
-      const [{ data: students }, { data: structures }, { data: payments }, { count: overdue }] = await Promise.all([
-        supabase.from('students').select('id, class_assignments(class_id)'),
-        supabase.from('fee_structures').select('amount, class_id'),
+      const [{ data: students }, { data: structures }, { data: payments }, { count: overdue }, classMap] = await Promise.all([
+        supabase.from('students').select('id').is('archived_at', null),
+        supabase.from('fee_structures').select('amount, class_id, is_active'),
         supabase.from('fee_payments').select('amount_paid, payment_date, status, student_id').eq('status', 'completed'),
         supabase.from('fee_installments').select('id', { count: 'exact', head: true }).eq('status', 'overdue'),
+        fetchStudentClassMap(),
       ]);
+      const activeFees = (structures || []).filter((f: any) => f.is_active !== false);
       // Estimate billed = sum(structure.amount) applied to each student who matches class (or global)
       let billed = 0;
       const paidByStudent: Record<string, number> = {};
       const perStudentBill: Record<string, number> = {};
       (students || []).forEach((s: any) => {
-        const classId = s.class_assignments?.[0]?.class_id || null;
-        const sum = (structures || []).filter((f: any) => !f.class_id || f.class_id === classId).reduce((a, b: any) => a + Number(b.amount), 0);
+        const classId = classMap.get(s.id)?.class_id || null;
+        const sum = activeFees.filter((f: any) => !f.class_id || f.class_id === classId).reduce((a, b: any) => a + Number(b.amount), 0);
         perStudentBill[s.id] = sum; billed += sum;
       });
       let collected = 0, thisMonth = 0;
