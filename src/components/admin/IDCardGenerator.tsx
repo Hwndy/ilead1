@@ -34,6 +34,7 @@ interface Student {
   };
   qr_token?: string | null;
   date_of_birth?: string | null;
+  campus_name?: string;
 }
 
 interface School {
