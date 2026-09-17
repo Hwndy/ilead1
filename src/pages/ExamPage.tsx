@@ -165,10 +165,12 @@ export const ExamPage: React.FC = () => {
   };
 
   return (
-    <JAMBExamInterface
-      exam={examData}
-      onSubmit={handleSubmitExam}
-      onExit={handleExitExam}
-    />
+    <div data-exam-active="true">
+      <JAMBExamInterface
+        exam={examData}
+        onSubmit={handleSubmitExam}
+        onExit={handleExitExam}
+      />
+    </div>
   );
 };

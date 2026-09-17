@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { usePWAContext } from '@/contexts/PWAContext';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
+const isBusy = () => {
+  const el = document.activeElement as HTMLElement | null;
+  if (el && ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName)) return true;
+  if (el?.isContentEditable) return true;
+  return !!document.querySelector('[data-exam-active="true"]');
+};
+
 export const UpdateAvailable: React.FC = () => {
   const { isUpdateAvailable, updateApp } = usePWAContext();
   const [shown, setShown] = useState(false);
+  const timer = useRef<number | null>(null);
 
+  // Apply new versions automatically, waiting until the person isn't mid-typing.
   useEffect(() => {
-    if (isUpdateAvailable && !shown) {
+    if (!isUpdateAvailable) return;
+    if (!shown) {
       setShown(true);
-      toast('Update Available', {
-        description: 'A new version of iVintageExam is available',
-        duration: Infinity,
-        action: {
-          label: 'Update Now',
-          onClick: () => {
-            updateApp();
-          },
-        },
-        icon: <RefreshCw className="h-4 w-4" />,
-      });
+      toast('Updating to the latest version…', { duration: 4000, icon: <RefreshCw className="h-4 w-4" /> });
     }
+    timer.current = window.setInterval(() => {
+      if (!isBusy()) updateApp();
+    }, 3000);
+    return () => { if (timer.current) window.clearInterval(timer.current); };
   }, [isUpdateAvailable, updateApp, shown]);
 
   if (!isUpdateAvailable) return null;
@@ -33,14 +37,10 @@ export const UpdateAvailable: React.FC = () => {
         <div className="flex items-center gap-3">
           <RefreshCw className="h-5 w-5 text-primary animate-spin" />
           <div className="flex-1">
-            <p className="font-medium">Update Available.</p>
-            <p className="text-sm text-muted-foreground">
-              Refresh to get the latest version
-            </p>
+            <p className="font-medium">New version ready</p>
+            <p className="text-sm text-muted-foreground">It will apply automatically in a moment.</p>
           </div>
-          <Button size="sm" onClick={updateApp}>
-            Update
-          </Button>
+          <Button size="sm" onClick={updateApp}>Update now</Button>
         </div>
       </div>
     </div>

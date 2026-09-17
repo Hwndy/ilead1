@@ -90,7 +90,7 @@ export const AssignAdmissionNumbersDialog: React.FC<Props> = ({
       const [{ data: profiles }, { data: students }] = await Promise.all([
         supabase.from('profiles').select('user_id, full_name').in('user_id', userIds),
         supabase.from('students')
-          .select('user_id, admission_number').in('user_id', userIds),
+          .select('user_id, admission_number').in('user_id', userIds).is('archived_at', null),
       ]);
       const pMap = new Map<string, string>(
         (profiles ?? []).map((p: any) => [p.user_id as string, p.full_name as string])

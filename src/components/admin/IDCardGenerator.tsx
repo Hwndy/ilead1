@@ -98,7 +98,7 @@ export const IDCardGenerator: React.FC = () => {
       const studentsResponse = await supabase
         .from('students')
         .select('id, user_id, admission_number, photo_url, date_of_birth')
-        ;
+        .is('archived_at', null);
       
       const studentsData = studentsResponse.data as any[] || [];
 

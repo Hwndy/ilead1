@@ -36,7 +36,7 @@ export const HostelAllocations: React.FC = () => {
       supabase.from('hostels').select('id, name, gender').order('name'),
       supabase.from('hostel_rooms').select('id, hostel_id, room_number, capacity').order('room_number'),
       supabase.from('hostel_allocations').select('*').order('allocated_on', { ascending: false }),
-      supabase.from('students').select('id, user_id, admission_number, gender, is_boarder').eq('status', 'active'),
+      supabase.from('students').select('id, user_id, admission_number, gender, is_boarder').eq('status', 'active').is('archived_at', null),
       supabase.from('class_assignments').select('student_id, class_id'),
       supabase.from('classes').select('id, name'),
       supabase.from('profiles').select('user_id, full_name'),

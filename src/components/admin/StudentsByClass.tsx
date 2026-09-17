@@ -128,7 +128,8 @@ export const StudentsByClass: React.FC = () => {
         supabase.from('profiles').select('user_id, full_name').in('user_id', userIds),
         supabase.from('students')
           .select('user_id, id, admission_number, gender, date_of_birth, status, photo_url')
-          .in('user_id', userIds),
+          .in('user_id', userIds)
+          .is('archived_at', null),
       ]);
 
       const pMap = new Map((profiles ?? []).map(p => [p.user_id, p]));
