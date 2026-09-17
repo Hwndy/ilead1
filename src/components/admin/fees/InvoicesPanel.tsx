@@ -86,7 +86,7 @@ export const InvoicesPanel: React.FC = () => {
           (!r.student_type || r.student_type === type) &&
           (!r.term || r.term === term) &&
           (!r.academic_year || r.academic_year === year));
-        const feeIds = Array.from(new Set(matched.map((r: any) => r.fee_id as string)));
+        const feeIds: string[] = Array.from(new Set<string>((matched as any[]).map(r => String(r.fee_id))));
         if (feeIds.length === 0) { skipped++; continue; }
 
         const { data: existing } = await db.from('student_invoices')
