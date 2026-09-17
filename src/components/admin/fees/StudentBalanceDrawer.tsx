@@ -25,15 +25,23 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, onClose
 
   const load = async () => {
     setLoading(true);
-    const { data: ca } = await supabase.from('class_assignments').select('class_id').eq('student_id', studentId).maybeSingle();
-    const classId = ca?.class_id;
-    const [{ data: fs }, { data: pays }] = await Promise.all([
-      supabase.from('fee_structures').select('*').or(`class_id.eq.${classId || '00000000-0000-0000-0000-000000000000'},class_id.is.null`),
-      supabase.from('fee_payments').select('*, fee_structure:fee_structures(fee_type,academic_year)').eq('student_id', studentId).order('created_at', { ascending: false }),
-    ]);
-    setStructures(fs || []);
-    setPayments(pays || []);
-    setLoading(false);
+    setError(null);
+    try {
+      const placement = await fetchStudentClass(studentId);
+      setClassName(placement.class_name);
+      const [{ data: fs, error: fsErr }, { data: pays, error: payErr }] = await Promise.all([
+        supabase.from('fee_structures').select('*'),
+        supabase.from('fee_payments').select('*, fee_structure:fee_structures(fee_type,academic_year)').eq('student_id', studentId).order('created_at', { ascending: false }),
+      ]);
+      if (fsErr) throw fsErr;
+      if (payErr) throw payErr;
+      setStructures((fs || []).filter((f: any) => f.is_active !== false && (!f.class_id || f.class_id === placement.class_id)));
+      setPayments(pays || []);
+    } catch (e: any) {
+      setError(e.message || 'Could not load this student’s fees.');
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => { load(); }, [studentId]);
 
