@@ -153,7 +153,26 @@ export const AdmissionPaymentVerification = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Payment Records</CardTitle>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <Select value={selectedApp} onValueChange={setSelectedApp}>
+                <SelectTrigger className="w-[260px]">
+                  <SelectValue placeholder="Applicant who paid at school" />
+                </SelectTrigger>
+                <SelectContent>
+                  {candidates.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>{c.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={!selectedApp}
+                onClick={() => setOfflineOpen(true)}
+              >
+                <Banknote className="h-4 w-4 mr-2" />
+                Record offline payment
+              </Button>
               <Button
                 size="sm"
                 variant={filter === "all" ? "default" : "outline"}
@@ -222,6 +241,16 @@ export const AdmissionPaymentVerification = () => {
           )}
         </CardContent>
       </Card>
+
+      {selectedApp && (
+        <RecordOfflineAcceptanceDialog
+          applicationId={selectedApp}
+          applicantName={candidates.find((c) => c.id === selectedApp)?.label || "this applicant"}
+          open={offlineOpen}
+          onOpenChange={setOfflineOpen}
+          onRecorded={fetchPayments}
+        />
+      )}
     </div>
   );
 };
