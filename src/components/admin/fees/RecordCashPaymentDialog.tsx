@@ -98,7 +98,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
           f.is_active !== false && (!f.class_id || (info.class_id && f.class_id === info.class_id)),
         );
         setFees(applicable);
-        const { data: plans } = await supabase.from('fee_payment_plans').select('id').eq('student_id', studentId);
+        const { data: plans } = await supabase.from('fee_installment_plans').select('id').eq('student_id', studentId);
         const planIds = (plans || []).map((p: any) => p.id);
         if (planIds.length) {
           const { data: ins } = await supabase
