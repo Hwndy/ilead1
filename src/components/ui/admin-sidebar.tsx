@@ -76,6 +76,7 @@ export const NAV_SECTIONS: NavSection[] = [
         tab: "academic",
         children: [
           { title: "Classes", tab: "academic", subtab: "classes" },
+          { title: "Campuses & Arms", tab: "academic", subtab: "structure" },
           { title: "Subjects", tab: "academic", subtab: "subjects" },
           { title: "Timetable", tab: "academic", subtab: "timetable" },
         ],
