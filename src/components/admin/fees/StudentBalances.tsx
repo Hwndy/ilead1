@@ -145,7 +145,7 @@ export const StudentBalances: React.FC = () => {
             </TableBody>
           </Table>
         )}
-        {selected && <StudentBalanceDrawer studentId={selected.id} name={selected.name} onClose={() => { setSelected(null); load(); }}/>}
+        {selected && <StudentBalanceDrawer studentId={selected.id} name={selected.name} admission={selected.admission} onClose={() => { setSelected(null); load(); }}/>}
         <RecordCashPaymentDialog
           open={payFor !== null}
           onOpenChange={(v) => { if (!v) setPayFor(null); }}

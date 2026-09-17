@@ -15,6 +15,7 @@ export const PaymentsList: React.FC = () => {
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
+  const [payOpen, setPayOpen] = useState(false);
 
   const load = async () => {
     {
@@ -88,6 +89,7 @@ export const PaymentsList: React.FC = () => {
             </TableBody>
           </Table>
         )}
+        <RecordCashPaymentDialog open={payOpen} onOpenChange={setPayOpen} onSaved={load} />
       </CardContent>
     </Card>
   );
