@@ -11,10 +11,12 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, AlertTriangle } from 'lucide-react';
 import { fetchStudentClass } from '@/lib/class-roster';
 import { FeeReceiptView, FeeReceiptData } from '@/components/fees/FeeReceiptView';
+import { fetchStudentInvoices, invoiceBillable, StudentInvoice } from '@/lib/student-billing';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
 const OTHER = 'OTHER';
+const INVOICE_PREFIX = 'INV:';
 
 export interface CashPaymentStudent {
   id: string;
@@ -41,6 +43,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
   const [classInfo, setClassInfo] = useState<{ class_id: string | null; class_name: string } | null>(null);
   const [fees, setFees] = useState<any[]>([]);
   const [installments, setInstallments] = useState<Installment[]>([]);
+  const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
   const [saving, setSaving] = useState(false);
   const [receipt, setReceipt] = useState<FeeReceiptData | null>(null);
 
@@ -98,6 +101,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
           f.is_active !== false && (!f.class_id || (info.class_id && f.class_id === info.class_id)),
         );
         setFees(applicable);
+        setInvoices(await fetchStudentInvoices(studentId));
         const { data: plans } = await supabase.from('fee_installment_plans').select('id').eq('student_id', studentId);
         const planIds = (plans || []).map((p: any) => p.id);
         if (planIds.length) {
@@ -115,6 +119,12 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
     })();
   }, [open, studentId]);
 
+  const selectedInvoice = form.fee_structure_id.startsWith(INVOICE_PREFIX)
+    ? invoices.find(i => i.id === form.fee_structure_id.slice(INVOICE_PREFIX.length)) || null
+    : null;
+  const invoiceBalance = selectedInvoice
+    ? Math.max(0, invoiceBillable(selectedInvoice) - Number(selectedInvoice.amount_paid || 0))
+    : null;
   const selectedInstallment = installments.find(i => i.id === form.installment_id) || null;
   const installmentBalance = selectedInstallment
     ? Number(selectedInstallment.amount) - Number(selectedInstallment.paid_amount || 0)
@@ -138,16 +148,22 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
       toast({ title: 'Amount too high', description: `The selected installment only has ${NGN(installmentBalance)} outstanding.`, variant: 'destructive' });
       return;
     }
+    if (invoiceBalance !== null && amount > invoiceBalance) {
+      toast({ title: 'Amount too high', description: `That invoice only has ${NGN(invoiceBalance)} outstanding.`, variant: 'destructive' });
+      return;
+    }
 
     setSaving(true);
     try {
       const receiptNumber = `REC-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 10).toUpperCase()}`;
       const paidAt = new Date(`${form.date}T12:00:00`).toISOString();
       const { data: auth } = await supabase.auth.getUser();
-      const feeStructureId = form.fee_structure_id === OTHER ? null : form.fee_structure_id;
-      const feeLabel = feeStructureId
-        ? (fees.find(f => f.id === feeStructureId)?.fee_type || 'School fee')
-        : form.description.trim();
+      const feeStructureId = form.fee_structure_id === OTHER || selectedInvoice ? null : form.fee_structure_id;
+      const feeLabel = selectedInvoice
+        ? `${selectedInvoice.term} ${selectedInvoice.academic_year} fees`
+        : feeStructureId
+          ? (fees.find(f => f.id === feeStructureId)?.fee_type || 'School fee')
+          : form.description.trim();
 
       const payload: any = {
         student_id: studentId,
@@ -165,6 +181,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
         metadata: { source: 'office', description: feeLabel, recorded_by: auth?.user?.id || null },
         created_by: auth?.user?.id || null,
       };
+      if (selectedInvoice) payload.invoice_id = selectedInvoice.id;
 
       const { error } = await supabase.from('fee_payments').insert(payload);
       if (error) throw error;
@@ -262,11 +279,25 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
               <Label>Payment for *</Label>
               <Select
                 value={form.fee_structure_id}
-                onValueChange={v => setForm({ ...form, fee_structure_id: v, installment_id: '' })}
+                onValueChange={v => {
+                  const inv = v.startsWith(INVOICE_PREFIX)
+                    ? invoices.find(i => i.id === v.slice(INVOICE_PREFIX.length)) || null
+                    : null;
+                  const due = inv ? Math.max(0, invoiceBillable(inv) - Number(inv.amount_paid || 0)) : null;
+                  setForm({ ...form, fee_structure_id: v, installment_id: '', amount: due ? String(due) : form.amount });
+                }}
                 disabled={!studentId || loadingCtx}
               >
-                <SelectTrigger><SelectValue placeholder={loadingCtx ? 'Loading fees…' : 'Select a fee'} /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder={loadingCtx ? 'Loading fees…' : 'Select an invoice or fee'} /></SelectTrigger>
                 <SelectContent>
+                  {invoices.map(inv => {
+                    const due = Math.max(0, invoiceBillable(inv) - Number(inv.amount_paid || 0));
+                    return (
+                      <SelectItem key={inv.id} value={`${INVOICE_PREFIX}${inv.id}`}>
+                        {inv.term} {inv.academic_year} invoice — {NGN(due)} outstanding
+                      </SelectItem>
+                    );
+                  })}
                   {fees.map(f => (
                     <SelectItem key={f.id} value={f.id}>{f.fee_type} — {NGN(Number(f.amount))}{f.term ? ` (${f.term})` : ''}</SelectItem>
                   ))}
@@ -282,7 +313,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
               </div>
             )}
 
-            {installments.length > 0 && form.fee_structure_id !== OTHER && (
+            {installments.length > 0 && form.fee_structure_id !== OTHER && !selectedInvoice && (
               <div>
                 <Label>Installment (optional)</Label>
                 <Select value={form.installment_id || 'none'} onValueChange={v => setForm({ ...form, installment_id: v === 'none' ? '' : v })}>
@@ -304,6 +335,7 @@ export const RecordCashPaymentDialog: React.FC<Props> = ({ open, onOpenChange, s
                 <Label>Amount (₦) *</Label>
                 <Input type="number" min="0" value={form.amount} onChange={e => setForm({ ...form, amount: e.target.value })} />
                 {installmentBalance !== null && <p className="text-xs text-muted-foreground mt-1">Max {NGN(installmentBalance)}</p>}
+                {invoiceBalance !== null && <p className="text-xs text-muted-foreground mt-1">Outstanding on this invoice: {NGN(invoiceBalance)}</p>}
               </div>
               <div>
                 <Label>Date received *</Label>

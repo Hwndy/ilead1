@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { buildBrandedReceipt } from '@/lib/receipt-pdf';
+import { fetchStudentInvoices, fetchStudentCredits, invoiceBillable, StudentInvoice } from '@/lib/student-billing';
 
 interface FeeStructure {
   id: string;
@@ -58,6 +59,8 @@ export const ParentFees: React.FC = () => {
   const [payments, setPayments] = useState<FeePayment[]>([]);
   const [plans, setPlans] = useState<Plan[]>([]);
   const [installments, setInstallments] = useState<Installment[]>([]);
+  const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
+  const [creditBalance, setCreditBalance] = useState(0);
   const [loading, setLoading] = useState(true);
   const [paying, setPaying] = useState<string | null>(null);
   const [receiptFor, setReceiptFor] = useState<FeePayment | null>(null);
@@ -71,17 +74,21 @@ export const ParentFees: React.FC = () => {
     if (!selectedChild) return;
     setLoading(true);
     try {
-      const [{ data: fs }, { data: pay }, { data: pl }] = await Promise.all([
+      const [{ data: fs }, { data: pay }, { data: pl }, invs, cr] = await Promise.all([
         supabase
           .from('fee_structures')
           .select('*')
           .or(`class_id.eq.${selectedChild.class_id || '00000000-0000-0000-0000-000000000000'},class_id.is.null`),
         supabase.from('fee_payments').select('*').eq('student_id', selectedChild.student_id).order('payment_date', { ascending: false }),
         supabase.from('fee_installment_plans').select('*').eq('student_id', selectedChild.student_id),
+        fetchStudentInvoices(selectedChild.student_id),
+        fetchStudentCredits(selectedChild.student_id),
       ]);
-      setStructures((fs || []) as FeeStructure[]);
+      setStructures(((fs || []) as FeeStructure[]).filter((f: any) => f.is_active !== false));
       setPayments((pay || []) as FeePayment[]);
       setPlans((pl || []) as Plan[]);
+      setInvoices(invs);
+      setCreditBalance(cr);
       const planIds = (pl || []).map((p: any) => p.id);
       if (planIds.length) {
         const { data: ins } = await supabase.from('fee_installments').select('*').in('plan_id', planIds).order('installment_number');
@@ -105,15 +112,16 @@ export const ParentFees: React.FC = () => {
     .filter(p => p.status === 'completed' && !p.fee_structure_id && !p.fee_installment_id)
     .reduce((s, p) => s + Number(p.amount_paid || 0), 0);
 
-  const pay = async (opts: { fee_structure_id?: string; fee_installment_id?: string; amount: number; label: string }) => {
+  const pay = async (opts: { fee_structure_id?: string; fee_installment_id?: string; invoice_id?: string; amount: number; label: string }) => {
     if (!selectedChild) return;
-    setPaying(opts.fee_structure_id || opts.fee_installment_id || 'x');
+    setPaying(opts.fee_structure_id || opts.fee_installment_id || opts.invoice_id || 'x');
     try {
       const { data, error } = await supabase.functions.invoke('initialize-fee-payment', {
         body: {
           student_id: selectedChild.student_id,
           fee_structure_id: opts.fee_structure_id,
           fee_installment_id: opts.fee_installment_id,
+          invoice_id: opts.invoice_id,
           amount: opts.amount,
           label: opts.label,
           callback_url: `${window.location.origin}/fees/payment-callback`,
@@ -145,9 +153,12 @@ export const ParentFees: React.FC = () => {
     return <div className="flex items-center justify-center p-8"><Loader2 className="animate-spin h-6 w-6" /></div>;
   }
 
-  const totalBilled = structures.reduce((s, f) => s + Number(f.amount || 0), 0);
+  const hasInvoices = invoices.length > 0;
+  const totalBilled = hasInvoices
+    ? invoices.reduce((s, i) => s + invoiceBillable(i), 0)
+    : structures.reduce((s, f) => s + Number(f.amount || 0), 0);
   const totalPaid = payments.filter(p => p.status === 'completed').reduce((s, p) => s + Number(p.amount_paid || 0), 0);
-  const outstanding = Math.max(0, totalBilled - totalPaid);
+  const outstanding = Math.max(0, totalBilled - totalPaid - creditBalance);
   // Apply any unallocated credit to the first mandatory fee (falls back to the first fee).
   const creditTargetId =
     (structures.find(s => s.is_mandatory) || structures[0])?.id ?? null;
@@ -184,6 +195,49 @@ export const ParentFees: React.FC = () => {
         <Card><CardHeader className="pb-2"><CardDescription>Next Due</CardDescription><CardTitle className="text-base">{nextDue?.due_date ? format(new Date(nextDue.due_date), 'PP') : ''}</CardTitle></CardHeader></Card>
       </div>
 
+      {hasInvoices && invoices.map(inv => {
+        const billable = invoiceBillable(inv);
+        const paidOnInvoice = payments
+          .filter(p => p.status === 'completed' && (p as any).invoice_id === inv.id)
+          .reduce((s, p) => s + Number(p.amount_paid || 0), 0);
+        const due = Math.max(0, billable - paidOnInvoice);
+        return (
+          <Card key={inv.id}>
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>{inv.term} • {inv.academic_year}</span>
+                <Badge variant={due <= 0 ? 'secondary' : 'outline'}>{due <= 0 ? 'Paid' : 'Balance ' + NGN(due)}</Badge>
+              </CardTitle>
+              <CardDescription>Fees for {selectedChild.full_name} — {selectedChild.class_name || 'Not assigned'}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Table>
+                <TableHeader><TableRow><TableHead>Item</TableHead><TableHead className="text-right">Amount</TableHead></TableRow></TableHeader>
+                <TableBody>
+                  {inv.items.filter(i => !i.is_optional || i.selected).map(i => (
+                    <TableRow key={i.id}>
+                      <TableCell>{i.description}{i.is_optional && <span className="ml-2 text-xs text-muted-foreground">optional</span>}</TableCell>
+                      <TableCell className="text-right">{NGN(i.amount)}</TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell className="font-semibold">Invoice total</TableCell>
+                    <TableCell className="text-right font-semibold">{NGN(billable)}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              {due > 0 && (
+                <Button className="w-full" disabled={paying === inv.id}
+                  onClick={() => pay({ invoice_id: inv.id, amount: due, label: `${inv.term} ${inv.academic_year} fees` })}>
+                  {paying === inv.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-1" /> Pay {NGN(due)}</>}
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        );
+      })}
+
+      {!hasInvoices && (
       <Card>
         <CardHeader>
           <CardTitle>Fees for {selectedChild.full_name}</CardTitle>
@@ -241,6 +295,7 @@ export const ParentFees: React.FC = () => {
           )}
         </CardContent>
       </Card>
+      )}
 
       {installments.length > 0 && (
         <Card>
