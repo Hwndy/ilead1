@@ -62,26 +62,34 @@ export const AdmissionDocumentViewer = ({ applicationId }: AdmissionDocumentView
     }
   };
 
-  const handleVerify = async (docId: string, verified: boolean) => {
+  const statusOf = (doc: Document) =>
+    doc.verification_status || (doc.verified ? "verified" : "pending");
+
+  const handleReview = async (docId: string, status: "verified" | "rejected") => {
+    if (status === "rejected" && !(notes[docId] || "").trim()) {
+      toast.error("Please type the reason for rejecting this document");
+      return;
+    }
     setVerifyingDoc(docId);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      const { error } = await supabase
-        .from("admission_documents")
-        .update({
-          verified,
-          verified_by: user?.id,
-          verified_at: new Date().toISOString(),
-        })
-        .eq("id", docId);
+      const { error } = await (supabase as any).rpc("review_admission_document", {
+        p_document_id: docId,
+        p_status: status,
+        p_reason: status === "rejected" ? notes[docId] : null,
+      });
 
       if (error) throw error;
 
-      toast.success(`Document ${verified ? "verified" : "rejected"} successfully`);
+      toast.success(status === "verified" ? "Document verified" : "Document rejected");
+      setNotes((prev) => ({ ...prev, [docId]: "" }));
       fetchDocuments();
     } catch (error: any) {
-      toast.error("Failed to update document: " + error.message);
+      const message: string = error?.message || "unknown error";
+      toast.error(
+        /review_admission_document|schema cache|function/i.test(message)
+          ? "The database still needs the admissions update (db/phase5-admissions.sql)."
+          : "Failed to update document: " + message,
+      );
     } finally {
       setVerifyingDoc(null);
     }
