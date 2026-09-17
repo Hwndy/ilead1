@@ -14,9 +14,9 @@
 - [x] Service worker: network-first shell, auto-apply new version
 
 ## Phase 3 — Campus / class / arm structure
-- [ ] campuses, arms, campus_class_offerings, student_enrollments, student_movement_log
-- [ ] SchoolStructure, StudentsHub, ClassRoster screens
-- [ ] Two-way sync with legacy class_assignments
+- [x] campuses, arms, campus_class_offerings, student_enrollments, student_movement_log
+- [x] SchoolStructure, StudentsHub, ClassRoster screens
+- [x] Two-way sync with legacy class_assignments
 
 ## Phase 4 — Rules-based billing
 - [ ] fee_categories, fees, fee_rules, student_invoices, invoice_items, credits, adjustments
