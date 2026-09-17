@@ -9,8 +9,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Users, Plus, Search, Edit, Eye, Briefcase, Calendar, RefreshCw, Loader2, Download } from "lucide-react";
+import { Users, Plus, Search, Edit, Eye, Briefcase, Calendar, RefreshCw, Loader2, Download, UserPlus } from "lucide-react";
 import { format } from "date-fns";
+import { CreateStaffAccountDialog } from "./CreateStaffAccountDialog";
+
 
 interface StaffMember {
   id: string;
@@ -53,6 +55,8 @@ export const StaffManagement = () => {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showCreateAccount, setShowCreateAccount] = useState(false);
+
   const [showViewDialog, setShowViewDialog] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState<StaffDetails | null>(null);
   const [teachers, setTeachers] = useState<any[]>([]);
@@ -367,10 +371,15 @@ export const StaffManagement = () => {
             {syncing ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-2" />}
             Sync staff from accounts
           </Button>
+          <Button variant="outline" onClick={() => setShowCreateAccount(true)}>
+            <UserPlus className="h-4 w-4 mr-2" />
+            New staff account
+          </Button>
           <Button onClick={() => setShowAddDialog(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Add Staff
           </Button>
+
         </div>
       </div>
 
@@ -552,7 +561,17 @@ export const StaffManagement = () => {
         </CardContent>
       </Card>
 
+      <CreateStaffAccountDialog
+        open={showCreateAccount}
+        onOpenChange={setShowCreateAccount}
+        onCreated={() => {
+          fetchStaffMembers();
+          fetchTeachers();
+        }}
+      />
+
       {/* Add Staff Dialog */}
+
       <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
         <DialogContent>
           <DialogHeader>
