@@ -1,45 +1,39 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const PAGE = 1000;
+
 Deno.serve(async (req) => {
-  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('Export users request received');
-
-    // Create admin client with service role
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-      { auth: { autoRefreshToken: false, persistSession: false } }
+      { auth: { autoRefreshToken: false, persistSession: false } },
     );
 
-    // Verify the requester is a super admin
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      console.error('No authorization header');
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
-    
     if (authError || !user) {
-      console.error('Auth error:', authError);
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const { data: roleData } = await supabaseAdmin
@@ -47,95 +41,84 @@ Deno.serve(async (req) => {
       .select('role')
       .eq('user_id', user.id)
       .eq('role', 'admin')
-      .single();
+      .maybeSingle();
 
     if (!roleData) {
-      console.error('User is not an admin');
-      return new Response(
-        JSON.stringify({ error: 'Only admins can export users' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Only admins can export users' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('Fetching all users with admin client');
-
-    // Fetch all profiles
-    const { data: profiles, error: profilesError } = await supabaseAdmin
-      .from('profiles')
-      .select('user_id, full_name, created_at')
-      .order('created_at', { ascending: false });
-
-    if (profilesError) {
-      console.error('Profiles error:', profilesError);
-      throw profilesError;
+    // ---- profiles (paginated; Postgrest caps each request at 1000 rows) ----
+    const profiles: Array<{ user_id: string; full_name: string | null; created_at: string }> = [];
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabaseAdmin
+        .from('profiles')
+        .select('user_id, full_name, created_at')
+        .order('created_at', { ascending: false })
+        .range(from, from + PAGE - 1);
+      if (error) throw error;
+      profiles.push(...((data as any[]) || []));
+      if (!data || data.length < PAGE) break;
     }
 
-    console.log(`Found ${profiles?.length || 0} profiles`);
-
-    // Fetch all emails from auth.users using admin API
-    const { data: authUsers, error: authUsersError } = await supabaseAdmin.auth.admin.listUsers({
-      perPage: 10000
-    });
-
-    if (authUsersError) {
-      console.error('Auth users error:', authUsersError);
-      throw authUsersError;
+    // ---- auth users (paginated) ----
+    const emailMap = new Map<string, string>();
+    for (let page = 1; page <= 100; page++) {
+      const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page, perPage: PAGE });
+      if (error) throw error;
+      const users = data?.users || [];
+      for (const u of users) if (u.email) emailMap.set(u.id, u.email);
+      if (users.length < PAGE) break;
     }
 
-    console.log(`Found ${authUsers?.users?.length || 0} auth users`);
+    // ---- roles (paginated) ----
+    const roleMap = new Map<string, string>();
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabaseAdmin
+        .from('user_roles')
+        .select('user_id, role')
+        .range(from, from + PAGE - 1);
+      if (error) throw error;
+      for (const r of (data as any[]) || []) if (!roleMap.has(r.user_id)) roleMap.set(r.user_id, r.role);
+      if (!data || data.length < PAGE) break;
+    }
 
-    // Create email map
-    const emailMap = new Map(authUsers?.users?.map(u => [u.id, u.email]) || []);
+    // ---- class assignments (paginated) ----
+    const classMap = new Map<string, string>();
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabaseAdmin
+        .from('class_assignments')
+        .select('student_id, classes(name)')
+        .range(from, from + PAGE - 1);
+      if (error) throw error;
+      for (const ca of (data as any[]) || []) {
+        classMap.set(ca.student_id, (ca.classes as any)?.name || 'Unknown');
+      }
+      if (!data || data.length < PAGE) break;
+    }
 
-    // Fetch all user roles
-    const userIds = profiles?.map(p => p.user_id) || [];
-    const { data: rolesData } = await supabaseAdmin
-      .from('user_roles')
-      .select('user_id, role')
-      .in('user_id', userIds);
-
-    const roleMap = new Map(rolesData?.map(r => [r.user_id, r.role]) || []);
-
-    // Fetch class assignments for students
-    const { data: classAssignments } = await supabaseAdmin
-      .from('class_assignments')
-      .select('student_id, class_id, classes(name)')
-      .in('student_id', userIds);
-
-    const classMap = new Map(
-      classAssignments?.map(ca => [ca.student_id, (ca.classes as any)?.name || 'Unknown']) || []
-    );
-
-    console.log(`Found ${classAssignments?.length || 0} class assignments`);
-
-    // Build user data with all info
-    const usersData = profiles?.map(profile => {
+    const usersData = profiles.map((profile) => {
       const role = roleMap.get(profile.user_id) || 'student';
-      const email = emailMap.get(profile.user_id) || '';
-      const className = role === 'student' ? (classMap.get(profile.user_id) || 'Not Assigned') : 'N/A';
-
       return {
         full_name: profile.full_name,
-        email,
+        email: emailMap.get(profile.user_id) || '',
         role,
         school: 'iVintage College',
-        class_name: className,
-        created_at: profile.created_at
+        class_name: role === 'student' ? (classMap.get(profile.user_id) || 'Not Assigned') : 'N/A',
+        created_at: profile.created_at,
       };
-    }) || [];
+    });
 
-    console.log(`Returning ${usersData.length} users`);
-
-    return new Response(
-      JSON.stringify({ users: usersData }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ users: usersData, count: usersData.length }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('Export users error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message || 'Failed to export users' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message || 'Failed to export users' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
