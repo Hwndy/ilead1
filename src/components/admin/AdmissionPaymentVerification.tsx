@@ -5,7 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { DollarSign, CheckCircle, Clock, XCircle } from "lucide-react";
+import { DollarSign, CheckCircle, Clock, XCircle, Banknote } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RecordOfflineAcceptanceDialog } from "@/components/admin/admissions/RecordOfflineAcceptanceDialog";
 interface Payment {
   id: string;
   application_id: string;
