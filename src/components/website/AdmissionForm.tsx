@@ -1129,7 +1129,7 @@ export const AdmissionForm = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="birth_certificate">Birth Certificate</Label>
+                  <Label htmlFor="birth_certificate">Birth Certificate *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
@@ -1152,7 +1152,7 @@ export const AdmissionForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="previous_result">Previous School Result</Label>
+                  <Label htmlFor="previous_result">Previous School Result *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
