@@ -12,7 +12,8 @@ export const FeeOverview: React.FC = () => {
   const [stats, setStats] = useState({ billed: 0, collected: 0, outstanding: 0, thisMonth: 0, overdue: 0, defaulters: [] as any[] });
 
   useEffect(() => { load(); }, []);
-  useRealtimeRefresh(['fee_payments', 'fee_structures'], load, 'fees-overview');
+  useRealtimeRefresh(['fee_payments', 'fee_structures'], () => load(), 'fees-overview');
+
 
   const load = async () => {
     setLoading(true);
