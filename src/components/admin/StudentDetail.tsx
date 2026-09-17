@@ -192,7 +192,8 @@ export const StudentDetail: React.FC = () => {
           <div className="flex-1">
             <h2 className="text-2xl font-bold">{profile.full_name}</h2>
             <div className="flex flex-wrap items-center gap-2 mt-2">
-              {className && <Badge variant="secondary"><GraduationCap className="h-3 w-3 mr-1" />{className}</Badge>}
+              {className && <Badge variant="secondary"><GraduationCap className="h-3 w-3 mr-1" />{[className, placement.arm_name].filter(Boolean).join(' ')}</Badge>}
+              {placement.campus_name && <Badge variant="outline"><MapPin className="h-3 w-3 mr-1" />{placement.campus_name}</Badge>}
               <Badge>{student?.status || 'active'}</Badge>
               {student?.admission_number && (
                 <Badge variant="outline">Adm: {student.admission_number}</Badge>
