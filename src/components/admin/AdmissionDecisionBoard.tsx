@@ -279,6 +279,18 @@ export const AdmissionDecisionBoard = () => {
                     {app.first_name} {app.last_name}
                     <div className="text-sm text-muted-foreground">{app.email}</div>
                   </TableCell>
+                  <TableCell className="text-sm">
+                    {app.nin || <span className="text-muted-foreground">Missing</span>}
+                  </TableCell>
+                  <TableCell>
+                    {app.documents_status === 'verified' ? (
+                      <Badge className="bg-green-600 hover:bg-green-600">Verified</Badge>
+                    ) : app.documents_status === 'rejected' ? (
+                      <Badge variant="destructive">Rejected</Badge>
+                    ) : (
+                      <Badge variant="secondary">Awaiting check</Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="font-bold text-lg">
                     {app.combined_score?.toFixed(2) || "N/A"}
                   </TableCell>
