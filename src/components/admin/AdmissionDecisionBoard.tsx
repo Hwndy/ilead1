@@ -258,6 +258,8 @@ export const AdmissionDecisionBoard = () => {
                 <TableHead>Rank</TableHead>
                 <TableHead>Application</TableHead>
                 <TableHead>Name</TableHead>
+                <TableHead>NIN</TableHead>
+                <TableHead>Documents</TableHead>
                 <TableHead>Score</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
