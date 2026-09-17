@@ -26,6 +26,7 @@ interface AdmissionFormData {
   nationality: string;
   state_of_origin: string;
   lga: string;
+  nin: string;
   
   // Contact Information
   address: string;
@@ -91,6 +92,7 @@ export const AdmissionForm = () => {
     nationality: 'Nigerian',
     state_of_origin: '',
     lga: '',
+    nin: '',
     address: '',
     city: '',
     state: '',
@@ -192,15 +194,18 @@ export const AdmissionForm = () => {
     switch (step) {
       case 0: // Personal Info
         return !!(formData.first_name && formData.last_name && formData.date_of_birth && 
-                 formData.gender && formData.phone && formData.email);
+                 formData.gender && formData.phone && formData.email &&
+                 /^\d{11}$/.test(formData.nin.replace(/\D/g, '')));
       case 1: // Academic Info
         return !!(formData.applying_for_class);
       case 2: // Parent/Guardian
         return !!(formData.father_name || formData.mother_name || formData.guardian_name);
       case 3: // Medical Info
         return !!(formData.emergency_contact_name && formData.emergency_contact_phone);
-      case 4: // Documents
-        return true; // Documents are optional for initial submission
+      case 4: // Documents — birth certificate, previous result and passport are compulsory
+        return !!(formData.documents.birth_certificate &&
+                  formData.documents.previous_result &&
+                  formData.documents.passport_photos);
       case 5: // Review
         return formData.declaration_accepted;
       default:
@@ -232,6 +237,24 @@ export const AdmissionForm = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!validateStep(0)) {
+        toast({
+          title: 'National Identification Number required',
+          description: 'Please go back to Personal Info and enter the applicant\'s 11-digit NIN.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      if (!validateStep(4)) {
+        toast({
+          title: 'Documents missing',
+          description: 'Birth certificate, previous school result and passport photograph are compulsory.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       if (!validateStep(5)) {
         toast({
           title: 'Form Incomplete',
@@ -334,6 +357,7 @@ export const AdmissionForm = () => {
             gender: normalizedGender,
             blood_group: formData.blood_group || null,
             state_of_origin: formData.state_of_origin || null,
+            nin: formData.nin.replace(/\D/g, ''),
             lga: formData.lga || null,
             nationality: formData.nationality || 'Nigerian',
             religion: null,
@@ -702,6 +726,18 @@ export const AdmissionForm = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="nin">National Identification Number (NIN) *</Label>
+                    <Input
+                      id="nin"
+                      inputMode="numeric"
+                      maxLength={11}
+                      value={formData.nin}
+                      onChange={(e) => updateFormData('nin', e.target.value.replace(/\D/g, '').slice(0, 11))}
+                      placeholder="11-digit NIN"
+                    />
+                    <p className="text-xs text-muted-foreground">Required by the school for every applicant.</p>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lga">Local Government Area</Label>
@@ -1087,12 +1123,13 @@ export const AdmissionForm = () => {
             <div className="space-y-6">
               <h3 className="text-lg font-semibold">Required Documents</h3>
               <p className="text-muted-foreground">
-                Please upload the following documents. You can also bring physical copies during the entrance examination.
+                The birth certificate, previous school result and passport photograph are compulsory. Please bring the
+                original copies along during the entrance examination.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="birth_certificate">Birth Certificate</Label>
+                  <Label htmlFor="birth_certificate">Birth Certificate *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
@@ -1115,7 +1152,7 @@ export const AdmissionForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="previous_result">Previous School Result</Label>
+                  <Label htmlFor="previous_result">Previous School Result *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>
@@ -1138,7 +1175,7 @@ export const AdmissionForm = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="passport_photos">Passport Photographs (4 copies)</Label>
+                  <Label htmlFor="passport_photos">Passport Photographs (4 copies) *</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">Click to upload or drag and drop</p>

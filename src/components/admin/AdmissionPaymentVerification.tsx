@@ -5,7 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { DollarSign, CheckCircle, Clock, XCircle } from "lucide-react";
+import { DollarSign, CheckCircle, Clock, XCircle, Banknote } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RecordOfflineAcceptanceDialog } from "@/components/admin/admissions/RecordOfflineAcceptanceDialog";
 interface Payment {
   id: string;
   application_id: string;
@@ -28,10 +30,29 @@ export const AdmissionPaymentVerification = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
+  const [candidates, setCandidates] = useState<Array<{ id: string; label: string }>>([]);
+  const [selectedApp, setSelectedApp] = useState<string>("");
+  const [offlineOpen, setOfflineOpen] = useState(false);
 
   useEffect(() => {
     fetchPayments();
   }, [filter]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("admission_applications")
+        .select("id, application_number, first_name, last_name, status")
+        .in("status", ["accepted", "payment_pending"] as any)
+        .order("application_number");
+      setCandidates(
+        (data || []).map((a: any) => ({
+          id: a.id,
+          label: `${a.application_number} — ${a.first_name} ${a.last_name}`,
+        })),
+      );
+    })();
+  }, []);
 
   const fetchPayments = async () => {
     try {
@@ -132,7 +153,26 @@ export const AdmissionPaymentVerification = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Payment Records</CardTitle>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <Select value={selectedApp} onValueChange={setSelectedApp}>
+                <SelectTrigger className="w-[260px]">
+                  <SelectValue placeholder="Applicant who paid at school" />
+                </SelectTrigger>
+                <SelectContent>
+                  {candidates.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>{c.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={!selectedApp}
+                onClick={() => setOfflineOpen(true)}
+              >
+                <Banknote className="h-4 w-4 mr-2" />
+                Record offline payment
+              </Button>
               <Button
                 size="sm"
                 variant={filter === "all" ? "default" : "outline"}
@@ -201,6 +241,16 @@ export const AdmissionPaymentVerification = () => {
           )}
         </CardContent>
       </Card>
+
+      {selectedApp && (
+        <RecordOfflineAcceptanceDialog
+          applicationId={selectedApp}
+          applicantName={candidates.find((c) => c.id === selectedApp)?.label || "this applicant"}
+          open={offlineOpen}
+          onOpenChange={setOfflineOpen}
+          onRecorded={fetchPayments}
+        />
+      )}
     </div>
   );
 };

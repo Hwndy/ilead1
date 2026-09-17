@@ -16,6 +16,8 @@ interface Document {
   verified_at: string | null;
   uploaded_at: string;
   mime_type: string | null;
+  verification_status?: string | null;
+  rejection_reason?: string | null;
 }
 
 interface AdmissionDocumentViewerProps {
@@ -60,26 +62,34 @@ export const AdmissionDocumentViewer = ({ applicationId }: AdmissionDocumentView
     }
   };
 
-  const handleVerify = async (docId: string, verified: boolean) => {
+  const statusOf = (doc: Document) =>
+    doc.verification_status || (doc.verified ? "verified" : "pending");
+
+  const handleReview = async (docId: string, status: "verified" | "rejected") => {
+    if (status === "rejected" && !(notes[docId] || "").trim()) {
+      toast.error("Please type the reason for rejecting this document");
+      return;
+    }
     setVerifyingDoc(docId);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      const { error } = await supabase
-        .from("admission_documents")
-        .update({
-          verified,
-          verified_by: user?.id,
-          verified_at: new Date().toISOString(),
-        })
-        .eq("id", docId);
+      const { error } = await (supabase as any).rpc("review_admission_document", {
+        p_document_id: docId,
+        p_status: status,
+        p_reason: status === "rejected" ? notes[docId] : null,
+      });
 
       if (error) throw error;
 
-      toast.success(`Document ${verified ? "verified" : "rejected"} successfully`);
+      toast.success(status === "verified" ? "Document verified" : "Document rejected");
+      setNotes((prev) => ({ ...prev, [docId]: "" }));
       fetchDocuments();
     } catch (error: any) {
-      toast.error("Failed to update document: " + error.message);
+      const message: string = error?.message || "unknown error";
+      toast.error(
+        /review_admission_document|schema cache|function/i.test(message)
+          ? "The database still needs the admissions update (db/phase5-admissions.sql)."
+          : "Failed to update document: " + message,
+      );
     } finally {
       setVerifyingDoc(null);
     }
@@ -169,10 +179,15 @@ export const AdmissionDocumentViewer = ({ applicationId }: AdmissionDocumentView
                 </CardTitle>
                 <CardDescription>{doc.document_name}</CardDescription>
               </div>
-              {doc.verified ? (
+              {statusOf(doc) === "verified" ? (
                 <Badge variant="default" className="gap-1">
                   <CheckCircle className="h-3 w-3" />
                   Verified
+                </Badge>
+              ) : statusOf(doc) === "rejected" ? (
+                <Badge variant="destructive" className="gap-1">
+                  <XCircle className="h-3 w-3" />
+                  Rejected
                 </Badge>
               ) : (
                 <Badge variant="secondary" className="gap-1">
@@ -200,31 +215,44 @@ export const AdmissionDocumentViewer = ({ applicationId }: AdmissionDocumentView
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Preview
               </Button>
-              {!doc.verified && (
-                <>
-                  <Button
-                    size="sm"
-                    onClick={() => handleVerify(doc.id, true)}
-                    disabled={verifyingDoc === doc.id}
-                  >
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Verify
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleVerify(doc.id, false)}
-                    disabled={verifyingDoc === doc.id}
-                  >
-                    <XCircle className="h-4 w-4 mr-2" />
-                    Reject
-                  </Button>
-                </>
+              {statusOf(doc) !== "verified" && (
+                <Button
+                  size="sm"
+                  onClick={() => handleReview(doc.id, "verified")}
+                  disabled={verifyingDoc === doc.id}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  Verify
+                </Button>
+              )}
+              {statusOf(doc) !== "rejected" && (
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => handleReview(doc.id, "rejected")}
+                  disabled={verifyingDoc === doc.id}
+                >
+                  <XCircle className="h-4 w-4 mr-2" />
+                  Reject
+                </Button>
               )}
             </div>
+            {statusOf(doc) === "rejected" && doc.rejection_reason && (
+              <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
+                <span className="font-medium">Reason: </span>{doc.rejection_reason}
+              </div>
+            )}
+            {statusOf(doc) !== "verified" && (
+              <Textarea
+                rows={2}
+                placeholder="Reason, if you are rejecting this document"
+                value={notes[doc.id] || ""}
+                onChange={(e) => setNotes((prev) => ({ ...prev, [doc.id]: e.target.value }))}
+              />
+            )}
             <div className="text-sm text-muted-foreground">
               Uploaded: {new Date(doc.uploaded_at).toLocaleDateString()}
-              {doc.verified_at && ` • Verified: ${new Date(doc.verified_at).toLocaleDateString()}`}
+              {doc.verified_at && ` • Reviewed: ${new Date(doc.verified_at).toLocaleDateString()}`}
             </div>
           </CardContent>
         </Card>
