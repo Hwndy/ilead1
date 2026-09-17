@@ -126,12 +126,13 @@ export const StudentsByClass: React.FC = () => {
         return;
       }
 
-      const [{ data: profiles }, { data: students }] = await Promise.all([
+      const [{ data: profiles }, { data: students }, placements] = await Promise.all([
         supabase.from('profiles').select('user_id, full_name').in('user_id', userIds),
         supabase.from('students')
           .select('user_id, id, admission_number, gender, date_of_birth, status, photo_url')
           .in('user_id', userIds)
           .is('archived_at', null),
+        fetchPlacementMap(),
       ]);
 
       const pMap = new Map((profiles ?? []).map(p => [p.user_id, p]));
@@ -141,6 +142,7 @@ export const StudentsByClass: React.FC = () => {
       (assigns ?? []).forEach(a => {
         const p = pMap.get(a.student_id);
         const s = sMap.get(a.student_id);
+        const place = s?.id ? placements.get(s.id) : undefined;
         grouped[a.class_id].push({
           user_id: a.student_id,
           class_id: a.class_id,
@@ -151,6 +153,8 @@ export const StudentsByClass: React.FC = () => {
           date_of_birth: s?.date_of_birth ?? null,
           status: s?.status ?? 'active',
           photo_url: s?.photo_url ?? null,
+          campus_name: place?.campus_name || '',
+          arm_name: place?.arm_name || '',
         });
       });
       Object.values(grouped).forEach(arr => arr.sort((a, b) => a.full_name.localeCompare(b.full_name)));
