@@ -29,6 +29,6 @@ ALTER TABLE public.fee_payments
   ADD COLUMN IF NOT EXISTS recorded_by uuid;
 
 -- 4. Finance delete access code lives in settings, not in browser code --------
-INSERT INTO public.app_settings (setting_key, setting_value, description)
-VALUES ('finance_delete_code', '"iVintage2026"'::jsonb, 'Code required to delete a fee structure that has no payment history')
+INSERT INTO public.app_settings (setting_key, setting_value)
+VALUES ('finance_delete_code', '"iVintage2026"'::jsonb)
 ON CONFLICT (setting_key) DO NOTHING;

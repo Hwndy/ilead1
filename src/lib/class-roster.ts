@@ -60,6 +60,60 @@ export async function fetchClassRoster(classId: string): Promise<RosterStudent[]
     .sort((a, b) => a.full_name.localeCompare(b.full_name));
 }
 
+export interface StudentClass {
+  class_id: string | null;
+  class_name: string;
+}
+
+/**
+ * Resolves every student's class in one pass.
+ *
+ * `class_assignments.student_id` holds either the student's auth/profile user
+ * id or the `students.id`, so both are matched. Keyed by `students.id`.
+ */
+export async function fetchStudentClassMap(): Promise<Map<string, StudentClass>> {
+  const [assignsRes, studentsRes, classesRes] = await Promise.all([
+    supabase.from('class_assignments').select('student_id, class_id'),
+    supabase.from('students').select('id, user_id'),
+    supabase.from('classes').select('id, name'),
+  ]);
+  if (assignsRes.error) throw assignsRes.error;
+  if (studentsRes.error) throw studentsRes.error;
+  if (classesRes.error) throw classesRes.error;
+
+  const className = new Map<string, string>((classesRes.data || []).map((c: any) => [c.id, c.name]));
+  const byRef = new Map<string, string>(); // assignment ref -> class_id
+  (assignsRes.data || []).forEach((a: any) => {
+    if (a.student_id && a.class_id && !byRef.has(a.student_id)) byRef.set(a.student_id, a.class_id);
+  });
+
+  const out = new Map<string, StudentClass>();
+  (studentsRes.data || []).forEach((s: any) => {
+    const classId = byRef.get(s.id) || (s.user_id ? byRef.get(s.user_id) : undefined) || null;
+    out.set(s.id, { class_id: classId, class_name: classId ? className.get(classId) || '' : '' });
+  });
+  return out;
+}
+
+/** Resolves a single student's class, matching on both id shapes. */
+export async function fetchStudentClass(studentId: string): Promise<StudentClass> {
+  const { data: student } = await supabase
+    .from('students')
+    .select('id, user_id')
+    .eq('id', studentId)
+    .maybeSingle();
+
+  const refs = [studentId, (student as any)?.user_id].filter(Boolean) as string[];
+  const { data } = await supabase
+    .from('class_assignments')
+    .select('class_id, classes(id, name)')
+    .in('student_id', refs)
+    .limit(1);
+
+  const row: any = (data || [])[0];
+  return { class_id: row?.class_id ?? null, class_name: row?.classes?.name ?? '' };
+}
+
 export function toCsv(rows: (string | number | null | undefined)[][]): string {
   return rows
     .map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','))
