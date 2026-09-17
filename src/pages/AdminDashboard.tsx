@@ -16,6 +16,8 @@ import { EnhancedLiveMonitor } from '@/components/admin/EnhancedLiveMonitor';
 import { AdminQuestionBank } from '@/components/admin/AdminQuestionBank';
 import { ExamManagement } from '@/components/admin/ExamManagement';
 import { AdminStudentResults } from '@/components/admin/AdminStudentResults';
+import { AdminOverview } from '@/components/admin/AdminOverview';
+
 import { AdminResultsModal } from '@/components/admin/AdminResultsModal';
 import { AdmissionsHub, type AdmissionTab } from '@/components/admin/admissions/AdmissionsHub';
 import { EmailLogsViewer } from '@/components/admin/EmailLogsViewer';
