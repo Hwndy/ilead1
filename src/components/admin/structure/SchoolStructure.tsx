@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Building2, Plus, Loader2, AlertTriangle, Users } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { fetchStudentClassMap } from '@/lib/class-roster';
 
 const db = supabase as any;
 
@@ -47,14 +48,30 @@ export const SchoolStructure: React.FC = () => {
         db.from('campuses').select('*').order('name'),
         db.from('class_arms').select('*').order('name'),
         db.from('classes').select('id, name').order('name'),
-        db.from('students').select('id, full_name, admission_number, class_id, campus_id, arm_id').is('archived_at', null).order('full_name'),
+        db.from('students').select('id, user_id, admission_number, campus_id, arm_id').is('archived_at', null),
       ]);
       if (campusError) { setSetupNeeded(true); setLoading(false); return; }
       setSetupNeeded(false);
       setCampuses(campusData || []);
       setArms(armData || []);
       setClasses(classData || []);
-      setStudents(studentData || []);
+
+      const rows = studentData || [];
+      const userIds = rows.map((r: any) => r.user_id).filter(Boolean);
+      const nameByUser = new Map<string, string>();
+      if (userIds.length) {
+        const { data: profs } = await db.from('profiles').select('user_id, full_name').in('user_id', userIds);
+        (profs || []).forEach((p: any) => nameByUser.set(p.user_id, p.full_name));
+      }
+      const classMap = await fetchStudentClassMap();
+      setStudents(rows.map((r: any) => ({
+        id: r.id,
+        full_name: (r.user_id && nameByUser.get(r.user_id)) || r.admission_number || 'Unnamed student',
+        admission_number: r.admission_number ?? null,
+        class_id: classMap.get(r.id)?.class_id || classMap.get(r.user_id || '')?.class_id || null,
+        campus_id: r.campus_id ?? null,
+        arm_id: r.arm_id ?? null,
+      })).sort((a: StudentRow, b: StudentRow) => (a.full_name || '').localeCompare(b.full_name || '')));
     } catch {
       setSetupNeeded(true);
     } finally {
@@ -118,7 +135,7 @@ export const SchoolStructure: React.FC = () => {
     const next: Record<string, string | null> = { [field]: value === 'none' ? null : value };
     if (field === 'arm_id' && value !== 'none') {
       const arm = arms.find(a => a.id === value);
-      if (arm) { next.campus_id = arm.campus_id; next.class_id = arm.class_id; }
+      if (arm) { next.campus_id = arm.campus_id; }
     }
     const { error } = await db.from('students').update(next).eq('id', student.id);
     if (error) { toast({ title: 'Could not move student', description: error.message, variant: 'destructive' }); return; }
