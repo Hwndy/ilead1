@@ -11,6 +11,7 @@ import { Loader2, Search, Eye, AlertTriangle, Banknote, RefreshCw } from 'lucide
 import { StudentBalanceDrawer } from './StudentBalanceDrawer';
 import { RecordCashPaymentDialog, CashPaymentStudent } from './RecordCashPaymentDialog';
 import { fetchStudentClassMap } from '@/lib/class-roster';
+import { useRealtimeRefresh } from '@/hooks/useRealtimeRefresh';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -80,6 +81,7 @@ export const StudentBalances: React.FC = () => {
   };
 
   useEffect(() => { load(); }, []);
+  useRealtimeRefresh(['fee_payments', 'fee_structures', 'students'], load, 'fees-balances');
 
   const filtered = useMemo(() => {
     return rows.filter(r =>
