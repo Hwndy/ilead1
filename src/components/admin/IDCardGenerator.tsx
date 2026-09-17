@@ -19,6 +19,7 @@ import jsPDF from 'jspdf';
 import { StudentIDCard } from './StudentIDCard';
 import { fetchSchoolBranding } from '@/lib/school-branding';
 import { EditStudentDialog } from './EditStudentDialog';
+import { fetchPlacementMap } from '@/lib/student-placement';
 
 interface Student {
   id: string;
