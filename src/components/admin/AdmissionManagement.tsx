@@ -450,6 +450,10 @@ export const AdmissionManagement = () => {
                                 <span className="text-muted-foreground">Status:</span>
                                 <p className="font-medium capitalize">{selectedApplication.status.replace('_', ' ')}</p>
                               </div>
+                              <div>
+                                <span className="text-muted-foreground">NIN:</span>
+                                <p className="font-medium">{selectedApplication.nin || 'Not provided'}</p>
+                              </div>
                             </div>
                           </div>
 
