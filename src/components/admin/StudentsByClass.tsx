@@ -348,6 +348,8 @@ export const StudentsByClass: React.FC = () => {
                           <TableHead className="w-12">Photo</TableHead>
                           <TableHead>Name</TableHead>
                           <TableHead>Admission #</TableHead>
+                          <TableHead>Campus</TableHead>
+                          <TableHead>Arm</TableHead>
                           <TableHead>Gender</TableHead>
                           <TableHead>Status</TableHead>
                           <TableHead className="w-12"></TableHead>
