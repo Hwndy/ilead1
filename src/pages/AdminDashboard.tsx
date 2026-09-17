@@ -35,6 +35,7 @@ import { LibraryManager } from '@/components/admin/LibraryManager';
 import { BulkNotificationSender } from '@/components/admin/BulkNotificationSender';
 import { IDCardGenerator } from '@/components/admin/IDCardGenerator';
 import { StudentsByClass } from '@/components/admin/StudentsByClass';
+import { SchoolStructure } from '@/components/admin/structure/SchoolStructure';
 import { StudentDetail } from '@/components/admin/StudentDetail';
 import { ParentsHub } from '@/components/admin/parents/ParentsHub';
 import { ScanStation } from '@/components/attendance/ScanStation';
@@ -283,6 +284,7 @@ export const AdminDashboard = () => {
         case 'results': return <AdminStudentResults />;
         case 'questions': return <AdminQuestionBank />;
         case 'classes': return <ClassManagement />;
+        case 'structure': return <SchoolStructure />;
         case 'students': return <StudentsByClass />;
         case 'student-detail': return <StudentDetail />;
         case 'subjects': return <SubjectManagement />;
