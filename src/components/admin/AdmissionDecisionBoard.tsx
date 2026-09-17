@@ -31,16 +31,24 @@ export const AdmissionDecisionBoard = () => {
 
   const fetchApplications = async () => {
     try {
-      const { data, error } = await 
-        supabase
-          .from("admission_applications")
-          .select("id, application_number, first_name, last_name, email, status, combined_score, merit_rank")
-          .in("status", ["under_review", "interview_scheduled"])
-          .order("combined_score", { ascending: false, nullsFirst: false })
-      ;
+      const base = "id, application_number, first_name, last_name, email, status, combined_score, merit_rank";
+      let { data, error } = await (supabase as any)
+        .from("admission_applications")
+        .select(`${base}, nin, documents_status`)
+        .in("status", ["under_review", "interview_scheduled"])
+        .order("combined_score", { ascending: false, nullsFirst: false });
 
-      if (error) throw error;
-      setApplications(data || []);
+      if (error) {
+        // Database not updated with the admissions fields yet.
+        const fallback = await supabase
+          .from("admission_applications")
+          .select(base)
+          .in("status", ["under_review", "interview_scheduled"])
+          .order("combined_score", { ascending: false, nullsFirst: false });
+        if (fallback.error) throw fallback.error;
+        data = fallback.data as any;
+      }
+      setApplications((data || []) as ApplicationWithScore[]);
     } catch (error: any) {
       toast.error("Failed to load applications: " + error.message);
     } finally {
