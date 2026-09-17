@@ -1,12 +1,12 @@
 # iVintage platform roadmap (September change log port)
 
 ## Phase 1 — Finance reliability and money coming in
-- [ ] Shared class resolution helper used by all finance screens
-- [ ] Record cash/transfer/POS/cheque payment dialog (incl. "Other / not listed")
-- [ ] Shared branded receipt view for preview, print and PDF
-- [ ] Retire/restore fee structures with payment history, usage counts
-- [ ] Payroll "Approved" status + refresh
-- [ ] Loading/error states on balances and overview
+- [x] Shared class resolution helper used by all finance screens
+- [x] Record cash/transfer/POS/cheque payment dialog (incl. "Other / not listed")
+- [x] Shared branded receipt view for preview, print and PDF
+- [x] Retire/restore fee structures with payment history, usage counts
+- [x] Payroll "Approved" status + refresh
+- [x] Loading/error states on balances and overview
 
 ## Phase 2 — Archived students and automatic updates
 - [ ] Exclude archived students from active lists everywhere
