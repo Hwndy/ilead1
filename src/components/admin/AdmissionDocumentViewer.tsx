@@ -16,6 +16,8 @@ interface Document {
   verified_at: string | null;
   uploaded_at: string;
   mime_type: string | null;
+  verification_status?: string | null;
+  rejection_reason?: string | null;
 }
 
 interface AdmissionDocumentViewerProps {
