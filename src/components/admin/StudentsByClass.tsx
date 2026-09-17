@@ -40,6 +40,7 @@ import { AssignAdmissionNumbersDialog } from './AssignAdmissionNumbersDialog';
 import html2canvas from 'html2canvas';
 import { printNode } from '@/lib/print-node';
 import { fetchSchoolBranding as loadSchoolBranding } from '@/lib/school-branding';
+import { fetchPlacementMap } from '@/lib/student-placement';
 
 interface ClassRow { id: string; name: string; description?: string | null; }
 interface StudentRow {
