@@ -29,9 +29,9 @@
 - [x] Offline acceptance payment (RPC + admin dialog)
 
 ## Phase 6 — Staff, users, admin home
-- [ ] create-staff-user edge function + Staff Management rework
-- [ ] Paginated users CSV export
-- [ ] Admin overview dashboard
+- [x] create-staff-user edge function + "New staff account" dialog in Staff Management
+- [x] Paginated users CSV export (server + in-app fallback)
+- [x] Admin overview dashboard (money, pupils, admissions, latest activity)
 
 ## Blocked / needs the user
 - Edge functions are not deployed to the connected Supabase project; server-side items stay inactive until deployed.
