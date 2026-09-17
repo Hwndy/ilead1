@@ -124,6 +124,22 @@ export const AdminOverview = () => {
       /* handled by the note above */
     }
 
+    try {
+      const placements = await fetchPlacementMap();
+      const counts = new Map<string, number>();
+      placements.forEach((p) => {
+        const name = p.campus_name || "Not placed";
+        counts.set(name, (counts.get(name) || 0) + 1);
+      });
+      setCampusCounts(
+        Array.from(counts.entries())
+          .sort((a, b) => b[1] - a[1])
+          .map(([name, count]) => ({ name, count })),
+      );
+    } catch {
+      setCampusCounts([]);
+    }
+
     setSnap(next);
     if (notes.length) setProblem(`Some figures could not be loaded (${notes.join(", ")}).`);
     setLoading(false);
