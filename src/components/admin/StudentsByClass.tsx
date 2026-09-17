@@ -372,6 +372,8 @@ export const StudentsByClass: React.FC = () => {
                               </button>
                             </TableCell>
                             <TableCell>{s.admission_number || ''}</TableCell>
+                            <TableCell className="text-muted-foreground">{s.campus_name || '—'}</TableCell>
+                            <TableCell className="text-muted-foreground">{s.arm_name || '—'}</TableCell>
                             <TableCell className="capitalize">{s.gender || ''}</TableCell>
                             <TableCell>
                               <Badge variant={s.status === 'active' ? 'default' : 'secondary'}>
