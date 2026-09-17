@@ -53,6 +53,8 @@ interface StudentRow {
   status: string | null;
   photo_url: string | null;
   email?: string | null;
+  campus_name?: string;
+  arm_name?: string;
 }
 
 const initials = (n?: string) =>
