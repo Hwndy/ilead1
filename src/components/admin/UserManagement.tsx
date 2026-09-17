@@ -380,19 +380,59 @@ export const UserManagement = () => {
 
   const stats = getRoleStats();
 
-  // Export all users to CSV via edge function
+  // Export every user to CSV. Uses the server export (it can read emails);
+  // falls back to a paginated in-app export when that is unavailable.
   const exportToCSV = async () => {
+    const PAGE = 1000;
+
+    const fetchLocally = async () => {
+      const profiles: any[] = [];
+      for (let from = 0; ; from += PAGE) {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('user_id, full_name, created_at')
+          .order('created_at', { ascending: false })
+          .range(from, from + PAGE - 1);
+        if (error) throw error;
+        profiles.push(...(data || []));
+        if (!data || data.length < PAGE) break;
+      }
+
+      const roleMap = new Map<string, string>();
+      for (let from = 0; ; from += PAGE) {
+        const { data, error } = await supabase
+          .from('user_roles')
+          .select('user_id, role')
+          .range(from, from + PAGE - 1);
+        if (error) throw error;
+        for (const r of (data as any[]) || []) if (!roleMap.has(r.user_id)) roleMap.set(r.user_id, r.role);
+        if (!data || data.length < PAGE) break;
+      }
+
+      return profiles.map((p) => ({
+        full_name: p.full_name,
+        email: '',
+        role: roleMap.get(p.user_id) || 'student',
+        school: 'iVintage College',
+        class_name: '',
+        created_at: p.created_at,
+      }));
+    };
+
     try {
       setExporting(true);
-      
-      // Call edge function to get all user data including emails
-      const { data, error } = await supabase.functions.invoke('export-users');
 
-      if (error) throw error;
+      let users: any[] = [];
+      let partial = false;
+      try {
+        const { data, error } = await supabase.functions.invoke('export-users');
+        if (error) throw error;
+        users = data?.users || [];
+      } catch {
+        users = await fetchLocally();
+        partial = true;
+      }
 
-      const users = data?.users || [];
-
-      // Build CSV data with email and class
       const headers = ['Full Name', 'Email', 'Role', 'School', 'Class', 'Created Date'];
       const rows = users.map((user: any) => [
         user.full_name,
@@ -400,16 +440,14 @@ export const UserManagement = () => {
         user.role,
         user.school,
         user.class_name,
-        new Date(user.created_at).toLocaleDateString()
+        new Date(user.created_at).toLocaleDateString(),
       ]);
 
-      // Create CSV content
       const csvContent = [
         headers.join(','),
-        ...rows.map((row: string[]) => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+        ...rows.map((row: string[]) => row.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(',')),
       ].join('\n');
 
-      // Download file
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -421,8 +459,10 @@ export const UserManagement = () => {
       URL.revokeObjectURL(url);
 
       toast({
-        title: 'Export Complete',
-        description: `Exported ${rows.length} users to CSV`,
+        title: 'Export complete',
+        description: partial
+          ? `Exported ${rows.length} people. Email addresses are left blank until the server tools are switched on.`
+          : `Exported ${rows.length} people to CSV`,
       });
     } catch (error: any) {
       toast({
@@ -434,6 +474,7 @@ export const UserManagement = () => {
       setExporting(false);
     }
   };
+
   return (
     <div className="space-y-6">
       {/* Stats Cards */}
