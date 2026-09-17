@@ -86,14 +86,14 @@ export const InvoicesPanel: React.FC = () => {
           (!r.student_type || r.student_type === type) &&
           (!r.term || r.term === term) &&
           (!r.academic_year || r.academic_year === year));
-        const feeIds = Array.from(new Set(matched.map((r: any) => r.fee_id)));
+        const feeIds = Array.from(new Set(matched.map((r: any) => r.fee_id as string)));
         if (feeIds.length === 0) { skipped++; continue; }
 
         const { data: existing } = await db.from('student_invoices')
           .select('id').eq('student_id', s.id).eq('academic_year', year).eq('term', term).maybeSingle();
         if (existing?.id) { skipped++; continue; }
 
-        const lines = feeIds.map(id => feeById.get(id)).filter(Boolean);
+        const lines = feeIds.map((id: string) => feeById.get(id)).filter(Boolean);
         const total = lines.filter((f: any) => !f.is_optional).reduce((sum: number, f: any) => sum + Number(f.amount || 0), 0);
         const { data: invoice, error } = await db.from('student_invoices')
           .insert({ student_id: s.id, academic_year: year, term, total_amount: total })
