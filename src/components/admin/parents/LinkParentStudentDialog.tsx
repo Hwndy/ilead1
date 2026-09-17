@@ -35,7 +35,7 @@ export const LinkParentStudentDialog: React.FC<Props> = ({ open, onOpenChange, o
         const { data: profs } = ids.length ? await supabase.from('profiles').select('user_id,full_name').in('user_id', ids) : { data: [] as any };
         setParents((profs || []) as any);
       }
-      const { data: rows } = await supabase.from('students').select('id,user_id,admission_number').order('admission_number');
+      const { data: rows } = await supabase.from('students').select('id,user_id,admission_number').is('archived_at', null).order('admission_number');
       const uids = (rows || []).map(r => r.user_id).filter(Boolean);
       const { data: sprofs } = uids.length ? await supabase.from('profiles').select('user_id,full_name').in('user_id', uids) : { data: [] as any };
       setStudents((rows || []).map(r => ({

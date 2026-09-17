@@ -97,6 +97,7 @@ export const StudentManagement = () => {
       const { data: studentsData, error: studentsError } = await supabase
         .from('students')
         .select('*')
+        .is('archived_at', null)
         .order('created_at', { ascending: false });
 
       if (studentsError) throw studentsError;
