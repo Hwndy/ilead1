@@ -179,10 +179,15 @@ export const AdmissionDocumentViewer = ({ applicationId }: AdmissionDocumentView
                 </CardTitle>
                 <CardDescription>{doc.document_name}</CardDescription>
               </div>
-              {doc.verified ? (
+              {statusOf(doc) === "verified" ? (
                 <Badge variant="default" className="gap-1">
                   <CheckCircle className="h-3 w-3" />
                   Verified
+                </Badge>
+              ) : statusOf(doc) === "rejected" ? (
+                <Badge variant="destructive" className="gap-1">
+                  <XCircle className="h-3 w-3" />
+                  Rejected
                 </Badge>
               ) : (
                 <Badge variant="secondary" className="gap-1">
