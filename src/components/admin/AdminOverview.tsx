@@ -220,6 +220,24 @@ export const AdminOverview = () => {
         ))}
       </div>
 
+      {campusCounts.length > 0 && (
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">Pupils by campus</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {campusCounts.map((c) => (
+              <div key={c.name} className="rounded-md border p-3">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">{c.name}</p>
+                <p className="text-xl font-bold mt-1">{c.count}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+
+
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
