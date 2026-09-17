@@ -15,12 +15,13 @@ export const PaymentsList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState('');
 
-  useEffect(() => {
-    (async () => {
+  const load = async () => {
+    {
+      setLoading(true);
       const { data } = await supabase.from('fee_payments')
-        .select('*, students(id, user_id, admission_number), fee_structures(fee_type,academic_year)')
+        .select('*, students(id, user_id, admission_number, archived_at), fee_structures(fee_type,academic_year)')
         .order('created_at', { ascending: false }).limit(500);
-      const rows = (data || []) as any[];
+      const rows = ((data || []) as any[]).filter(r => !r.students?.archived_at);
       const userIds = [...new Set(rows.map(r => r.students?.user_id).filter(Boolean))];
       let nameMap = new Map<string, string>();
       if (userIds.length) {
