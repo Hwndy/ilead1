@@ -48,11 +48,7 @@ verify_jwt = true
 [functions.send-bulk-sms]
 verify_jwt = true
 
-[functions.create-school]
-verify_jwt = true
 
-[functions.create-school-admins]
-verify_jwt = true
 
 [functions.send-push-notification]
 verify_jwt = true
