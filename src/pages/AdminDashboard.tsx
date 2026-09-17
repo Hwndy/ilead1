@@ -210,7 +210,9 @@ export const AdminDashboard = () => {
     if (activeTab === 'overview') {
       return (
         <div className="space-y-6">
+          <AdminOverview />
           <Card>
+
             <CardHeader>
               <CardTitle>Recent Exams</CardTitle>
             </CardHeader>
