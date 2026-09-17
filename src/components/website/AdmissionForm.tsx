@@ -237,6 +237,24 @@ export const AdmissionForm = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!validateStep(0)) {
+        toast({
+          title: 'National Identification Number required',
+          description: 'Please go back to Personal Info and enter the applicant\'s 11-digit NIN.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      if (!validateStep(4)) {
+        toast({
+          title: 'Documents missing',
+          description: 'Birth certificate, previous school result and passport photograph are compulsory.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       if (!validateStep(5)) {
         toast({
           title: 'Form Incomplete',
@@ -339,6 +357,7 @@ export const AdmissionForm = () => {
             gender: normalizedGender,
             blood_group: formData.blood_group || null,
             state_of_origin: formData.state_of_origin || null,
+            nin: formData.nin.replace(/\D/g, ''),
             lga: formData.lga || null,
             nationality: formData.nationality || 'Nigerian',
             religion: null,
@@ -707,6 +726,18 @@ export const AdmissionForm = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="nin">National Identification Number (NIN) *</Label>
+                    <Input
+                      id="nin"
+                      inputMode="numeric"
+                      maxLength={11}
+                      value={formData.nin}
+                      onChange={(e) => updateFormData('nin', e.target.value.replace(/\D/g, '').slice(0, 11))}
+                      placeholder="11-digit NIN"
+                    />
+                    <p className="text-xs text-muted-foreground">Required by the school for every applicant.</p>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lga">Local Government Area</Label>
@@ -1092,7 +1123,8 @@ export const AdmissionForm = () => {
             <div className="space-y-6">
               <h3 className="text-lg font-semibold">Required Documents</h3>
               <p className="text-muted-foreground">
-                Please upload the following documents. You can also bring physical copies during the entrance examination.
+                The birth certificate, previous school result and passport photograph are compulsory. Please bring the
+                original copies along during the entrance examination.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
