@@ -17,6 +17,8 @@ interface ApplicationWithScore {
   status: string;
   combined_score: number | null;
   merit_rank: number | null;
+  nin?: string | null;
+  documents_status?: string | null;
 }
 
 export const AdmissionDecisionBoard = () => {
