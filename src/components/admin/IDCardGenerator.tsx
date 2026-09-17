@@ -140,18 +140,25 @@ export const IDCardGenerator: React.FC = () => {
           tokenMap.set(t.student_id, t.token);
         }
 
-        const studentsWithProfiles: Student[] = studentsData.map((student: any) => ({
-          id: student.id,
-          user_id: student.user_id,
-          admission_number: student.admission_number || `STU-${student.id.slice(0, 8).toUpperCase()}`,
-          profile: profilesData.find(p => p.user_id === student.user_id) || { full_name: 'Unknown' },
-          photo_url: student.photo_url,
-          date_of_birth: student.date_of_birth,
-          qr_token: tokenMap.get(student.id) || null,
-          class: userClassMap.has(student.user_id)
-            ? { name: userClassMap.get(student.user_id)! }
-            : undefined,
-        }));
+        const placements = await fetchPlacementMap();
+
+        const studentsWithProfiles: Student[] = studentsData.map((student: any) => {
+          const place = placements.get(student.id);
+          const legacyClass = userClassMap.get(student.user_id);
+          const className = [place?.class_name || legacyClass || '', place?.arm_name || '']
+            .filter(Boolean).join(' ');
+          return {
+            id: student.id,
+            user_id: student.user_id,
+            admission_number: student.admission_number || `STU-${student.id.slice(0, 8).toUpperCase()}`,
+            profile: profilesData.find(p => p.user_id === student.user_id) || { full_name: 'Unknown' },
+            photo_url: student.photo_url,
+            date_of_birth: student.date_of_birth,
+            qr_token: tokenMap.get(student.id) || null,
+            campus_name: place?.campus_name || '',
+            class: className ? { name: className } : undefined,
+          };
+        });
 
         setStudents(studentsWithProfiles);
       }
