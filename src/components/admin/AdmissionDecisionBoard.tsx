@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { CheckCircle, XCircle, Clock, Award } from "lucide-react";
 interface ApplicationWithScore {
@@ -17,6 +18,8 @@ interface ApplicationWithScore {
   status: string;
   combined_score: number | null;
   merit_rank: number | null;
+  nin?: string | null;
+  documents_status?: string | null;
 }
 
 export const AdmissionDecisionBoard = () => {
@@ -31,16 +34,24 @@ export const AdmissionDecisionBoard = () => {
 
   const fetchApplications = async () => {
     try {
-      const { data, error } = await 
-        supabase
-          .from("admission_applications")
-          .select("id, application_number, first_name, last_name, email, status, combined_score, merit_rank")
-          .in("status", ["under_review", "interview_scheduled"])
-          .order("combined_score", { ascending: false, nullsFirst: false })
-      ;
+      const base = "id, application_number, first_name, last_name, email, status, combined_score, merit_rank";
+      let { data, error } = await (supabase as any)
+        .from("admission_applications")
+        .select(`${base}, nin, documents_status`)
+        .in("status", ["under_review", "interview_scheduled"])
+        .order("combined_score", { ascending: false, nullsFirst: false });
 
-      if (error) throw error;
-      setApplications(data || []);
+      if (error) {
+        // Database not updated with the admissions fields yet.
+        const fallback = await supabase
+          .from("admission_applications")
+          .select(base)
+          .in("status", ["under_review", "interview_scheduled"])
+          .order("combined_score", { ascending: false, nullsFirst: false });
+        if (fallback.error) throw fallback.error;
+        data = fallback.data as any;
+      }
+      setApplications((data || []) as ApplicationWithScore[]);
     } catch (error: any) {
       toast.error("Failed to load applications: " + error.message);
     } finally {
@@ -248,6 +259,8 @@ export const AdmissionDecisionBoard = () => {
                 <TableHead>Rank</TableHead>
                 <TableHead>Application</TableHead>
                 <TableHead>Name</TableHead>
+                <TableHead>NIN</TableHead>
+                <TableHead>Documents</TableHead>
                 <TableHead>Score</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
@@ -266,6 +279,18 @@ export const AdmissionDecisionBoard = () => {
                   <TableCell>
                     {app.first_name} {app.last_name}
                     <div className="text-sm text-muted-foreground">{app.email}</div>
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {app.nin || <span className="text-muted-foreground">Missing</span>}
+                  </TableCell>
+                  <TableCell>
+                    {app.documents_status === 'verified' ? (
+                      <Badge className="bg-green-600 hover:bg-green-600">Verified</Badge>
+                    ) : app.documents_status === 'rejected' ? (
+                      <Badge variant="destructive">Rejected</Badge>
+                    ) : (
+                      <Badge variant="secondary">Awaiting check</Badge>
+                    )}
                   </TableCell>
                   <TableCell className="font-bold text-lg">
                     {app.combined_score?.toFixed(2) || "N/A"}

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { fetchPlacementMap } from "@/lib/student-placement";
 import {
   Banknote,
   GraduationCap,
@@ -54,6 +55,7 @@ export const AdminOverview = () => {
   const [snap, setSnap] = useState<Snapshot>(EMPTY);
   const [recentPayments, setRecentPayments] = useState<any[]>([]);
   const [recentApplications, setRecentApplications] = useState<any[]>([]);
+  const [campusCounts, setCampusCounts] = useState<{ name: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
   const [problem, setProblem] = useState<string | null>(null);
 
@@ -122,6 +124,22 @@ export const AdminOverview = () => {
       setRecentPayments((data as any[]) || []);
     } catch {
       /* handled by the note above */
+    }
+
+    try {
+      const placements = await fetchPlacementMap();
+      const counts = new Map<string, number>();
+      placements.forEach((p) => {
+        const name = p.campus_name || "Not placed";
+        counts.set(name, (counts.get(name) || 0) + 1);
+      });
+      setCampusCounts(
+        Array.from(counts.entries())
+          .sort((a, b) => b[1] - a[1])
+          .map(([name, count]) => ({ name, count })),
+      );
+    } catch {
+      setCampusCounts([]);
     }
 
     setSnap(next);
@@ -201,6 +219,24 @@ export const AdminOverview = () => {
           </Card>
         ))}
       </div>
+
+      {campusCounts.length > 0 && (
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">Pupils by campus</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {campusCounts.map((c) => (
+              <div key={c.name} className="rounded-md border p-3">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">{c.name}</p>
+                <p className="text-xl font-bold mt-1">{c.count}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>

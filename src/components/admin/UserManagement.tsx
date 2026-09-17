@@ -12,6 +12,7 @@ import { User, Profile, Class, Subject } from '@/types/auth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { UserEditModal } from './UserEditModal';
+import { fetchPlacementMap } from '@/lib/student-placement';
 export const UserManagement = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
@@ -410,6 +411,7 @@ export const UserManagement = () => {
       }
 
       return profiles.map((p) => ({
+        user_id: p.user_id,
         full_name: p.full_name,
         email: '',
         role: roleMap.get(p.user_id) || 'student',
@@ -417,6 +419,27 @@ export const UserManagement = () => {
         class_name: '',
         created_at: p.created_at,
       }));
+    };
+
+    // Campus, arm and class for each pupil, keyed by their sign-in id.
+    const placementByUser = async () => {
+      const byUser = new Map<string, { campus: string; arm: string; className: string }>();
+      try {
+        const [{ data: students }, placements] = await Promise.all([
+          supabase.from('students').select('id, user_id').is('archived_at', null),
+          fetchPlacementMap(),
+        ]);
+        ((students || []) as any[]).forEach((s) => {
+          if (!s.user_id) return;
+          const pl = placements.get(s.id);
+          byUser.set(s.user_id, {
+            campus: pl?.campus_name || '',
+            arm: pl?.arm_name || '',
+            className: pl?.class_name || '',
+          });
+        });
+      } catch { /* structure not available */ }
+      return byUser;
     };
 
     try {
@@ -433,15 +456,22 @@ export const UserManagement = () => {
         partial = true;
       }
 
-      const headers = ['Full Name', 'Email', 'Role', 'School', 'Class', 'Created Date'];
-      const rows = users.map((user: any) => [
-        user.full_name,
-        user.email,
-        user.role,
-        user.school,
-        user.class_name,
-        new Date(user.created_at).toLocaleDateString(),
-      ]);
+      const places = await placementByUser();
+
+      const headers = ['Full Name', 'Email', 'Role', 'School', 'Campus', 'Class', 'Arm', 'Created Date'];
+      const rows = users.map((user: any) => {
+        const pl = places.get(user.user_id) || { campus: '', arm: '', className: '' };
+        return [
+          user.full_name,
+          user.email,
+          user.role,
+          user.school,
+          user.campus_name || pl.campus,
+          pl.className || user.class_name,
+          user.arm_name || pl.arm,
+          new Date(user.created_at).toLocaleDateString(),
+        ];
+      });
 
       const csvContent = [
         headers.join(','),
