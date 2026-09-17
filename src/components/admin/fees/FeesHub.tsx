@@ -8,6 +8,8 @@ import { PaymentsList } from './PaymentsList';
 import { RemindersPanel } from './RemindersPanel';
 import { FeeReceiptGenerator } from '@/components/admin/FeeReceiptGenerator';
 import { Reconciliation } from './Reconciliation';
+import { BillingRules } from './BillingRules';
+import { InvoicesPanel } from './InvoicesPanel';
 
 export const FeesHub: React.FC = () => {
   return (
@@ -16,6 +18,8 @@ export const FeesHub: React.FC = () => {
         <TabsList className="flex w-max min-w-full h-auto gap-1 p-1">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="structures">Fee Structures</TabsTrigger>
+          <TabsTrigger value="rules">Fee Rules</TabsTrigger>
+          <TabsTrigger value="invoices">Invoices</TabsTrigger>
           <TabsTrigger value="balances">Student Balances</TabsTrigger>
           <TabsTrigger value="plans">Installment Plans</TabsTrigger>
           <TabsTrigger value="payments">Payments</TabsTrigger>
@@ -26,6 +30,8 @@ export const FeesHub: React.FC = () => {
       </div>
       <TabsContent value="overview"><FeeOverview /></TabsContent>
       <TabsContent value="structures"><FeeStructures /></TabsContent>
+      <TabsContent value="rules"><BillingRules /></TabsContent>
+      <TabsContent value="invoices"><InvoicesPanel /></TabsContent>
       <TabsContent value="balances"><StudentBalances /></TabsContent>
       <TabsContent value="plans"><InstallmentPlans /></TabsContent>
       <TabsContent value="payments"><PaymentsList /></TabsContent>
