@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Wallet, TrendingUp, AlertTriangle, CalendarClock } from 'lucide-react';
 import { fetchStudentClassMap } from '@/lib/class-roster';
+import { useRealtimeRefresh } from '@/hooks/useRealtimeRefresh';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -11,6 +12,7 @@ export const FeeOverview: React.FC = () => {
   const [stats, setStats] = useState({ billed: 0, collected: 0, outstanding: 0, thisMonth: 0, overdue: 0, defaulters: [] as any[] });
 
   useEffect(() => { load(); }, []);
+  useRealtimeRefresh(['fee_payments', 'fee_structures'], load, 'fees-overview');
 
   const load = async () => {
     setLoading(true);
