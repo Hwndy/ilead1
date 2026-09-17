@@ -13,6 +13,7 @@ import { ArrowLeft, Mail, Phone, Calendar, MapPin, User, GraduationCap, Receipt,
 import { Pencil, KeyRound, Loader2 } from 'lucide-react';
 import { EditStudentDialog } from './EditStudentDialog';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { fetchPlacement, Placement, EMPTY_PLACEMENT } from '@/lib/student-placement';
 
 const makeTempPassword = () => {
   const letters = 'abcdefghjkmnpqrstuvwxyz';
