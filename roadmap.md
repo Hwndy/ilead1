@@ -19,8 +19,8 @@
 - [x] Two-way sync with legacy class_assignments
 
 ## Phase 4 — Rules-based billing
-- [ ] fee_categories, fees, fee_rules, student_invoices, invoice_items, credits, adjustments
-- [ ] FeeRules, BillingRun, InvoicesList screens
+- [x] fee_categories, fees, fee_rules, student_invoices, invoice_items, credits, adjustments
+- [x] FeeRules, BillingRun, InvoicesList screens
 
 ## Phase 5 — Admissions and enrolment reliability
 - [ ] NIN capture + compulsory documents
