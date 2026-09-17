@@ -26,6 +26,7 @@ interface AdmissionFormData {
   nationality: string;
   state_of_origin: string;
   lga: string;
+  nin: string;
   
   // Contact Information
   address: string;
@@ -91,6 +92,7 @@ export const AdmissionForm = () => {
     nationality: 'Nigerian',
     state_of_origin: '',
     lga: '',
+    nin: '',
     address: '',
     city: '',
     state: '',
@@ -192,15 +194,18 @@ export const AdmissionForm = () => {
     switch (step) {
       case 0: // Personal Info
         return !!(formData.first_name && formData.last_name && formData.date_of_birth && 
-                 formData.gender && formData.phone && formData.email);
+                 formData.gender && formData.phone && formData.email &&
+                 /^\d{11}$/.test(formData.nin.replace(/\D/g, '')));
       case 1: // Academic Info
         return !!(formData.applying_for_class);
       case 2: // Parent/Guardian
         return !!(formData.father_name || formData.mother_name || formData.guardian_name);
       case 3: // Medical Info
         return !!(formData.emergency_contact_name && formData.emergency_contact_phone);
-      case 4: // Documents
-        return true; // Documents are optional for initial submission
+      case 4: // Documents — birth certificate, previous result and passport are compulsory
+        return !!(formData.documents.birth_certificate &&
+                  formData.documents.previous_result &&
+                  formData.documents.passport_photos);
       case 5: // Review
         return formData.declaration_accepted;
       default:
