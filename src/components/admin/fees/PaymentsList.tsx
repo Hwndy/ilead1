@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Download, Search } from 'lucide-react';
+import { Loader2, Download, Search, Banknote } from 'lucide-react';
 import { format } from 'date-fns';
+import { RecordCashPaymentDialog } from './RecordCashPaymentDialog';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -64,6 +65,7 @@ export const PaymentsList: React.FC = () => {
         <div className="flex gap-2">
           <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/><Input className="pl-9 w-64" placeholder="Search..." value={q} onChange={e => setQ(e.target.value)}/></div>
           <Button variant="outline" onClick={exportCsv}><Download className="h-4 w-4 mr-1"/>CSV</Button>
+          <Button onClick={() => setPayOpen(true)}><Banknote className="h-4 w-4 mr-1"/>Record payment</Button>
         </div>
       </CardHeader>
       <CardContent>
