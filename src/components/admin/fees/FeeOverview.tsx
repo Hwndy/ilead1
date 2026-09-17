@@ -13,28 +13,32 @@ export const FeeOverview: React.FC = () => {
   const [stats, setStats] = useState({ billed: 0, collected: 0, outstanding: 0, thisMonth: 0, overdue: 0, defaulters: [] as any[] });
 
   useEffect(() => { load(); }, []);
-  useRealtimeRefresh(['fee_payments', 'fee_structures'], () => load(), 'fees-overview');
+  useRealtimeRefresh(['fee_payments', 'fee_structures', 'student_invoices', 'invoice_items'], () => load(), 'fees-overview');
 
 
   const load = async () => {
     setLoading(true);
     try {
       const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
-      const [{ data: students }, { data: structures }, { data: payments }, { count: overdue }, classMap] = await Promise.all([
+      const [{ data: students }, { data: structures }, { data: payments }, { count: overdue }, classMap, invoiced, credits] = await Promise.all([
         supabase.from('students').select('id').is('archived_at', null),
         supabase.from('fee_structures').select('amount, class_id, is_active'),
         supabase.from('fee_payments').select('amount_paid, payment_date, status, student_id').eq('status', 'completed'),
         supabase.from('fee_installments').select('id', { count: 'exact', head: true }).eq('status', 'overdue'),
         fetchStudentClassMap(),
+        fetchInvoicedTotals(),
+        fetchCreditTotals(),
       ]);
       const activeFees = (structures || []).filter((f: any) => f.is_active !== false);
-      // Estimate billed = sum(structure.amount) applied to each student who matches class (or global)
+      // Invoices are the source of truth; fee structures only cover students with no invoice yet.
       let billed = 0;
       const paidByStudent: Record<string, number> = {};
       const perStudentBill: Record<string, number> = {};
       (students || []).forEach((s: any) => {
         const classId = classMap.get(s.id)?.class_id || null;
-        const sum = activeFees.filter((f: any) => !f.class_id || f.class_id === classId).reduce((a, b: any) => a + Number(b.amount), 0);
+        const sum = invoiced.has(s.id)
+          ? invoiced.get(s.id)!
+          : activeFees.filter((f: any) => !f.class_id || f.class_id === classId).reduce((a, b: any) => a + Number(b.amount), 0);
         perStudentBill[s.id] = sum; billed += sum;
       });
       let collected = 0, thisMonth = 0;
@@ -45,7 +49,7 @@ export const FeeOverview: React.FC = () => {
         if (p.payment_date && new Date(p.payment_date) >= monthStart) thisMonth += amt;
       });
       const defaulters = Object.entries(perStudentBill)
-        .map(([id, bill]) => ({ id, outstanding: bill - (paidByStudent[id] || 0) }))
+        .map(([id, bill]) => ({ id, outstanding: bill - (paidByStudent[id] || 0) - (credits.get(id) || 0) }))
         .filter(d => d.outstanding > 0).sort((a,b) => b.outstanding - a.outstanding).slice(0, 5);
       const ids = defaulters.map(d => d.id);
       let named: any[] = [];
