@@ -9,9 +9,9 @@
 - [x] Loading/error states on balances and overview
 
 ## Phase 2 — Archived students and automatic updates
-- [ ] Exclude archived students from active lists everywhere
-- [ ] Realtime/auto refresh on key operational screens
-- [ ] Service worker: network-first shell, auto-apply new version
+- [x] Exclude archived students from active lists everywhere
+- [x] Realtime/auto refresh on key operational screens
+- [x] Service worker: network-first shell, auto-apply new version
 
 ## Phase 3 — Campus / class / arm structure
 - [ ] campuses, arms, campus_class_offerings, student_enrollments, student_movement_log
