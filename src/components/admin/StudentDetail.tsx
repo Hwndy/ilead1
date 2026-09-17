@@ -97,11 +97,14 @@ export const StudentDetail: React.FC = () => {
           .eq('student_id', stu.id)
           .maybeSingle();
         setApplication(app ?? null);
+        const place = await fetchPlacement(stu.id);
+        setPlacement(place);
+        if (place.class_name) setClassName(place.class_name);
       }
 
       if (assign?.class_id) {
         const { data: cls } = await supabase.from('classes').select('name').eq('id', assign.class_id).maybeSingle();
-        setClassName(cls?.name ?? null);
+        setClassName(prev => prev ?? (cls?.name ?? null));
       }
 
       const [{ data: examSessions }, { data: att }, { data: pays }, { data: rels }] = await Promise.all([
