@@ -102,6 +102,7 @@ Deno.serve(async (req) => {
     const usersData = profiles.map((profile) => {
       const role = roleMap.get(profile.user_id) || 'student';
       return {
+        user_id: profile.user_id,
         full_name: profile.full_name,
         email: emailMap.get(profile.user_id) || '',
         role,
