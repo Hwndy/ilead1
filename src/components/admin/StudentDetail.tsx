@@ -13,6 +13,7 @@ import { ArrowLeft, Mail, Phone, Calendar, MapPin, User, GraduationCap, Receipt,
 import { Pencil, KeyRound, Loader2 } from 'lucide-react';
 import { EditStudentDialog } from './EditStudentDialog';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { fetchPlacement, Placement, EMPTY_PLACEMENT } from '@/lib/student-placement';
 
 const makeTempPassword = () => {
   const letters = 'abcdefghjkmnpqrstuvwxyz';
@@ -47,6 +48,7 @@ export const StudentDetail: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [student, setStudent] = useState<any>(null);
   const [className, setClassName] = useState<string | null>(null);
+  const [placement, setPlacement] = useState<Placement>(EMPTY_PLACEMENT);
   const [exams, setExams] = useState<any[]>([]);
   const [attendance, setAttendance] = useState<any | null>(null);
   const [payments, setPayments] = useState<any[]>([]);
@@ -95,11 +97,14 @@ export const StudentDetail: React.FC = () => {
           .eq('student_id', stu.id)
           .maybeSingle();
         setApplication(app ?? null);
+        const place = await fetchPlacement(stu.id);
+        setPlacement(place);
+        if (place.class_name) setClassName(place.class_name);
       }
 
       if (assign?.class_id) {
         const { data: cls } = await supabase.from('classes').select('name').eq('id', assign.class_id).maybeSingle();
-        setClassName(cls?.name ?? null);
+        setClassName(prev => prev ?? (cls?.name ?? null));
       }
 
       const [{ data: examSessions }, { data: att }, { data: pays }, { data: rels }] = await Promise.all([
@@ -187,7 +192,8 @@ export const StudentDetail: React.FC = () => {
           <div className="flex-1">
             <h2 className="text-2xl font-bold">{profile.full_name}</h2>
             <div className="flex flex-wrap items-center gap-2 mt-2">
-              {className && <Badge variant="secondary"><GraduationCap className="h-3 w-3 mr-1" />{className}</Badge>}
+              {className && <Badge variant="secondary"><GraduationCap className="h-3 w-3 mr-1" />{[className, placement.arm_name].filter(Boolean).join(' ')}</Badge>}
+              {placement.campus_name && <Badge variant="outline"><MapPin className="h-3 w-3 mr-1" />{placement.campus_name}</Badge>}
               <Badge>{student?.status || 'active'}</Badge>
               {student?.admission_number && (
                 <Badge variant="outline">Adm: {student.admission_number}</Badge>
@@ -246,10 +252,13 @@ export const StudentDetail: React.FC = () => {
         <Card>
           <CardHeader><CardTitle className="flex items-center gap-2"><GraduationCap className="h-4 w-4" />Academic</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm">
+            <Row label="Campus" value={placement.campus_name || 'Not placed'} />
             <Row label="Class" value={className} />
+            <Row label="Arm" value={placement.arm_name || 'Not placed'} />
             <Row label="Section" value={student?.section} />
             <Row label="Admission Date" value={student?.admission_date} />
             <Row label="Registration #" value={student?.registration_number || student?.admission_number} />
+            <Row label="NIN" value={student?.nin} />
           </CardContent>
         </Card>
 

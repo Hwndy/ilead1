@@ -10,6 +10,7 @@ import { FileText, Download, Printer, Search } from "lucide-react";
 import { format } from "date-fns";
 import { buildBrandedReceipt } from "@/lib/receipt-pdf";
 import { fetchSchoolBranding, DEFAULT_SCHOOL_BRANDING, SchoolBranding } from "@/lib/school-branding";
+import { FeeReceiptView } from "@/components/fees/FeeReceiptView";
 
 interface Payment {
   id: string;
@@ -256,88 +257,26 @@ export const FeeReceiptGenerator = () => {
             <DialogTitle>Receipt Preview</DialogTitle>
           </DialogHeader>
           {selectedPayment && (
-            <div ref={receiptRef} className="p-6 border rounded-lg bg-white">
-              <div className="text-center mb-6">
-                {schoolInfo.logo_url && (
-                  <img
-                    src={schoolInfo.logo_url}
-                    alt={`${schoolInfo.name} logo`}
-                    className="h-16 mx-auto mb-2 object-contain"
-                  />
-                )}
-                <h2 className="text-xl font-bold uppercase">{schoolInfo.name}</h2>
-                {schoolInfo.address && <p className="text-sm text-muted-foreground">{schoolInfo.address}</p>}
-                {(schoolInfo.phone || schoolInfo.email) && (
-                  <p className="text-sm text-muted-foreground">
-                    {[schoolInfo.phone && `Tel: ${schoolInfo.phone}`, schoolInfo.email && `Email: ${schoolInfo.email}`]
-                      .filter(Boolean)
-                      .join("  |  ")}
-                  </p>
-                )}
-                {schoolInfo.motto && <p className="text-xs italic text-muted-foreground">“{schoolInfo.motto}”</p>}
-              </div>
-
-              <h3 className="text-lg font-bold text-center mb-4 border-y py-2">FEE RECEIPT</h3>
-
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Receipt No</p>
-                  <p className="font-medium">{selectedPayment.receipt_number || "N/A"}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-muted-foreground">Date</p>
-                  <p className="font-medium">
-                    {selectedPayment.payment_date
-                      ? format(new Date(selectedPayment.payment_date), "MMM dd, yyyy")
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-2 mb-4 p-4 bg-muted/50 rounded-lg">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Student Name:</span>
-                  <span className="font-medium">{selectedPayment.student?.profile?.full_name || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Admission No:</span>
-                  <span className="font-medium">{selectedPayment.student?.admission_number || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Fee Type:</span>
-                  <span className="font-medium">{selectedPayment.fee_structure?.fee_type || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Academic Year:</span>
-                  <span className="font-medium">{selectedPayment.fee_structure?.academic_year || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Payment Method:</span>
-                  <span className="font-medium capitalize">{selectedPayment.payment_method || "N/A"}</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center p-4 bg-primary/10 rounded-lg mb-6">
-                <span className="text-lg font-medium">Amount Paid:</span>
-                <span className="text-2xl font-bold">₦{selectedPayment.amount_paid.toLocaleString()}</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-8 pt-8">
-                <div className="text-center">
-                  <div className="border-t border-dashed pt-2">
-                    <p className="text-sm text-muted-foreground">Authorized Signature</p>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="border-t border-dashed pt-2">
-                    <p className="text-sm text-muted-foreground">School Stamp</p>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-xs text-center text-muted-foreground mt-6">
-                This is a computer generated receipt.
-              </p>
+            <div ref={receiptRef}>
+              <FeeReceiptView
+                data={{
+                  title: "FEE PAYMENT RECEIPT",
+                  receiptNumber: selectedPayment.receipt_number,
+                  date: selectedPayment.payment_date
+                    ? format(new Date(selectedPayment.payment_date), "MMM dd, yyyy")
+                    : null,
+                  amount: Number(selectedPayment.amount_paid),
+                  fields: [
+                    { label: "Student", value: selectedPayment.student?.profile?.full_name },
+                    { label: "Admission No.", value: selectedPayment.student?.admission_number },
+                    { label: "Payment for", value: selectedPayment.fee_structure?.fee_type || (selectedPayment as any).metadata?.description || "School fee" },
+                    { label: "Academic Year", value: selectedPayment.fee_structure?.academic_year },
+                    { label: "Method", value: (selectedPayment.payment_method || "").replace("_", " ") },
+                    { label: "Status", value: selectedPayment.status },
+                  ],
+                }}
+                actions={false}
+              />
             </div>
           )}
           <div className="flex justify-end gap-2">

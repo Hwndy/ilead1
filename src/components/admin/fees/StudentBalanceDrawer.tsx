@@ -7,9 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, AlertTriangle, Banknote } from 'lucide-react';
 import { format } from 'date-fns';
-import { fetchStudentClass } from '@/lib/class-roster';
 import { RecordCashPaymentDialog } from './RecordCashPaymentDialog';
 import { FeeReceiptView, FeeReceiptData } from '@/components/fees/FeeReceiptView';
+import { fetchPlacement, Placement, EMPTY_PLACEMENT } from '@/lib/student-placement';
+import { fetchStudentInvoices, fetchStudentCredits, invoiceBillable, StudentInvoice } from '@/lib/student-billing';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
@@ -18,9 +19,11 @@ interface Props { studentId: string; name: string; admission?: string | null; on
 export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admission, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [className, setClassName] = useState('');
+  const [placement, setPlacement] = useState<Placement>(EMPTY_PLACEMENT);
   const [structures, setStructures] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
+  const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
+  const [credit, setCredit] = useState(0);
   const [payOpen, setPayOpen] = useState(false);
   const [receipt, setReceipt] = useState<FeeReceiptData | null>(null);
 
@@ -28,16 +31,20 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admissi
     setLoading(true);
     setError(null);
     try {
-      const placement = await fetchStudentClass(studentId);
-      setClassName(placement.class_name);
-      const [{ data: fs, error: fsErr }, { data: pays, error: payErr }] = await Promise.all([
+      const place = await fetchPlacement(studentId);
+      setPlacement(place);
+      const [{ data: fs, error: fsErr }, { data: pays, error: payErr }, invs, cr] = await Promise.all([
         supabase.from('fee_structures').select('*'),
         supabase.from('fee_payments').select('*, fee_structure:fee_structures(fee_type,academic_year)').eq('student_id', studentId).order('created_at', { ascending: false }),
+        fetchStudentInvoices(studentId),
+        fetchStudentCredits(studentId),
       ]);
       if (fsErr) throw fsErr;
       if (payErr) throw payErr;
-      setStructures((fs || []).filter((f: any) => f.is_active !== false && (!f.class_id || f.class_id === placement.class_id)));
+      setStructures((fs || []).filter((f: any) => f.is_active !== false && (!f.class_id || f.class_id === place.class_id)));
       setPayments(pays || []);
+      setInvoices(invs);
+      setCredit(cr);
     } catch (e: any) {
       setError(e.message || 'Could not load this student’s fees.');
     } finally {
@@ -46,8 +53,11 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admissi
   };
   useEffect(() => { load(); }, [studentId]);
 
+  const className = placement.class_name;
   const paidFor = (id: string) => payments.filter(p => p.status === 'completed' && p.fee_structure_id === id).reduce((a, b) => a + Number(b.amount_paid || 0), 0);
-  const totalBilled = structures.reduce((a, b) => a + Number(b.amount), 0);
+  const totalBilled = invoices.length
+    ? invoices.reduce((a, i) => a + invoiceBillable(i), 0)
+    : structures.reduce((a, b) => a + Number(b.amount), 0);
   const totalPaid = payments.filter(p => p.status === 'completed').reduce((a, b) => a + Number(b.amount_paid || 0), 0);
 
   const showReceipt = (p: any) => setReceipt({
@@ -69,7 +79,7 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admissi
     <Sheet open onOpenChange={onClose}>
       <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>{name}{className ? ` — ${className}` : ''}</SheetTitle>
+          <SheetTitle>{name}{placement.label ? ` — ${placement.label}` : ''}</SheetTitle>
         </SheetHeader>
         {error && (
           <Alert variant="destructive" className="mt-4">
@@ -79,12 +89,41 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admissi
         )}
         {loading ? <div className="flex justify-center p-8"><Loader2 className="animate-spin h-6 w-6"/></div> : (
           <div className="space-y-6 mt-4">
-            <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="grid grid-cols-4 gap-3 text-center">
               <div className="p-3 border rounded"><div className="text-xs text-muted-foreground">Billed</div><div className="font-semibold">{NGN(totalBilled)}</div></div>
               <div className="p-3 border rounded"><div className="text-xs text-muted-foreground">Paid</div><div className="font-semibold text-green-600">{NGN(totalPaid)}</div></div>
-              <div className="p-3 border rounded"><div className="text-xs text-muted-foreground">Outstanding</div><div className="font-semibold text-red-600">{NGN(Math.max(0, totalBilled - totalPaid))}</div></div>
+              <div className="p-3 border rounded"><div className="text-xs text-muted-foreground">Credit</div><div className="font-semibold">{NGN(credit)}</div></div>
+              <div className="p-3 border rounded"><div className="text-xs text-muted-foreground">Outstanding</div><div className="font-semibold text-red-600">{NGN(Math.max(0, totalBilled - totalPaid - credit))}</div></div>
             </div>
 
+            {invoices.length > 0 ? (
+              <div className="space-y-4">
+                <h3 className="font-semibold">Invoices</h3>
+                {invoices.map(inv => (
+                  <div key={inv.id} className="border rounded p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="font-medium">{inv.term} • {inv.academic_year}</div>
+                      <Badge variant={inv.status === 'paid' ? 'default' : 'outline'}>{inv.status.replace('_', ' ')}</Badge>
+                    </div>
+                    <Table>
+                      <TableHeader><TableRow><TableHead>Item</TableHead><TableHead className="text-right">Amount</TableHead></TableRow></TableHeader>
+                      <TableBody>
+                        {inv.items.filter(i => !i.is_optional || i.selected).map(i => (
+                          <TableRow key={i.id}>
+                            <TableCell>{i.description}{i.is_optional && <span className="ml-2 text-xs text-muted-foreground">optional</span>}</TableCell>
+                            <TableCell className="text-right">{NGN(i.amount)}</TableCell>
+                          </TableRow>
+                        ))}
+                        <TableRow>
+                          <TableCell className="font-semibold">Invoice total</TableCell>
+                          <TableCell className="text-right font-semibold">{NGN(invoiceBillable(inv))}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                ))}
+              </div>
+            ) : (
             <div>
               <h3 className="font-semibold mb-2">Fee Breakdown</h3>
               <Table>
@@ -104,6 +143,7 @@ export const StudentBalanceDrawer: React.FC<Props> = ({ studentId, name, admissi
                 </TableBody>
               </Table>
             </div>
+            )}
 
             <Button className="w-full" onClick={() => setPayOpen(true)}>
               <Banknote className="h-4 w-4 mr-1" />Record a payment received

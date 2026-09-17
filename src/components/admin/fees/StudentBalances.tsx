@@ -10,12 +10,18 @@ import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Search, Eye, AlertTriangle, Banknote, RefreshCw } from 'lucide-react';
 import { StudentBalanceDrawer } from './StudentBalanceDrawer';
 import { RecordCashPaymentDialog, CashPaymentStudent } from './RecordCashPaymentDialog';
-import { fetchStudentClassMap } from '@/lib/class-roster';
 import { useRealtimeRefresh } from '@/hooks/useRealtimeRefresh';
+import { fetchPlacementMap, fetchStructureOptions, CampusOption } from '@/lib/student-placement';
+import { fetchInvoicedTotals, fetchCreditTotals } from '@/lib/student-billing';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
-interface Row { id: string; name: string; admission: string; class_id: string | null; class_name: string; billed: number; paid: number; outstanding: number; }
+interface Row {
+  id: string; name: string; admission: string;
+  class_id: string | null; class_name: string;
+  campus_id: string | null; campus_name: string; arm_name: string;
+  billed: number; paid: number; credit: number; outstanding: number; invoiced: boolean;
+}
 
 export const StudentBalances: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
@@ -23,7 +29,9 @@ export const StudentBalances: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [q, setQ] = useState('');
   const [classFilter, setClassFilter] = useState('ALL');
+  const [campusFilter, setCampusFilter] = useState('ALL');
   const [classes, setClasses] = useState<{ id: string; name: string }[]>([]);
+  const [campuses, setCampuses] = useState<CampusOption[]>([]);
   const [selected, setSelected] = useState<Row | null>(null);
   const [payFor, setPayFor] = useState<CashPaymentStudent | null>(null);
 
@@ -31,17 +39,21 @@ export const StudentBalances: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const [stsRes, clsRes, fsRes, paysRes, classMap] = await Promise.all([
+      const [stsRes, clsRes, fsRes, paysRes, placementMap, invoicedMap, creditMap, structure] = await Promise.all([
         supabase.from('students').select('id, admission_number, user_id').is('archived_at', null),
         supabase.from('classes').select('id, name').order('name'),
         supabase.from('fee_structures').select('id, amount, class_id, is_active'),
         supabase.from('fee_payments').select('student_id, amount_paid, status').eq('status', 'completed'),
-        fetchStudentClassMap(),
+        fetchPlacementMap(),
+        fetchInvoicedTotals(),
+        fetchCreditTotals(),
+        fetchStructureOptions(),
       ]);
       const firstError = stsRes.error || clsRes.error || fsRes.error || paysRes.error;
       if (firstError) throw firstError;
 
       setClasses((clsRes.data || []) as any);
+      setCampuses(structure.campuses);
       const activeFees = (fsRes.data || []).filter((f: any) => f.is_active !== false);
 
       const userIds = [...new Set((stsRes.data || []).map((s: any) => s.user_id).filter(Boolean))];
@@ -55,21 +67,29 @@ export const StudentBalances: React.FC = () => {
       (paysRes.data || []).forEach((p: any) => { paidMap[p.student_id] = (paidMap[p.student_id] || 0) + Number(p.amount_paid || 0); });
 
       const out: Row[] = (stsRes.data || []).map((s: any) => {
-        const placement = classMap.get(s.id);
+        const placement = placementMap.get(s.id);
         const classId = placement?.class_id || null;
-        const billed = activeFees
+        const fallbackBilled = activeFees
           .filter((f: any) => !f.class_id || f.class_id === classId)
           .reduce((a: number, b: any) => a + Number(b.amount), 0);
+        const invoiced = invoicedMap.get(s.id);
+        const billed = invoiced !== undefined ? invoiced : fallbackBilled;
         const paid = paidMap[s.id] || 0;
+        const credit = creditMap.get(s.id) || 0;
         return {
           id: s.id,
           name: nameMap.get(s.user_id) || s.admission_number || 'Unnamed student',
           admission: s.admission_number || '',
           class_id: classId,
           class_name: placement?.class_name || '',
+          campus_id: placement?.campus_id || null,
+          campus_name: placement?.campus_name || '',
+          arm_name: placement?.arm_name || '',
           billed,
           paid,
-          outstanding: Math.max(0, billed - paid),
+          credit,
+          outstanding: Math.max(0, billed - paid - credit),
+          invoiced: invoiced !== undefined,
         };
       });
       setRows(out);
@@ -86,9 +106,10 @@ export const StudentBalances: React.FC = () => {
   const filtered = useMemo(() => {
     return rows.filter(r =>
       (classFilter === 'ALL' || r.class_id === classFilter) &&
+      (campusFilter === 'ALL' || r.campus_id === campusFilter) &&
       (!q || r.name.toLowerCase().includes(q.toLowerCase()) || r.admission.toLowerCase().includes(q.toLowerCase()))
     );
-  }, [rows, q, classFilter]);
+  }, [rows, q, classFilter, campusFilter]);
 
   return (
     <Card>
@@ -112,6 +133,15 @@ export const StudentBalances: React.FC = () => {
               {classes.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
             </SelectContent>
           </Select>
+          {campuses.length > 0 && (
+            <Select value={campusFilter} onValueChange={setCampusFilter}>
+              <SelectTrigger className="w-full sm:w-[180px]"><SelectValue/></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">All campuses</SelectItem>
+                {campuses.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -132,9 +162,22 @@ export const StudentBalances: React.FC = () => {
               {filtered.map(r => (
                 <TableRow key={r.id}>
                   <TableCell><div className="font-medium">{r.name}</div><div className="text-xs text-muted-foreground">{r.admission}</div></TableCell>
-                  <TableCell>{r.class_name || <span className="text-xs text-muted-foreground">Not placed</span>}</TableCell>
-                  <TableCell className="text-right">{NGN(r.billed)}</TableCell>
-                  <TableCell className="text-right text-green-600">{NGN(r.paid)}</TableCell>
+                  <TableCell>
+                    {r.class_name ? (
+                      <>
+                        <div>{[r.class_name, r.arm_name].filter(Boolean).join(' ')}</div>
+                        {r.campus_name && <div className="text-xs text-muted-foreground">{r.campus_name}</div>}
+                      </>
+                    ) : <span className="text-xs text-muted-foreground">Not placed</span>}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {NGN(r.billed)}
+                    {!r.invoiced && <div className="text-[10px] text-muted-foreground">not invoiced yet</div>}
+                  </TableCell>
+                  <TableCell className="text-right text-green-600">
+                    {NGN(r.paid)}
+                    {r.credit > 0 && <div className="text-[10px] text-muted-foreground">+{NGN(r.credit)} credit</div>}
+                  </TableCell>
                   <TableCell className="text-right font-semibold">{NGN(r.outstanding)}</TableCell>
                   <TableCell>{r.outstanding <= 0 ? <Badge>Cleared</Badge> : r.paid > 0 ? <Badge variant="outline">Partial</Badge> : <Badge variant="destructive">Owing</Badge>}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">

@@ -37,6 +37,7 @@ interface Application {
   applying_for_class_id: string | null;
   parent_guardian_info: any;
   address: any;
+  nin?: string | null;
 }
 
 export const AdmissionManagement = () => {
@@ -448,6 +449,10 @@ export const AdmissionManagement = () => {
                               <div>
                                 <span className="text-muted-foreground">Status:</span>
                                 <p className="font-medium capitalize">{selectedApplication.status.replace('_', ' ')}</p>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">NIN:</span>
+                                <p className="font-medium">{selectedApplication.nin || 'Not provided'}</p>
                               </div>
                             </div>
                           </div>
