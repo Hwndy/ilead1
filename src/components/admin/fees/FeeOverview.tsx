@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Wallet, TrendingUp, AlertTriangle, CalendarClock } from 'lucide-react';
 import { fetchStudentClassMap } from '@/lib/class-roster';
 import { useRealtimeRefresh } from '@/hooks/useRealtimeRefresh';
+import { fetchInvoicedTotals, fetchCreditTotals } from '@/lib/student-billing';
 
 const NGN = (n: number) => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(n || 0);
 
