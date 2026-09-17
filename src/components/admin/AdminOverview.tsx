@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { fetchPlacementMap } from "@/lib/student-placement";
 import {
   Banknote,
   GraduationCap,
