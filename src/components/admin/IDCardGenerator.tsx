@@ -525,7 +525,9 @@ export const IDCardGenerator: React.FC = () => {
                 }}
                 school={{
                   name: school?.name || 'School Name',
-                  address: school?.address,
+                  address: previewStudent.campus_name
+                    ? `${previewStudent.campus_name} Campus`
+                    : school?.address,
                   logo_url: school?.logo_url || null,
                   motto: school?.motto,
                   phone: school?.phone,
