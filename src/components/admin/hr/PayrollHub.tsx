@@ -315,7 +315,17 @@ export const PayrollHub: React.FC = () => {
     if (next === 'closed') patch.closed_at = new Date().toISOString();
 
     const { error } = await supabase.from('payroll_periods').update(patch).eq('id', period.id);
-    if (error) { toast({ title: 'Update failed', description: error.message, variant: 'destructive' }); return; }
+    if (error) {
+      const constraint = /check constraint|violates/i.test(error.message);
+      toast({
+        title: 'Update failed',
+        description: constraint && next === 'approved'
+          ? 'The database still needs the finance update (db/phase1-finance.sql) before payroll can be approved.'
+          : error.message,
+        variant: 'destructive',
+      });
+      return;
+    }
     if (next === 'paid') {
       await supabase.from('payroll_items').update({ status: 'paid', paid_at: new Date().toISOString() } as any).eq('period_id', period.id);
       if (openPeriod?.id === period.id) await loadItems(period);
