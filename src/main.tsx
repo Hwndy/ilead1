@@ -3,21 +3,53 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 
-// Register service worker for PWA support
+// Register the service worker and keep the app on the newest version automatically.
 if ('serviceWorker' in navigator) {
+  let reloading = false;
+
+  // Don't interrupt someone in the middle of typing or an exam.
+  const isBusy = () => {
+    const el = document.activeElement as HTMLElement | null;
+    if (el && ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName)) return true;
+    if (el?.isContentEditable) return true;
+    if (document.querySelector('[data-exam-active="true"]')) return true;
+    return false;
+  };
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
+    window.location.reload();
+  });
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then((registration) => {
-        console.log('SW registered:', registration.scope);
-        
-        // Check for updates periodically
-        setInterval(() => {
-          registration.update();
-        }, 60 * 60 * 1000); // Check every hour
+        const applyWaiting = () => {
+          if (registration.waiting && !isBusy()) {
+            registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+        };
+
+        registration.addEventListener('updatefound', () => {
+          const worker = registration.installing;
+          worker?.addEventListener('statechange', () => {
+            if (worker.state === 'installed' && navigator.serviceWorker.controller) applyWaiting();
+          });
+        });
+
+        const check = () => {
+          registration.update().catch(() => undefined);
+          applyWaiting();
+        };
+
+        check();
+        setInterval(check, 15 * 60 * 1000);
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+        window.addEventListener('online', check);
+        window.addEventListener('focus', check);
       })
-      .catch((error) => {
-        console.log('SW registration failed:', error);
-      });
+      .catch(() => undefined);
   });
 }
 
