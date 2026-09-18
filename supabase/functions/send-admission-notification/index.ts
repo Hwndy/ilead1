@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
+import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
@@ -86,10 +87,12 @@ interface NotificationRequest {
   additional_data?: any;
 }
 
+// The school address and contact details are part of the official letterhead
+// footer that wraps every message, so the sign-off stays short.
 const SCHOOL_SIGNOFF = `
       <p style="margin-top:24px;">Yours faithfully,<br><br>
         <strong>Admissions Officer</strong><br>
-        <span style="color:#6b7280;font-size:13px;">iVintage College, 1 iVintage Close, Behind UBA, Badagry Market Road, Badagry, Lagos &middot; 08028152097</span>
+        <span style="color:#6b7280;font-size:13px;">For: iVintage College</span>
       </p>`;
 
 const emailTemplates: Record<string, (data: any) => { subject: string; html: string }> = {
@@ -343,7 +346,7 @@ serve(async (req) => {
         to: [application.email],
         reply_to: REPLY_TO,
         subject: template.subject,
-        html: template.html,
+        html: wrapEmailInLetterhead(template.html, template.subject),
       });
 
       // Update log with success

@@ -2,6 +2,11 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 import { jsPDF } from "npm:jspdf@2.5.1";
+import {
+  getLetterheadDataUrl,
+  LETTERHEAD_MARGINS,
+  wrapEmailInLetterhead,
+} from "../_shared/letterhead.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -11,10 +16,7 @@ const corsHeaders = {
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ivintage.vercel.app").replace(/\/+$/, "");
-// NOTE: the custom domain serves index.html for /__l5e/* paths, so assets must be
-// loaded from the asset host (or an explicit ASSET_BASE_URL secret).
-const ASSET_BASE_URL = (Deno.env.get("ASSET_BASE_URL") || "https://id-preview--def176ba-5aaa-4bf2-a711-588b116fc44e.lovable.app").replace(/\/+$/, "");
-const LETTERHEAD_URL = `${ASSET_BASE_URL}/__l5e/assets-v1/f210aa1b-7164-4673-a0da-2e0eb697e3a9/ivintage-letterhead.png`;
+// Official letterhead artwork + email strips live in the shared module.
 const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
 const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
@@ -84,44 +86,16 @@ async function logEmail(supabase: any, logData: any) {
   }
 }
 
-// Fetch letterhead PNG once and cache as base64 data URL for jsPDF
-let cachedLetterhead: string | null = null;
-async function getLetterheadDataUrl(): Promise<string | null> {
-  if (cachedLetterhead) return cachedLetterhead;
-  try {
-    const res = await fetch(LETTERHEAD_URL);
-    if (!res.ok) {
-      console.error("Failed to fetch letterhead:", res.status);
-      return null;
-    }
-    const buf = new Uint8Array(await res.arrayBuffer());
-    // Guard: some hosts return an SPA index.html with a 200 status.
-    const PNG_SIG = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
-    if (buf.length < 8 || PNG_SIG.some((b, i) => buf[i] !== b)) {
-      console.error("Letterhead URL did not return a PNG:", res.headers.get("content-type"));
-      return null;
-    }
-    let binary = "";
-    for (let i = 0; i < buf.length; i++) binary += String.fromCharCode(buf[i]);
-    cachedLetterhead = `data:image/png;base64,${btoa(binary)}`;
-    return cachedLetterhead;
-  } catch (e) {
-    console.error("Letterhead fetch error:", e);
-    return null;
-  }
-}
-
 // ---------------------------------------------------------------------------
-// Offer letter PDF  the letter is typeset INSIDE the official letterhead page.
-// The letterhead PNG is a full-page design (crest + address band at the top,
-// watermark in the middle, colour bars at the foot), so it is drawn as the page
-// background and all text is laid out inside a safe area between the two.
+// Offer letter PDF — the letter is typeset INSIDE the official letterhead page
+// (A4). The artwork is drawn as the page background exactly as supplied and all
+// text is laid out inside the safe area between the top arc and address block.
 // ---------------------------------------------------------------------------
-const PAGE_FORMAT = "letter";      // 215.9mm x 279.4mm  matches the artwork ratio
-const SAFE_TOP = 60;               // below the address band
-const SAFE_BOTTOM = 258;           // above the footer colour bars
-const SAFE_LEFT = 25;
-const SAFE_RIGHT = 25;
+const PAGE_FORMAT = "a4";          // 210mm x 297mm — matches the official artwork
+const SAFE_TOP = LETTERHEAD_MARGINS.top;
+const SAFE_BOTTOM = 297 - LETTERHEAD_MARGINS.bottom;
+const SAFE_LEFT = LETTERHEAD_MARGINS.left + 4;
+const SAFE_RIGHT = LETTERHEAD_MARGINS.right + 4;
 
 function fmtDate(value: string | number | Date) {
   return new Date(value).toLocaleDateString("en-GB", {
@@ -143,38 +117,40 @@ async function generateOfferLetterPDF(
   const pageHeight = doc.internal.pageSize.getHeight();
   const contentWidth = pageWidth - SAFE_LEFT - SAFE_RIGHT;
 
-  const letterhead = await getLetterheadDataUrl();
+  const letterhead = await getLetterheadDataUrl("full");
+  const continuation = await getLetterheadDataUrl("continuation");
 
-  const paintBackground = () => {
-    if (letterhead) {
+  const paintBackground = (variant: "full" | "continuation" = "full") => {
+    const art = variant === "continuation" ? (continuation || letterhead) : letterhead;
+    if (art) {
       try {
-        doc.addImage(letterhead, "PNG", 0, 0, pageWidth, pageHeight, undefined, "FAST");
+        doc.addImage(art, "PNG", 0, 0, pageWidth, pageHeight, undefined, "FAST");
         return true;
       } catch (e) {
         console.error("Failed to draw letterhead:", e);
       }
     }
     // Fallback stationery if the artwork cannot be fetched.
-    doc.setFillColor(21, 128, 61);
+    doc.setFillColor(20, 28, 43);
     doc.rect(0, 0, pageWidth, 26, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
     doc.text("IVINTAGE COLLEGE", pageWidth / 2, 16, { align: "center" });
     doc.setTextColor(0, 0, 0);
-    doc.setFillColor(21, 128, 61);
+    doc.setFillColor(198, 217, 45);
     doc.rect(0, pageHeight - 10, pageWidth, 10, "F");
     return false;
   };
 
-  paintBackground();
+  paintBackground("full");
   let y = SAFE_TOP;
 
   const ensureSpace = (needed: number) => {
     if (y + needed <= SAFE_BOTTOM) return;
     doc.addPage(PAGE_FORMAT);
-    paintBackground();
-    y = SAFE_TOP;
+    paintBackground("continuation");
+    y = LETTERHEAD_MARGINS.continuationTop;
   };
 
   const write = (
@@ -492,88 +468,63 @@ serve(async (req) => {
     
     const emailSubject = `Offer of provisional admission - ${application.application_number}`;
     const prettyDeadline = new Date(acceptance_deadline).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="margin:0;padding:24px 0;background-color:#eef0ee;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr><td align="center">
-            <!-- Plain branded email. The official letterhead lives on the attached PDF. -->
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="620"
-                   style="width:620px;max-width:100%;background-color:#ffffff;border-radius:6px;overflow:hidden;font-family:Georgia,'Times New Roman',serif;color:#111827;">
-              <tr><td style="background:#15803d;padding:22px 56px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;">
-                <div style="font-size:18px;font-weight:bold;letter-spacing:0.3px;">iVintage College</div>
-                <div style="font-size:12px;opacity:0.9;margin-top:4px;">Office of Admissions &middot; Badagry, Lagos</div>
-              </td></tr>
-              <tr><td style="padding:24px 56px 8px 56px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4b5563;">
-                Ref: ${application.application_number}
-                <span style="float:right;">${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}</span>
-              </td></tr>
-              <tr><td style="padding:16px 56px 0 56px;font-size:15px;line-height:1.65;">
-                <p style="margin:0 0 4px 0;font-weight:bold;">${application.first_name} ${application.last_name}</p>
-                <p style="margin:0 0 22px 0;font-size:13px;color:#6b7280;">${application.email}</p>
+    const emailHtml = wrapEmailInLetterhead(`
+      <div style="font-size:12px;color:#6b7280;margin-bottom:14px;">
+        Ref: ${application.application_number}
+        <span style="float:right;">${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}</span>
+      </div>
 
-                <p style="margin:0 0 6px 0;font-weight:bold;letter-spacing:0.4px;">OFFER OF PROVISIONAL ADMISSION</p>
-                <div style="height:2px;width:180px;background:#15803d;margin-bottom:20px;"></div>
+      <p style="margin:0 0 4px 0;font-weight:bold;">${application.first_name} ${application.last_name}</p>
+      <p style="margin:0 0 22px 0;font-size:13px;color:#6b7280;">${application.email}</p>
 
-                <p style="margin:0 0 16px 0;">Dear ${application.first_name},</p>
+      <p style="margin:0 0 6px 0;font-weight:bold;letter-spacing:0.4px;">OFFER OF PROVISIONAL ADMISSION</p>
+      <div style="height:3px;width:180px;background:#C6D92D;margin-bottom:20px;"></div>
 
-                <p style="margin:0 0 18px 0;">
-                  Following the assessment of your application, I am pleased to confirm that you have been admitted to
-                  <strong>${admittedClassName}</strong> at iVintage College for the
-                  ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session. The offer is provisional
-                  until the acceptance fee is paid and your original documents are sighted at the school office.
-                </p>
+      <p style="margin:0 0 16px 0;">Dear ${application.first_name},</p>
 
-                ${classChanged ? `<p style="margin:0 0 18px 0;">
-                  Following your performance in the entrance assessment, the school is offering admission into
-                  <strong>${admittedClassName}</strong> rather than <strong>${appliedClassName}</strong>.${classInfo.note ? ` ${classInfo.note}` : ""}
-                </p>` : ""}
+      <p style="margin:0 0 18px 0;">
+        Following the assessment of your application, I am pleased to confirm that you have been admitted to
+        <strong>${admittedClassName}</strong> at iVintage College for the
+        ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session. The offer is provisional
+        until the acceptance fee is paid and your original documents are sighted at the school office.
+      </p>
 
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
-                       style="font-family:Arial,Helvetica,sans-serif;font-size:14px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;margin:0 0 18px 0;">
-                  <tr><td style="padding:10px 0;color:#6b7280;">Application number</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${application.application_number}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Class applied for</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${appliedClassName}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Class admitted to</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${admittedClassName}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Acceptance fee</td><td style="padding:10px 0;font-weight:bold;text-align:right;">&#8358;${acceptanceFee.toLocaleString("en-NG")}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Payment deadline</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${prettyDeadline}</td></tr>
-                </table>
+      ${classChanged ? `<p style="margin:0 0 18px 0;">
+        Following your performance in the entrance assessment, the school is offering admission into
+        <strong>${admittedClassName}</strong> rather than <strong>${appliedClassName}</strong>.${classInfo.note ? ` ${classInfo.note}` : ""}
+      </p>` : ""}
 
-                <p style="margin:0 0 18px 0;font-size:13px;color:#4b5563;">${acceptanceFeeNote}</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
+             style="font-size:14px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;margin:0 0 18px 0;">
+        <tr><td style="padding:10px 0;color:#6b7280;">Application number</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${application.application_number}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Class applied for</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${appliedClassName}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Class admitted to</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${admittedClassName}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Acceptance fee</td><td style="padding:10px 0;font-weight:bold;text-align:right;">&#8358;${acceptanceFee.toLocaleString("en-NG")}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Payment deadline</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${prettyDeadline}</td></tr>
+      </table>
 
-                <p style="margin:0 0 18px 0;">
-                  To take up the place, accept the offer using the link below and pay the acceptance fee on or before
-                  <strong>${prettyDeadline}</strong>. Offers not accepted by that date are released to candidates on the waiting list.
-                </p>
+      <p style="margin:0 0 18px 0;font-size:13px;color:#4b5563;">${acceptanceFeeNote}</p>
 
-                <p style="margin:0 0 26px 0;">
-                  <a href="${acceptanceUrl}" style="display:inline-block;background:#15803d;color:#ffffff;padding:13px 30px;text-decoration:none;border-radius:4px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;">Accept the offer</a>
-                </p>
+      <p style="margin:0 0 18px 0;">
+        To take up the place, accept the offer using the link below and pay the acceptance fee on or before
+        <strong>${prettyDeadline}</strong>. Offers not accepted by that date are released to candidates on the waiting list.
+      </p>
 
-                <p style="margin:0 0 18px 0;">
-                  The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
-                  the offer should be sent to
-                  <a href="mailto:admissions@ivintagecollege.com" style="color:#15803d;">admissions@ivintagecollege.com</a>.
-                </p>
+      <p style="margin:0 0 26px 0;">
+        <a href="${acceptanceUrl}" style="display:inline-block;background:#141C2B;color:#ffffff;padding:13px 30px;text-decoration:none;border-radius:4px;font-size:14px;font-weight:bold;">Accept the offer</a>
+      </p>
 
-                <p style="margin:0 0 32px 0;">Yours faithfully,<br><br>
-                  <strong>Admissions Officer</strong><br>
-                  <span style="font-size:13px;color:#6b7280;">For: iVintage College, Badagry, Lagos</span>
-                </p>
-              </td></tr>
-              <tr><td style="padding:16px 56px;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6b7280;">
-                iVintage College &middot; admissions@ivintagecollege.com
-              </td></tr>
-            </table>
-          </td></tr>
-        </table>
-      </body>
-      </html>
-    `;
+      <p style="margin:0 0 18px 0;">
+        The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
+        the offer should be sent to
+        <a href="mailto:admissions@ivintagecollege.com" style="color:#141C2B;">admissions@ivintagecollege.com</a>.
+      </p>
+
+      <p style="margin:0 0 8px 0;">Yours faithfully,<br><br>
+        <strong>Admissions Officer</strong><br>
+        <span style="font-size:13px;color:#6b7280;">For: iVintage College</span>
+      </p>
+    `, emailSubject);
 
     // Log email attempt
     const emailLogData = {

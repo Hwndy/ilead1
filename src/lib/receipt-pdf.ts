@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { fetchSchoolBranding, SchoolBranding } from '@/lib/school-branding';
+import { drawLetterhead, LETTERHEAD_MARGINS } from '@/lib/letterhead';
 
 export interface ReceiptField {
   label: string;
@@ -37,124 +38,100 @@ async function loadImage(url: string): Promise<{ dataUrl: string; format: string
   }
 }
 
-/** Builds a school-branded A4 receipt (logo, name, address, contacts, motto, stamp lines). */
+/** Builds a receipt on the official iVintage letterhead (artwork used exactly as supplied). */
 export async function buildBrandedReceipt(data: ReceiptData, brandingOverride?: SchoolBranding): Promise<jsPDF> {
   const school = brandingOverride || (await fetchSchoolBranding());
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const w = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
 
-  // --- Header band -------------------------------------------------------
-  doc.setFillColor(16, 78, 58);
-  doc.rect(0, 0, w, 34, 'F');
+  // --- Official letterhead ------------------------------------------------
+  const painted = await drawLetterhead(doc, 'full');
+  const left = LETTERHEAD_MARGINS.left;
+  const right = w - LETTERHEAD_MARGINS.right;
+  let top = painted ? LETTERHEAD_MARGINS.top : 24;
 
-  const logo = school.logo_url ? await loadImage(school.logo_url) : null;
-  if (logo) {
-    try {
-      doc.addImage(logo.dataUrl, logo.format, 12, 5, 24, 24);
-    } catch { /* ignore unsupported image */ }
-  }
-
-  const textLeft = logo ? 42 : 14;
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.text(school.name.toUpperCase(), textLeft, 13);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  let hy = 19;
-  if (school.address) { doc.text(school.address, textLeft, hy); hy += 5; }
-  const contact = [school.phone && `Tel: ${school.phone}`, school.email && `Email: ${school.email}`]
-    .filter(Boolean).join('   |   ');
-  if (contact) { doc.text(contact, textLeft, hy); hy += 5; }
-  if (school.motto) {
-    doc.setFont('helvetica', 'italic');
-    doc.text(`"${school.motto}"`, textLeft, hy);
+  if (!painted) {
+    // Fallback only if the letterhead artwork cannot be fetched.
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(15);
+    doc.setTextColor(20, 28, 43);
+    doc.text(school.name.toUpperCase(), w / 2, 18, { align: 'center' });
   }
 
   // --- Title -------------------------------------------------------------
-  doc.setTextColor(20, 20, 20);
+  doc.setTextColor(20, 28, 43);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.text(data.title || 'PAYMENT RECEIPT', w / 2, 46, { align: 'center' });
-  doc.setDrawColor(16, 78, 58);
-  doc.setLineWidth(0.8);
-  doc.line(14, 50, w - 14, 50);
-
-  // --- Watermark ---------------------------------------------------------
-  if (logo) {
-    try {
-      const gs: any = (doc as any).GState && new (doc as any).GState({ opacity: 0.06 });
-      if (gs) (doc as any).setGState(gs);
-      doc.addImage(logo.dataUrl, logo.format, w / 2 - 45, 110, 90, 90);
-      const solid: any = (doc as any).GState && new (doc as any).GState({ opacity: 1 });
-      if (solid) (doc as any).setGState(solid);
-    } catch { /* ignore */ }
-  }
+  doc.text(data.title || 'PAYMENT RECEIPT', w / 2, top, { align: 'center' });
+  doc.setDrawColor(198, 217, 45);
+  doc.setLineWidth(1);
+  doc.line(w / 2 - 30, top + 3, w / 2 + 30, top + 3);
 
   // --- Meta row ----------------------------------------------------------
+  let y = top + 14;
   doc.setFontSize(10);
+  doc.setTextColor(20, 20, 20);
   doc.setFont('helvetica', 'normal');
-  doc.text('Receipt No:', 14, 60);
+  doc.text('Receipt No:', left, y);
   doc.setFont('helvetica', 'bold');
-  doc.text(data.receiptNumber || '', 40, 60);
+  doc.text(data.receiptNumber || '', left + 26, y);
   doc.setFont('helvetica', 'normal');
-  doc.text('Date:', w / 2 + 20, 60);
+  doc.text('Date:', w / 2 + 20, y);
   doc.setFont('helvetica', 'bold');
-  doc.text(data.date || new Date().toLocaleDateString(), w / 2 + 35, 60);
+  doc.text(data.date || new Date().toLocaleDateString(), w / 2 + 35, y);
 
   // --- Details box -------------------------------------------------------
   const rows = data.fields.filter(f => f.value);
-  const boxTop = 68;
+  const boxTop = y + 8;
   const boxHeight = Math.max(30, rows.length * 9 + 10);
   doc.setDrawColor(200, 208, 204);
   doc.setLineWidth(0.4);
-  doc.roundedRect(14, boxTop, w - 28, boxHeight, 2, 2);
+  doc.roundedRect(left, boxTop, right - left, boxHeight, 2, 2);
 
-  let y = boxTop + 11;
+  let ry = boxTop + 11;
   rows.forEach(f => {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(90, 96, 94);
-    doc.text(f.label, 20, y);
+    doc.text(f.label, left + 6, ry);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(20, 20, 20);
-    doc.text(String(f.value), w - 20, y, { align: 'right' });
-    y += 9;
+    doc.text(String(f.value), right - 6, ry, { align: 'right' });
+    ry += 9;
   });
 
   // --- Amount band -------------------------------------------------------
   const amtY = boxTop + boxHeight + 10;
-  doc.setFillColor(232, 243, 238);
-  doc.roundedRect(14, amtY, w - 28, 18, 2, 2, 'F');
-  doc.setTextColor(16, 78, 58);
+  doc.setFillColor(244, 248, 219);
+  doc.roundedRect(left, amtY, right - left, 18, 2, 2, 'F');
+  doc.setTextColor(20, 28, 43);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
-  doc.text(data.amountLabel || 'Amount Paid', 20, amtY + 12);
+  doc.text(data.amountLabel || 'Amount Paid', left + 6, amtY + 12);
   doc.setFontSize(15);
-  doc.text(money(data.amount), w - 20, amtY + 12, { align: 'right' });
+  doc.text(money(data.amount), right - 6, amtY + 12, { align: 'right' });
 
   // --- Signatures --------------------------------------------------------
-  const sigY = amtY + 50;
+  const maxY = pageH - LETTERHEAD_MARGINS.bottom - 12;
+  const sigY = Math.min(amtY + 45, maxY);
   doc.setTextColor(20, 20, 20);
   doc.setLineWidth(0.3);
   doc.setDrawColor(120, 120, 120);
-  doc.line(20, sigY, 85, sigY);
-  doc.line(w - 85, sigY, w - 20, sigY);
+  doc.line(left + 4, sigY, left + 65, sigY);
+  doc.line(right - 65, sigY, right - 4, sigY);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
-  doc.text(school.principal_name ? school.principal_name : 'Authorised Signature', 20, sigY + 5);
-  if (school.principal_name) doc.text('Principal', 20, sigY + 10);
-  doc.text('School Stamp', w - 85, sigY + 5);
+  doc.text(school.principal_name ? school.principal_name : 'Authorised Signature', left + 4, sigY + 5);
+  if (school.principal_name) doc.text('Principal', left + 4, sigY + 10);
+  doc.text('School Stamp', right - 65, sigY + 5);
 
-  // --- Footer ------------------------------------------------------------
-  const pageH = doc.internal.pageSize.getHeight();
-  doc.setFillColor(16, 78, 58);
-  doc.rect(0, pageH - 16, w, 16, 'F');
-  doc.setTextColor(255, 255, 255);
+  // --- Note (kept above the letterhead footer artwork) --------------------
   doc.setFontSize(8);
+  doc.setTextColor(110, 116, 120);
   doc.text(
-    data.footerNote || `${school.name}  this is a computer-generated receipt and is valid without a signature.`,
+    data.footerNote || 'This is a computer-generated receipt and is valid without a signature.',
     w / 2,
-    pageH - 6,
+    pageH - LETTERHEAD_MARGINS.bottom - 2,
     { align: 'center' }
   );
 

@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -72,20 +73,14 @@ serve(async (req) => {
         if (!emails.length) { failed++; errors.push({ student_id, reason: "parents have no email" }); continue; }
 
         const link = `${Deno.env.get("SUPABASE_URL")?.replace(/\.supabase\.co.*/, "") || ""}`; // placeholder
-        const html = `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-            <div style="background:#141C2B;color:#fff;padding:20px;text-align:center">
-              <h2 style="margin:0">${schoolName}</h2>
-              <p style="margin:4px 0 0">${sess?.session_name || ""} • ${term}</p>
-            </div>
-            <div style="padding:20px">
-              <p>Dear Parent/Guardian,</p>
-              <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""})  ${cls?.name || ""}  for <strong>${term}</strong> has been published.</p>
-              <p>Please log in to the Parent Portal to download the official PDF:</p>
-              <p><a href="https://ivintage.vercel.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
-              <p style="color:#666;font-size:12px;margin-top:24px">If you did not expect this message, please contact ${school?.email || replyTo}.</p>
-            </div>
-          </div>`;
+        const html = wrapEmailInLetterhead(`
+          <p style="margin:0 0 14px;font-weight:bold;letter-spacing:.4px;">${sess?.session_name || ""} &bull; ${term} Report Card</p>
+          <p>Dear Parent/Guardian,</p>
+          <p>The report card for <strong>${prof?.full_name || "your child"}</strong> (${student.admission_number || ""}) &mdash; ${cls?.name || ""} &mdash; for <strong>${term}</strong> has been published.</p>
+          <p>Please log in to the Parent Portal to download the official PDF:</p>
+          <p><a href="https://ilead1.lovable.app" style="background:#141C2B;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none">Open Parent Portal</a></p>
+          <p style="color:#666;font-size:12px;margin-top:24px">If you did not expect this message, please contact ${school?.email || replyTo}.</p>
+        `, `${term} Report Card`);
 
         await resend.emails.send({
           from, to: emails, reply_to: replyTo,

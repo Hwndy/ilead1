@@ -1,5 +1,8 @@
 // Shared printable HTML generator for report cards.
 // Kept in sync with ReportCardGenerator; consumed by admin/parent/student portals.
+// Every sheet is printed on the official iVintage letterhead artwork.
+
+import { LETTERHEAD_MARGINS, letterheadBackgroundMarkup } from '@/lib/letterhead';
 
 export interface ReportCardGrade {
   subject_name: string;
@@ -137,29 +140,34 @@ function initials(name: string): string {
 
 /** Print stylesheet shared by single and bulk report card documents. */
 export function reportCardStyles(): string {
+  const m = LETTERHEAD_MARGINS;
   return `
-    @page { size: A4 portrait; margin: 10mm; }
+    @page { size: A4 portrait; margin: 0; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
       color: ${BRAND.ink};
-      font-size: 11px;
+      font-size: 10.5px;
       background: #fff;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
     }
+    /* Every report card is printed on the official school letterhead. */
     .rc-sheet {
       position: relative;
-      width: 190mm;
-      margin: 0 auto 0;
-      padding: 0 0 6mm;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: ${m.top}mm ${m.right}mm ${m.bottom}mm ${m.left}mm;
       overflow: hidden;
     }
     .rc-sheet + .rc-sheet { page-break-before: always; }
-    .rc-watermark {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0.05; z-index: 0; pointer-events: none;
+    .rc-letterhead {
+      position: absolute; top: 0; left: 0;
+      width: 210mm; height: 297mm;
+      z-index: 0; pointer-events: none;
     }
-    .rc-watermark img { width: 120mm; height: auto; }
+    .rc-letterhead img { width: 210mm; height: 297mm; display: block; }
     .rc-content { position: relative; z-index: 1; }
 
     .rc-head {
@@ -341,22 +349,8 @@ export function renderReportCardBody(
 
   return `
   <div class="rc-sheet">
-    ${logo ? `<div class="rc-watermark"><img src="${esc(logo)}" alt="" /></div>` : ''}
+    ${letterheadBackgroundMarkup('rc-letterhead')}
     <div class="rc-content">
-      <div class="rc-head">
-        ${logo
-          ? `<img class="crest" src="${esc(logo)}" alt="${schoolName} crest" />`
-          : `<div class="crest-fallback">${esc(initials(schoolInfo.name || 'AB'))}</div>`}
-        <div class="titles">
-          <div class="rc-school-name">${schoolName}</div>
-          ${contactLine ? `<div class="rc-school-meta">${contactLine}</div>` : ''}
-          ${schoolInfo.motto ? `<div class="rc-motto">&ldquo;${esc(schoolInfo.motto)}&rdquo;</div>` : ''}
-        </div>
-        ${logo
-          ? `<img class="crest" src="${esc(logo)}" alt="" />`
-          : `<div class="crest-fallback">${esc(initials(schoolInfo.name || 'AB'))}</div>`}
-      </div>
-
       <div class="rc-ribbon">
         Student Terminal Report &nbsp;&mdash;&nbsp; <span>${esc(card.term)} &bull; ${esc(card.academic_year || '')}</span>
       </div>
