@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Microscope, Monitor, Trophy, Utensils, Bus, Home, Building2, Users, GraduationCap, School } from 'lucide-react';
-import { useWebsiteSettings, useGallery, settingValue } from '@/hooks/useCms';
+import { useWebsiteSettings, useGallery, settingValue, useSiteFields } from '@/hooks/useCms';
 import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
 import { SectionBand, SectionHeading } from '@/components/website/Section';
@@ -29,6 +29,7 @@ const DEFAULT_FACILITIES: Facility[] = [
 ];
 export const FacilitiesPage = () => {
   const { settings } = useWebsiteSettings();
+  const { field } = useSiteFields();
   const intro = settingValue<string>(settings, 'facilities_intro', 'Modern infrastructure designed to support effective teaching, learning, and character development');
   const facilities = settingValue<Facility[]>(settings, 'facilities', DEFAULT_FACILITIES);
   const { data: photos = [] } = useGallery({ category: 'facilities', limit: 12 });
@@ -42,7 +43,7 @@ export const FacilitiesPage = () => {
       />
       <PageHero
         eyebrow="Campus"
-        title="World-Class Facilities"
+        title={field('facilities.hero_title')}
         subtitle={intro}
         crumbs={[{ label: 'Facilities' }]}
       />
@@ -50,8 +51,8 @@ export const FacilitiesPage = () => {
       <SectionBand>
         <SectionHeading
           eyebrow="Facilities"
-          title="Built for how children actually learn"
-          intro="Every space on campus is there for a reason  study, science, sport, safety and rest."
+          title={field('facilities.section_title')}
+          intro={field('facilities.section_intro')}
         />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {facilities.map((facility, index) => {
