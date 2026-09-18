@@ -13,6 +13,7 @@ import { UserManagement } from '@/components/admin/UserManagement';
 import { ClassManagement } from '@/components/admin/ClassManagement';
 import { SubjectManagement } from '@/components/admin/SubjectManagement';
 import { EnhancedLiveMonitor } from '@/components/admin/EnhancedLiveMonitor';
+import { AuditLog } from '@/components/admin/system/AuditLog';
 import { AdminQuestionBank } from '@/components/admin/AdminQuestionBank';
 import { ExamManagement } from '@/components/admin/ExamManagement';
 import { AdminStudentResults } from '@/components/admin/AdminStudentResults';
