@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X, Image as ImageIcon } from 'lucide-react';
 import { useGallery } from '@/hooks/useCms';
 import { SEO, SITE_URL } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
+import { useSiteFields } from '@/hooks/useCms';
 import { EmptyState } from '@/components/website/EmptyState';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -13,6 +14,7 @@ const CATEGORIES = ['all', 'facilities', 'events', 'activities', 'general'] as c
 type Cat = typeof CATEGORIES[number];
 
 export const GalleryPage: React.FC = () => {
+  const { field } = useSiteFields();
   const [cat, setCat] = useState<Cat>('all');
   const { data: items = [], isLoading } = useGallery(cat === 'all' ? {} : { category: cat });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -53,8 +55,8 @@ export const GalleryPage: React.FC = () => {
 
       <PageHero
         eyebrow="Gallery"
-        title="Moments from Campus"
-        subtitle="A visual journey through the life, learning and celebrations at iVintage College."
+        title={field('gallery.hero_title')}
+        subtitle={field('gallery.hero_subtitle')}
         crumbs={[{ label: 'Gallery' }]}
       />
 

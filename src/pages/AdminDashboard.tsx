@@ -27,6 +27,11 @@ import { GalleryManager } from '@/components/admin/CMS/GalleryManager';
 import { TestimonialManager } from '@/components/admin/CMS/TestimonialManager';
 import { SchoolInfoEditor } from '@/components/admin/CMS/SchoolInfoEditor';
 import { SiteSettingsEditor } from '@/components/admin/CMS/SiteSettingsEditor';
+import { ContentEditor } from '@/components/admin/website/ContentEditor';
+import { MenuEditor } from '@/components/admin/website/MenuEditor';
+import { FormBuilder } from '@/components/admin/website/FormBuilder';
+import { SubmissionsInbox } from '@/components/admin/website/SubmissionsInbox';
+import { SeoEditor } from '@/components/admin/website/SeoEditor';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { FinanceHub } from '@/components/admin/finance/FinanceHub';
@@ -361,11 +366,16 @@ export const AdminDashboard = () => {
 
     if (activeTab === 'website') {
       switch (activeSubTab) {
+        case 'menus': return <MenuEditor />;
+        case 'form': return <FormBuilder />;
+        case 'submissions': return <SubmissionsInbox />;
+        case 'seo': return <SeoEditor />;
+        case 'news': return <NewsManager />;
         case 'gallery': return <GalleryManager />;
         case 'testimonials': return <TestimonialManager />;
         case 'school-info': return <SchoolInfoEditor />;
         case 'site-settings': return <SiteSettingsEditor />;
-        default: return <NewsManager />;
+        default: return <ContentEditor />;
       }
     }
 

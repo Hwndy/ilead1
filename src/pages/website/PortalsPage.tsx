@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useWebsiteSettings, settingValue } from '@/hooks/useCms';
 import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
+import { useSiteFields } from '@/hooks/useCms';
 import { SectionBand, SectionHeading } from '@/components/website/Section';
 import { Reveal } from '@/components/website/Reveal';
 
@@ -29,6 +30,7 @@ const DEFAULTS: Portal[] = [
 ];
 
 export const PortalsPage = () => {
+  const { field } = useSiteFields();
   const { settings } = useWebsiteSettings();
   const portals = settingValue<Portal[]>(settings, 'portals', DEFAULTS).filter((p) => p.enabled !== false);
 
@@ -44,8 +46,8 @@ export const PortalsPage = () => {
       />
       <PageHero
         eyebrow="Portals"
-        title="Access Your Portal"
-        subtitle="Choose your portal to access personalised features and stay connected with iVintage College."
+        title={field('portals.hero_title')}
+        subtitle={field('portals.hero_subtitle')}
         crumbs={[{ label: 'Portals' }]}
       />
 

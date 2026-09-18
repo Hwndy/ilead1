@@ -5,13 +5,13 @@ import { Logo } from '@/components/shared/Logo';
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Youtube, Menu, X, ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useSchoolInfo } from '@/hooks/useCms';
+import { useSchoolInfo, useSiteMenu, useSiteFields } from '@/hooks/useCms';
 
 interface WebsiteLayoutProps {
   children: ReactNode;
 }
 
-const primaryNav = [
+const DEFAULT_PRIMARY_NAV = [
   { name: 'Home', href: '/website' },
   { name: 'About Us', href: '/website/about' },
   { name: 'Admissions', href: '/website/admissions' },
@@ -20,20 +20,31 @@ const primaryNav = [
   { name: 'Portals', href: '/website/portals' },
 ];
 
-const moreNav = [
+const DEFAULT_MORE_NAV = [
   { name: 'Gallery', href: '/website/gallery' },
   { name: 'Testimonials', href: '/website/testimonials' },
   { name: 'Facilities', href: '/website/facilities' },
   { name: 'Careers', href: '/website/careers' },
 ];
 
-const navigation = [...primaryNav, ...moreNav];
+const DEFAULT_NAV = [...DEFAULT_PRIMARY_NAV, ...DEFAULT_MORE_NAV];
 
 export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { info } = useSchoolInfo();
+  const { visible } = useSiteMenu();
+  const { field } = useSiteFields();
+
+  const toNav = (rows: { label: string; href: string }[], fallback: { name: string; href: string }[]) =>
+    rows.length ? rows.map((r) => ({ name: r.label, href: r.href })) : fallback;
+
+  const primaryNav = toNav(visible('primary'), DEFAULT_PRIMARY_NAV);
+  const moreNav = toNav(visible('more'), DEFAULT_MORE_NAV);
+  const navigation = [...primaryNav, ...moreNav];
+  const footerNav = visible('footer').map((r) => ({ name: r.label, href: r.href }));
+  const announcement = field<boolean>('global.announcement_enabled');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -57,6 +68,14 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
   return (
     <div className="site-theme min-h-screen bg-background text-foreground">
+      {announcement ? (
+        <Link
+          to={field('global.announcement_link')}
+          className="block bg-primary px-4 py-2 text-center text-sm font-medium text-primary-foreground"
+        >
+          {field('global.announcement_text')}
+        </Link>
+      ) : null}
       {/* Header */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
@@ -143,7 +162,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             <div className="flex items-center gap-2 shrink-0">
               <Button asChild size="sm" className="hidden sm:inline-flex rounded-full px-5">
-                <Link to="/website/admissions/apply">Apply Now</Link>
+                <Link to={field('global.header_cta_href')}>{field('global.header_cta_label')}</Link>
               </Button>
 
               {/* Mobile menu */}
@@ -228,10 +247,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                   <p className="text-sm text-muted-foreground">{info.motto}</p>
                 </div>
               </div>
-              <p className="text-muted-foreground mb-4">
-                {info.name} is committed to providing quality education that nurtures the intellectual,
-                moral, and social development of our students, preparing them for success in an ever-changing world.
-              </p>
+              <p className="text-muted-foreground mb-4">{field('global.footer_tagline')}</p>
               <div className="flex space-x-4">
                 {socials.filter(([url]) => !!url).map(([url, label, Icon]) => (
                   <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
@@ -245,6 +261,12 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             <div>
               <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
               <ul className="space-y-2">
+                {footerNav.map((item) => (
+                  <li key={item.href + item.name}>
+                    <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors">{item.name}</Link>
+                  </li>
+                ))}
+                {footerNav.length ? null : (<>
                 <li><Link to="/website/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
                 <li><Link to="/website/admissions" className="text-muted-foreground hover:text-primary transition-colors">Admissions</Link></li>
                 <li><Link to="/website/school-life" className="text-muted-foreground hover:text-primary transition-colors">Academics</Link></li>
@@ -252,6 +274,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 <li><Link to="/website/gallery" className="text-muted-foreground hover:text-primary transition-colors">Gallery</Link></li>
                 <li><Link to="/website/testimonials" className="text-muted-foreground hover:text-primary transition-colors">Testimonials</Link></li>
                 <li><Link to="/website/portals" className="text-muted-foreground hover:text-primary transition-colors">Portals</Link></li>
+                </>)}
               </ul>
             </div>
 
@@ -305,7 +328,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
                 <div className="flex items-start space-x-2">
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <span>Mon – Fri, 8:00am – 4:00pm</span>
+                  <span>{field('office_hours')}</span>
                 </div>
               </div>
             </div>

@@ -217,6 +217,11 @@ export const NAV_SECTIONS: NavSection[] = [
         icon: Globe,
         tab: "website",
         children: [
+          { title: "Page Content", tab: "website", subtab: "content" },
+          { title: "Menus & Footer", tab: "website", subtab: "menus" },
+          { title: "Application Form", tab: "website", subtab: "form" },
+          { title: "Messages", tab: "website", subtab: "submissions" },
+          { title: "Search & Sharing", tab: "website", subtab: "seo" },
           { title: "News & Articles", tab: "website", subtab: "news" },
           { title: "Gallery", tab: "website", subtab: "gallery" },
           { title: "Testimonials", tab: "website", subtab: "testimonials" },

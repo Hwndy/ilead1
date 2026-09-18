@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
+import { useSiteFields } from '@/hooks/useCms';
 import { EmptyState } from '@/components/website/EmptyState';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,6 +12,7 @@ import { format } from 'date-fns';
 import { Briefcase } from 'lucide-react';
 
 export const CareersPage: React.FC = () => {
+  const { field } = useSiteFields();
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,8 +37,8 @@ export const CareersPage: React.FC = () => {
       />
       <PageHero
         eyebrow="Work with us"
-        title="Careers at iVintage"
-        subtitle="Passionate educators and dedicated staff make iVintage what it is. Explore current openings below."
+        title={field('careers.hero_title')}
+        subtitle={field('careers.hero_subtitle')}
         crumbs={[{ label: 'Careers' }]}
       />
 

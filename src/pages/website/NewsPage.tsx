@@ -10,6 +10,7 @@ import { Calendar, Clock, ArrowLeft, Search, Share2, Facebook, Twitter, MessageC
 import { useNews, useNewsArticle, type NewsItem } from '@/hooks/useCms';
 import { SEO, SITE_URL } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
+import { useSiteFields } from '@/hooks/useCms';
 import { Reveal } from '@/components/website/Reveal';
 import { EmptyState } from '@/components/website/EmptyState';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -56,6 +57,7 @@ function downloadIcs(item: NewsItem) {
 }
 
 const NewsList: React.FC = () => {
+  const { field } = useSiteFields();
   const [tab, setTab] = useState<'news' | 'events'>('news');
   const [cat, setCat] = useState<Cat>('all');
   const [q, setQ] = useState('');
@@ -92,9 +94,9 @@ const NewsList: React.FC = () => {
 
       <PageHero
         eyebrow="News & Events"
-        title="Stay Updated"
-        highlight="Latest News"
-        subtitle="Keep up with the latest happenings, events, and announcements at iVintage College."
+        title={field('news.hero_title')}
+        highlight={field('news.hero_highlight')}
+        subtitle={field('news.hero_subtitle')}
         crumbs={[{ label: 'News & Events' }]}
       />
 
@@ -362,6 +364,7 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
 };
 
 export const NewsPage = () => {
+  const { field } = useSiteFields();
   const { slug } = useParams();
   return slug ? <NewsDetail slug={slug} /> : <NewsList />;
 };
