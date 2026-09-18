@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import { supabase, SUPABASE_PROJECT_REF } from '@/integrations/supabase/client';
 import { User, AuthState, LoginCredentials } from '@/types/auth';
+import { logAuditEvent } from '@/lib/audit';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
