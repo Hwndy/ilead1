@@ -56,7 +56,7 @@ export const SchoolLifePage = () => {
                 .filter(Boolean);
               return (
                 <Reveal key={`${program.title}-${index}`} delay={index * 90}>
-                  <article className="relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <article className="relative h-full overflow-hidden border-t-4 border-t-gold bg-card p-7 shadow-sm transition-all duration-300 hover:shadow-xl">
                     <span className="absolute right-6 top-5 text-5xl font-bold leading-none text-primary/10">
                       {String(index + 1).padStart(2, '0')}
                     </span>
@@ -97,7 +97,7 @@ export const SchoolLifePage = () => {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {classStructure.map((c, i) => (
             <Reveal key={c.level} delay={(i % 3) * 80}>
-              <article className="h-full rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
+              <article className="h-full border-l-4 border-l-gold bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{c.level}</p>
                 <h3 className="mt-3 text-lg font-semibold text-foreground">{c.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
@@ -119,7 +119,7 @@ export const SchoolLifePage = () => {
             const Icon = FACILITY_ICONS[index % FACILITY_ICONS.length];
             return (
               <Reveal key={`${facility.title}-${index}`} delay={(index % 2) * 90}>
-                <article className="flex h-full items-start gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
+                <article className="flex h-full items-start gap-4 border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
                   </span>
@@ -133,7 +133,7 @@ export const SchoolLifePage = () => {
           })}
         </div>
         <div className="mt-10 text-center">
-          <Button variant="outline" className="rounded-full px-6" asChild>
+           <Button variant="outline" className="px-6" asChild>
             <Link to="/website/facilities">See all facilities</Link>
           </Button>
         </div>
@@ -168,7 +168,7 @@ export const SchoolLifePage = () => {
           intro="A structured day that balances academics, worship, rest and play."
         />
         <Reveal className="mx-auto max-w-3xl">
-          <ol className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+           <ol className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
             {schedule.map((s, i) => (
               <li
                 key={s.time}
@@ -191,10 +191,10 @@ export const SchoolLifePage = () => {
             Applications are open across Junior and Senior Secondary, day and boarding.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button size="lg" className="rounded-full px-7" asChild>
+             <Button size="lg" className="px-7" asChild>
               <Link to="/website/admissions/apply">Apply now</Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-7" asChild>
+             <Button size="lg" variant="outline" className="px-7" asChild>
               <Link to="/website/admissions">Admissions info</Link>
             </Button>
           </div>
