@@ -50,7 +50,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   return (
     <section
       className={`relative overflow-hidden ${
-        onImage ? 'py-20 sm:py-24' : 'bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16 sm:py-20'
+        onImage ? 'brand-arch py-20 sm:py-24' : 'brand-arch bg-primary py-16 text-primary-foreground sm:py-20'
       }`}
     >
       <Helmet>
@@ -60,14 +60,14 @@ export const PageHero: React.FC<PageHeroProps> = ({
       {onImage && (
         <div className="absolute inset-0 z-0">
           <img src={image} alt="" aria-hidden="true" className="h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
+           <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-steel/50" />
         </div>
       )}
 
       <div className="container relative z-10 mx-auto px-4">
         {/* Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="mb-6 flex justify-center">
-          <ol className={`flex flex-wrap items-center justify-center gap-1 text-xs sm:text-sm ${onImage ? 'text-white/70' : 'text-muted-foreground'}`}>
+           <ol className="flex flex-wrap items-center justify-center gap-1 text-xs text-primary-foreground/60 sm:text-sm">
             {trail.map((c, i) => (
               <li key={`${c.label}-${i}`} className="flex items-center gap-1">
                 {i > 0 && <ChevronRight className="h-3.5 w-3.5 opacity-60" />}
@@ -76,7 +76,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                     {c.label}
                   </Link>
                 ) : (
-                  <span className={onImage ? 'text-white' : 'text-foreground'} aria-current="page">
+                   <span className="text-primary-foreground" aria-current="page">
                     {c.label}
                   </span>
                 )}
@@ -90,15 +90,13 @@ export const PageHero: React.FC<PageHeroProps> = ({
             <Badge className="mb-5 border-none bg-primary px-3 py-1 text-primary-foreground shadow-sm">{eyebrow}</Badge>
           )}
           <h1
-            className={`text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl ${
-              onImage ? 'text-white' : 'text-foreground'
-            }`}
+            className="text-3xl font-bold leading-[1.1] text-primary-foreground sm:text-4xl lg:text-5xl"
           >
             {title}
-            {highlight && <span className="mt-1 block text-primary">{highlight}</span>}
+             {highlight && <span className="mt-1 block text-gold">{highlight}</span>}
           </h1>
           {subtitle && (
-            <p className={`mt-5 text-base leading-relaxed sm:text-lg ${onImage ? 'text-slate-200' : 'text-muted-foreground'}`}>
+             <p className="mt-5 text-base leading-relaxed text-primary-foreground/70 sm:text-lg">
               {subtitle}
             </p>
           )}
