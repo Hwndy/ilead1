@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -101,6 +101,7 @@ export const AdminDashboard = () => {
   const { toast } = useToast();
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const activeTab = searchParams.get('tab') || 'overview';
   const activeSubTab = searchParams.get('subtab');
@@ -412,7 +413,15 @@ export const AdminDashboard = () => {
       }
     }
 
-    return null;
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+        <h2 className="text-xl font-semibold">Section not found</h2>
+        <p className="text-sm text-muted-foreground">
+          This part of the dashboard doesn’t exist or has moved.
+        </p>
+        <Button onClick={() => navigate('/admin?tab=overview')}>Back to dashboard</Button>
+      </div>
+    );
   };
 
   return (

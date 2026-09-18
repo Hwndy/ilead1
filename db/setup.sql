@@ -3055,7 +3055,7 @@ CREATE POLICY "Admins can manage email logs" ON public.email_logs
 CREATE POLICY "Users can view their email logs" ON public.email_logs
   FOR SELECT
   USING (
-    recipient_email = (SELECT email FROM auth.users WHERE id = auth.uid())
+    recipient_email = (auth.jwt() ->> 'email')
   );
 
 -- Add trigger to update updated_at

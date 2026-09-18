@@ -20,7 +20,7 @@ interface Announcement {
   is_published: boolean;
   target_audience: string[];
   publish_date: string | null;
-  expiry_date: string | null;
+  expire_date: string | null;
   created_at: string;
 }
 
@@ -50,7 +50,7 @@ export const AnnouncementsComposer: React.FC = () => {
     setLoading(true);
     const { data } = await supabase
       .from('announcements')
-      .select('id,title,content,priority,is_published,target_audience,publish_date,expiry_date,created_at')
+      .select('id,title,content,priority,is_published,target_audience,publish_date,expire_date,created_at')
       .order('created_at', { ascending: false })
       .limit(50);
     setItems((data || []) as any);
@@ -78,7 +78,7 @@ export const AnnouncementsComposer: React.FC = () => {
         target_audience: form.audiences as any,
         is_published: true,
         publish_date: new Date().toISOString(),
-        expiry_date: form.expiry_date ? new Date(form.expiry_date).toISOString() : null,
+        expire_date: form.expiry_date ? new Date(form.expiry_date).toISOString() : null,
         created_by: user?.id,
       } as any);
       if (error) throw error;
@@ -176,8 +176,8 @@ export const AnnouncementsComposer: React.FC = () => {
                     </div>
                   </div>
                   <p className="text-sm mt-2 whitespace-pre-wrap">{a.content}</p>
-                  {a.expiry_date && (
-                    <p className="text-xs text-muted-foreground mt-1">Expires {new Date(a.expiry_date).toLocaleDateString()}</p>
+                  {a.expire_date && (
+                    <p className="text-xs text-muted-foreground mt-1">Expires {new Date(a.expire_date).toLocaleDateString()}</p>
                   )}
                 </div>
               ))}
