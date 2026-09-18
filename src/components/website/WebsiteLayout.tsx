@@ -56,18 +56,18 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="site-theme min-h-screen bg-background text-foreground">
       {/* Header */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
-          scrolled ? 'bg-primary/95 border-b border-steel shadow-lg' : 'bg-primary/90 border-b border-primary'
+          scrolled ? 'bg-background/90 border-b border-border shadow-sm' : 'bg-background/70 border-b border-transparent'
         }`}
       >
         {/* Top bar with contact info */}
-        <div className="hidden md:block border-b border-steel bg-steel/40">
+        <div className="hidden md:block border-b border-border/40 bg-primary/[0.04]">
           <div className="container mx-auto px-4 py-1.5">
             <div className="flex flex-wrap justify-between items-center gap-y-1 gap-x-4 text-xs">
-              <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-primary-foreground/70 min-w-0">
+              <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-muted-foreground min-w-0">
                 {info.contact_phone && (
                   <a href={`tel:${info.contact_phone.replace(/\s+/g, '')}`} className="flex items-center gap-1 min-w-0 hover:text-primary transition-colors">
                     <Phone className="h-3 w-3 shrink-0" />
@@ -105,8 +105,8 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             <Link to="/website" className="flex items-center gap-3 min-w-0 shrink-0">
               <Logo size="md" showText={false} />
               <div className="min-w-0 hidden sm:block">
-                 <span className="block text-[15px] font-bold text-primary-foreground leading-tight whitespace-nowrap">{info.name || 'iVintage College'}</span>
-                 <span className="block text-[10px] font-bold uppercase text-primary-foreground/55 leading-tight truncate">{info.motto || 'Excellence in Education'}</span>
+                <span className="block text-[15px] font-bold text-foreground leading-tight whitespace-nowrap">{info.name || 'iVintage College'}</span>
+                <span className="block text-[11px] uppercase tracking-[0.14em] text-muted-foreground leading-tight truncate">{info.motto || 'Excellence in Education'}</span>
               </div>
             </Link>
 
@@ -118,8 +118,8 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                   to={item.href}
                   className={`rounded-full px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
                     isActivePath(item.href)
-                      ? 'bg-steel text-primary-foreground'
-                      : 'text-primary-foreground/75 hover:text-primary-foreground hover:bg-steel/60'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-foreground/75 hover:text-primary hover:bg-muted'
                   }`}
                 >
                   {item.name}
@@ -127,11 +127,11 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               ))}
               <DropdownMenu>
                 <DropdownMenuTrigger className={`flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors outline-none ${
-                  moreNav.some(i => isActivePath(i.href)) ? 'bg-steel text-primary-foreground' : 'text-primary-foreground/75 hover:text-primary-foreground hover:bg-steel/60'
+                  moreNav.some(i => isActivePath(i.href)) ? 'bg-primary/10 text-primary' : 'text-foreground/75 hover:text-primary hover:bg-muted'
                 }`}>
                   More <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-popover">
+                <DropdownMenuContent align="end" className="site-theme w-48 bg-popover">
                   {moreNav.map((item) => (
                     <DropdownMenuItem key={item.name} asChild>
                       <Link to={item.href} className={isActivePath(item.href) ? 'text-primary' : ''}>{item.name}</Link>
@@ -142,18 +142,18 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             </nav>
 
             <div className="flex items-center gap-2 shrink-0">
-              <Button asChild size="sm" className="hidden bg-gold text-gold-foreground hover:bg-gold/90 sm:inline-flex px-5">
+              <Button asChild size="sm" className="hidden sm:inline-flex rounded-full px-5">
                 <Link to="/website/admissions/apply">Apply Now</Link>
               </Button>
 
               {/* Mobile menu */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-steel lg:hidden" aria-label="Open menu">
+                  <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="flex w-[85vw] max-w-sm flex-col p-0">
+                <SheetContent side="right" className="site-theme w-[85vw] max-w-sm p-0 flex flex-col bg-background text-foreground">
                   <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
                     <Logo size="sm" showText={false} />
                     <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'iVintage College'}</span>
@@ -198,19 +198,19 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t border-steel bg-primary text-primary-foreground">
+      <footer className="bg-card border-t border-border mt-16">
         {/* Pre-footer CTA */}
-        <div className="border-b border-steel bg-steel/35">
+        <div className="border-b border-border bg-primary/[0.05]">
           <div className="container mx-auto flex flex-col items-center gap-4 px-4 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <h3 className="text-lg font-bold text-primary-foreground">Admissions are open for the new session</h3>
-              <p className="text-sm text-primary-foreground/65">Apply online in minutes and track your application at every stage.</p>
+              <h3 className="text-lg font-bold text-foreground">Admissions are open for the new session</h3>
+              <p className="text-sm text-muted-foreground">Apply online in minutes and track your application at every stage.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button asChild className="rounded-full px-6">
                 <Link to="/website/admissions/apply">Apply Now</Link>
               </Button>
-               <Button variant="outline" asChild className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-steel px-6">
+              <Button variant="outline" asChild className="rounded-full px-6">
                 <Link to="/website/track-application">Track Application</Link>
               </Button>
             </div>
@@ -224,11 +224,11 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               <div className="flex items-center space-x-4 mb-4">
                 <Logo size="md" />
                 <div>
-                   <h3 className="text-lg font-bold text-primary-foreground">{info.name}</h3>
-                   <p className="text-sm text-primary-foreground/60">{info.motto}</p>
+                  <h3 className="text-lg font-bold text-foreground">{info.name}</h3>
+                  <p className="text-sm text-muted-foreground">{info.motto}</p>
                 </div>
               </div>
-               <p className="mb-4 text-primary-foreground/65">
+              <p className="text-muted-foreground mb-4">
                 {info.name} is committed to providing quality education that nurtures the intellectual,
                 moral, and social development of our students, preparing them for success in an ever-changing world.
               </p>
@@ -243,7 +243,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="mb-4 font-semibold text-primary-foreground">Quick Links</h3>
+              <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li><Link to="/website/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
                 <li><Link to="/website/admissions" className="text-muted-foreground hover:text-primary transition-colors">Admissions</Link></li>
@@ -257,7 +257,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* For families */}
             <div>
-              <h3 className="mb-4 font-semibold text-primary-foreground">For Families</h3>
+              <h3 className="font-semibold text-foreground mb-4">For Families</h3>
               <ul className="space-y-2">
                 <li><Link to="/website/admissions/apply" className="text-muted-foreground hover:text-primary transition-colors">Apply Online</Link></li>
                 <li><Link to="/website/track-application" className="text-muted-foreground hover:text-primary transition-colors">Track Application</Link></li>
@@ -270,8 +270,8 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* Contact Info */}
             <div>
-              <h3 className="mb-4 font-semibold text-primary-foreground">Contact Info</h3>
-               <div className="space-y-3 text-primary-foreground/65">
+              <h3 className="font-semibold text-foreground mb-4">Contact Info</h3>
+              <div className="space-y-3 text-muted-foreground">
                 {info.address && (
                   <div className="flex items-start space-x-2">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -311,7 +311,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             </div>
           </div>
 
-           <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-steel pt-8 text-center text-sm text-primary-foreground/55 sm:flex-row sm:text-left">
+          <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
             <p>&copy; {new Date().getFullYear()} {info.name}. All rights reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
               <Link to="/website/about" className="hover:text-primary transition-colors">About</Link>
