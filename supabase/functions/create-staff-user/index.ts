@@ -91,6 +91,25 @@ Deno.serve(async (req) => {
 
     const userId = created.user.id;
 
+    // Scope the new staff member to the same school as the administrator
+    // (super admins have no school, so fall back to the only/default school).
+    const { data: callerProfile } = await admin
+      .from('profiles')
+      .select('school_id')
+      .eq('user_id', userData.user.id)
+      .maybeSingle();
+
+    let schoolId: string | null = callerProfile?.school_id ?? null;
+    if (!schoolId) {
+      const { data: school } = await admin
+        .from('schools')
+        .select('id')
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      schoolId = school?.id ?? null;
+    }
+
     // The signup trigger only ever grants student; replace it with the staff role.
     await admin.from('user_roles').delete().eq('user_id', userId).eq('role', 'student');
     const { error: roleError } = await admin
@@ -101,15 +120,25 @@ Deno.serve(async (req) => {
       return json({ error: 'role_failed', message: roleError.message }, 500);
     }
 
-    await admin
+    const { error: profileError } = await admin
       .from('profiles')
       .upsert(
-        { user_id: userId, full_name: fullName, ...(body.phone ? { phone: body.phone } : {}) },
+        {
+          user_id: userId,
+          full_name: fullName,
+          ...(schoolId ? { school_id: schoolId } : {}),
+          ...(body.phone ? { phone: body.phone } : {}),
+        },
         { onConflict: 'user_id' },
       );
+    if (profileError) {
+      await admin.auth.admin.deleteUser(userId);
+      return json({ error: 'profile_failed', message: profileError.message }, 500);
+    }
 
     const { error: staffError } = await admin.from('staff_details').insert({
       user_id: userId,
+      ...(schoolId ? { school_id: schoolId } : {}),
       department: body.department || (role === 'admin' ? 'Administration' : 'Academics'),
       designation: body.designation || (role === 'admin' ? 'Administrator' : 'Teacher'),
       employment_type: body.employmentType || 'full-time',
