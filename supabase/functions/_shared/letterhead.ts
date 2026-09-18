@@ -2,8 +2,10 @@
 // produces a PDF document or sends an email. The artwork is used exactly as
 // supplied by the school — never redrawn, re-typed or recoloured.
 
-const ASSET_BASE_URL = Deno.env.get("FRONTEND_URL")?.replace(/\/+$/, "") ||
-  "https://ilead1.lovable.app";
+// The published Lovable host serves /__l5e/* assets. A custom domain may not,
+// so this stays pinned unless LETTERHEAD_BASE_URL explicitly overrides it.
+const ASSET_BASE_URL = (Deno.env.get("LETTERHEAD_BASE_URL") || "https://ilead1.lovable.app")
+  .replace(/\/+$/, "");
 
 export const LETTERHEAD_FULL_URL =
   `${ASSET_BASE_URL}/__l5e/assets-v1/63d1664b-4636-40b4-ba15-938fd07c6255/ivintage-letterhead-full.png`;
