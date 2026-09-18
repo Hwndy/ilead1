@@ -1,5 +1,8 @@
 // Shared printable HTML generator for report cards.
 // Kept in sync with ReportCardGenerator; consumed by admin/parent/student portals.
+// Every sheet is printed on the official iVintage letterhead artwork.
+
+import { LETTERHEAD_MARGINS, letterheadBackgroundMarkup } from '@/lib/letterhead';
 
 export interface ReportCardGrade {
   subject_name: string;
