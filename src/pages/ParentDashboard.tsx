@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChildrenOverview } from '@/components/parent/ChildrenOverview';
 import { ParentAcademics } from '@/components/parent/ParentAcademics';
 import { ParentAttendance } from '@/components/parent/ParentAttendance';
@@ -19,7 +19,31 @@ import { useAuth } from '@/contexts/AuthContext';
 const ParentDashboardInner: React.FC = () => {
   const { user } = useAuth();
   const { children, selectedChild } = useChildren();
-  const [activeTab, setActiveTab] = useState('overview');
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const activeTab = searchParams.get('tab') || 'overview';
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'overview': return <ChildrenOverview />;
+      case 'academics': return <ParentAcademics />;
+      case 'assignments': return <ParentAssignments />;
+      case 'notes': return <ParentLessonNotes />;
+      case 'report-cards': return <ParentReportCards onViewResults={() => {}} />;
+      case 'attendance': return <ParentAttendance />;
+      case 'fees': return <ParentFees />;
+      case 'messages':
+        return (
+          <div className="space-y-6">
+            <ParentMessagesInbox />
+            <CommunicationHub />
+          </div>
+        );
+      case 'calendar': return <AcademicCalendar />;
+      case 'settings': return <ParentProfileSettings />;
+      default: return <ChildrenOverview />;
+    }
+  };
 
   return (
     <DashboardLayout title="Parent Portal">
@@ -34,38 +58,9 @@ const ParentDashboardInner: React.FC = () => {
           {children.length > 0 && <ChildSelector />}
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <div className="overflow-x-auto">
-            <TabsList className="flex w-max min-w-full h-auto gap-1 p-1">
-              <TabsTrigger value="overview" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
-              <TabsTrigger value="academics" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Academics</TabsTrigger>
-              <TabsTrigger value="assignments" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Assignments</TabsTrigger>
-              <TabsTrigger value="notes" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Lesson Notes</TabsTrigger>
-              <TabsTrigger value="report-cards" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Report Cards</TabsTrigger>
-              <TabsTrigger value="attendance" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Attendance</TabsTrigger>
-              <TabsTrigger value="fees" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Fees</TabsTrigger>
-              <TabsTrigger value="messages" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Messages</TabsTrigger>
-              <TabsTrigger value="calendar" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Calendar</TabsTrigger>
-              <TabsTrigger value="settings" className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Settings</TabsTrigger>
-            </TabsList>
-          </div>
-
-          <TabsContent value="overview"><ChildrenOverview /></TabsContent>
-          <TabsContent value="academics"><ParentAcademics /></TabsContent>
-          <TabsContent value="assignments"><ParentAssignments /></TabsContent>
-          <TabsContent value="notes"><ParentLessonNotes /></TabsContent>
-          <TabsContent value="report-cards"><ParentReportCards onViewResults={() => setActiveTab('academics')} /></TabsContent>
-          <TabsContent value="attendance"><ParentAttendance /></TabsContent>
-          <TabsContent value="fees"><ParentFees /></TabsContent>
-          <TabsContent value="messages">
-            <div className="space-y-6">
-              <ParentMessagesInbox />
-              <CommunicationHub />
-            </div>
-          </TabsContent>
-          <TabsContent value="calendar"><AcademicCalendar /></TabsContent>
-          <TabsContent value="settings"><ParentProfileSettings /></TabsContent>
-        </Tabs>
+        <div className="bg-card rounded-xl border shadow-sm p-6">
+          {renderContent()}
+        </div>
       </div>
     </DashboardLayout>
   );
