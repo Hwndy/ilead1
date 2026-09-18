@@ -202,9 +202,43 @@ export const AcceptOfferPage = () => {
     );
   }
 
-  const isProcessed = offer.status === 'accepted' || offer.status === 'declined';
+  const isAccepted = accepted || offer.status === 'accepted';
 
-  if (isProcessed) {
+  if (isAccepted) {
+    return (
+      <WebsiteLayout>
+        <div className="min-h-screen py-12 px-4">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                Offer Accepted
+              </CardTitle>
+              <CardDescription>
+                Please pay the acceptance fee by bank transfer to complete enrolment.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <BankTransferDetails
+                amount={offer.acceptance_fee ?? undefined}
+                reference={`${application.first_name} ${application.last_name} ${application.application_number}`}
+                title="Acceptance fee — bank transfer"
+              />
+              <p className="text-sm text-muted-foreground">
+                After the transfer, send your proof of payment to the admissions office. Once the office confirms it, your
+                child is enrolled and login details are sent to you.
+              </p>
+              <Button onClick={() => navigate('/track-application')} className="w-full" variant="outline">
+                Track Application
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </WebsiteLayout>
+    );
+  }
+
+  if (offer.status === 'declined') {
     return (
       <WebsiteLayout>
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -212,7 +246,7 @@ export const AcceptOfferPage = () => {
             <CardHeader>
               <CardTitle>Offer Already Processed</CardTitle>
               <CardDescription>
-                This offer has already been {offer.status}
+                This offer has already been declined
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -225,6 +259,7 @@ export const AcceptOfferPage = () => {
       </WebsiteLayout>
     );
   }
+
 
   const deadline = new Date(`${offer.acceptance_deadline}T23:59:59.999`);
   const isExpired = deadline < new Date();
