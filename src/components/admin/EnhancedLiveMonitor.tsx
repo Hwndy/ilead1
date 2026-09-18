@@ -255,6 +255,12 @@ export const EnhancedLiveMonitor: React.FC = () => {
 
       if (error) throw error;
 
+      await logAuditEvent('exam_session_ended', {
+        tableName: 'exam_sessions',
+        rowId: sessionId,
+        metadata: { student_name: studentName },
+      });
+
       toast({
         title: 'Session Terminated',
         description: `${studentName}'s exam session has been terminated.`,
@@ -323,6 +329,9 @@ export const EnhancedLiveMonitor: React.FC = () => {
               Live Exam Monitor
             </CardTitle>
             <div className="flex items-center space-x-2">
+              <span className="text-xs text-muted-foreground hidden sm:inline">
+                {lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : 'Waiting for data'}
+              </span>
               <Button
                 variant="outline"
                 size="sm"
