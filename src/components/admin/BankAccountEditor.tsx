@@ -28,13 +28,14 @@ export const BankAccountEditor: React.FC = () => {
       const { data } = await supabase
         .from('app_settings')
         .select('setting_key, setting_value')
-        .in('setting_key', ['bank_name', 'bank_account_name', 'bank_account_number']);
+        .in('setting_key', ['bank_name', 'bank_account_name', 'bank_account_number', 'finance_delete_code']);
       data?.forEach((row: any) => {
-        const value = String(row.setting_value ?? '').trim();
+        const value = String(row.setting_value ?? '').replace(/^"|"$/g, '').trim();
         if (!value) return;
         if (row.setting_key === 'bank_name') setBankName(value);
         if (row.setting_key === 'bank_account_name') setAccountName(value);
         if (row.setting_key === 'bank_account_number') setAccountNumber(value);
+        if (row.setting_key === 'finance_delete_code') setFinanceCode(value);
       });
       setLoading(false);
     })();
