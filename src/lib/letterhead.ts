@@ -101,6 +101,6 @@ export function letterheadPageCss(): string {
   `;
 }
 
-export function letterheadBackgroundMarkup(): string {
-  return `<div class="lh-page-bg"><img src="${letterheadAbsoluteUrl(LETTERHEAD_FULL_URL)}" alt="" /></div>`;
+export function letterheadBackgroundMarkup(className = 'lh-page-bg'): string {
+  return `<div class="${className}"><img src="${letterheadAbsoluteUrl(LETTERHEAD_FULL_URL)}" alt="" /></div>`;
 }

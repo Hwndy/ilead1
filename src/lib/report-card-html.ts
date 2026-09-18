@@ -346,22 +346,8 @@ export function renderReportCardBody(
 
   return `
   <div class="rc-sheet">
-    ${logo ? `<div class="rc-watermark"><img src="${esc(logo)}" alt="" /></div>` : ''}
+    ${letterheadBackgroundMarkup('rc-letterhead')}
     <div class="rc-content">
-      <div class="rc-head">
-        ${logo
-          ? `<img class="crest" src="${esc(logo)}" alt="${schoolName} crest" />`
-          : `<div class="crest-fallback">${esc(initials(schoolInfo.name || 'AB'))}</div>`}
-        <div class="titles">
-          <div class="rc-school-name">${schoolName}</div>
-          ${contactLine ? `<div class="rc-school-meta">${contactLine}</div>` : ''}
-          ${schoolInfo.motto ? `<div class="rc-motto">&ldquo;${esc(schoolInfo.motto)}&rdquo;</div>` : ''}
-        </div>
-        ${logo
-          ? `<img class="crest" src="${esc(logo)}" alt="" />`
-          : `<div class="crest-fallback">${esc(initials(schoolInfo.name || 'AB'))}</div>`}
-      </div>
-
       <div class="rc-ribbon">
         Student Terminal Report &nbsp;&mdash;&nbsp; <span>${esc(card.term)} &bull; ${esc(card.academic_year || '')}</span>
       </div>
