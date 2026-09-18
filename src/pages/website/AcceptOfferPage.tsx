@@ -111,18 +111,12 @@ export const AcceptOfferPage = () => {
         throw new Error(acceptData.error);
       }
 
-      // Initialize payment after successful acceptance
-      const { data, error } = await supabase.functions.invoke('initialize-acceptance-payment', {
-        body: {
-          application_id: acceptData.application_id,
-          email: application.email,
-          callback_url: `${window.location.origin}/payment-callback`,
-        },
+      setAccepted(true);
+      setProcessing(false);
+      toast({
+        title: 'Offer Accepted',
+        description: 'Please complete the acceptance fee by bank transfer.',
       });
-
-      if (error) throw error;
-
-      window.location.href = data.authorization_url;
     } catch (error: any) {
       console.error('Error accepting offer:', error);
       toast({
