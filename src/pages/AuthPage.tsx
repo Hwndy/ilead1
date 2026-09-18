@@ -33,7 +33,7 @@ export const AuthPage = () => {
         .from('app_settings')
         .select('setting_value')
         .eq('setting_key', 'allow_student_registration')
-        .single();
+        .maybeSingle();
       
       if (data) {
         setAllowStudentRegistration(data.setting_value === true);

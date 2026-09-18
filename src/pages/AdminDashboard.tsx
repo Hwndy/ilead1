@@ -103,8 +103,42 @@ export const AdminDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const activeTab = searchParams.get('tab') || 'overview';
-  const activeSubTab = searchParams.get('subtab');
+  // Bare tab aliases: links like /admin?tab=students resolve to the
+  // correct group + subtab so every entry point renders real content.
+  const TAB_ALIASES: Record<string, { tab: string; subtab?: string }> = {
+    students: { tab: 'academic', subtab: 'students' },
+    'student-detail': { tab: 'academic', subtab: 'student-detail' },
+    classes: { tab: 'academic', subtab: 'classes' },
+    structure: { tab: 'academic', subtab: 'structure' },
+    campuses: { tab: 'academic', subtab: 'structure' },
+    subjects: { tab: 'academic', subtab: 'subjects' },
+    timetable: { tab: 'academic', subtab: 'timetable' },
+    exams: { tab: 'academic' },
+    questions: { tab: 'academic', subtab: 'questions' },
+    results: { tab: 'academic', subtab: 'results' },
+    'report-cards': { tab: 'academic', subtab: 'report-cards' },
+    'enter-scores': { tab: 'results-mgmt' },
+    broadsheet: { tab: 'results-mgmt' },
+    promotion: { tab: 'results-mgmt', subtab: 'promotion' },
+    'past-students': { tab: 'results-mgmt', subtab: 'past-students' },
+    automation: { tab: 'results-mgmt', subtab: 'automation' },
+    expenses: { tab: 'fees', subtab: 'expenses' },
+    revenue: { tab: 'fees', subtab: 'revenue' },
+    payroll: { tab: 'hr', subtab: 'payroll' },
+    staff: { tab: 'hr', subtab: 'staff' },
+    'staff-attendance': { tab: 'hr', subtab: 'staff-attendance' },
+    leave: { tab: 'hr', subtab: 'leave' },
+    careers: { tab: 'hr', subtab: 'careers' },
+    'child-links': { tab: 'parents', subtab: 'child-links' },
+    messages: { tab: 'parents', subtab: 'messages' },
+    monitor: { tab: 'system', subtab: 'monitor-logs' },
+    'email-logs': { tab: 'system', subtab: 'email-logs' },
+  };
+
+  const rawTab = searchParams.get('tab') || 'overview';
+  const alias = TAB_ALIASES[rawTab];
+  const activeTab = alias ? alias.tab : rawTab;
+  const activeSubTab = searchParams.get('subtab') || alias?.subtab || null;
 
   useEffect(() => {
     if (activeTab === 'overview') {
