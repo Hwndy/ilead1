@@ -536,18 +536,15 @@ export const AdmissionForm = () => {
               </p>
             </div>
             
-            <div className="bg-primary/10 p-4 rounded-lg mb-6">
-              <p className="font-semibold text-primary mb-2">Next Step: Pay Application Fee</p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Complete your application by paying the ₦10,000 application fee.
-              </p>
-              <Button onClick={handlePayment} size="lg" className="w-full sm:w-auto">
-                <CreditCard className="h-5 w-5 mr-2" />
-                Proceed to Payment
-              </Button>
+            <div className="text-left mb-6">
+              <BankTransferDetails
+                title="If any fee is requested, pay by bank transfer"
+                reference={`${formData.first_name} ${formData.last_name} ${submissionId}`.trim()}
+              />
             </div>
 
             <div className="space-y-2 text-sm text-muted-foreground">
+              <p>• Your application goes straight to our admissions team for review</p>
               <p>• You will receive a confirmation email within 24 hours</p>
               <p>• Entrance examination dates will be communicated via email/phone</p>
               <p>• Contact our admissions office for any inquiries: +234 813 418 7710</p>
