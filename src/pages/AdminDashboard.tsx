@@ -382,6 +382,17 @@ export const AdminDashboard = () => {
     if (activeTab === 'system') {
       switch (activeSubTab) {
         case 'monitor-logs': return <EnhancedLiveMonitor />;
+        case 'email-logs':
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <EmailLogsViewer />
+              </div>
+              <div>
+                <EmailTestingPanel />
+              </div>
+            </div>
+          );
         case 'results-modal': 
           return (
             <>
@@ -395,17 +406,8 @@ export const AdminDashboard = () => {
               )}
             </>
           );
-        default: 
-          return (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <EmailLogsViewer />
-              </div>
-              <div>
-                <EmailTestingPanel />
-              </div>
-            </div>
-          );
+        default:
+          return <AuditLog />;
       }
     }
 
