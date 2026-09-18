@@ -45,3 +45,10 @@
 ## Blocked / needs the user
 - Authenticated portal visual verification requires a signed-in preview session.
 - GitHub project sync cannot be attached to the existing `Hwndy/ilead1` repository by the agent; Lovable's Git settings can reconnect only by creating a new repository.
+
+## Full-app audit (Sept 18)
+- [x] Bare tab addresses (students, classes, subjects, exams, etc.) resolve to correct sections via alias map
+- [x] Email Logs fixed (db/phase11-fixes.sql applied — JWT-email policy)
+- [x] Login 406 fixed (maybeSingle on app_settings lookup)
+- [x] Crawled all 55 admin sections — all render, no page errors, no failed requests
+- [x] Typecheck and build clean
