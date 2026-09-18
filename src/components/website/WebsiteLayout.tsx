@@ -131,7 +131,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 }`}>
                   More <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-popover">
+                <DropdownMenuContent align="end" className="site-theme w-48 bg-popover">
                   {moreNav.map((item) => (
                     <DropdownMenuItem key={item.name} asChild>
                       <Link to={item.href} className={isActivePath(item.href) ? 'text-primary' : ''}>{item.name}</Link>
@@ -153,7 +153,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[85vw] max-w-sm p-0 flex flex-col">
+                <SheetContent side="right" className="site-theme w-[85vw] max-w-sm p-0 flex flex-col bg-background text-foreground">
                   <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
                     <Logo size="sm" showText={false} />
                     <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'iVintage College'}</span>
