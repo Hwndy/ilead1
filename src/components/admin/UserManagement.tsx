@@ -144,19 +144,17 @@ export const UserManagement = () => {
         if (!/^[+\d][\d\s()-]{6,19}$/.test(userForm.phone.trim())) {
           throw new Error('Enter a valid parent phone number');
         }
-        const { data, error } = await supabase.functions.invoke('create-parent-account', {
-          body: {
-            fullName: userForm.fullName.trim(),
-            email: userForm.email.trim().toLowerCase(),
-            phone: userForm.phone.trim(),
-            studentId: userForm.studentId || undefined,
-            relationshipType: userForm.relationshipType,
-            canViewGrades: userForm.canViewGrades,
-            canViewAttendance: userForm.canViewAttendance,
-            canViewFees: userForm.canViewFees,
-          },
+        const { data } = await invokeFunction<any>('create-parent-account', {
+          fullName: userForm.fullName.trim(),
+          email: userForm.email.trim().toLowerCase(),
+          phone: userForm.phone.trim(),
+          studentId: userForm.studentId || undefined,
+          relationshipType: userForm.relationshipType,
+          canViewGrades: userForm.canViewGrades,
+          canViewAttendance: userForm.canViewAttendance,
+          canViewFees: userForm.canViewFees,
         });
-        if (error || !data?.success) throw new Error(data?.error || error?.message || 'Failed to create parent');
+        if (!data?.success) throw new Error('Failed to create parent');
         await fetchData();
         setIsAddingUser(false);
         resetUserForm();
