@@ -519,32 +519,6 @@ export const AdmissionForm = () => {
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   if (submissionId && applicationId) {
-    const handlePayment = async () => {
-      try {
-        const { data, error } = await supabase.functions.invoke('initialize-admission-payment', {
-          body: {
-            application_id: applicationId,
-            amount: 10000,
-            email: formData.email,
-            callback_url: `${window.location.origin}/payment-callback`,
-          }
-        });
-        
-        if (error) throw error;
-        
-        if (data?.authorization_url) {
-          window.location.href = data.authorization_url;
-        }
-      } catch (error: any) {
-        console.error('Payment error:', error);
-        toast({
-          title: 'Payment Error',
-          description: 'Failed to initialize payment. Please try again or contact admissions.',
-          variant: 'destructive',
-        });
-      }
-    };
-
     return (
       <div className="max-w-2xl mx-auto p-6">
         <Card>
