@@ -37,6 +37,9 @@ $$;
 GRANT EXECUTE ON FUNCTION public.log_audit_event(text, text, text, jsonb) TO authenticated, anon, service_role;
 
 -- 2. Wider trigger coverage on the tables administrators care about.
+-- Remove the older, narrower triggers so nothing is recorded twice.
+DROP TRIGGER IF EXISTS trg_audit_admission_apps ON public.admission_applications;
+
 DO $$
 DECLARE t text;
 BEGIN
