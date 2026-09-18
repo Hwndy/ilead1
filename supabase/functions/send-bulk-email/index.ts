@@ -117,19 +117,11 @@ const handler = async (req: Request): Promise<Response> => {
           to: [recipientEmail],
           reply_to: replyTo,
           subject: subject,
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <div style="background-color: #4F46E5; padding: 20px; text-align: center;">
-                <h1 style="color: white; margin: 0;">${schoolName}</h1>
-              </div>
-              <div style="padding: 20px; background-color: #f9fafb;">
-                ${body.replace(/\n/g, '<br>')}
-              </div>
-              <div style="padding: 15px; background-color: #e5e7eb; text-align: center; font-size: 12px; color: #6b7280;">
-                This is an automated message from ${schoolName}
-              </div>
-            </div>
-          `,
+          html: wrapEmailInLetterhead(
+            `${body.replace(/\n/g, '<br>')}
+             <p style="margin-top:26px;font-size:12px;color:#6b7280;">This is an automated message from ${schoolName}.</p>`,
+            subject,
+          ),
         });
 
         console.log(`Email sent to ${recipientEmail}:`, emailResponse);
