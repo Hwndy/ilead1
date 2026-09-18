@@ -101,6 +101,7 @@ export const AdminDashboard = () => {
   const { toast } = useToast();
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const activeTab = searchParams.get('tab') || 'overview';
   const activeSubTab = searchParams.get('subtab');
