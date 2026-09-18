@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
+import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
