@@ -14,14 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { UserEditModal } from './UserEditModal';
 import { fetchPlacementMap } from '@/lib/student-placement';
 import { logAuditEvent } from '@/lib/audit';
-
-const friendlyFunctionError = (message?: string) => {
-  const msg = String(message || '');
-  if (/Failed to send a request|Failed to fetch|non-2xx/i.test(msg)) {
-    return 'Accounts are created on the server, and the server tools could not be reached. Please try again in a moment.';
-  }
-  return msg || 'Failed to create the account';
-};
+import { invokeFunction } from '@/lib/functions';
 
 export const UserManagement = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
