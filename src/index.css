@@ -211,3 +211,55 @@
     border-color: hsl(var(--gold) / 0.82);
   }
 }
+
+/* Public website keeps the original navy + lime light theme */
+.site-theme {
+  --background: 0 0% 100%;
+  --foreground: 219 37% 14%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 219 37% 14%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 219 37% 14%;
+
+  --primary: 219 37% 12%;
+  --primary-hover: 219 37% 20%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 216 17% 95%;
+  --secondary-hover: 216 17% 90%;
+  --secondary-foreground: 219 37% 14%;
+
+  --muted: 216 17% 97%;
+  --muted-foreground: 216 12% 45%;
+
+  --accent: 67 69% 94%;
+  --accent-foreground: 219 37% 14%;
+
+  --gold: 67 69% 51%;
+  --gold-foreground: 219 37% 12%;
+  --gold-soft: 67 69% 92%;
+
+  --border: 216 20% 88%;
+  --input: 216 20% 88%;
+  --ring: 67 69% 45%;
+
+  --radius: 0.75rem;
+
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(219 37% 24%));
+
+  --shadow-card: 0 2px 8px -2px hsl(219 37% 12% / 0.12);
+  --shadow-hover: 0 4px 16px -4px hsl(219 37% 12% / 0.18);
+
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.site-theme h1,
+.site-theme h2,
+.site-theme h3,
+.site-theme h4,
+.site-theme h5,
+.site-theme h6 {
+  font-family: inherit;
+}
