@@ -468,88 +468,63 @@ serve(async (req) => {
     
     const emailSubject = `Offer of provisional admission - ${application.application_number}`;
     const prettyDeadline = new Date(acceptance_deadline).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="margin:0;padding:24px 0;background-color:#eef0ee;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr><td align="center">
-            <!-- Plain branded email. The official letterhead lives on the attached PDF. -->
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="620"
-                   style="width:620px;max-width:100%;background-color:#ffffff;border-radius:6px;overflow:hidden;font-family:Georgia,'Times New Roman',serif;color:#111827;">
-              <tr><td style="background:#15803d;padding:22px 56px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;">
-                <div style="font-size:18px;font-weight:bold;letter-spacing:0.3px;">iVintage College</div>
-                <div style="font-size:12px;opacity:0.9;margin-top:4px;">Office of Admissions &middot; Badagry, Lagos</div>
-              </td></tr>
-              <tr><td style="padding:24px 56px 8px 56px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4b5563;">
-                Ref: ${application.application_number}
-                <span style="float:right;">${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}</span>
-              </td></tr>
-              <tr><td style="padding:16px 56px 0 56px;font-size:15px;line-height:1.65;">
-                <p style="margin:0 0 4px 0;font-weight:bold;">${application.first_name} ${application.last_name}</p>
-                <p style="margin:0 0 22px 0;font-size:13px;color:#6b7280;">${application.email}</p>
+    const emailHtml = wrapEmailInLetterhead(`
+      <div style="font-size:12px;color:#6b7280;margin-bottom:14px;">
+        Ref: ${application.application_number}
+        <span style="float:right;">${new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" })}</span>
+      </div>
 
-                <p style="margin:0 0 6px 0;font-weight:bold;letter-spacing:0.4px;">OFFER OF PROVISIONAL ADMISSION</p>
-                <div style="height:2px;width:180px;background:#15803d;margin-bottom:20px;"></div>
+      <p style="margin:0 0 4px 0;font-weight:bold;">${application.first_name} ${application.last_name}</p>
+      <p style="margin:0 0 22px 0;font-size:13px;color:#6b7280;">${application.email}</p>
 
-                <p style="margin:0 0 16px 0;">Dear ${application.first_name},</p>
+      <p style="margin:0 0 6px 0;font-weight:bold;letter-spacing:0.4px;">OFFER OF PROVISIONAL ADMISSION</p>
+      <div style="height:3px;width:180px;background:#C6D92D;margin-bottom:20px;"></div>
 
-                <p style="margin:0 0 18px 0;">
-                  Following the assessment of your application, I am pleased to confirm that you have been admitted to
-                  <strong>${admittedClassName}</strong> at iVintage College for the
-                  ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session. The offer is provisional
-                  until the acceptance fee is paid and your original documents are sighted at the school office.
-                </p>
+      <p style="margin:0 0 16px 0;">Dear ${application.first_name},</p>
 
-                ${classChanged ? `<p style="margin:0 0 18px 0;">
-                  Following your performance in the entrance assessment, the school is offering admission into
-                  <strong>${admittedClassName}</strong> rather than <strong>${appliedClassName}</strong>.${classInfo.note ? ` ${classInfo.note}` : ""}
-                </p>` : ""}
+      <p style="margin:0 0 18px 0;">
+        Following the assessment of your application, I am pleased to confirm that you have been admitted to
+        <strong>${admittedClassName}</strong> at iVintage College for the
+        ${new Date().getFullYear()}/${new Date().getFullYear() + 1} academic session. The offer is provisional
+        until the acceptance fee is paid and your original documents are sighted at the school office.
+      </p>
 
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
-                       style="font-family:Arial,Helvetica,sans-serif;font-size:14px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;margin:0 0 18px 0;">
-                  <tr><td style="padding:10px 0;color:#6b7280;">Application number</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${application.application_number}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Class applied for</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${appliedClassName}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Class admitted to</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${admittedClassName}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Acceptance fee</td><td style="padding:10px 0;font-weight:bold;text-align:right;">&#8358;${acceptanceFee.toLocaleString("en-NG")}</td></tr>
-                  <tr><td style="padding:10px 0;color:#6b7280;">Payment deadline</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${prettyDeadline}</td></tr>
-                </table>
+      ${classChanged ? `<p style="margin:0 0 18px 0;">
+        Following your performance in the entrance assessment, the school is offering admission into
+        <strong>${admittedClassName}</strong> rather than <strong>${appliedClassName}</strong>.${classInfo.note ? ` ${classInfo.note}` : ""}
+      </p>` : ""}
 
-                <p style="margin:0 0 18px 0;font-size:13px;color:#4b5563;">${acceptanceFeeNote}</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
+             style="font-size:14px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;margin:0 0 18px 0;">
+        <tr><td style="padding:10px 0;color:#6b7280;">Application number</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${application.application_number}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Class applied for</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${appliedClassName}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Class admitted to</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${admittedClassName}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Acceptance fee</td><td style="padding:10px 0;font-weight:bold;text-align:right;">&#8358;${acceptanceFee.toLocaleString("en-NG")}</td></tr>
+        <tr><td style="padding:10px 0;color:#6b7280;">Payment deadline</td><td style="padding:10px 0;font-weight:bold;text-align:right;">${prettyDeadline}</td></tr>
+      </table>
 
-                <p style="margin:0 0 18px 0;">
-                  To take up the place, accept the offer using the link below and pay the acceptance fee on or before
-                  <strong>${prettyDeadline}</strong>. Offers not accepted by that date are released to candidates on the waiting list.
-                </p>
+      <p style="margin:0 0 18px 0;font-size:13px;color:#4b5563;">${acceptanceFeeNote}</p>
 
-                <p style="margin:0 0 26px 0;">
-                  <a href="${acceptanceUrl}" style="display:inline-block;background:#15803d;color:#ffffff;padding:13px 30px;text-decoration:none;border-radius:4px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;">Accept the offer</a>
-                </p>
+      <p style="margin:0 0 18px 0;">
+        To take up the place, accept the offer using the link below and pay the acceptance fee on or before
+        <strong>${prettyDeadline}</strong>. Offers not accepted by that date are released to candidates on the waiting list.
+      </p>
 
-                <p style="margin:0 0 18px 0;">
-                  The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
-                  the offer should be sent to
-                  <a href="mailto:admissions@ivintagecollege.com" style="color:#15803d;">admissions@ivintagecollege.com</a>.
-                </p>
+      <p style="margin:0 0 26px 0;">
+        <a href="${acceptanceUrl}" style="display:inline-block;background:#141C2B;color:#ffffff;padding:13px 30px;text-decoration:none;border-radius:4px;font-size:14px;font-weight:bold;">Accept the offer</a>
+      </p>
 
-                <p style="margin:0 0 32px 0;">Yours faithfully,<br><br>
-                  <strong>Admissions Officer</strong><br>
-                  <span style="font-size:13px;color:#6b7280;">For: iVintage College, Badagry, Lagos</span>
-                </p>
-              </td></tr>
-              <tr><td style="padding:16px 56px;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6b7280;">
-                iVintage College &middot; admissions@ivintagecollege.com
-              </td></tr>
-            </table>
-          </td></tr>
-        </table>
-      </body>
-      </html>
-    `;
+      <p style="margin:0 0 18px 0;">
+        The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
+        the offer should be sent to
+        <a href="mailto:admissions@ivintagecollege.com" style="color:#141C2B;">admissions@ivintagecollege.com</a>.
+      </p>
+
+      <p style="margin:0 0 8px 0;">Yours faithfully,<br><br>
+        <strong>Admissions Officer</strong><br>
+        <span style="font-size:13px;color:#6b7280;">For: iVintage College</span>
+      </p>
+    `, emailSubject);
 
     // Log email attempt
     const emailLogData = {
