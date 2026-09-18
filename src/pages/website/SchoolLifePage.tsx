@@ -8,78 +8,19 @@ import { PageHero } from '@/components/website/PageHero';
 import { SectionBand, SectionHeading } from '@/components/website/Section';
 import { Reveal } from '@/components/website/Reveal';
 
+const PROGRAMME_ICONS = [Microscope, Calculator, Palette, BookOpen];
+const FACILITY_ICONS = [BookOpen, Microscope, Globe, Trophy];
+
 export const SchoolLifePage = () => {
-  const academicPrograms = [
-    {
-      title: "Science Track",
-      description: "Comprehensive science education preparing students for medical and engineering careers",
-      icon: Microscope,
-      subjects: ["Biology", "Chemistry", "Physics", "Mathematics", "English"]
-    },
-    {
-      title: "Commercial Track", 
-      description: "Business-focused curriculum developing entrepreneurial and financial skills",
-      icon: Calculator,
-      subjects: ["Accounting", "Economics", "Commerce", "Mathematics", "English"]
-    },
-    {
-      title: "Arts Track",
-      description: "Liberal arts programme fostering critical thinking, language and cultural awareness",
-      icon: Palette,
-      subjects: ["Literature", "Government", "History", "Islamic Studies", "Arabic"]
-    },
-    {
-      title: "Tahfeedh & Arabic",
-      description: "Qur'an memorisation and Arabic proficiency running alongside the academic curriculum",
-      icon: BookOpen,
-      subjects: ["Hifdhul Qur'an", "Tajweed", "Arabic Language", "Islamic Studies"]
-    }
-  ];
+  const { field, list } = useSiteFields();
+  const { isVisible } = useSectionControls('school-life');
 
+  const academicPrograms = list<{ title: string; description: string; subjects?: string }>('school_life.programmes');
+  const facilities = list<{ title: string; description: string }>('facilities').slice(0, 4);
+  const extracurricular = list<string>('school_life.clubs');
+  const classStructure = list<{ level: string; title: string; description: string }>('school_life.structure');
+  const schedule = list<{ time: string; activity: string }>('school_life.schedule');
 
-  const facilities = [
-    {
-      title: "Modern Library",
-      description: "Extensive collection of books, digital resources, and quiet study spaces",
-      icon: BookOpen
-    },
-    {
-      title: "Science Laboratories", 
-      description: "Fully equipped labs for Biology, Chemistry, and Physics practical sessions",
-      icon: Microscope
-    },
-    {
-      title: "Computer Lab",
-      description: "State-of-the-art computers with internet access for digital literacy",
-      icon: Globe
-    },
-    {
-      title: "Sports Complex",
-      description: "Indoor and outdoor facilities for various sports and physical activities",
-      icon: Trophy
-    }
-  ];
-
-  const extracurricular = [
-    "Debate Club", "Science Club", "Literature Society", "Mathematics Club",
-    "Football Team", "Basketball Team", "Athletics", "Table Tennis",
-    "Quranic Recitation", "Arabic Calligraphy", "ICT & Coding Club", "Leadership Development"
-  ];
-
-  const classStructure = [
-    { level: 'JSS 1 – 3', title: 'Junior Secondary', description: 'Broad curriculum leading to BECE, with early subject guidance.' },
-    { level: 'SSS 1 – 3', title: 'Senior Secondary', description: 'Specialised tracks preparing students for WAEC, NECO and JAMB.' },
-    { level: '20–25', title: 'Class size', description: 'Small classes so every child is known, tracked and supported.' },
-  ];
-
-  const schedule = [
-    { time: '7:30 – 8:00 AM', activity: 'Morning assembly & prayers' },
-    { time: '8:00 – 11:30 AM', activity: 'First academic session' },
-    { time: '11:30 – 12:00 PM', activity: 'Break & refreshments' },
-    { time: '12:00 – 1:00 PM', activity: 'Second academic session' },
-    { time: '1:00 – 2:00 PM', activity: 'Lunch break & prayers' },
-    { time: '2:00 – 4:00 PM', activity: 'Madrasah & study period' },
-  ];
 
   return (
     <div className="space-y-0">
