@@ -81,44 +81,16 @@ async function logEmail(supabase: any, logData: any) {
   }
 }
 
-// Fetch letterhead PNG once and cache as base64 data URL for jsPDF
-let cachedLetterhead: string | null = null;
-async function getLetterheadDataUrl(): Promise<string | null> {
-  if (cachedLetterhead) return cachedLetterhead;
-  try {
-    const res = await fetch(LETTERHEAD_URL);
-    if (!res.ok) {
-      console.error("Failed to fetch letterhead:", res.status);
-      return null;
-    }
-    const buf = new Uint8Array(await res.arrayBuffer());
-    // Guard: some hosts return an SPA index.html with a 200 status.
-    const PNG_SIG = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
-    if (buf.length < 8 || PNG_SIG.some((b, i) => buf[i] !== b)) {
-      console.error("Letterhead URL did not return a PNG:", res.headers.get("content-type"));
-      return null;
-    }
-    let binary = "";
-    for (let i = 0; i < buf.length; i++) binary += String.fromCharCode(buf[i]);
-    cachedLetterhead = `data:image/png;base64,${btoa(binary)}`;
-    return cachedLetterhead;
-  } catch (e) {
-    console.error("Letterhead fetch error:", e);
-    return null;
-  }
-}
-
 // ---------------------------------------------------------------------------
-// Offer letter PDF  the letter is typeset INSIDE the official letterhead page.
-// The letterhead PNG is a full-page design (crest + address band at the top,
-// watermark in the middle, colour bars at the foot), so it is drawn as the page
-// background and all text is laid out inside a safe area between the two.
+// Offer letter PDF — the letter is typeset INSIDE the official letterhead page
+// (A4). The artwork is drawn as the page background exactly as supplied and all
+// text is laid out inside the safe area between the top arc and address block.
 // ---------------------------------------------------------------------------
-const PAGE_FORMAT = "letter";      // 215.9mm x 279.4mm  matches the artwork ratio
-const SAFE_TOP = 60;               // below the address band
-const SAFE_BOTTOM = 258;           // above the footer colour bars
-const SAFE_LEFT = 25;
-const SAFE_RIGHT = 25;
+const PAGE_FORMAT = "a4";          // 210mm x 297mm — matches the official artwork
+const SAFE_TOP = LETTERHEAD_MARGINS.top;
+const SAFE_BOTTOM = 297 - LETTERHEAD_MARGINS.bottom;
+const SAFE_LEFT = LETTERHEAD_MARGINS.left + 4;
+const SAFE_RIGHT = LETTERHEAD_MARGINS.right + 4;
 
 function fmtDate(value: string | number | Date) {
   return new Date(value).toLocaleDateString("en-GB", {
