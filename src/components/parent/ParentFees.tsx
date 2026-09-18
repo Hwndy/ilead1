@@ -201,10 +201,10 @@ export const ParentFees: React.FC = () => {
                 </TableBody>
               </Table>
               {due > 0 && (
-                <Button className="w-full" disabled={paying === inv.id}
-                  onClick={() => pay({ invoice_id: inv.id, amount: due, label: `${inv.term} ${inv.academic_year} fees` })}>
-                  {paying === inv.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-1" /> Pay {NGN(due)}</>}
-                </Button>
+                <BankTransferDetails
+                  amount={due}
+                  reference={`${selectedChild.full_name} ${selectedChild.admission_number || ''}`.trim()}
+                />
               )}
             </CardContent>
           </Card>
@@ -256,9 +256,7 @@ export const ParentFees: React.FC = () => {
                         ) : plan ? (
                           <Badge variant="outline">On plan</Badge>
                         ) : (
-                          <Button size="sm" disabled={paying === f.id} onClick={() => pay({ fee_structure_id: f.id, amount: balance, label: f.fee_type })}>
-                            {paying === f.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-1" /> Pay {NGN(balance)}</>}
-                          </Button>
+                          <Badge variant="outline" className="text-red-600">Due {NGN(balance)}</Badge>
                         )}
                       </TableCell>
                     </TableRow>
@@ -300,9 +298,7 @@ export const ParentFees: React.FC = () => {
                         {balance <= 0 ? (
                           <Badge variant="secondary">Paid</Badge>
                         ) : (
-                          <Button size="sm" disabled={paying === i.id} onClick={() => pay({ fee_installment_id: i.id, amount: balance, label: `Installment #${i.installment_number}` })}>
-                            {paying === i.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <><CreditCard className="h-4 w-4 mr-1" /> Pay {NGN(balance)}</>}
-                          </Button>
+                          <Badge variant="outline" className="text-red-600">Due {NGN(balance)}</Badge>
                         )}
                       </TableCell>
                     </TableRow>
