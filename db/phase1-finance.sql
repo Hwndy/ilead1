@@ -30,5 +30,5 @@ ALTER TABLE public.fee_payments
 
 -- 4. Finance delete access code lives in settings, not in browser code --------
 INSERT INTO public.app_settings (setting_key, setting_value)
-VALUES ('finance_delete_code', '"iVintage2026"'::jsonb)
-ON CONFLICT (setting_key) DO NOTHING;
+VALUES ('finance_delete_code', '"4250645"'::jsonb)
+ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value;

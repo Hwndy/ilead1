@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Save, Eye, EyeOff } from 'lucide-react';
 import { DEFAULT_BANK_ACCOUNT } from '@/components/shared/BankTransferDetails';
 
 /**
@@ -19,19 +19,23 @@ export const BankAccountEditor: React.FC = () => {
   const [bankName, setBankName] = useState(DEFAULT_BANK_ACCOUNT.bank_name);
   const [accountName, setAccountName] = useState(DEFAULT_BANK_ACCOUNT.account_name);
   const [accountNumber, setAccountNumber] = useState(DEFAULT_BANK_ACCOUNT.account_number);
+  const [financeCode, setFinanceCode] = useState('');
+  const [savingCode, setSavingCode] = useState(false);
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     (async () => {
       const { data } = await supabase
         .from('app_settings')
         .select('setting_key, setting_value')
-        .in('setting_key', ['bank_name', 'bank_account_name', 'bank_account_number']);
+        .in('setting_key', ['bank_name', 'bank_account_name', 'bank_account_number', 'finance_delete_code']);
       data?.forEach((row: any) => {
-        const value = String(row.setting_value ?? '').trim();
+        const value = String(row.setting_value ?? '').replace(/^"|"$/g, '').trim();
         if (!value) return;
         if (row.setting_key === 'bank_name') setBankName(value);
         if (row.setting_key === 'bank_account_name') setAccountName(value);
         if (row.setting_key === 'bank_account_number') setAccountNumber(value);
+        if (row.setting_key === 'finance_delete_code') setFinanceCode(value);
       });
       setLoading(false);
     })();
@@ -65,11 +69,32 @@ export const BankAccountEditor: React.FC = () => {
     }
   };
 
+  const handleSaveCode = async () => {
+    const code = financeCode.trim();
+    if (code.length < 4) {
+      toast({ title: 'Code too short', description: 'Use at least 4 characters.', variant: 'destructive' });
+      return;
+    }
+    setSavingCode(true);
+    try {
+      const { error } = await supabase
+        .from('app_settings')
+        .upsert([{ setting_key: 'finance_delete_code', setting_value: code as any }], { onConflict: 'setting_key' });
+      if (error) throw error;
+      toast({ title: 'Saved', description: 'Finance access code updated.' });
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message || 'Failed to save', variant: 'destructive' });
+    } finally {
+      setSavingCode(false);
+    }
+  };
+
   if (loading) {
     return <div className="flex items-center justify-center py-12"><Loader2 className="h-6 w-6 animate-spin" /></div>;
   }
 
   return (
+    <div className="space-y-6">
     <Card>
       <CardHeader>
         <CardTitle>School Bank Account</CardTitle>
@@ -102,6 +127,38 @@ export const BankAccountEditor: React.FC = () => {
         </Button>
       </CardContent>
     </Card>
+
+    <Card>
+      <CardHeader>
+        <CardTitle>Finance Access Code</CardTitle>
+        <CardDescription>
+          Required to confirm sensitive finance actions, such as deleting a fee. Share it only with staff allowed to delete fees.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4 max-w-xl">
+        <div className="space-y-2">
+          <Label htmlFor="finance-code">Access code</Label>
+          <Input
+            id="finance-code"
+            type={showCode ? 'text' : 'password'}
+            value={financeCode}
+            onChange={(e) => setFinanceCode(e.target.value)}
+            placeholder="Access code"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Button onClick={handleSaveCode} disabled={savingCode}>
+            {savingCode ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
+            Save Code
+          </Button>
+          <Button type="button" variant="outline" onClick={() => setShowCode((v) => !v)}>
+            {showCode ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+            {showCode ? 'Hide' : 'Show'}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+    </div>
   );
 };
 
