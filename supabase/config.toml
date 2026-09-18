@@ -1,17 +1,5 @@
 project_id = "trtuqzdsutmindcjbkvj"
 
-[functions.initialize-admission-payment]
-verify_jwt = false
-
-[functions.verify-admission-payment]
-verify_jwt = false
-
-[functions.initialize-acceptance-payment]
-verify_jwt = false
-
-[functions.verify-acceptance-payment]
-verify_jwt = false
-
 [functions.send-offer-letter]
 verify_jwt = true
 
@@ -30,9 +18,6 @@ verify_jwt = false
 [functions.track-application]
 verify_jwt = false
 
-[functions.paystack-webhook]
-verify_jwt = false
-
 [functions.create-student]
 verify_jwt = true
 
@@ -48,8 +33,6 @@ verify_jwt = true
 [functions.send-bulk-sms]
 verify_jwt = true
 
-
-
 [functions.send-push-notification]
 verify_jwt = true
 
@@ -59,17 +42,8 @@ verify_jwt = true
 [functions.create-parent-account]
 verify_jwt = false
 
-[functions.initialize-fee-payment]
-verify_jwt = false
-
-[functions.verify-fee-payment]
-verify_jwt = false
-
 [functions.delete-parent-account]
 verify_jwt = false
-
-[functions.paystack-reconcile]
-verify_jwt = true
 
 [functions.send-report-cards]
 verify_jwt = true

@@ -5,6 +5,7 @@ import { SiteSettingsEditor } from '@/components/admin/CMS/SiteSettingsEditor';
 import { StaffAttendance } from '@/components/admin/StaffAttendance';
 import { GradingScaleEditor } from '@/components/admin/GradingScaleEditor';
 import { AdmissionSettingsEditor } from '@/components/admin/AdmissionSettingsEditor';
+import { BankAccountEditor } from '@/components/admin/BankAccountEditor';
 import { School, Globe, Users, GraduationCap, Receipt } from 'lucide-react';
 
 /**
@@ -22,12 +23,14 @@ export const SettingsHub: React.FC = () => {
           <TabsTrigger value="staff-attendance">Staff Attendance</TabsTrigger>
           <TabsTrigger value="grading">Grading Scale</TabsTrigger>
           <TabsTrigger value="admissions">Admissions</TabsTrigger>
+          <TabsTrigger value="payments">Payments</TabsTrigger>
         </TabsList>
         <TabsContent value="school"><SchoolInfoEditor /></TabsContent>
         <TabsContent value="site"><SiteSettingsEditor /></TabsContent>
         <TabsContent value="staff-attendance"><StaffAttendance /></TabsContent>
         <TabsContent value="grading"><GradingScaleEditor /></TabsContent>
         <TabsContent value="admissions"><AdmissionSettingsEditor /></TabsContent>
+        <TabsContent value="payments"><BankAccountEditor /></TabsContent>
       </Tabs>
     </div>
   );

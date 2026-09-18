@@ -21,12 +21,10 @@ import NotFound from '@/pages/NotFound';
 import { WebsiteRouter } from '@/pages/website/WebsiteRouter';
 import { TrackApplicationPage } from '@/pages/website/TrackApplicationPage';
 import { AcceptOfferPage } from '@/pages/website/AcceptOfferPage';
-import { PaymentCallbackPage } from '@/pages/website/PaymentCallbackPage';
 import { InstallPage } from '@/pages/InstallPage';
 import { InstallPrompt } from '@/components/pwa/InstallPrompt';
 import { OfflineIndicator } from '@/components/pwa/OfflineIndicator';
 import { UpdateAvailable } from '@/components/pwa/UpdateAvailable';
-import { FeePaymentCallback } from '@/pages/FeePaymentCallback';
 import { ScanStation } from '@/components/attendance/ScanStation';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
@@ -103,10 +101,6 @@ const App = () => (
                     {/* Login route */}
                     <Route path="/login" element={<AuthPage />} />
                     <Route path="/reset-password" element={<ResetPasswordPage />} />
-                    <Route
-                      path="/fees/payment-callback"
-                      element={<ProtectedRoute allowedRoles={['parent']}><FeePaymentCallback /></ProtectedRoute>}
-                    />
                     
                     {/* Install page for PWA */}
                     <Route path="/install" element={<InstallPage />} />
@@ -187,7 +181,6 @@ const App = () => (
                   <Route path="/website/*" element={<WebsiteRouter />} />
                   <Route path="/track-application" element={<TrackApplicationPage />} />
                   <Route path="/accept-offer/:token" element={<AcceptOfferPage />} />
-                  <Route path="/payment-callback" element={<PaymentCallbackPage />} />
                   
                   {/* Redirect old super-admin route to dashboard */}
                   <Route path="/super-admin" element={<Navigate to="/dashboard" replace />} />

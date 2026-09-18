@@ -7,7 +7,6 @@ import { InstallmentPlans } from './InstallmentPlans';
 import { PaymentsList } from './PaymentsList';
 import { RemindersPanel } from './RemindersPanel';
 import { FeeReceiptGenerator } from '@/components/admin/FeeReceiptGenerator';
-import { Reconciliation } from './Reconciliation';
 import { BillingRules } from './BillingRules';
 import { InvoicesPanel } from './InvoicesPanel';
 
@@ -25,7 +24,6 @@ export const FeesHub: React.FC = () => {
           <TabsTrigger value="payments">Payments</TabsTrigger>
           <TabsTrigger value="receipts">Receipts</TabsTrigger>
           <TabsTrigger value="reminders">Reminders</TabsTrigger>
-          <TabsTrigger value="reconciliation">Reconciliation</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="overview"><FeeOverview /></TabsContent>
@@ -37,7 +35,6 @@ export const FeesHub: React.FC = () => {
       <TabsContent value="payments"><PaymentsList /></TabsContent>
       <TabsContent value="receipts"><FeeReceiptGenerator /></TabsContent>
       <TabsContent value="reminders"><RemindersPanel /></TabsContent>
-      <TabsContent value="reconciliation"><Reconciliation /></TabsContent>
     </Tabs>
   );
 };

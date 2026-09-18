@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle, XCircle, Loader2, CreditCard } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2, CalendarClock } from 'lucide-react';
+import { BankTransferDetails } from '@/components/shared/BankTransferDetails';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface OfferData {
@@ -38,6 +39,7 @@ export const AcceptOfferPage = () => {
   const [processing, setProcessing] = useState(false);
   const [offer, setOffer] = useState<OfferData | null>(null);
   const [application, setApplication] = useState<ApplicationData | null>(null);
+  const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
     if (acceptanceToken) {
@@ -111,18 +113,12 @@ export const AcceptOfferPage = () => {
         throw new Error(acceptData.error);
       }
 
-      // Initialize payment after successful acceptance
-      const { data, error } = await supabase.functions.invoke('initialize-acceptance-payment', {
-        body: {
-          application_id: acceptData.application_id,
-          email: application.email,
-          callback_url: `${window.location.origin}/payment-callback`,
-        },
+      setAccepted(true);
+      setProcessing(false);
+      toast({
+        title: 'Offer Accepted',
+        description: 'Please complete the acceptance fee by bank transfer.',
       });
-
-      if (error) throw error;
-
-      window.location.href = data.authorization_url;
     } catch (error: any) {
       console.error('Error accepting offer:', error);
       toast({
@@ -206,9 +202,43 @@ export const AcceptOfferPage = () => {
     );
   }
 
-  const isProcessed = offer.status === 'accepted' || offer.status === 'declined';
+  const isAccepted = accepted || offer.status === 'accepted';
 
-  if (isProcessed) {
+  if (isAccepted) {
+    return (
+      <WebsiteLayout>
+        <div className="min-h-screen py-12 px-4">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                Offer Accepted
+              </CardTitle>
+              <CardDescription>
+                Please pay the acceptance fee by bank transfer to complete enrolment.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <BankTransferDetails
+                amount={offer.acceptance_fee ?? undefined}
+                reference={`${application.first_name} ${application.last_name} ${application.application_number}`}
+                title="Acceptance fee — bank transfer"
+              />
+              <p className="text-sm text-muted-foreground">
+                After the transfer, send your proof of payment to the admissions office. Once the office confirms it, your
+                child is enrolled and login details are sent to you.
+              </p>
+              <Button onClick={() => navigate('/track-application')} className="w-full" variant="outline">
+                Track Application
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </WebsiteLayout>
+    );
+  }
+
+  if (offer.status === 'declined') {
     return (
       <WebsiteLayout>
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -216,7 +246,7 @@ export const AcceptOfferPage = () => {
             <CardHeader>
               <CardTitle>Offer Already Processed</CardTitle>
               <CardDescription>
-                This offer has already been {offer.status}
+                This offer has already been declined
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -229,6 +259,7 @@ export const AcceptOfferPage = () => {
       </WebsiteLayout>
     );
   }
+
 
   const deadline = new Date(`${offer.acceptance_deadline}T23:59:59.999`);
   const isExpired = deadline < new Date();
@@ -289,7 +320,7 @@ export const AcceptOfferPage = () => {
                     <h4 className="font-medium">Next Steps:</h4>
                     <ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
                       <li>Accept this admission offer</li>
-                      <li>Pay the acceptance fee ({feeLabel})</li>
+                      <li>Pay the acceptance fee ({feeLabel}) by bank transfer</li>
                       <li>Complete enrollment process</li>
                       <li>Receive your student credentials</li>
                     </ol>
@@ -297,7 +328,7 @@ export const AcceptOfferPage = () => {
                   </div>
 
                   <Alert>
-                    <CreditCard className="h-4 w-4" />
+                    <CalendarClock className="h-4 w-4" />
                     <AlertDescription>
                       Acceptance deadline: {new Date(offer.acceptance_deadline).toLocaleDateString()}
                     </AlertDescription>
@@ -318,7 +349,7 @@ export const AcceptOfferPage = () => {
                       ) : (
                         <>
                           <CheckCircle className="h-4 w-4 mr-2" />
-                          Accept & Pay Fee
+                          Accept Offer
                         </>
                       )}
                     </Button>

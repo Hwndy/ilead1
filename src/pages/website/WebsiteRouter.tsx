@@ -12,7 +12,6 @@ import { PortalsPage } from './PortalsPage';
 import { TrackApplicationPage } from './TrackApplicationPage';
 import { ApplyPage } from './ApplyPage';
 import { AcceptOfferPage } from './AcceptOfferPage';
-import { PaymentCallbackPage } from './PaymentCallbackPage';
 import { GalleryPage } from './GalleryPage';
 import { TestimonialsPage } from './TestimonialsPage';
 import { CareersPage } from './CareersPage';
@@ -30,7 +29,6 @@ export const WebsiteRouter = () => {
         <Route path="/admissions/apply" element={<ApplyPage />} />
         <Route path="/track-application" element={<TrackApplicationPage />} />
         <Route path="/accept-offer/:token" element={<AcceptOfferPage />} />
-        <Route path="/payment-callback" element={<PaymentCallbackPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:slug" element={<NewsPage />} />
         <Route path="/gallery" element={<GalleryPage />} />

@@ -84,22 +84,21 @@ export const AdmissionManagement = () => {
     const reference = pendingEnrolments[applicationId];
     if (!reference) return;
     setCompletingId(applicationId);
-    const { data, error } = await supabase.functions.invoke('verify-acceptance-payment', {
-      body: { reference },
+    const { data, error } = await (supabase as any).rpc('enroll_applicant', {
+      p_application_id: applicationId,
     });
     setCompletingId(null);
-    if (error || !(data as any)?.success || (data as any)?.enrollment_pending) {
+    if (error) {
       toast({
         title: 'Enrolment could not be completed',
-        description:
-          (data as any)?.error || error?.message || 'Please check the function logs and retry.',
+        description: error.message || 'Please try again.',
         variant: 'destructive',
       });
       return;
     }
     toast({
       title: 'Enrolment completed',
-      description: `Admission number ${(data as any)?.admission_number ?? ''} issued and credentials emailed.`,
+      description: `Admission number ${(data as any)?.admission_number ?? ''} issued.`,
     });
     fetchApplications();
     fetchPendingEnrolments();
