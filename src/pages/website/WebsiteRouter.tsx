@@ -12,7 +12,6 @@ import { PortalsPage } from './PortalsPage';
 import { TrackApplicationPage } from './TrackApplicationPage';
 import { ApplyPage } from './ApplyPage';
 import { AcceptOfferPage } from './AcceptOfferPage';
-import { PaymentCallbackPage } from './PaymentCallbackPage';
 import { GalleryPage } from './GalleryPage';
 import { TestimonialsPage } from './TestimonialsPage';
 import { CareersPage } from './CareersPage';

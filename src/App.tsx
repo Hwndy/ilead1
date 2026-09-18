@@ -103,10 +103,6 @@ const App = () => (
                     {/* Login route */}
                     <Route path="/login" element={<AuthPage />} />
                     <Route path="/reset-password" element={<ResetPasswordPage />} />
-                    <Route
-                      path="/fees/payment-callback"
-                      element={<ProtectedRoute allowedRoles={['parent']}><FeePaymentCallback /></ProtectedRoute>}
-                    />
                     
                     {/* Install page for PWA */}
                     <Route path="/install" element={<InstallPage />} />
