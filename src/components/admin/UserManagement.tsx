@@ -14,14 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { UserEditModal } from './UserEditModal';
 import { fetchPlacementMap } from '@/lib/student-placement';
 import { logAuditEvent } from '@/lib/audit';
-
-const friendlyFunctionError = (message?: string) => {
-  const msg = String(message || '');
-  if (/Failed to send a request|Failed to fetch|non-2xx/i.test(msg)) {
-    return 'Accounts are created on the server, and the server tools could not be reached. Please try again in a moment.';
-  }
-  return msg || 'Failed to create the account';
-};
+import { invokeFunction } from '@/lib/functions';
 
 export const UserManagement = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -151,19 +144,17 @@ export const UserManagement = () => {
         if (!/^[+\d][\d\s()-]{6,19}$/.test(userForm.phone.trim())) {
           throw new Error('Enter a valid parent phone number');
         }
-        const { data, error } = await supabase.functions.invoke('create-parent-account', {
-          body: {
-            fullName: userForm.fullName.trim(),
-            email: userForm.email.trim().toLowerCase(),
-            phone: userForm.phone.trim(),
-            studentId: userForm.studentId || undefined,
-            relationshipType: userForm.relationshipType,
-            canViewGrades: userForm.canViewGrades,
-            canViewAttendance: userForm.canViewAttendance,
-            canViewFees: userForm.canViewFees,
-          },
+        const { data } = await invokeFunction<any>('create-parent-account', {
+          fullName: userForm.fullName.trim(),
+          email: userForm.email.trim().toLowerCase(),
+          phone: userForm.phone.trim(),
+          studentId: userForm.studentId || undefined,
+          relationshipType: userForm.relationshipType,
+          canViewGrades: userForm.canViewGrades,
+          canViewAttendance: userForm.canViewAttendance,
+          canViewFees: userForm.canViewFees,
         });
-        if (error || !data?.success) throw new Error(data?.error || error?.message || 'Failed to create parent');
+        if (!data?.success) throw new Error('Failed to create parent');
         await fetchData();
         setIsAddingUser(false);
         resetUserForm();
@@ -180,30 +171,22 @@ export const UserManagement = () => {
       let newUserId: string | null = null;
 
       if (userForm.role === 'student') {
-        const { data, error } = await supabase.functions.invoke('create-student', {
-          body: {
-            email: userForm.email.trim().toLowerCase(),
-            password: userForm.password,
-            fullName: userForm.fullName.trim(),
-            classId: userForm.classId || undefined,
-          },
+        const { data } = await invokeFunction<any>('create-student', {
+          email: userForm.email.trim().toLowerCase(),
+          password: userForm.password,
+          fullName: userForm.fullName.trim(),
+          classId: userForm.classId || undefined,
         });
-        if (error) throw new Error(friendlyFunctionError(error.message));
-        if ((data as any)?.error) throw new Error((data as any).error);
-        newUserId = (data as any)?.user?.id ?? null;
+        newUserId = data?.user?.id ?? data?.user_id ?? null;
       } else {
-        const { data, error } = await supabase.functions.invoke('create-staff-user', {
-          body: {
-            fullName: userForm.fullName.trim(),
-            email: userForm.email.trim().toLowerCase(),
-            password: userForm.password,
-            role: userForm.role,
-            phone: userForm.phone.trim() || undefined,
-          },
+        const { data } = await invokeFunction<any>('create-staff-user', {
+          fullName: userForm.fullName.trim(),
+          email: userForm.email.trim().toLowerCase(),
+          password: userForm.password,
+          role: userForm.role,
+          phone: userForm.phone.trim() || undefined,
         });
-        if (error) throw new Error(friendlyFunctionError(error.message));
-        if ((data as any)?.error) throw new Error((data as any).message || (data as any).error);
-        newUserId = (data as any)?.user_id ?? null;
+        newUserId = data?.user_id ?? null;
       }
 
       if (userForm.role === 'teacher' && newUserId) {
