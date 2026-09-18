@@ -300,7 +300,7 @@ export function AdminSidebar() {
     setOpenGroups((prev) => (prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]));
 
   const activeClasses =
-    "bg-sidebar-accent text-sidebar-accent-foreground font-medium border-l-2 border-primary rounded-l-none";
+    "bg-sidebar-accent text-sidebar-accent-foreground font-medium border-l-4 border-sidebar-primary rounded-l-none";
 
   return (
     <Sidebar collapsible="icon" className={collapsed ? "w-14" : "w-64"}>
