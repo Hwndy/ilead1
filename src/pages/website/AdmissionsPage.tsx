@@ -36,12 +36,12 @@ export const AdmissionsPage = () => {
         subtitle={field('admissions.hero_subtitle')}
         crumbs={[{ label: 'Admissions' }]}
       >
-        <Button size="lg" asChild className="w-full rounded-full px-7 sm:w-auto">
+        <Button size="lg" asChild className="w-full px-7 sm:w-auto">
           <Link to="/website/admissions/apply">
             Start Application <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>
-        <Button variant="outline" size="lg" asChild className="w-full rounded-full px-7 sm:w-auto">
+        <Button variant="outline" size="lg" asChild className="w-full px-7 sm:w-auto">
           <Link to="/website/track-application">Track Application</Link>
         </Button>
       </PageHero>
@@ -59,7 +59,7 @@ export const AdmissionsPage = () => {
               const Icon = HIGHLIGHT_ICONS[i % HIGHLIGHT_ICONS.length];
               return (
                 <Reveal key={`${h.title}-${i}`} delay={(i % 3) * 80}>
-                  <article className="flex h-full items-start gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <article className="flex h-full items-start gap-4 border-t-4 border-t-gold bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
                     </span>
@@ -88,8 +88,8 @@ export const AdmissionsPage = () => {
               const Icon = STEP_ICONS[index % STEP_ICONS.length];
               return (
                 <Reveal key={`${step.title}-${index}`} delay={index * 90}>
-                  <article className="relative h-full rounded-2xl border border-border bg-card p-7 text-center shadow-sm">
-                    <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground">
+                  <article className="relative h-full border border-border bg-card p-7 text-center shadow-sm">
+                    <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-t-full bg-primary text-xl font-bold text-primary-foreground">
                       {index + 1}
                     </span>
                     <Icon className="mx-auto mt-5 h-6 w-6 text-primary" />
@@ -115,7 +115,7 @@ export const AdmissionsPage = () => {
             intro={field('admissions.requirements_intro')}
           />
           <Reveal className="mx-auto max-w-4xl">
-            <ul className="grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-8 shadow-sm md:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-4 border-l-4 border-l-gold bg-card p-8 shadow-sm md:grid-cols-2">
               {requirements.map((requirement, i) => (
                 <li key={`${requirement}-${i}`} className="flex items-start gap-3">
                   <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
@@ -137,16 +137,16 @@ export const AdmissionsPage = () => {
             <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{field('admissions.cta_text')}</p>
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button size="lg" className="rounded-full px-7" asChild>
+              <Button size="lg" className="px-7" asChild>
                 <Link to="/website/admissions/apply">
                   Apply online <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full px-7" asChild>
+              <Button variant="outline" size="lg" className="px-7" asChild>
                 <Link to="/website/track-application">Track application</Link>
               </Button>
               {brochureUrl ? (
-                <Button variant="outline" size="lg" className="rounded-full px-7" asChild>
+                <Button variant="outline" size="lg" className="px-7" asChild>
                   <a href={brochureUrl} target="_blank" rel="noopener noreferrer">
                     Download brochure
                   </a>
@@ -156,7 +156,7 @@ export const AdmissionsPage = () => {
 
             <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
               {contacts.map((c) => (
-                <div key={c.label} className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-sm">
+                <div key={c.label} className="border-t-4 border-t-gold bg-card/70 p-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{c.label}</p>
                   <p className="mt-2 font-medium text-foreground">{c.value}</p>
                 </div>

@@ -10,13 +10,10 @@ export const LatestNews: React.FC = () => {
 
   return (
     <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+      <div className="site-container">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-              <span className="h-px w-8 bg-gold" />
-              Latest from Campus
-            </div>
+            <div className="site-kicker">Latest from campus</div>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground">News & Events</h2>
             <p className="text-muted-foreground max-w-xl">
               Announcements, achievements and moments from the iVintage community.
@@ -32,9 +29,9 @@ export const LatestNews: React.FC = () => {
             <Link
               to={item?.slug ? `/website/news/${item.slug}` : '/website/news'}
               key={item?.id || i}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card hover:shadow-xl transition-all duration-300"
+               className="group relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:shadow-xl"
             >
-              <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/10 to-gold/10">
+               <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                 {item?.featured_image ? (
                   <img
                     src={item.featured_image}
@@ -44,7 +41,7 @@ export const LatestNews: React.FC = () => {
                   />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-primary/20 font-serif text-6xl">
-                    AB
+                     iV
                   </div>
                 )}
                 {item?.category && (

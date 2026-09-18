@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ChevronRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { SITE_URL } from '@/components/website/SEO';
 
 export interface Crumb {
@@ -48,11 +47,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   };
 
   return (
-    <section
-      className={`relative overflow-hidden ${
-        onImage ? 'py-20 sm:py-24' : 'bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16 sm:py-20'
-      }`}
-    >
+    <section className={`relative overflow-hidden border-b border-border ${onImage ? 'min-h-[28rem]' : 'bg-muted/55 py-16 sm:py-24'}`}>
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
@@ -60,14 +55,15 @@ export const PageHero: React.FC<PageHeroProps> = ({
       {onImage && (
         <div className="absolute inset-0 z-0">
           <img src={image} alt="" aria-hidden="true" className="h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/75 to-primary/20" />
+          <div className="absolute inset-y-0 left-0 w-1 bg-gold" />
         </div>
       )}
 
-      <div className="container relative z-10 mx-auto px-4">
+      <div className={`site-container relative z-10 ${onImage ? 'flex min-h-[28rem] flex-col justify-center py-16' : ''}`}>
         {/* Breadcrumbs */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex justify-center">
-          <ol className={`flex flex-wrap items-center justify-center gap-1 text-xs sm:text-sm ${onImage ? 'text-white/70' : 'text-muted-foreground'}`}>
+        <nav aria-label="Breadcrumb" className="mb-8 flex">
+          <ol className={`flex flex-wrap items-center gap-1 text-xs sm:text-sm ${onImage ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
             {trail.map((c, i) => (
               <li key={`${c.label}-${i}`} className="flex items-center gap-1">
                 {i > 0 && <ChevronRight className="h-3.5 w-3.5 opacity-60" />}
@@ -76,7 +72,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                     {c.label}
                   </Link>
                 ) : (
-                  <span className={onImage ? 'text-white' : 'text-foreground'} aria-current="page">
+                  <span className={onImage ? 'text-primary-foreground' : 'text-foreground'} aria-current="page">
                     {c.label}
                   </span>
                 )}
@@ -85,24 +81,24 @@ export const PageHero: React.FC<PageHeroProps> = ({
           </ol>
         </nav>
 
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="max-w-3xl text-left">
           {eyebrow && (
-            <Badge className="mb-5 border-none bg-primary px-3 py-1 text-primary-foreground shadow-sm">{eyebrow}</Badge>
+            <p className={`site-kicker mb-5 ${onImage ? '[&]:text-gold' : ''}`}>{eyebrow}</p>
           )}
           <h1
-            className={`text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl ${
-              onImage ? 'text-white' : 'text-foreground'
+            className={`text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl ${
+              onImage ? 'text-primary-foreground' : 'text-foreground'
             }`}
           >
             {title}
-            {highlight && <span className="mt-1 block text-primary">{highlight}</span>}
+            {highlight && <span className={`mt-1 block ${onImage ? 'text-gold' : 'text-steel'}`}>{highlight}</span>}
           </h1>
           {subtitle && (
-            <p className={`mt-5 text-base leading-relaxed sm:text-lg ${onImage ? 'text-slate-200' : 'text-muted-foreground'}`}>
+            <p className={`mt-6 max-w-2xl text-base leading-relaxed sm:text-lg ${onImage ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
               {subtitle}
             </p>
           )}
-          {children && <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">{children}</div>}
+          {children && <div className="mt-8 flex flex-col gap-3 sm:flex-row">{children}</div>}
         </div>
       </div>
     </section>

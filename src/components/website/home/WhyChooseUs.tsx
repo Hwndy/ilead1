@@ -45,29 +45,21 @@ export const WhyChooseUs: React.FC = () => {
   if (!pillars?.length) return null;
 
   return (
-    <section className="py-16 sm:py-20">
-      <div className="container mx-auto px-4">
-        <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Why us</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{heading}</h2>
+    <section className="border-y border-border bg-muted/55 py-16 sm:py-24">
+      <div className="site-container">
+        <Reveal className="mb-12 max-w-3xl">
+          <p className="site-kicker">The iVintage foundation</p>
+          <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground lg:text-5xl">{heading}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 border-t border-border sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 90}>
-              <article className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-                <div className="relative h-40 w-full overflow-hidden">
-                  <img
-                    src={p.image || '/campus.png'}
-                    alt={p.title}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
+              <article className="h-full border-b border-border p-6 sm:border-r lg:p-7">
+                <div className="text-sm font-extrabold text-gold">{String(i + 1).padStart(2, '0')}</div>
+                <div className="pt-4">
+                  <h3 className="text-lg font-bold leading-snug text-foreground">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
                 </div>
               </article>

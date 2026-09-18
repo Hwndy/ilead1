@@ -61,7 +61,7 @@ export const GalleryPage: React.FC = () => {
       />
 
       <section className="py-8 border-b border-border">
-        <div className="container mx-auto px-4 flex flex-wrap gap-2 justify-center">
+        <div className="site-container flex flex-wrap justify-center gap-2">
           {CATEGORIES.map((c) => (
             <Button key={c} size="sm" variant={cat === c ? 'default' : 'outline'} onClick={() => setCat(c)} className="capitalize">
               {c}
@@ -71,7 +71,7 @@ export const GalleryPage: React.FC = () => {
       </section>
 
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className="site-container">
           {isLoading ? (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
@@ -92,7 +92,7 @@ export const GalleryPage: React.FC = () => {
                 <button
                   key={item.id}
                   onClick={() => setOpenIndex(idx)}
-                  className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-xl border border-border bg-card group focus:outline-none focus:ring-2 focus:ring-primary"
+                   className="group mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <img
                     src={item.image_url}

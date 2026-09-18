@@ -62,7 +62,7 @@ export const PortalsPage = () => {
             const Icon = (portal.icon && ICONS[portal.icon]) || GraduationCap;
             return (
               <Reveal key={idx} delay={(idx % 2) * 90}>
-                <article className="flex h-full flex-col rounded-2xl border border-border bg-card p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <article className="flex h-full flex-col border-t-4 border-t-gold bg-card p-7 shadow-sm transition-all duration-300 hover:shadow-xl">
                   <div className="flex items-start gap-4">
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-6 w-6" />
@@ -81,7 +81,7 @@ export const PortalsPage = () => {
                     ))}
                   </ul>
                   <div className="mt-auto">
-                    <Button asChild className="w-full rounded-full">
+                    <Button asChild className="w-full">
                       <Link to={LOGIN_PATH}>
                         Enter portal <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>

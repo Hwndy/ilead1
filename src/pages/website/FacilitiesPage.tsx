@@ -60,20 +60,20 @@ export const FacilitiesPage = () => {
             const photo = photos[index]?.image_url || CARD_IMAGES[index % CARD_IMAGES.length];
             return (
               <Reveal key={facility.title} delay={(index % 3) * 90}>
-                <article className="group relative h-full min-h-[300px] overflow-hidden rounded-2xl border border-border shadow-sm">
+                <article className="group relative h-full min-h-[300px] overflow-hidden rounded-lg border border-border shadow-sm">
                   <img
                     src={photo}
                     alt={facility.title}
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-transparent" />
                   <div className="relative flex h-full flex-col justify-end p-6">
-                    <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-white/25 bg-white/15 text-white backdrop-blur-sm">
+                    <span className="mb-4 flex h-10 w-10 items-center justify-center border border-primary-foreground/25 bg-primary-foreground/15 text-primary-foreground backdrop-blur-sm">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <h3 className="text-xl font-semibold text-white">{facility.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-200">{facility.description}</p>
+                    <h3 className="text-xl font-semibold text-primary-foreground">{facility.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-primary-foreground/75">{facility.description}</p>
                   </div>
                 </article>
               </Reveal>
@@ -107,7 +107,7 @@ export const FacilitiesPage = () => {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Button variant="outline" className="rounded-full px-6" asChild>
+            <Button variant="outline" className="px-6" asChild>
               <Link to="/website/gallery">View the full gallery</Link>
             </Button>
           </div>
@@ -121,10 +121,10 @@ export const FacilitiesPage = () => {
             Photos only go so far. Come and walk the grounds, meet the teachers and see a lesson in progress.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button size="lg" className="rounded-full px-7" asChild>
+            <Button size="lg" className="px-7" asChild>
               <Link to="/website/admissions/apply">Start an application</Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-7" asChild>
+            <Button size="lg" variant="outline" className="px-7" asChild>
               <Link to="/website/about">About the school</Link>
             </Button>
           </div>

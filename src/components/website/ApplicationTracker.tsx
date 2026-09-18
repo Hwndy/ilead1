@@ -89,49 +89,49 @@ export const ApplicationTracker = () => {
     const statusMap: Record<string, { icon: any; color: string; label: string; description: string }> = {
       submitted: {
         icon: Clock,
-        color: 'text-blue-600',
+        color: 'text-steel',
         label: 'Submitted',
         description: 'Your application has been received and is awaiting review.',
       },
       under_review: {
         icon: FileText,
-        color: 'text-yellow-600',
+        color: 'text-warning',
         label: 'Under Review',
         description: 'Our admissions team is currently reviewing your application.',
       },
       interview_scheduled: {
         icon: Calendar,
-        color: 'text-purple-600',
+        color: 'text-steel',
         label: 'Interview Scheduled',
         description: 'Your interview has been scheduled. Check your email for details.',
       },
       accepted: {
         icon: CheckCircle,
-        color: 'text-green-600',
+        color: 'text-success',
         label: 'Accepted',
         description: 'Congratulations! You have been offered admission.',
       },
       rejected: {
         icon: XCircle,
-        color: 'text-red-600',
+        color: 'text-destructive',
         label: 'Not Accepted',
         description: 'Unfortunately, we cannot offer you admission at this time.',
       },
       payment_pending: {
         icon: Clock,
-        color: 'text-orange-600',
+        color: 'text-warning',
         label: 'Payment Pending',
         description: 'Please complete your application fee payment.',
       },
       enrolled: {
         icon: CheckCircle,
-        color: 'text-green-600',
+        color: 'text-success',
         label: 'Enrolled',
         description: 'You are now enrolled. Welcome to iVintage College!',
       },
       withdrawn: {
         icon: XCircle,
-        color: 'text-gray-600',
+        color: 'text-muted-foreground',
         label: 'Withdrawn',
         description: 'This application has been withdrawn.',
       },
@@ -157,10 +157,10 @@ export const ApplicationTracker = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Track Your Application</CardTitle>
+    <div className="mx-auto max-w-2xl px-5">
+      <Card className="border-t-4 border-t-gold shadow-card">
+        <CardHeader>
+          <CardTitle className="text-2xl">Application details</CardTitle>
           <CardDescription>
             Enter your application details to check your admission status
           </CardDescription>

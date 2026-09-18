@@ -233,7 +233,7 @@ export const AdmissionForm = () => {
   const generateApplicationNumber = (): string => {
     const year = new Date().getFullYear();
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-    return `ALB-ADM-${year}-${random}`;
+    return `IVC-ADM-${year}-${random}`;
   };
 
   const handleSubmit = async () => {

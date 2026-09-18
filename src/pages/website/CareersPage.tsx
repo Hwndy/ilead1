@@ -42,7 +42,7 @@ export const CareersPage: React.FC = () => {
         crumbs={[{ label: 'Careers' }]}
       />
 
-      <div className="container mx-auto max-w-4xl px-4 py-16">
+      <div className="site-container max-w-4xl py-16">
         {loading ? (
           <div className="space-y-4">
             {[0, 1, 2].map((i) => (
@@ -55,7 +55,7 @@ export const CareersPage: React.FC = () => {
             title="No open positions at the moment"
             description="New roles are posted here as soon as they open. In the meantime, you are welcome to send us a speculative application."
           >
-            <Button asChild className="rounded-full px-6">
+            <Button asChild className="px-6">
               <a href="mailto:careers@ivintage.vercel.app?subject=Speculative%20application">Email careers@ivintage.vercel.app</a>
             </Button>
           </EmptyState>

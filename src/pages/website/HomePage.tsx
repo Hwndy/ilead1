@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PrincipalWelcome } from '@/components/website/home/PrincipalWelcome';
@@ -18,7 +17,7 @@ import { Achievements } from '@/components/website/home/Achievements';
 import { VisitUs } from '@/components/website/home/VisitUs';
 import { WhyChooseUs } from '@/components/website/home/WhyChooseUs';
 import { usePrefersReducedMotion } from '@/components/website/Reveal';
-import { useWebsiteSettings, useSchoolInfo, settingValue } from '@/hooks/useCms';
+import { useWebsiteSettings, settingValue } from '@/hooks/useCms';
 
 // Fallback hero image slideshow when nothing is configured in the CMS.
 const DEFAULT_HERO_IMAGES = [
@@ -32,7 +31,6 @@ export const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [paused, setPaused] = useState(false);
   const { settings } = useWebsiteSettings();
-  const { info } = useSchoolInfo();
   const reducedMotion = usePrefersReducedMotion();
 
   const heroImages = useMemo(() => {
@@ -92,103 +90,53 @@ export const HomePage = () => {
         })}</script>
       </Helmet>
 
-      {/* Hero Section with Slideshow Background */}
-      <section className="relative min-h-[600px] lg:min-h-[680px] flex items-center py-20 lg:py-28 overflow-hidden">
-        
-        {/* Background Slideshow Layer */}
-        <div className="absolute inset-0 z-0">
-          {heroImages.map((imageSrc, index) => (
-            <img
-              key={imageSrc}
-              src={imageSrc}
-              alt={`iVintage College Slideshow Background ${index + 1}`}
-              className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-          ))}
-          
-          {/* Directional scrim: dark on the left for text contrast, lighter on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
-        </div>
-
-        {/* Content Layer */}
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <Badge className="w-fit bg-primary text-primary-foreground border-none px-3 py-1 text-sm shadow-md">
-              {heroBadge}
-            </Badge>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight max-w-[15ch]">
+      <section className="relative overflow-hidden bg-muted/55">
+        <div className="site-container grid min-h-[42rem] p-0 lg:grid-cols-[.9fr_1.1fr] lg:pr-0">
+          <div className="relative z-10 flex flex-col justify-center px-5 py-14 md:px-12 lg:px-0 lg:py-20 lg:pr-16">
+            <p className="site-kicker">{heroBadge}</p>
+            <h1 className="mt-5 max-w-[14ch] text-4xl font-bold leading-[1.06] text-foreground sm:text-5xl lg:text-6xl">
               {heroTitle}
-              <span className="block mt-1 text-accent drop-shadow-sm">{heroTitleHighlight}</span>
+              <span className="mt-1 block text-steel">{heroTitleHighlight}</span>
             </h1>
-            
-            <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed">
-              {heroSubtitle}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button size="lg" className="rounded-full px-7 shadow-lg text-base" asChild>
-                <Link to="/website/admissions/apply">
-                  {heroCtaPrimary} <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{heroSubtitle}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button size="lg" variant="secondary" className="px-7" asChild>
+                <Link to="/website/admissions/apply">{heroCtaPrimary} <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="rounded-full px-7 bg-white/10 hover:bg-white/20 hover:text-white text-white border-white/30 backdrop-blur-sm text-base"
-                asChild
-              >
+              <Button variant="outline" size="lg" className="px-7" asChild>
                 <Link to="/website/about">{heroCtaSecondary}</Link>
               </Button>
             </div>
           </div>
 
-            {/* Highlight card balances the composition on desktop */}
-            {/* <div className="lg:col-span-5">
-              <div className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md p-6 sm:p-7 shadow-2xl">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-white/90">
-                  <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                  Admissions open
-                </div>
-                <p className="mt-3 text-white/90 text-sm leading-relaxed">
-                  Applications for the new session are now being accepted across Nursery, Primary and Secondary.
-                </p>
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  {[
-                    { value: info.stat_students, label: 'Students' },
-                    { value: info.stat_teachers, label: 'Teachers' },
-                    { value: info.stat_success_rate, label: 'Success rate' },
-                    { value: info.stat_years, label: 'Years of excellence' },
-                  ].filter((s) => !!s.value).map((s) => (
-
-                    <div key={s.label} className="rounded-xl bg-white/10 border border-white/10 px-4 py-3">
-                      <div className="text-2xl font-bold text-white leading-none">{s.value}</div>
-                      <div className="mt-1 text-[11px] uppercase tracking-wide text-white/70">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-                <Button variant="secondary" className="mt-6 w-full rounded-full" asChild>
-                  <Link to="/website/track-application">Track your application</Link>
-                </Button>
-              </div>
-            </div> */}
+          <div className="relative min-h-[24rem] overflow-hidden lg:min-h-[42rem]">
+            {heroImages.map((imageSrc, index) => (
+              <img
+                key={imageSrc}
+                src={imageSrc}
+                alt={`Life at iVintage College ${index + 1}`}
+                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              />
+            ))}
+            <div className="pointer-events-none absolute -left-36 -top-16 hidden h-[42rem] w-80 rounded-t-full bg-muted lg:block" />
+            <div className="pointer-events-none absolute -left-28 -top-8 hidden h-[36rem] w-64 rounded-tl-full border-l-[12px] border-t-[12px] border-gold lg:block" />
+            <div className="absolute bottom-6 left-5 right-5 border-l-4 border-gold bg-primary p-5 text-primary-foreground md:left-auto md:right-8 md:w-80">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-gold">The iVintage difference</p>
+              <p className="mt-2 font-bold leading-snug">Academic excellence rooted in faith and character.</p>
+            </div>
           </div>
         </div>
 
         {/* Slide controls */}
         {heroImages.length > 1 && (
-          <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/30 px-3 py-2 backdrop-blur-sm">
+          <div className="absolute bottom-2 right-2 z-20 flex items-center gap-3 rounded-full border border-primary-foreground/15 bg-primary/60 px-3 py-2 backdrop-blur-sm lg:bottom-6 lg:right-6">
             <div className="flex space-x-2">
               {heroImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                    index === currentSlide ? 'w-6 bg-primary' : 'w-2 bg-white/50 hover:bg-white'
+                    index === currentSlide ? 'w-6 bg-gold' : 'w-2 bg-primary-foreground/50 hover:bg-primary-foreground'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                   aria-current={index === currentSlide}
@@ -197,7 +145,7 @@ export const HomePage = () => {
             </div>
             <button
               onClick={() => setPaused((p) => !p)}
-              className="text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="text-primary-foreground/80 transition-colors hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
               aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
             >
               {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
@@ -205,6 +153,16 @@ export const HomePage = () => {
           </div>
         )}
       </section>
+
+      <nav aria-label="Explore iVintage" className="bg-primary text-primary-foreground">
+        <div className="site-container grid grid-cols-2 p-0 lg:grid-cols-4">
+          {['Day School', 'Boarding', 'Tahfeedh', 'ICT & Coding'].map((label) => (
+            <Link key={label} to="/website/school-life" className="flex items-center justify-between border-b border-r border-primary-foreground/10 px-5 py-5 text-sm font-bold transition-colors hover:bg-steel">
+              {label}<ArrowRight className="h-4 w-4 text-gold" />
+            </Link>
+          ))}
+        </div>
+      </nav>
 
       {/* Accreditations strip */}
       {/* <Accreditations /> */}
@@ -243,8 +201,8 @@ export const HomePage = () => {
       <Newsletter />
 
       {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10">
-        <div className="container mx-auto px-4 text-center">
+      <section className="border-y border-border bg-gold-soft/45 py-16">
+        <div className="site-container text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Ready to Join iVintage College?
           </h2>

@@ -18,14 +18,10 @@ export const Newsletter: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-primary via-primary-hover to-primary text-primary-foreground relative overflow-hidden">
-      {/* Decorative gold accents */}
-      <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
-      <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
-
-      <div className="container mx-auto px-4 relative">
+    <section className="relative overflow-hidden bg-steel py-16 text-primary-foreground">
+      <div className="site-container relative">
         <div className="max-w-3xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-gold/20 border border-gold/40">
+           <div className="inline-flex h-14 w-14 items-center justify-center border border-gold/40 bg-gold/15">
             <Mail className="h-6 w-6 text-gold" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold">
@@ -37,7 +33,7 @@ export const Newsletter: React.FC = () => {
           </p>
 
           {submitted ? (
-            <div className="inline-flex items-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-6 py-3">
+             <div className="inline-flex items-center gap-2 border border-gold/40 bg-gold/15 px-6 py-3">
               <CheckCircle2 className="h-5 w-5 text-gold" />
               <span className="font-medium">Thank you  you\u2019re subscribed.</span>
             </div>

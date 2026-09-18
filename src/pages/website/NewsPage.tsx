@@ -101,7 +101,7 @@ const NewsList: React.FC = () => {
       />
 
       <section className="bg-muted/40 py-8">
-        <div className="container mx-auto px-4">
+        <div className="site-container">
           <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <TabsList>
@@ -117,7 +117,7 @@ const NewsList: React.FC = () => {
             <TabsContent value="news" className="mt-6">
               <div className="mb-6 flex flex-wrap gap-2">
                 {CATEGORIES.map((c) => (
-                  <Button key={c} size="sm" variant={cat === c ? 'default' : 'outline'} onClick={() => setCat(c)} className="rounded-full px-5 capitalize">
+                  <Button key={c} size="sm" variant={cat === c ? 'default' : 'outline'} onClick={() => setCat(c)} className="px-5 capitalize">
                     {c}
                   </Button>
                 ))}
@@ -139,8 +139,8 @@ const NewsList: React.FC = () => {
                   {filtered.map((item, i) => (
                     <Reveal key={item.id} delay={(i % 3) * 80}>
                       <Link to={`/website/news/${item.slug}`} className="group block h-full">
-                        <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
-                          <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10">
+                        <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-all duration-300 group-hover:shadow-xl">
+                          <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-muted">
                             {item.featured_image ? (
                               <img
                                 src={item.featured_image}
@@ -206,7 +206,7 @@ const NewsList: React.FC = () => {
 const EventCard: React.FC<{ item: NewsItem }> = ({ item }) => {
   const date = item.event_date ? new Date(item.event_date) : null;
   return (
-    <Card className="overflow-hidden border-0 shadow-md">
+    <Card className="overflow-hidden rounded-lg border border-border shadow-sm">
       <div className="flex">
         {date && (
           <div className="w-24 shrink-0 bg-primary text-primary-foreground flex flex-col items-center justify-center py-4">
@@ -239,10 +239,10 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   const { data: related = [] } = useNews({ limit: 3 });
   const { toast } = useToast();
 
-  if (isLoading) return <div className="container mx-auto px-4 py-24 text-center text-muted-foreground">Loading...</div>;
+  if (isLoading) return <div className="site-container py-24 text-center text-muted-foreground">Loading...</div>;
   if (!article) {
     return (
-      <div className="container mx-auto px-4 py-24 text-center space-y-4">
+      <div className="site-container space-y-4 py-24 text-center">
         <SEO title="Article not found  iVintage" description="The requested article was not found." path={`/website/news/${slug}`} noindex />
         <h1 className="text-3xl font-bold">Article not found</h1>
         <Button asChild><Link to="/website/news"><ArrowLeft className="mr-2 h-4 w-4" />Back to news</Link></Button>
@@ -288,32 +288,32 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
           },
         }}
       />
-      <section className="bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 py-16">
-        <div className="container mx-auto px-4 max-w-3xl">
+      <section className="border-b border-primary-foreground/10 bg-primary py-16 text-primary-foreground">
+        <div className="site-container max-w-3xl">
           <Button variant="ghost" size="sm" asChild className="mb-4">
             <Link to="/website/news"><ArrowLeft className="mr-2 h-4 w-4" />All news</Link>
           </Button>
           <Badge className="mb-4 capitalize">{article.category}</Badge>
-          <h1 className="text-3xl lg:text-5xl font-bold text-foreground mb-4">{article.title}</h1>
-          <p className="text-muted-foreground text-sm flex items-center gap-2">
+          <h1 className="mb-4 text-3xl font-bold text-primary-foreground lg:text-5xl">{article.title}</h1>
+          <p className="flex items-center gap-2 text-sm text-primary-foreground/70">
             <Calendar className="h-4 w-4" /> {formatDate(article.event_date || article.published_at)}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            <span className="text-xs text-muted-foreground flex items-center gap-1"><Share2 className="h-3.5 w-3.5" /> Share:</span>
+            <span className="flex items-center gap-1 text-xs text-primary-foreground/70"><Share2 className="h-3.5 w-3.5" /> Share:</span>
             <a href={`https://wa.me/?text=${shareTitle}%20${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"
-               className="h-8 w-8 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+               className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-foreground/25 transition-colors hover:bg-primary-foreground hover:text-primary">
               <MessageCircle className="h-4 w-4" />
             </a>
             <a href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on X"
-               className="h-8 w-8 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+               className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-foreground/25 transition-colors hover:bg-primary-foreground hover:text-primary">
               <Twitter className="h-4 w-4" />
             </a>
             <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
-               className="h-8 w-8 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+               className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-foreground/25 transition-colors hover:bg-primary-foreground hover:text-primary">
               <Facebook className="h-4 w-4" />
             </a>
             <button onClick={copyLink} aria-label="Copy link"
-               className="h-8 w-8 rounded-full border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+               className="flex h-8 w-8 items-center justify-center rounded-full border border-primary-foreground/25 transition-colors hover:bg-primary-foreground hover:text-primary">
               <LinkIcon className="h-4 w-4" />
             </button>
             {article.category === 'events' && article.event_date && (
@@ -326,15 +326,15 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
       </section>
 
       {article.featured_image && (
-        <section className="container mx-auto px-4 -mt-6">
-          <div className="max-w-4xl mx-auto aspect-video overflow-hidden rounded-2xl border border-border shadow-lg">
+        <section className="site-container -mt-6">
+          <div className="mx-auto aspect-video max-w-4xl overflow-hidden rounded-lg border border-border shadow-lg">
             <img src={article.featured_image} alt={article.title} className="h-full w-full object-cover" />
           </div>
         </section>
       )}
 
       <section className="py-12">
-        <div className="container mx-auto px-4 max-w-3xl prose prose-neutral dark:prose-invert">
+        <div className="site-container prose prose-neutral max-w-3xl">
           {article.excerpt && <p className="lead text-lg text-muted-foreground">{article.excerpt}</p>}
           {safeHtml && (
             <div className="mt-6 whitespace-pre-wrap text-foreground/90 leading-relaxed"
@@ -345,11 +345,11 @@ const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
 
       {related.filter((r) => r.id !== article.id).length > 0 && (
         <section className="py-12 bg-card/30 border-t border-border">
-          <div className="container mx-auto px-4">
+           <div className="site-container">
             <h2 className="text-2xl font-bold mb-6">Related</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.filter((r) => r.id !== article.id).slice(0, 3).map((r) => (
-                <Link key={r.id} to={`/website/news/${r.slug}`} className="block rounded-xl border border-border p-4 hover:shadow-md transition-shadow">
+                 <Link key={r.id} to={`/website/news/${r.slug}`} className="block border-l-4 border-l-gold bg-card p-4 transition-shadow hover:shadow-md">
                   <Badge variant="secondary" className="capitalize mb-2">{r.category}</Badge>
                   <p className="font-semibold text-foreground line-clamp-2">{r.title}</p>
                   <p className="text-xs text-muted-foreground mt-2">{formatDate(r.published_at)}</p>

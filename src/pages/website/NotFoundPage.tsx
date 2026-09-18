@@ -15,7 +15,7 @@ const SUGGESTIONS = [
 export const NotFoundPage: React.FC = () => {
   const location = useLocation();
   return (
-    <div className="container mx-auto px-4 py-24">
+    <div className="site-container py-24">
       <SEO
         title="Page Not Found  iVintage College"
         description="The page you were looking for could not be found on the iVintage College website."
@@ -23,7 +23,7 @@ export const NotFoundPage: React.FC = () => {
         noindex
       />
       <div className="mx-auto max-w-xl text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-t-full bg-gold-soft">
           <Compass className="h-8 w-8 text-primary" />
         </div>
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Error 404</p>
@@ -32,10 +32,10 @@ export const NotFoundPage: React.FC = () => {
           The link may be out of date or mistyped. Try one of the sections below, or head back to the homepage.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Button asChild className="rounded-full px-6">
+          <Button asChild className="px-6">
             <Link to="/website">Back to homepage</Link>
           </Button>
-          <Button variant="outline" asChild className="rounded-full px-6">
+          <Button variant="outline" asChild className="px-6">
             <Link to="/website/admissions/apply">Apply now</Link>
           </Button>
         </div>
