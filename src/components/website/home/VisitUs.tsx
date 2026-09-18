@@ -20,11 +20,11 @@ export const VisitUs: React.FC = () => {
 
   return (
     <section className="border-y border-border bg-muted/40 py-16 sm:py-20">
-      <div className="container mx-auto px-4">
+      <div className="site-container">
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
           <Reveal className="flex flex-col justify-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Visit us</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{heading}</h2>
+            <p className="site-kicker">Visit us</p>
+            <h2 className="mt-4 text-3xl font-bold text-foreground lg:text-4xl">{heading}</h2>
             <p className="mt-4 text-muted-foreground">{intro}</p>
 
             <ul className="mt-7 space-y-4">
@@ -55,13 +55,13 @@ export const VisitUs: React.FC = () => {
             </ul>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="rounded-full px-6">
+              <Button asChild className="px-6">
                 <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer">
                   Get directions <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
               {info.whatsapp_number && (
-                <Button variant="outline" asChild className="rounded-full px-6">
+                <Button variant="outline" asChild className="px-6">
                   <a
                     href={`https://wa.me/${info.whatsapp_number}?text=${encodeURIComponent('Hello, I would like to book a school tour.')}`}
                     target="_blank"
@@ -75,7 +75,7 @@ export const VisitUs: React.FC = () => {
           </Reveal>
 
           <Reveal delay={100} className="min-h-[320px]">
-            <div className="h-full overflow-hidden rounded-2xl border border-border shadow-sm">
+            <div className="h-full overflow-hidden rounded-lg border border-border shadow-sm">
               <iframe
                 title={`Map showing ${info.name || 'iVintage College'}`}
                 src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}

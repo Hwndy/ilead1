@@ -21,26 +21,22 @@ export const HowToApply: React.FC = () => {
   const steps = settingValue<Step[]>(settings, 'how_to_apply_steps', DEFAULTS);
   return (
     <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            <span className="h-px w-8 bg-gold" />
-            Admissions, Made Simple
-            <span className="h-px w-8 bg-gold" />
-          </div>
+      <div className="site-container">
+        <div className="mx-auto mb-14 max-w-2xl space-y-3 text-center">
+          <div className="text-xs font-extrabold uppercase tracking-[0.18em] text-steel">Admissions, made simple</div>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             Three steps to becoming an iVintage Student
           </h2>
         </div>
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+          <div className="absolute left-[16%] right-[16%] top-12 hidden h-px bg-border md:block" />
           {steps.map(({ n, icon, title, body }) => {
             const Icon = (icon && ICONS[icon]) || FileText;
             return (
               <div key={n} className="relative text-center group">
                 <div className="relative mx-auto mb-6 h-24 w-24">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary-hover shadow-lg group-hover:scale-105 transition-transform" />
-                  <div className="absolute inset-2 rounded-full bg-card flex items-center justify-center">
+                   <div className="absolute inset-0 rounded-t-full bg-primary transition-transform group-hover:scale-105" />
+                   <div className="absolute inset-2 flex items-center justify-center rounded-t-full bg-card">
                     <Icon className="h-9 w-9 text-primary" />
                   </div>
                   <div className="absolute -top-2 -right-2 h-9 w-9 rounded-full bg-gold text-gold-foreground font-bold flex items-center justify-center text-sm shadow-md">

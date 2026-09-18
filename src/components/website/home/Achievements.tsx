@@ -33,23 +33,23 @@ export const Achievements: React.FC = () => {
 
   return (
     <section className="py-16 sm:py-20">
-      <div className="container mx-auto px-4">
-        <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Achievements</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{heading}</h2>
+      <div className="site-container">
+        <Reveal className="mb-12 max-w-3xl">
+          <p className="site-kicker">Achievements</p>
+          <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground lg:text-4xl">{heading}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 border-y border-border sm:grid-cols-2 lg:grid-cols-4">
           {items.map((a, i) => {
             const Icon = (a.icon && ICONS[a.icon]) || Award;
             return (
               <Reveal key={a.label} delay={i * 70}>
-                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                    <Icon className="h-5 w-5 text-primary" />
+                <div className="h-full border-b border-r border-border p-6">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold-soft">
+                    <Icon className="h-5 w-5 text-steel" />
                   </div>
-                  <div className="text-3xl font-bold text-primary">
+                  <div className="text-3xl font-bold text-steel">
                     <CountUp value={a.value} />
                   </div>
                   <div className="mt-1 font-semibold text-foreground">{a.label}</div>
