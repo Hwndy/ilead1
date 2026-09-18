@@ -126,89 +126,34 @@ const handler = async (req: Request): Promise<Response> => {
     let subject: string;
     let htmlContent: string;
     
+    const codeBlock = `
+      <div style="text-align:center;margin:30px 0;">
+        <div style="background:#ffffff;border:2px solid #141C2B;border-radius:8px;padding:20px;display:inline-block;">
+          <div style="font-size:32px;font-weight:bold;color:#141C2B;letter-spacing:8px;font-family:monospace;">${otp}</div>
+        </div>
+      </div>`;
+
     if (type === 'reset_password') {
-      subject = "Password Reset Code - IVINTAGE CBT System";
-      htmlContent = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Password Reset Code</title>
-          </head>
-          <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="text-align: center; padding: 20px 0;">
-              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #10b981); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <span style="color: white; font-size: 32px; font-weight: bold;">A</span>
-              </div>
-              <h1 style="color: #059669; margin: 0;">IVINTAGE CBT System</h1>
-              <p style="color: #6b7280; margin: 5px 0 30px;">Computer Based Test System</p>
-            </div>
-            
-            <div style="background: #f9fafb; border-radius: 8px; padding: 30px; margin: 20px 0;">
-              <h2 style="color: #1f2937; margin-top: 0;">Password Reset Code</h2>
-              <p style="margin: 15px 0;">We received a request to reset your password. Use the verification code below to complete the password reset process:</p>
-              
-              <div style="text-align: center; margin: 30px 0;">
-                <div style="background: white; border: 2px solid #059669; border-radius: 8px; padding: 20px; display: inline-block;">
-                  <div style="font-size: 32px; font-weight: bold; color: #059669; letter-spacing: 8px; font-family: monospace;">${otp}</div>
-                </div>
-              </div>
-              
-              <p style="margin: 15px 0;"><strong>This code will expire in 10 minutes.</strong></p>
-              <p style="margin: 15px 0;">If you didn't request a password reset, please ignore this email or contact your administrator if you have concerns.</p>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                This is an automated message from IVINTAGE CBT System.<br>
-                Please do not reply to this email.
-              </p>
-            </div>
-          </body>
-        </html>
-      `;
+      subject = "Password Reset Code - iVintage College";
+      htmlContent = wrapEmailInLetterhead(`
+        <h2 style="color:#141C2B;margin:0 0 6px;">Password Reset Code</h2>
+        <div style="height:3px;width:160px;background:#C6D92D;margin-bottom:18px;"></div>
+        <p style="margin:15px 0;">We received a request to reset your password. Use the verification code below to complete the password reset.</p>
+        ${codeBlock}
+        <p style="margin:15px 0;"><strong>This code will expire in 10 minutes.</strong></p>
+        <p style="margin:15px 0;">If you did not request a password reset, please ignore this message or contact the school office.</p>
+        <p style="margin-top:26px;font-size:12px;color:#6b7280;">This is an automated message. Please do not reply to this email.</p>
+      `, subject);
     } else {
-      subject = "Email Verification Code - IVINTAGE CBT System";
-      htmlContent = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Email Verification Code</title>
-          </head>
-          <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="text-align: center; padding: 20px 0;">
-              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669, #10b981); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                <span style="color: white; font-size: 32px; font-weight: bold;">A</span>
-              </div>
-              <h1 style="color: #059669; margin: 0;">IVINTAGE CBT System</h1>
-              <p style="color: #6b7280; margin: 5px 0 30px;">Computer Based Test System</p>
-            </div>
-            
-            <div style="background: #f9fafb; border-radius: 8px; padding: 30px; margin: 20px 0;">
-              <h2 style="color: #1f2937; margin-top: 0;">Verify Your Email</h2>
-              <p style="margin: 15px 0;">Please use the verification code below to verify your email address:</p>
-              
-              <div style="text-align: center; margin: 30px 0;">
-                <div style="background: white; border: 2px solid #059669; border-radius: 8px; padding: 20px; display: inline-block;">
-                  <div style="font-size: 32px; font-weight: bold; color: #059669; letter-spacing: 8px; font-family: monospace;">${otp}</div>
-                </div>
-              </div>
-              
-              <p style="margin: 15px 0;"><strong>This code will expire in 10 minutes.</strong></p>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 14px; margin: 0;">
-                This is an automated message from IVINTAGE CBT System.<br>
-                Please do not reply to this email.
-              </p>
-            </div>
-          </body>
-        </html>
-      `;
+      subject = "Email Verification Code - iVintage College";
+      htmlContent = wrapEmailInLetterhead(`
+        <h2 style="color:#141C2B;margin:0 0 6px;">Verify Your Email</h2>
+        <div style="height:3px;width:160px;background:#C6D92D;margin-bottom:18px;"></div>
+        <p style="margin:15px 0;">Please use the verification code below to verify your email address.</p>
+        ${codeBlock}
+        <p style="margin:15px 0;"><strong>This code will expire in 10 minutes.</strong></p>
+        <p style="margin-top:26px;font-size:12px;color:#6b7280;">This is an automated message. Please do not reply to this email.</p>
+      `, subject);
     }
 
     // Log email attempt
