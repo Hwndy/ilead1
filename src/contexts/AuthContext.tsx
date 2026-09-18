@@ -171,9 +171,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     if (error) {
       console.log('Login error:', error.message);
+      void logAuditEvent('sign_in_failed', { metadata: { email: credentials.email, reason: error.message } });
       setIsLoading(false);
       throw new Error(error.message);
     }
+
+    void logAuditEvent('sign_in', { metadata: { email: credentials.email } });
 
     const { data: roles, error: roleError } = await supabase
       .from('user_roles')
@@ -325,6 +328,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return;
       }
       
+      await logAuditEvent('sign_out');
+
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.log('Logout error:', error.message);
