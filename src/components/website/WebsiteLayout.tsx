@@ -56,7 +56,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="website-dark min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
@@ -131,7 +131,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 }`}>
                   More <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="website-dark w-48 border-border bg-popover text-popover-foreground">
+                <DropdownMenuContent align="end" className="w-48 bg-popover">
                   {moreNav.map((item) => (
                     <DropdownMenuItem key={item.name} asChild>
                       <Link to={item.href} className={isActivePath(item.href) ? 'text-primary' : ''}>{item.name}</Link>
@@ -153,7 +153,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="website-dark flex w-[85vw] max-w-sm flex-col border-border bg-background p-0 text-foreground">
+                <SheetContent side="right" className="flex w-[85vw] max-w-sm flex-col p-0">
                   <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
                     <Logo size="sm" showText={false} />
                     <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'iVintage College'}</span>
