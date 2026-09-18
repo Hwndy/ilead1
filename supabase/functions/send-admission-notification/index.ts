@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
+import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
