@@ -4,6 +4,7 @@ import { Star, Quote, MessageSquareQuote } from 'lucide-react';
 import { useTestimonials } from '@/hooks/useCms';
 import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
+import { useSiteFields } from '@/hooks/useCms';
 import { SectionBand } from '@/components/website/Section';
 import { Reveal } from '@/components/website/Reveal';
 import { EmptyState } from '@/components/website/EmptyState';
@@ -13,6 +14,7 @@ const ROLES = ['all', 'student', 'parent', 'alumni', 'staff'] as const;
 type Role = typeof ROLES[number];
 
 export const TestimonialsPage: React.FC = () => {
+  const { field } = useSiteFields();
   const [role, setRole] = useState<Role>('all');
   const { data: items = [], isLoading } = useTestimonials();
   const filtered = role === 'all' ? items : items.filter((t) => t.role === role);
@@ -27,8 +29,8 @@ export const TestimonialsPage: React.FC = () => {
 
       <PageHero
         eyebrow="Voices of iVintage"
-        title="What Our Community Says"
-        subtitle="Real stories from the students, families and educators who call iVintage home."
+        title={field('testimonials.hero_title')}
+        subtitle={field('testimonials.hero_subtitle')}
         crumbs={[{ label: 'Testimonials' }]}
       />
 
