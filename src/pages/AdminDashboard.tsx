@@ -412,7 +412,15 @@ export const AdminDashboard = () => {
       }
     }
 
-    return null;
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+        <h2 className="text-xl font-semibold">Section not found</h2>
+        <p className="text-sm text-muted-foreground">
+          This part of the dashboard doesn’t exist or has moved.
+        </p>
+        <Button onClick={() => navigate('/admin?tab=overview')}>Back to dashboard</Button>
+      </div>
+    );
   };
 
   return (
