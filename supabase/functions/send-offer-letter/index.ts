@@ -2,6 +2,11 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 import { jsPDF } from "npm:jspdf@2.5.1";
+import {
+  getLetterheadDataUrl,
+  LETTERHEAD_MARGINS,
+  wrapEmailInLetterhead,
+} from "../_shared/letterhead.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
