@@ -117,7 +117,7 @@ export const SITE_PAGES: SitePage[] = [
               { title: 'Academic excellence', description: 'Sound, highly qualitative western education, with distinction scores maintained in both internal and external examinations.', image: '/img1.png' },
               { title: 'ICT and coding', description: 'Proficiency in Microsoft Office (Word, Excel, PowerPoint, Access), basic programming and coding, and robotics.', image: '/img3.png' },
               { title: 'Hifdhul Qur’an, Islamic education and Arabic', description: 'Qur’an memorisation — at least a quarter of the whole Qur’an — Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.', image: '/img2.png' },
-              { title: 'Leadership development', description: 'Leadership training classes, mentoring and coaching programmes, clubs and associations, plus guidance and counselling.', image: '/campus.png' },
+              { title: 'Leadership development', description: 'Leadership training classes, mentoring and coaching programmes, clubs and associations (literacy and debating, book readers, karate and more), plus guidance and counselling.', image: '/campus.png' },
             ],
           },
         ],
