@@ -180,6 +180,43 @@
 }
 
 @layer components {
+  /* Public website only: white typography on layered iVintage navy surfaces. */
+  .website-dark {
+    --background: 224 23% 17%;
+    --foreground: 0 0% 100%;
+    --card: 219 28% 23%;
+    --card-foreground: 0 0% 100%;
+    --popover: 219 28% 20%;
+    --popover-foreground: 0 0% 100%;
+    --secondary: 219 28% 27%;
+    --secondary-hover: 219 28% 32%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 219 28% 23%;
+    --muted-foreground: 0 0% 84%;
+    --border: 219 24% 35%;
+    --input: 219 24% 40%;
+  }
+
+  .website-dark .text-primary {
+    color: hsl(var(--gold));
+  }
+
+  .website-dark .text-foreground,
+  .website-dark .text-card-foreground,
+  .website-dark .text-popover-foreground,
+  .website-dark .text-secondary-foreground {
+    color: hsl(0 0% 100%);
+  }
+
+  .website-dark .text-muted-foreground {
+    color: hsl(0 0% 84%);
+  }
+
+  .website-dark .text-gray-600,
+  .website-dark .text-slate-200 {
+    color: hsl(0 0% 100%);
+  }
+
   .brand-arch {
     position: relative;
     isolation: isolate;

@@ -56,7 +56,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="website-dark min-h-screen bg-background text-foreground">
       {/* Header */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
@@ -131,7 +131,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 }`}>
                   More <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-popover">
+                <DropdownMenuContent align="end" className="website-dark w-48 border-border bg-popover text-popover-foreground">
                   {moreNav.map((item) => (
                     <DropdownMenuItem key={item.name} asChild>
                       <Link to={item.href} className={isActivePath(item.href) ? 'text-primary' : ''}>{item.name}</Link>
@@ -153,7 +153,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[85vw] max-w-sm p-0 flex flex-col">
+                <SheetContent side="right" className="website-dark flex w-[85vw] max-w-sm flex-col border-border bg-background p-0 text-foreground">
                   <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
                     <Logo size="sm" showText={false} />
                     <span className="text-sm font-bold text-foreground leading-tight">{info.name || 'iVintage College'}</span>
@@ -243,7 +243,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
+              <h3 className="mb-4 font-semibold text-primary-foreground">Quick Links</h3>
               <ul className="space-y-2">
                 <li><Link to="/website/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
                 <li><Link to="/website/admissions" className="text-muted-foreground hover:text-primary transition-colors">Admissions</Link></li>
@@ -257,7 +257,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* For families */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">For Families</h3>
+              <h3 className="mb-4 font-semibold text-primary-foreground">For Families</h3>
               <ul className="space-y-2">
                 <li><Link to="/website/admissions/apply" className="text-muted-foreground hover:text-primary transition-colors">Apply Online</Link></li>
                 <li><Link to="/website/track-application" className="text-muted-foreground hover:text-primary transition-colors">Track Application</Link></li>
@@ -270,7 +270,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             {/* Contact Info */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Contact Info</h3>
+              <h3 className="mb-4 font-semibold text-primary-foreground">Contact Info</h3>
                <div className="space-y-3 text-primary-foreground/65">
                 {info.address && (
                   <div className="flex items-start space-x-2">
