@@ -69,22 +69,18 @@ export const CreateStaffAccountDialog = ({ open, onOpenChange, onCreated }: Prop
 
     setSaving(true);
     try {
-      const { data, error } = await supabase.functions.invoke("create-staff-user", {
-        body: {
-          fullName: form.fullName.trim(),
-          email: form.email.trim().toLowerCase(),
-          password: form.password,
-          role: form.role,
-          department: form.department.trim() || undefined,
-          designation: form.designation.trim() || undefined,
-          employmentType: form.employmentType,
-          joinDate: form.joinDate || undefined,
-          phone: form.phone.trim() || undefined,
-        },
+      await invokeFunction("create-staff-user", {
+        fullName: form.fullName.trim(),
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+        role: form.role,
+        department: form.department.trim() || undefined,
+        designation: form.designation.trim() || undefined,
+        employmentType: form.employmentType,
+        joinDate: form.joinDate || undefined,
+        phone: form.phone.trim() || undefined,
       });
 
-      if (error) throw error;
-      if ((data as any)?.error) throw new Error((data as any).message || (data as any).error);
 
       toast.success(`${form.fullName} can now sign in`, {
         description: `Email: ${form.email.trim().toLowerCase()} · Temporary password: ${form.password}`,
