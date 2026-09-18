@@ -1,5 +1,11 @@
 # iVintage platform roadmap (September change log port)
 
+## Full color branding overhaul
+- [x] Apply Academic Navy Premium tokens and Sora/Manrope typography
+- [x] Restyle shared controls, public website chrome, and page openings
+- [x] Apply structured navy portal framing across admin, teacher, student, and parent areas
+- [ ] Validate representative public and authenticated screens at desktop and mobile widths
+
 ## Phase 1 — Finance reliability and money coming in
 - [x] Shared class resolution helper used by all finance screens
 - [x] Record cash/transfer/POS/cheque payment dialog (incl. "Other / not listed")
