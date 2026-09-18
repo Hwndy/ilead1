@@ -232,15 +232,23 @@ export const UserManagement = () => {
         }
       }
 
+      await logAuditEvent('user_created', {
+        tableName: 'user_roles',
+        rowId: newUserId,
+        metadata: { email: userForm.email.trim().toLowerCase(), role: userForm.role, full_name: userForm.fullName.trim() },
+      });
+
       // If successful, refresh the profiles list
       await fetchData();
-      
+
+      const createdRole = userForm.role;
+      const createdName = userForm.fullName;
       setIsAddingUser(false);
       resetUserForm();
-      
+
       toast({
-        title: 'User Created',
-        description: `${userForm.fullName} has been added successfully.`,
+        title: 'Account created',
+        description: `${createdName} was added as ${createdRole === 'admin' ? 'an administrator' : `a ${createdRole}`} and can sign in now.`,
       });
     } catch (error: any) {
       toast({
