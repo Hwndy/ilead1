@@ -4,7 +4,8 @@
 - [x] Apply Academic Navy Premium tokens and Sora/Manrope typography
 - [x] Restyle shared controls, public website chrome, and page openings
 - [x] Apply structured navy portal framing across admin, teacher, student, and parent areas
-- [ ] Validate representative public and authenticated screens at desktop and mobile widths
+- [x] Validate representative public website and sign-in screens at desktop and mobile widths
+- [ ] Validate authenticated portal screens when a signed-in preview session is available
 
 ## Phase 1 — Finance reliability and money coming in
 - [x] Shared class resolution helper used by all finance screens
@@ -40,5 +41,4 @@
 - [x] Admin overview dashboard (money, pupils, admissions, latest activity)
 
 ## Blocked / needs the user
-- Edge functions are not deployed to the connected Supabase project; server-side items stay inactive until deployed.
-- SQL migrations in `db/` must be run in the Supabase SQL editor: phase1-finance, phase3-structure, phase4-billing, phase5-admissions.
+- Authenticated portal visual verification requires a signed-in preview session.
