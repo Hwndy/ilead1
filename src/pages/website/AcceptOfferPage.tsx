@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { CheckCircle, XCircle, Loader2, CalendarClock } from 'lucide-react';
 import { BankTransferDetails } from '@/components/shared/BankTransferDetails';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { SEO } from '@/components/website/SEO';
 
 interface OfferData {
   id: string;
@@ -170,7 +171,7 @@ export const AcceptOfferPage = () => {
   if (loading) {
     return (
       <WebsiteLayout>
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex min-h-[60vh] items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       </WebsiteLayout>
@@ -180,8 +181,8 @@ export const AcceptOfferPage = () => {
   if (!offer || !application) {
     return (
       <WebsiteLayout>
-        <div className="min-h-screen flex items-center justify-center p-4">
-          <Card className="max-w-md w-full">
+        <div className="flex min-h-[60vh] items-center justify-center bg-muted/55 p-4">
+          <Card className="w-full max-w-md border-t-4 border-t-gold">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <XCircle className="h-5 w-5 text-destructive" />
@@ -192,7 +193,7 @@ export const AcceptOfferPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={() => navigate('/')} className="w-full">
+              <Button onClick={() => navigate('/website')} className="w-full">
                 Return Home
               </Button>
             </CardContent>
@@ -207,11 +208,12 @@ export const AcceptOfferPage = () => {
   if (isAccepted) {
     return (
       <WebsiteLayout>
-        <div className="min-h-screen py-12 px-4">
-          <Card className="max-w-2xl mx-auto">
+        <SEO title="Offer accepted — iVintage College" description="Complete your iVintage College admission acceptance." path={`/accept-offer/${acceptanceToken}`} noindex />
+        <div className="bg-muted/55 px-4 py-16">
+          <Card className="mx-auto max-w-2xl border-t-4 border-t-gold">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600" />
+                <CheckCircle className="h-5 w-5 text-success" />
                 Offer Accepted
               </CardTitle>
               <CardDescription>
@@ -228,7 +230,7 @@ export const AcceptOfferPage = () => {
                 After the transfer, send your proof of payment to the admissions office. Once the office confirms it, your
                 child is enrolled and login details are sent to you.
               </p>
-              <Button onClick={() => navigate('/track-application')} className="w-full" variant="outline">
+              <Button onClick={() => navigate('/website/track-application')} className="w-full" variant="outline">
                 Track Application
               </Button>
             </CardContent>
@@ -241,8 +243,8 @@ export const AcceptOfferPage = () => {
   if (offer.status === 'declined') {
     return (
       <WebsiteLayout>
-        <div className="min-h-screen flex items-center justify-center p-4">
-          <Card className="max-w-md w-full">
+        <div className="flex min-h-[60vh] items-center justify-center bg-muted/55 p-4">
+          <Card className="w-full max-w-md border-t-4 border-t-gold">
             <CardHeader>
               <CardTitle>Offer Already Processed</CardTitle>
               <CardDescription>
@@ -250,7 +252,7 @@ export const AcceptOfferPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={() => navigate('/track-application')} className="w-full">
+              <Button onClick={() => navigate('/website/track-application')} className="w-full">
                 Track Application
               </Button>
             </CardContent>
@@ -269,12 +271,13 @@ export const AcceptOfferPage = () => {
 
   return (
     <WebsiteLayout>
-      <div className="min-h-screen py-12 px-4">
-        <div className="max-w-3xl mx-auto">
-          <Card>
+      <SEO title="Admission offer — iVintage College" description="Review and respond to your iVintage College admission offer." path={`/accept-offer/${acceptanceToken}`} noindex />
+      <div className="bg-muted/55 px-4 py-16">
+        <div className="mx-auto max-w-3xl">
+          <Card className="border-t-4 border-t-gold">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+                <CheckCircle className="h-6 w-6 text-success" />
                 Congratulations!
               </CardTitle>
               <CardDescription>
@@ -282,7 +285,7 @@ export const AcceptOfferPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-muted p-6 rounded-lg space-y-3">
+              <div className="space-y-3 border-l-4 border-l-gold bg-muted p-6">
                 <h3 className="font-semibold text-lg">Admission Details</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>

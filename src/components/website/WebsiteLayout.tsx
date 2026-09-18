@@ -88,13 +88,13 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             <div className="flex flex-wrap justify-between items-center gap-y-1 gap-x-4 text-xs">
               <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 text-primary-foreground/75">
                 {info.contact_phone && (
-                  <a href={`tel:${info.contact_phone.replace(/\s+/g, '')}`} className="flex items-center gap-1 min-w-0 hover:text-primary transition-colors">
+                  <a href={`tel:${info.contact_phone.replace(/\s+/g, '')}`} className="flex min-w-0 items-center gap-1 transition-colors hover:text-gold">
                     <Phone className="h-3 w-3 shrink-0" />
                     <span className="truncate">{info.contact_phone}</span>
                   </a>
                 )}
                 {info.contact_email && (
-                  <a href={`mailto:${info.contact_email}`} className="hidden sm:flex items-center gap-1 min-w-0 hover:text-primary transition-colors">
+                  <a href={`mailto:${info.contact_email}`} className="hidden min-w-0 items-center gap-1 transition-colors hover:text-gold sm:flex">
                     <Mail className="h-3 w-3 shrink-0" />
                     <span className="truncate">{info.contact_email}</span>
                   </a>
@@ -192,7 +192,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     ))}
                   </nav>
                   <div className="border-t border-border p-4 space-y-3">
-                    <Button asChild className="w-full rounded-full">
+                    <Button asChild className="w-full">
                       <Link to="/website/admissions/apply" onClick={() => setIsMobileMenuOpen(false)}>Apply Now</Link>
                     </Button>
                     <div className="space-y-1 text-xs text-muted-foreground">
@@ -297,37 +297,37 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               <div className="space-y-3 text-muted-foreground">
                 {info.address && (
                   <div className="flex items-start space-x-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                     <span>{info.address}</span>
                   </div>
                 )}
                 {info.address_alt && (
                   <div className="flex items-start space-x-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                     <span>{info.address_alt}</span>
                   </div>
                 )}
                 {info.contact_phone && (
                   <div className="flex items-center space-x-2">
-                    <Phone className="h-4 w-4 text-primary" />
+                    <Phone className="h-4 w-4 text-gold" />
                     <span>{[info.contact_phone, info.contact_phone_alt].filter(Boolean).join(', ')}</span>
                   </div>
                 )}
                 {info.contact_email && (
                   <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-primary" />
+                    <Mail className="h-4 w-4 text-gold" />
                     <span className="break-all">{info.contact_email}</span>
                   </div>
                 )}
                 {info.contact_email_alt && (
                   <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-primary" />
+                    <Mail className="h-4 w-4 text-gold" />
                     <span className="break-all">{info.contact_email_alt}</span>
                   </div>
                 )}
 
                 <div className="flex items-start space-x-2">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                   <span>{field('office_hours')}</span>
                 </div>
               </div>
@@ -337,11 +337,11 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
            <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-primary-foreground/10 pt-8 text-center text-sm text-primary-foreground/55 sm:flex-row sm:text-left">
             <p>&copy; {new Date().getFullYear()} {info.name}. All rights reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-              <Link to="/website/about" className="hover:text-primary transition-colors">About</Link>
-              <Link to="/website/careers" className="hover:text-primary transition-colors">Careers</Link>
-              <Link to="/website/news" className="hover:text-primary transition-colors">News</Link>
+              <Link to="/website/about" className="transition-colors hover:text-gold">About</Link>
+              <Link to="/website/careers" className="transition-colors hover:text-gold">Careers</Link>
+              <Link to="/website/news" className="transition-colors hover:text-gold">News</Link>
               {info.contact_email && (
-                <a href={`mailto:${info.contact_email}`} className="hover:text-primary transition-colors">Contact</a>
+                <a href={`mailto:${info.contact_email}`} className="transition-colors hover:text-gold">Contact</a>
               )}
             </div>
           </div>
