@@ -117,38 +117,40 @@ async function generateOfferLetterPDF(
   const pageHeight = doc.internal.pageSize.getHeight();
   const contentWidth = pageWidth - SAFE_LEFT - SAFE_RIGHT;
 
-  const letterhead = await getLetterheadDataUrl();
+  const letterhead = await getLetterheadDataUrl("full");
+  const continuation = await getLetterheadDataUrl("continuation");
 
-  const paintBackground = () => {
-    if (letterhead) {
+  const paintBackground = (variant: "full" | "continuation" = "full") => {
+    const art = variant === "continuation" ? (continuation || letterhead) : letterhead;
+    if (art) {
       try {
-        doc.addImage(letterhead, "PNG", 0, 0, pageWidth, pageHeight, undefined, "FAST");
+        doc.addImage(art, "PNG", 0, 0, pageWidth, pageHeight, undefined, "FAST");
         return true;
       } catch (e) {
         console.error("Failed to draw letterhead:", e);
       }
     }
     // Fallback stationery if the artwork cannot be fetched.
-    doc.setFillColor(21, 128, 61);
+    doc.setFillColor(20, 28, 43);
     doc.rect(0, 0, pageWidth, 26, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
     doc.text("IVINTAGE COLLEGE", pageWidth / 2, 16, { align: "center" });
     doc.setTextColor(0, 0, 0);
-    doc.setFillColor(21, 128, 61);
+    doc.setFillColor(198, 217, 45);
     doc.rect(0, pageHeight - 10, pageWidth, 10, "F");
     return false;
   };
 
-  paintBackground();
+  paintBackground("full");
   let y = SAFE_TOP;
 
   const ensureSpace = (needed: number) => {
     if (y + needed <= SAFE_BOTTOM) return;
     doc.addPage(PAGE_FORMAT);
-    paintBackground();
-    y = SAFE_TOP;
+    paintBackground("continuation");
+    y = LETTERHEAD_MARGINS.continuationTop;
   };
 
   const write = (
