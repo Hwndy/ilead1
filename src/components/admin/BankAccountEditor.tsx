@@ -19,6 +19,9 @@ export const BankAccountEditor: React.FC = () => {
   const [bankName, setBankName] = useState(DEFAULT_BANK_ACCOUNT.bank_name);
   const [accountName, setAccountName] = useState(DEFAULT_BANK_ACCOUNT.account_name);
   const [accountNumber, setAccountNumber] = useState(DEFAULT_BANK_ACCOUNT.account_number);
+  const [financeCode, setFinanceCode] = useState('');
+  const [savingCode, setSavingCode] = useState(false);
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     (async () => {
