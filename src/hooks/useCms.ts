@@ -1,5 +1,10 @@
+import { useMemo, useSyncExternalStore } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { cmsDb, CMS_TABLES } from '@/lib/cms-db';
+import { subscribeToDraft, getDraft, getServerDraft } from '@/lib/cms-preview';
+import { SITE_DEFAULTS } from '@/config/siteSchema';
+
 
 /* ------------------------------------------------------------------ */
 /*  school_info                                                        */
@@ -63,7 +68,7 @@ export interface WebsiteSettingsMap {
 export function useWebsiteSettings() {
   const query = useQuery({
     queryKey: ['cms', 'website_settings'],
-    staleTime: 5 * 60 * 1000,
+    staleTime: 60 * 1000,
     queryFn: async (): Promise<WebsiteSettingsMap> => {
       const { data, error } = await supabase
         .from('website_settings')
@@ -76,8 +81,19 @@ export function useWebsiteSettings() {
       return map;
     },
   });
-  return { settings: query.data ?? {}, isLoading: query.isLoading, error: query.error };
+
+  // Unsaved values streamed in from the admin editor when previewing.
+  const draft = useSyncExternalStore(subscribeToDraft, getDraft, getServerDraft);
+
+  const settings = useMemo(() => {
+    const saved = query.data ?? {};
+    if (!draft) return saved;
+    return { ...saved, ...draft };
+  }, [query.data, draft]);
+
+  return { settings, isLoading: query.isLoading, error: query.error };
 }
+
 
 // Helper: setting values are stored as jsonb; unwrap primitive strings/objects with fallback.
 export function settingValue<T = any>(map: WebsiteSettingsMap, key: string, fallback: T): T {
@@ -201,4 +217,181 @@ export function useTestimonials(opts: { featured?: boolean; limit?: number } = {
       return (data as Testimonial[]) || [];
     },
   });
+}
+/* ------------------------------------------------------------------ */
+/*  Navigation menu (admin editable)                                   */
+/* ------------------------------------------------------------------ */
+
+export interface MenuItem {
+  id: string;
+  location: 'primary' | 'more' | 'footer';
+  label: string;
+  href: string;
+  display_order: number;
+  is_visible: boolean;
+}
+
+export function useSiteMenu() {
+  const query = useQuery({
+    queryKey: ['cms', 'site_menu_items'],
+    staleTime: 60 * 1000,
+    queryFn: async (): Promise<MenuItem[]> => {
+      const { data, error } = await cmsDb
+        .from(CMS_TABLES.menu)
+        .select('id,location,label,href,display_order,is_visible')
+        .order('display_order', { ascending: true });
+      if (error) return [];
+      return (data as MenuItem[]) || [];
+    },
+  });
+  const items = query.data ?? [];
+  return {
+    items,
+    visible: (location: MenuItem['location']) =>
+      items.filter((i) => i.location === location && i.is_visible),
+    isLoading: query.isLoading,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Media library                                                      */
+/* ------------------------------------------------------------------ */
+
+export interface MediaItem {
+  id: string;
+  url: string;
+  title: string | null;
+  alt_text: string | null;
+  created_at: string;
+}
+
+export function useSiteMedia() {
+  return useQuery({
+    queryKey: ['cms', 'site_media'],
+    queryFn: async (): Promise<MediaItem[]> => {
+      const { data, error } = await cmsDb
+        .from(CMS_TABLES.media)
+        .select('id,url,title,alt_text,created_at')
+        .order('created_at', { ascending: false });
+      if (error) return [];
+      return (data as MediaItem[]) || [];
+    },
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Form builder fields                                                */
+/* ------------------------------------------------------------------ */
+
+export type FormFieldType = 'text' | 'textarea' | 'number' | 'date' | 'select' | 'checkbox' | 'file';
+
+export interface FormFieldDef {
+  id: string;
+  form_key: string;
+  field_key: string;
+  label: string;
+  field_type: FormFieldType;
+  options: string[];
+  help_text: string | null;
+  is_required: boolean;
+  step: number;
+  display_order: number;
+  is_active: boolean;
+}
+
+export function useFormFields(formKey: string, opts: { activeOnly?: boolean } = {}) {
+  return useQuery({
+    queryKey: ['cms', 'form_fields', formKey, opts.activeOnly ?? true],
+    staleTime: 60 * 1000,
+    queryFn: async (): Promise<FormFieldDef[]> => {
+      let q = cmsDb
+        .from(CMS_TABLES.formFields)
+        .select('id,form_key,field_key,label,field_type,options,help_text,is_required,step,display_order,is_active')
+        .eq('form_key', formKey)
+        .order('display_order', { ascending: true });
+      if (opts.activeOnly !== false) q = q.eq('is_active', true);
+      const { data, error } = await q;
+      if (error) return [];
+      return ((data as any[]) || []).map((row) => ({
+        ...row,
+        options: Array.isArray(row.options) ? row.options : [],
+      })) as FormFieldDef[];
+    },
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Section visibility & ordering                                      */
+/* ------------------------------------------------------------------ */
+
+export function useSectionControls(pageKey: string) {
+  const { settings } = useWebsiteSettings();
+  const hidden = settingValue<string[]>(settings, 'sections_hidden', []);
+  const orders = settingValue<Record<string, string[]>>(settings, 'sections_order', {});
+  const order = orders?.[pageKey] ?? [];
+
+  return {
+    isVisible: (sectionKey: string) => !(hidden || []).includes(`${pageKey}.${sectionKey}`),
+    sortSections: <T extends { key: string }>(sections: T[]): T[] => {
+      if (!order.length) return sections;
+      const index = (k: string) => {
+        const i = order.indexOf(k);
+        return i === -1 ? 999 : i;
+      };
+      return [...sections].sort((a, b) => index(a.key) - index(b.key));
+    },
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Per-page SEO                                                       */
+/* ------------------------------------------------------------------ */
+
+export interface PageSeo {
+  page_key: string;
+  title: string | null;
+  description: string | null;
+  og_image: string | null;
+}
+
+export function usePageSeo(pageKey: string) {
+  return useQuery({
+    queryKey: ['cms', 'page_seo', pageKey],
+    staleTime: 60 * 1000,
+    queryFn: async (): Promise<PageSeo | null> => {
+      const { data, error } = await cmsDb
+        .from(CMS_TABLES.seo)
+        .select('page_key,title,description,og_image')
+        .eq('page_key', pageKey)
+        .maybeSingle();
+      if (error) return null;
+      return (data as PageSeo) ?? null;
+    },
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Schema-driven page content                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Reads any editable field declared in `src/config/siteSchema.ts`, falling back
+ * to the built-in default so a page never renders blank.
+ */
+export function useSiteFields() {
+  const { settings, isLoading } = useWebsiteSettings();
+
+  const field = <T = any>(key: string, fallback?: T): T => {
+    const saved = settings?.[key];
+    if (saved != null && saved !== '') return saved as T;
+    const def = SITE_DEFAULTS[key];
+    return (def != null ? def : fallback) as T;
+  };
+
+  const list = <T = any>(key: string, fallback: T[] = []): T[] => {
+    const value = field<T[]>(key, fallback);
+    return Array.isArray(value) && value.length ? value : fallback;
+  };
+
+  return { field, list, settings, isLoading };
 }
