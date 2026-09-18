@@ -361,11 +361,16 @@ export const AdminDashboard = () => {
 
     if (activeTab === 'website') {
       switch (activeSubTab) {
+        case 'menus': return <MenuEditor />;
+        case 'form': return <FormBuilder />;
+        case 'submissions': return <SubmissionsInbox />;
+        case 'seo': return <SeoEditor />;
+        case 'news': return <NewsManager />;
         case 'gallery': return <GalleryManager />;
         case 'testimonials': return <TestimonialManager />;
         case 'school-info': return <SchoolInfoEditor />;
         case 'site-settings': return <SiteSettingsEditor />;
-        default: return <NewsManager />;
+        default: return <ContentEditor />;
       }
     }
 
