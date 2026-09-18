@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { fetchSchoolBranding, SchoolBranding } from '@/lib/school-branding';
+import { drawLetterhead, LETTERHEAD_MARGINS } from '@/lib/letterhead';
 
 export interface ReceiptField {
   label: string;
