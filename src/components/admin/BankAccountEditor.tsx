@@ -127,6 +127,38 @@ export const BankAccountEditor: React.FC = () => {
         </Button>
       </CardContent>
     </Card>
+
+    <Card>
+      <CardHeader>
+        <CardTitle>Finance Access Code</CardTitle>
+        <CardDescription>
+          Required to confirm sensitive finance actions, such as deleting a fee. Share it only with staff allowed to delete fees.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4 max-w-xl">
+        <div className="space-y-2">
+          <Label htmlFor="finance-code">Access code</Label>
+          <Input
+            id="finance-code"
+            type={showCode ? 'text' : 'password'}
+            value={financeCode}
+            onChange={(e) => setFinanceCode(e.target.value)}
+            placeholder="Access code"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Button onClick={handleSaveCode} disabled={savingCode}>
+            {savingCode ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
+            Save Code
+          </Button>
+          <Button type="button" variant="outline" onClick={() => setShowCode((v) => !v)}>
+            {showCode ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+            {showCode ? 'Hide' : 'Show'}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+    </div>
   );
 };
 
