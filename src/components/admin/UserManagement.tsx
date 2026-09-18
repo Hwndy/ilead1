@@ -13,6 +13,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { UserEditModal } from './UserEditModal';
 import { fetchPlacementMap } from '@/lib/student-placement';
+import { logAuditEvent } from '@/lib/audit';
+
+const friendlyFunctionError = (message?: string) => {
+  const msg = String(message || '');
+  if (/Failed to send a request|Failed to fetch|non-2xx/i.test(msg)) {
+    return 'Accounts are created on the server, and the server tools could not be reached. Please try again in a moment.';
+  }
+  return msg || 'Failed to create the account';
+};
+
 export const UserManagement = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
@@ -164,85 +174,61 @@ export const UserManagement = () => {
         return;
       }
 
-      // Use the create_user_with_profile function
-      const { data, error } = await supabase.rpc('create_user_with_profile', {
-        user_email: userForm.email,
-        user_password: userForm.password,
-        user_full_name: userForm.fullName,
-        user_role: userForm.role
-      });
+      // Accounts are always created on the server so the role is granted
+      // server-side (a browser sign-up is forced to "student" by the database
+      // and would also replace the administrator's own session).
+      let newUserId: string | null = null;
 
-      if (error) throw error;
-
-      if (data && typeof data === 'object' && 'error' in data) {
-        throw new Error(data.error as string);
+      if (userForm.role === 'student') {
+        const { data, error } = await supabase.functions.invoke('create-student', {
+          body: {
+            email: userForm.email.trim().toLowerCase(),
+            password: userForm.password,
+            fullName: userForm.fullName.trim(),
+            classId: userForm.classId || undefined,
+          },
+        });
+        if (error) throw new Error(friendlyFunctionError(error.message));
+        if ((data as any)?.error) throw new Error((data as any).error);
+        newUserId = (data as any)?.user?.id ?? null;
+      } else {
+        const { data, error } = await supabase.functions.invoke('create-staff-user', {
+          body: {
+            fullName: userForm.fullName.trim(),
+            email: userForm.email.trim().toLowerCase(),
+            password: userForm.password,
+            role: userForm.role,
+            phone: userForm.phone.trim() || undefined,
+          },
+        });
+        if (error) throw new Error(friendlyFunctionError(error.message));
+        if ((data as any)?.error) throw new Error((data as any).message || (data as any).error);
+        newUserId = (data as any)?.user_id ?? null;
       }
 
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: userForm.email,
-        password: userForm.password,
-        options: {
-          data: {
-            full_name: userForm.fullName,
-            role: userForm.role
-          }
-        }
-      });
-
-      if (authError) throw authError;
-
-      if (authData.user) {
-        // Handle role-specific assignments
-        if (userForm.role === 'student' && userForm.classId) {
-          await supabase
-            .from('class_assignments')
-            .insert({
-              student_id: authData.user.id,
-              class_id: userForm.classId
-            });
-        }
-
-        if (userForm.role === 'teacher') {
-          console.log('🎓 Creating teacher account:', {
-            email: userForm.email,
-            subjects: userForm.subjectIds.length,
-            classes: userForm.classIds.length
-          });
-
-          // Create subject assignments for EACH combination of subject and class
-          if (userForm.subjectIds.length > 0 && userForm.classIds.length > 0) {
-            const subjectAssignments = [];
-            
-            for (const classId of userForm.classIds) {
-              for (const subjectId of userForm.subjectIds) {
-                subjectAssignments.push({
-                  user_id: authData.user.id,
-                  subject_id: subjectId,
-                  class_id: classId
-                });
-              }
-            }
-            
-            console.log('✅ Subject assignments to create:', subjectAssignments.length);
-            await supabase
-              .from('subject_assignments')
-              .insert(subjectAssignments);
-          }
-
-          // Add class assignments for teachers using RPC function to bypass RLS
-          if (userForm.classIds.length > 0) {
-            console.log('✅ Creating class assignments via RPC:', userForm.classIds.length);
-            
-            const { error: classAssignError } = await supabase
-              .rpc('create_teacher_class_assignments', {
-                p_teacher_id: authData.user.id,
-                p_class_ids: userForm.classIds
+      if (userForm.role === 'teacher' && newUserId) {
+        // Create subject assignments for EACH combination of subject and class
+        if (userForm.subjectIds.length > 0 && userForm.classIds.length > 0) {
+          const subjectAssignments = [];
+          for (const classId of userForm.classIds) {
+            for (const subjectId of userForm.subjectIds) {
+              subjectAssignments.push({
+                user_id: newUserId,
+                subject_id: subjectId,
+                class_id: classId,
               });
-              
-            if (classAssignError) throw classAssignError;
-            
-            console.log('✅ Class assignments created successfully');
+            }
           }
+          await supabase.from('subject_assignments').insert(subjectAssignments);
+        }
+
+        if (userForm.classIds.length > 0) {
+          const { error: classAssignError } = await supabase
+            .rpc('create_teacher_class_assignments', {
+              p_teacher_id: newUserId,
+              p_class_ids: userForm.classIds,
+            });
+          if (classAssignError) throw classAssignError;
         }
       }
 
