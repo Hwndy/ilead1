@@ -411,16 +411,16 @@ export const AdminDashboard = () => {
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Header */}
           <header className="sticky top-0 z-10 border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-            <div className="flex items-center justify-between gap-3 px-4 lg:px-6 h-14">
+            <div className="flex h-20 items-center justify-between gap-3 px-4 lg:px-8">
               <div className="flex items-center gap-3 min-w-0">
                 <SidebarTrigger />
                 <Logo size="sm" showText={false} className="hidden sm:flex shrink-0" />
                 <div className="min-w-0">
-                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground truncate">
+                  <p className="text-[10px] font-bold uppercase text-muted-foreground truncate">
                     {breadcrumb.section}
                     {breadcrumb.group ? ` › ${breadcrumb.group}` : ''}
                   </p>
-                  <h1 className="text-base font-semibold leading-tight truncate">{breadcrumb.title}</h1>
+                  <h1 className="text-lg font-semibold leading-tight truncate">{breadcrumb.title}</h1>
                 </div>
               </div>
               <div className="flex items-center gap-3 shrink-0">
@@ -436,7 +436,7 @@ export const AdminDashboard = () => {
 
           {/* Main Content */}
           <main className="flex-1 overflow-auto">
-            <div className="container mx-auto p-4 lg:p-6 space-y-6">
+             <div className="mx-auto w-full max-w-[1600px] space-y-6 p-4 lg:p-8">
               {/* Compact KPI row  only on Overview */}
               {activeTab === 'overview' && (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
@@ -449,7 +449,7 @@ export const AdminDashboard = () => {
                     { label: 'Questions', value: stats.totalQuestions, icon: TrendingUp },
                     { label: 'Live Sessions', value: stats.activeSessions, icon: Clock },
                   ].map(({ label, value, icon: Icon }) => (
-                    <Card key={label} className="shadow-sm">
+                     <Card key={label} className="overflow-hidden border-t-2 border-t-gold">
                       <CardContent className="p-3">
                         <div className="flex items-center gap-2 text-muted-foreground">
                           <Icon className="h-3.5 w-3.5" />

@@ -124,8 +124,8 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="brand-arch flex min-h-screen items-center justify-center overflow-hidden bg-primary p-4">
+      <div className="relative z-10 w-full max-w-md">
         {isPortalAccess && (
           <div className="mb-4 p-4 bg-primary/10 border border-primary/20 rounded-lg">
             <p className="text-sm text-primary text-center">

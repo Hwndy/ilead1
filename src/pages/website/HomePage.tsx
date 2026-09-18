@@ -93,7 +93,7 @@ export const HomePage = () => {
       </Helmet>
 
       {/* Hero Section with Slideshow Background */}
-      <section className="relative min-h-[600px] lg:min-h-[680px] flex items-center py-20 lg:py-28 overflow-hidden">
+      <section className="brand-arch relative flex min-h-[600px] items-center overflow-hidden py-20 lg:min-h-[680px] lg:py-28">
         
         {/* Background Slideshow Layer */}
         <div className="absolute inset-0 z-0">
@@ -109,29 +109,29 @@ export const HomePage = () => {
           ))}
           
           {/* Directional scrim: dark on the left for text contrast, lighter on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-steel/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-primary/40" />
         </div>
 
         {/* Content Layer */}
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <Badge className="w-fit bg-primary text-primary-foreground border-none px-3 py-1 text-sm shadow-md">
+            <Badge className="w-fit border border-gold/40 bg-gold/10 px-3 py-1 text-sm text-gold shadow-md">
               {heroBadge}
             </Badge>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight max-w-[15ch]">
+            <h1 className="max-w-[15ch] text-4xl font-bold leading-[1.08] text-primary-foreground sm:text-5xl lg:text-6xl">
               {heroTitle}
-              <span className="block mt-1 text-accent drop-shadow-sm">{heroTitleHighlight}</span>
+              <span className="mt-1 block text-gold">{heroTitleHighlight}</span>
             </h1>
             
-            <p className="text-base sm:text-lg text-slate-200/90 max-w-xl leading-relaxed">
+            <p className="max-w-xl text-base leading-relaxed text-primary-foreground/70 sm:text-lg">
               {heroSubtitle}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button size="lg" className="rounded-full px-7 shadow-lg text-base" asChild>
+              <Button size="lg" className="bg-gold px-7 text-base text-gold-foreground shadow-lg hover:bg-gold/90" asChild>
                 <Link to="/website/admissions/apply">
                   {heroCtaPrimary} <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
@@ -139,7 +139,7 @@ export const HomePage = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="rounded-full px-7 bg-white/10 hover:bg-white/20 hover:text-white text-white border-white/30 backdrop-blur-sm text-base"
+                className="border-primary-foreground/30 bg-primary-foreground/5 px-7 text-base text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 asChild
               >
                 <Link to="/website/about">{heroCtaSecondary}</Link>
@@ -181,14 +181,14 @@ export const HomePage = () => {
 
         {/* Slide controls */}
         {heroImages.length > 1 && (
-          <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/30 px-3 py-2 backdrop-blur-sm">
+          <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-primary-foreground/10 bg-primary/55 px-3 py-2 backdrop-blur-sm">
             <div className="flex space-x-2">
               {heroImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                    index === currentSlide ? 'w-6 bg-primary' : 'w-2 bg-white/50 hover:bg-white'
+                    index === currentSlide ? 'w-6 bg-gold' : 'w-2 bg-primary-foreground/40 hover:bg-primary-foreground'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                   aria-current={index === currentSlide}
@@ -197,7 +197,7 @@ export const HomePage = () => {
             </div>
             <button
               onClick={() => setPaused((p) => !p)}
-              className="text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="text-primary-foreground/70 transition-colors hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
               aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
             >
               {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
@@ -243,22 +243,22 @@ export const HomePage = () => {
       <Newsletter />
 
       {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10">
+      <section className="brand-arch overflow-hidden bg-primary py-16 text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          <h2 className="mb-4 text-3xl font-bold text-primary-foreground lg:text-4xl">
             Ready to Join iVintage College?
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-primary-foreground/65">
             Take the first step towards an exceptional education. Apply now and become part of our 
             growing community of future leaders.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
+            <Button size="lg" className="bg-gold text-gold-foreground hover:bg-gold/90" asChild>
               <Link to="/website/admissions">
                 Start Your Application <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" size="lg" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-steel" asChild>
               <Link to="/website/portals">Access Portals</Link>
             </Button>
           </div>

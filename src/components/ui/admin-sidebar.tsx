@@ -39,6 +39,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Logo } from "@/components/shared/Logo";
 
 export type NavLeaf = { title: string; tab: string; subtab?: string };
 export type NavItem = {
@@ -300,16 +301,19 @@ export function AdminSidebar() {
     setOpenGroups((prev) => (prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]));
 
   const activeClasses =
-    "bg-sidebar-accent text-sidebar-accent-foreground font-medium border-l-2 border-primary rounded-l-none";
+    "bg-sidebar-accent text-sidebar-accent-foreground font-semibold border-l-2 border-sidebar-primary rounded-l-none";
 
   return (
     <Sidebar collapsible="icon" className={collapsed ? "w-14" : "w-64"}>
+      <div className="flex h-20 items-center border-b border-sidebar-border px-4 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
+        <Logo size="sm" showText={!collapsed} className="[&_span:first-child]:text-sidebar-primary [&_span:last-child]:text-sidebar-foreground/60" />
+      </div>
       <SidebarContent className="gap-0">
         <TooltipProvider>
           {NAV_SECTIONS.map((section) => (
             <SidebarGroup key={section.label} className="py-1">
               {!collapsed && (
-                <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/70">
+                <SidebarGroupLabel className="text-[10px] font-bold uppercase text-sidebar-foreground/45">
                   {section.label}
                 </SidebarGroupLabel>
               )}

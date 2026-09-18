@@ -14,29 +14,29 @@
 
 .print-only { display: none; }
 
-/* iVintage College Design System - Navy + Lime Academic Theme */
+/* iVintage College — Academic Navy Premium */
 
 @layer base {
   :root {
     /* Core Brand Colors - Navy ink on white */
-    --background: 0 0% 100%;
-    --foreground: 219 37% 14%;
+    --background: 210 40% 98%;
+    --foreground: 222 50% 9%;
     
     --card: 0 0% 100%;
-    --card-foreground: 219 37% 14%;
+    --card-foreground: 222 50% 9%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 219 37% 14%;
+    --popover-foreground: 222 50% 9%;
     
     /* Primary - iVintage Deep Navy */
-    --primary: 219 37% 12%;
-    --primary-hover: 219 37% 20%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 224 23% 17%;
+    --primary-hover: 219 28% 29%;
+    --primary-foreground: 68 100% 50%;
     
     /* Secondary - Light Academic Gray */
-    --secondary: 216 17% 95%;
-    --secondary-hover: 216 17% 90%;
-    --secondary-foreground: 219 37% 14%;
+    --secondary: 218 24% 95%;
+    --secondary-hover: 218 22% 90%;
+    --secondary-foreground: 224 23% 17%;
     
     /* Success */
     --success: 142 61% 38%;
@@ -51,33 +51,35 @@
     --destructive-foreground: 0 0% 100%;
     
     /* Muted - Subtle Text and Backgrounds */
-    --muted: 216 17% 97%;
-    --muted-foreground: 216 12% 45%;
+    --muted: 216 33% 96%;
+    --muted-foreground: 218 13% 43%;
     
     /* Accent - iVintage Lime */
-    --accent: 67 69% 94%;
-    --accent-foreground: 219 37% 14%;
+    --accent: 68 100% 50%;
+    --accent-foreground: 224 23% 17%;
 
     /* Lime accent for marketing surfaces (matches logo) */
-    --gold: 67 69% 51%;
-    --gold-foreground: 219 37% 12%;
-    --gold-soft: 67 69% 92%;
+    --gold: 68 100% 50%;
+    --gold-foreground: 224 23% 17%;
+    --gold-soft: 68 100% 94%;
     
     /* Borders and Inputs */
-    --border: 216 20% 88%;
-    --input: 216 20% 88%;
-    --ring: 67 69% 45%;
+    --border: 216 24% 88%;
+    --input: 216 24% 84%;
+    --ring: 68 100% 43%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
     
     /* Gradients for Enhanced Visual Appeal */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(219 37% 24%));
+    --steel: 219 28% 29%;
+    --steel-soft: 218 25% 88%;
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--steel)));
     --gradient-success: linear-gradient(135deg, hsl(var(--gold)), hsl(67 69% 42%));
     --gradient-muted: linear-gradient(180deg, hsl(var(--muted)), hsl(216 17% 94%));
     
     /* Shadows for Depth */
-    --shadow-card: 0 2px 8px -2px hsl(219 37% 12% / 0.12);
-    --shadow-hover: 0 4px 16px -4px hsl(219 37% 12% / 0.18);
+    --shadow-card: 0 1px 2px hsl(224 23% 17% / 0.04), 0 8px 24px -18px hsl(224 23% 17% / 0.28);
+    --shadow-hover: 0 18px 38px -22px hsl(224 23% 17% / 0.38);
     --shadow-focus: 0 0 0 3px hsl(var(--gold) / 0.35);
 
     
@@ -85,21 +87,21 @@
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 222 50% 9%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-foreground: 210 40% 98%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 67 69% 51%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 219 37% 12%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 219 28% 24%;
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 68 100% 50%;
 
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 219 28% 21%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 67 69% 51%;
   }
 
   .dark {
@@ -161,6 +163,51 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+    letter-spacing: 0;
+  }
+
+  ::selection {
+    background: hsl(var(--gold));
+    color: hsl(var(--gold-foreground));
+  }
+}
+
+@layer components {
+  .brand-arch {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .brand-arch::before,
+  .brand-arch::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    right: -7rem;
+    top: -9rem;
+    border-radius: 9999px 9999px 0 0;
+    border-style: solid;
+    z-index: -1;
+  }
+
+  .brand-arch::before {
+    width: min(36rem, 72vw);
+    height: min(36rem, 72vw);
+    border-width: 3rem;
+    border-color: hsl(var(--steel) / 0.32);
+  }
+
+  .brand-arch::after {
+    width: min(29rem, 58vw);
+    height: min(29rem, 58vw);
+    border-width: 1px;
+    border-color: hsl(var(--gold) / 0.82);
   }
 }
