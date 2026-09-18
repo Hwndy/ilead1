@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/tooltip";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/shared/Logo";
 
 export interface NavItem {
   title: string;
@@ -56,16 +57,19 @@ export function NavSidebar({ sections, role, basePath }: NavSidebarProps) {
     currentTab === item.tab && (item.subtab ? currentSubTab === item.subtab : true);
 
   const activeClasses =
-    "bg-sidebar-accent text-sidebar-accent-foreground font-medium border-l-4 border-sidebar-primary rounded-l-none";
+    "bg-sidebar-accent text-sidebar-accent-foreground font-semibold border-l-2 border-sidebar-primary rounded-l-none";
 
   return (
     <Sidebar collapsible="icon" className={cn("border-r border-sidebar-border", collapsed ? "w-14" : "w-64")}>
+      <div className="flex h-20 items-center border-b border-sidebar-border px-4 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
+        <Logo size="sm" showText={!collapsed} className="[&_span:first-child]:text-sidebar-primary [&_span:last-child]:text-sidebar-foreground/60" />
+      </div>
       <SidebarContent className="bg-sidebar">
         <TooltipProvider>
           {sections.map((section) => (
             <SidebarGroup key={section.label} className="py-2">
               {!collapsed && (
-                <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-sidebar-foreground/50 px-4">
+                <SidebarGroupLabel className="px-4 text-[10px] font-bold uppercase text-sidebar-foreground/45">
                   {section.label}
                 </SidebarGroupLabel>
               )}

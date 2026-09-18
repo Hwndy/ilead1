@@ -123,15 +123,15 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {/* Header */}
           <header className="sticky top-0 z-20 border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-            <div className="flex items-center justify-between gap-3 px-4 h-14">
+            <div className="flex h-20 items-center justify-between gap-3 px-4 lg:px-8">
               <div className="flex items-center gap-3 min-w-0">
                 <SidebarTrigger />
                 <Logo size="sm" showText={false} className="hidden sm:flex shrink-0" />
                 <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-wide text-muted-foreground truncate">
+                  <p className="text-[10px] font-bold uppercase text-muted-foreground truncate">
                     {user?.role} Portal
                   </p>
-                  <h1 className="text-base font-semibold leading-tight truncate">{title}</h1>
+                  <h1 className="text-lg font-semibold leading-tight truncate">{title}</h1>
                 </div>
               </div>
               
@@ -158,8 +158,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 overflow-auto bg-muted/10 p-4 lg:p-6">
-            <div className="container mx-auto max-w-7xl">
+          <main className="flex-1 overflow-auto bg-background p-4 lg:p-8">
+            <div className="mx-auto max-w-[1600px]">
               {children}
             </div>
           </main>

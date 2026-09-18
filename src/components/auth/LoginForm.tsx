@@ -47,7 +47,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onForgotPass
   };
 
   return (
-    <Card className="w-full max-w-md shadow-lg">
+    <Card className="w-full max-w-md border-primary-foreground/10 shadow-2xl">
       <CardHeader className="text-center space-y-4">
         <img
           src={'/ivintage_logo.png'}
