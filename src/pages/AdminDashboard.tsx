@@ -13,6 +13,7 @@ import { UserManagement } from '@/components/admin/UserManagement';
 import { ClassManagement } from '@/components/admin/ClassManagement';
 import { SubjectManagement } from '@/components/admin/SubjectManagement';
 import { EnhancedLiveMonitor } from '@/components/admin/EnhancedLiveMonitor';
+import { AuditLog } from '@/components/admin/system/AuditLog';
 import { AdminQuestionBank } from '@/components/admin/AdminQuestionBank';
 import { ExamManagement } from '@/components/admin/ExamManagement';
 import { AdminStudentResults } from '@/components/admin/AdminStudentResults';
@@ -382,6 +383,17 @@ export const AdminDashboard = () => {
     if (activeTab === 'system') {
       switch (activeSubTab) {
         case 'monitor-logs': return <EnhancedLiveMonitor />;
+        case 'email-logs':
+          return (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <EmailLogsViewer />
+              </div>
+              <div>
+                <EmailTestingPanel />
+              </div>
+            </div>
+          );
         case 'results-modal': 
           return (
             <>
@@ -395,17 +407,8 @@ export const AdminDashboard = () => {
               )}
             </>
           );
-        default: 
-          return (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <EmailLogsViewer />
-              </div>
-              <div>
-                <EmailTestingPanel />
-              </div>
-            </div>
-          );
+        default:
+          return <AuditLog />;
       }
     }
 

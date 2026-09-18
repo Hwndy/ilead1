@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { logAuditEvent } from '@/lib/audit';
 
 interface LiveSession {
   id: string;
@@ -75,6 +76,7 @@ export const EnhancedLiveMonitor: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [investigating, setInvestigating] = useState<SuspiciousActivity | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -159,27 +161,56 @@ export const EnhancedLiveMonitor: React.FC = () => {
         server_load: Math.min(formattedSessions.length * 2, 100) // Simulated load
       });
 
-      // Generate some mock suspicious activities for demo
-      const mockSuspiciousActivities: SuspiciousActivity[] = [
-        {
-          id: '1',
-          student_name: 'John Doe',
-          activity_type: 'tab_switch',
-          description: 'Multiple tab switching detected',
-          timestamp: new Date(Date.now() - 5 * 60000).toISOString(),
-          severity: 'medium'
-        },
-        {
-          id: '2',
-          student_name: 'Jane Smith',
-          activity_type: 'copy_paste',
-          description: 'Clipboard activity detected',
-          timestamp: new Date(Date.now() - 10 * 60000).toISOString(),
-          severity: 'high'
-        }
-      ];
+      // Real attention signals derived from the live sessions themselves.
+      const activities: SuspiciousActivity[] = [];
+      const seenStudents = new Map<string, number>();
 
-      setSuspiciousActivities(mockSuspiciousActivities);
+      formattedSessions.forEach((session) => {
+        seenStudents.set(session.student_id, (seenStudents.get(session.student_id) || 0) + 1);
+
+        const lastActivity = session.last_activity ? new Date(session.last_activity).getTime() : null;
+        const idleMinutes = lastActivity ? (now.getTime() - lastActivity) / 60000 : 0;
+
+        if (idleMinutes >= 5) {
+          activities.push({
+            id: `${session.id}-idle`,
+            student_name: session.student_name,
+            activity_type: 'inactive',
+            description: `No activity for ${Math.round(idleMinutes)} minutes while the exam is still open`,
+            timestamp: session.last_activity || session.started_at,
+            severity: idleMinutes >= 15 ? 'high' : 'medium',
+          });
+        }
+
+        if (session.time_remaining_seconds === 0) {
+          activities.push({
+            id: `${session.id}-overtime`,
+            student_name: session.student_name,
+            activity_type: 'overtime',
+            description: 'Time has run out but the session has not been submitted',
+            timestamp: session.last_activity || session.started_at,
+            severity: 'high',
+          });
+        }
+      });
+
+      seenStudents.forEach((count, studentId) => {
+        if (count > 1) {
+          const session = formattedSessions.find((s) => s.student_id === studentId);
+          activities.push({
+            id: `${studentId}-duplicate`,
+            student_name: session?.student_name || 'Unknown student',
+            activity_type: 'duplicate_session',
+            description: `${count} exam sessions open at the same time`,
+            timestamp: new Date().toISOString(),
+            severity: 'high',
+          });
+        }
+      });
+
+      setSuspiciousActivities(activities);
+      setLastUpdated(new Date());
+
 
     } catch (error: any) {
       console.error('Error fetching live data:', error);
@@ -223,6 +254,12 @@ export const EnhancedLiveMonitor: React.FC = () => {
         .eq('id', sessionId);
 
       if (error) throw error;
+
+      await logAuditEvent('exam_session_ended', {
+        tableName: 'exam_sessions',
+        rowId: sessionId,
+        metadata: { student_name: studentName },
+      });
 
       toast({
         title: 'Session Terminated',
@@ -292,6 +329,9 @@ export const EnhancedLiveMonitor: React.FC = () => {
               Live Exam Monitor
             </CardTitle>
             <div className="flex items-center space-x-2">
+              <span className="text-xs text-muted-foreground hidden sm:inline">
+                {lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : 'Waiting for data'}
+              </span>
               <Button
                 variant="outline"
                 size="sm"

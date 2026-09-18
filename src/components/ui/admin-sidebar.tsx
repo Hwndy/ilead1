@@ -236,8 +236,9 @@ export const NAV_SECTIONS: NavSection[] = [
         icon: ServerCog,
         tab: "system",
         children: [
-          { title: "Email Logs", tab: "system", subtab: "email-logs" },
+          { title: "Audit Log", tab: "system", subtab: "audit-log" },
           { title: "Live Monitor", tab: "system", subtab: "monitor-logs" },
+          { title: "Email Logs", tab: "system", subtab: "email-logs" },
           { title: "All Results", tab: "system", subtab: "results-modal" },
         ],
       },
