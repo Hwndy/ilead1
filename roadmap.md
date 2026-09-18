@@ -4,6 +4,7 @@
 - [x] Apply Academic Navy Premium tokens and Sora/Manrope typography
 - [x] Restyle shared controls, public website chrome, and page openings
 - [x] Apply structured navy portal framing across admin, teacher, student, and parent areas
+- [x] Convert every public website surface to navy/steel with white text and lime accents
 - [x] Validate representative public website and sign-in screens at desktop and mobile widths
 - [ ] Validate authenticated portal screens when a signed-in preview session is available
 
@@ -42,3 +43,4 @@
 
 ## Blocked / needs the user
 - Authenticated portal visual verification requires a signed-in preview session.
+- GitHub project sync cannot be attached to the existing `Hwndy/ilead1` repository by the agent; Lovable's Git settings can reconnect only by creating a new repository.
