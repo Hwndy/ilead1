@@ -69,6 +69,26 @@ export const BankAccountEditor: React.FC = () => {
     }
   };
 
+  const handleSaveCode = async () => {
+    const code = financeCode.trim();
+    if (code.length < 4) {
+      toast({ title: 'Code too short', description: 'Use at least 4 characters.', variant: 'destructive' });
+      return;
+    }
+    setSavingCode(true);
+    try {
+      const { error } = await supabase
+        .from('app_settings')
+        .upsert([{ setting_key: 'finance_delete_code', setting_value: code as any }], { onConflict: 'setting_key' });
+      if (error) throw error;
+      toast({ title: 'Saved', description: 'Finance access code updated.' });
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message || 'Failed to save', variant: 'destructive' });
+    } finally {
+      setSavingCode(false);
+    }
+  };
+
   if (loading) {
     return <div className="flex items-center justify-center py-12"><Loader2 className="h-6 w-6 animate-spin" /></div>;
   }
