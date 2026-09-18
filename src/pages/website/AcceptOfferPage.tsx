@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle, XCircle, Loader2, CreditCard } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2, CalendarClock } from 'lucide-react';
+import { BankTransferDetails } from '@/components/shared/BankTransferDetails';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface OfferData {
@@ -38,6 +39,7 @@ export const AcceptOfferPage = () => {
   const [processing, setProcessing] = useState(false);
   const [offer, setOffer] = useState<OfferData | null>(null);
   const [application, setApplication] = useState<ApplicationData | null>(null);
+  const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
     if (acceptanceToken) {
