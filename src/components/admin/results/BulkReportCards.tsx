@@ -81,12 +81,22 @@ export const BulkReportCards: React.FC = () => {
         const { html, filename } = await buildHtml({ studentId: st.id, classId, sessionId, term });
         const iframe = document.createElement('iframe');
         iframe.style.position = 'fixed'; iframe.style.left = '-10000px'; iframe.style.top = '0';
-        iframe.style.width = '900px'; iframe.style.height = '1400px';
+        // A4 at 96dpi so the official letterhead artwork fills the sheet exactly.
+        iframe.style.width = '794px'; iframe.style.height = '1123px';
         document.body.appendChild(iframe);
         try {
           const doc = iframe.contentDocument!;
           doc.open(); doc.write(html); doc.close();
-          await new Promise(r => setTimeout(r, 500));
+          // Wait for the letterhead / passport images before rasterising.
+          const imgs = Array.from(doc.images || []);
+          await Promise.all(
+            imgs.map(im => im.complete ? Promise.resolve() : new Promise<void>(res => {
+              im.addEventListener('load', () => res(), { once: true });
+              im.addEventListener('error', () => res(), { once: true });
+              setTimeout(res, 5000);
+            })),
+          );
+          await new Promise(r => setTimeout(r, 400));
           const target = doc.body;
           if (target) {
             const canvas = await html2canvas(target as HTMLElement, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
@@ -94,9 +104,8 @@ export const BulkReportCards: React.FC = () => {
             const pdf = new jsPDF({ unit: 'pt', format: 'a4' });
             const pageW = pdf.internal.pageSize.getWidth();
             const pageH = pdf.internal.pageSize.getHeight();
-            const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
-            const w = canvas.width * ratio; const h = canvas.height * ratio;
-            pdf.addImage(img, 'JPEG', (pageW - w) / 2, 20, w, h);
+            // Letterhead is part of the page artwork, so print it edge to edge.
+            pdf.addImage(img, 'JPEG', 0, 0, pageW, pageH);
             const blob = pdf.output('blob');
             zip.file(filename, blob);
           }
