@@ -43,6 +43,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   const primaryNav = toNav(visible('primary'), DEFAULT_PRIMARY_NAV);
   const moreNav = toNav(visible('more'), DEFAULT_MORE_NAV);
   const navigation = [...primaryNav, ...moreNav];
+  const footerNav = visible('footer').map((r) => ({ name: r.label, href: r.href }));
   const announcement = field<boolean>('global.announcement_enabled');
 
   useEffect(() => {
@@ -246,10 +247,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                   <p className="text-sm text-muted-foreground">{info.motto}</p>
                 </div>
               </div>
-              <p className="text-muted-foreground mb-4">
-                {info.name} is committed to providing quality education that nurtures the intellectual,
-                moral, and social development of our students, preparing them for success in an ever-changing world.
-              </p>
+              <p className="text-muted-foreground mb-4">{field('global.footer_tagline')}</p>
               <div className="flex space-x-4">
                 {socials.filter(([url]) => !!url).map(([url, label, Icon]) => (
                   <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
@@ -263,6 +261,12 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             <div>
               <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
               <ul className="space-y-2">
+                {footerNav.map((item) => (
+                  <li key={item.href + item.name}>
+                    <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors">{item.name}</Link>
+                  </li>
+                ))}
+                {footerNav.length ? null : (<>
                 <li><Link to="/website/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
                 <li><Link to="/website/admissions" className="text-muted-foreground hover:text-primary transition-colors">Admissions</Link></li>
                 <li><Link to="/website/school-life" className="text-muted-foreground hover:text-primary transition-colors">Academics</Link></li>
@@ -270,6 +274,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 <li><Link to="/website/gallery" className="text-muted-foreground hover:text-primary transition-colors">Gallery</Link></li>
                 <li><Link to="/website/testimonials" className="text-muted-foreground hover:text-primary transition-colors">Testimonials</Link></li>
                 <li><Link to="/website/portals" className="text-muted-foreground hover:text-primary transition-colors">Portals</Link></li>
+                </>)}
               </ul>
             </div>
 
@@ -323,7 +328,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
                 <div className="flex items-start space-x-2">
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <span>Mon – Fri, 8:00am – 4:00pm</span>
+                  <span>{field('office_hours')}</span>
                 </div>
               </div>
             </div>
