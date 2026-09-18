@@ -5,13 +5,13 @@ import { Logo } from '@/components/shared/Logo';
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Youtube, Menu, X, ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useSchoolInfo } from '@/hooks/useCms';
+import { useSchoolInfo, useSiteMenu, useSiteFields } from '@/hooks/useCms';
 
 interface WebsiteLayoutProps {
   children: ReactNode;
 }
 
-const primaryNav = [
+const DEFAULT_PRIMARY_NAV = [
   { name: 'Home', href: '/website' },
   { name: 'About Us', href: '/website/about' },
   { name: 'Admissions', href: '/website/admissions' },
@@ -20,20 +20,30 @@ const primaryNav = [
   { name: 'Portals', href: '/website/portals' },
 ];
 
-const moreNav = [
+const DEFAULT_MORE_NAV = [
   { name: 'Gallery', href: '/website/gallery' },
   { name: 'Testimonials', href: '/website/testimonials' },
   { name: 'Facilities', href: '/website/facilities' },
   { name: 'Careers', href: '/website/careers' },
 ];
 
-const navigation = [...primaryNav, ...moreNav];
+const DEFAULT_NAV = [...DEFAULT_PRIMARY_NAV, ...DEFAULT_MORE_NAV];
 
 export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { info } = useSchoolInfo();
+  const { visible } = useSiteMenu();
+  const { field } = useSiteFields();
+
+  const toNav = (rows: { label: string; href: string }[], fallback: { name: string; href: string }[]) =>
+    rows.length ? rows.map((r) => ({ name: r.label, href: r.href })) : fallback;
+
+  const primaryNav = toNav(visible('primary'), DEFAULT_PRIMARY_NAV);
+  const moreNav = toNav(visible('more'), DEFAULT_MORE_NAV);
+  const navigation = [...primaryNav, ...moreNav];
+  const announcement = field<boolean>('global.announcement_enabled');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -57,6 +67,14 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
   return (
     <div className="site-theme min-h-screen bg-background text-foreground">
+      {announcement ? (
+        <Link
+          to={field('global.announcement_link')}
+          className="block bg-primary px-4 py-2 text-center text-sm font-medium text-primary-foreground"
+        >
+          {field('global.announcement_text')}
+        </Link>
+      ) : null}
       {/* Header */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
@@ -143,7 +161,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
             <div className="flex items-center gap-2 shrink-0">
               <Button asChild size="sm" className="hidden sm:inline-flex rounded-full px-5">
-                <Link to="/website/admissions/apply">Apply Now</Link>
+                <Link to={field('global.header_cta_href')}>{field('global.header_cta_label')}</Link>
               </Button>
 
               {/* Mobile menu */}
