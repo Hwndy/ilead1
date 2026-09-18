@@ -6,6 +6,7 @@
 - [x] Apply structured navy portal framing across admin, teacher, student, and parent areas
 - [x] Restore white and soft-gray public website surfaces with navy text and lime accents
 - [x] Validate representative public website and sign-in screens at desktop and mobile widths
+- [x] Revert the public website to its pre-overhaul look (site-scoped theme), portals unchanged
 - [ ] Validate authenticated portal screens when a signed-in preview session is available
 
 ## Phase 1 — Finance reliability and money coming in
