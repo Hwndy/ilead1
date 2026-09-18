@@ -169,6 +169,13 @@ export const ParentFees: React.FC = () => {
         <Card><CardHeader className="pb-2"><CardDescription>Next Due</CardDescription><CardTitle className="text-base">{nextDue?.due_date ? format(new Date(nextDue.due_date), 'PP') : ''}</CardTitle></CardHeader></Card>
       </div>
 
+      {!hasInvoices && outstanding > 0 && (
+        <BankTransferDetails
+          amount={outstanding}
+          reference={`${selectedChild.full_name} ${selectedChild.admission_number || ''}`.trim()}
+        />
+      )}
+
       {hasInvoices && invoices.map(inv => {
         const billable = invoiceBillable(inv);
         const paidOnInvoice = payments
