@@ -320,7 +320,7 @@ export const AcceptOfferPage = () => {
                     <h4 className="font-medium">Next Steps:</h4>
                     <ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
                       <li>Accept this admission offer</li>
-                      <li>Pay the acceptance fee ({feeLabel})</li>
+                      <li>Pay the acceptance fee ({feeLabel}) by bank transfer</li>
                       <li>Complete enrollment process</li>
                       <li>Receive your student credentials</li>
                     </ol>
@@ -328,7 +328,7 @@ export const AcceptOfferPage = () => {
                   </div>
 
                   <Alert>
-                    <CreditCard className="h-4 w-4" />
+                    <CalendarClock className="h-4 w-4" />
                     <AlertDescription>
                       Acceptance deadline: {new Date(offer.acceptance_deadline).toLocaleDateString()}
                     </AlertDescription>
@@ -349,7 +349,7 @@ export const AcceptOfferPage = () => {
                       ) : (
                         <>
                           <CheckCircle className="h-4 w-4 mr-2" />
-                          Accept & Pay Fee
+                          Accept Offer
                         </>
                       )}
                     </Button>
