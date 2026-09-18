@@ -10,7 +10,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, Upload, Calendar as CalendarIcon, User, GraduationCap, FileText, CreditCard, Send } from 'lucide-react';
+import { CheckCircle, Upload, Calendar as CalendarIcon, User, GraduationCap, FileText, Send } from 'lucide-react';
+import { BankTransferDetails } from '@/components/shared/BankTransferDetails';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
