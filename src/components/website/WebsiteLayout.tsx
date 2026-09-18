@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/shared/Logo';
-import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Youtube, Menu, X, ChevronDown } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Youtube, Menu, ChevronDown, ArrowRight } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useSchoolInfo, useSiteMenu, useSiteFields } from '@/hooks/useCms';
@@ -78,15 +78,15 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
       ) : null}
       {/* Header */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-xl ${
-          scrolled ? 'bg-background/90 border-b border-border shadow-sm' : 'bg-background/70 border-b border-transparent'
+        className={`sticky top-0 z-50 border-b transition-all duration-300 backdrop-blur-xl ${
+          scrolled ? 'border-border bg-background/95 shadow-sm' : 'border-border/70 bg-background/95'
         }`}
       >
         {/* Top bar with contact info */}
-        <div className="hidden md:block border-b border-border/40 bg-primary/[0.04]">
-          <div className="container mx-auto px-4 py-1.5">
+        <div className="hidden bg-primary text-primary-foreground md:block">
+          <div className="site-container py-2">
             <div className="flex flex-wrap justify-between items-center gap-y-1 gap-x-4 text-xs">
-              <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-muted-foreground min-w-0">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 text-primary-foreground/75">
                 {info.contact_phone && (
                   <a href={`tel:${info.contact_phone.replace(/\s+/g, '')}`} className="flex items-center gap-1 min-w-0 hover:text-primary transition-colors">
                     <Phone className="h-3 w-3 shrink-0" />
@@ -109,7 +109,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
               <div className="flex items-center space-x-3 shrink-0">
                 {socials.filter(([url]) => !!url).map(([url, label, Icon]) => (
-                  <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-primary-foreground/70 transition-colors hover:text-gold">
                     <Icon className="h-3.5 w-3.5" />
                   </a>
                 ))}
@@ -119,13 +119,13 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
         </div>
 
         {/* Main navigation */}
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 gap-3">
+        <div className="site-container">
+          <div className="flex h-[5.25rem] items-center justify-between gap-3">
             <Link to="/website" className="flex items-center gap-3 min-w-0 shrink-0">
               <Logo size="md" showText={false} />
               <div className="min-w-0 hidden sm:block">
                 <span className="block text-[15px] font-bold text-foreground leading-tight whitespace-nowrap">{info.name || 'iVintage College'}</span>
-                <span className="block text-[11px] uppercase tracking-[0.14em] text-muted-foreground leading-tight truncate">{info.motto || 'Excellence in Education'}</span>
+                 <span className="block truncate text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground leading-tight">{info.motto || 'Knowledge. Character. Excellence.'}</span>
               </div>
             </Link>
 
@@ -135,18 +135,18 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`rounded-full px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
+                  className={`relative px-3 py-2 text-sm font-bold transition-colors whitespace-nowrap ${
                     isActivePath(item.href)
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-foreground/75 hover:text-primary hover:bg-muted'
+                      ? 'text-primary after:absolute after:inset-x-3 after:-bottom-[1.15rem] after:h-0.5 after:bg-gold'
+                      : 'text-foreground/75 hover:text-primary'
                   }`}
                 >
                   {item.name}
                 </Link>
               ))}
               <DropdownMenu>
-                <DropdownMenuTrigger className={`flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors outline-none ${
-                  moreNav.some(i => isActivePath(i.href)) ? 'bg-primary/10 text-primary' : 'text-foreground/75 hover:text-primary hover:bg-muted'
+                <DropdownMenuTrigger className={`flex items-center gap-1 px-3 py-2 text-sm font-bold transition-colors outline-none ${
+                  moreNav.some(i => isActivePath(i.href)) ? 'text-primary' : 'text-foreground/75 hover:text-primary'
                 }`}>
                   More <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
@@ -161,8 +161,8 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             </nav>
 
             <div className="flex items-center gap-2 shrink-0">
-              <Button asChild size="sm" className="hidden sm:inline-flex rounded-full px-5">
-                <Link to={field('global.header_cta_href')}>{field('global.header_cta_label')}</Link>
+              <Button asChild size="sm" className="hidden px-5 sm:inline-flex">
+                <Link to={field('global.header_cta_href')}>{field('global.header_cta_label')} <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
 
               {/* Mobile menu */}
@@ -217,26 +217,26 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border mt-16">
+      <footer className="mt-0 border-t border-primary bg-primary text-primary-foreground">
         {/* Pre-footer CTA */}
-        <div className="border-b border-border bg-primary/[0.05]">
-          <div className="container mx-auto flex flex-col items-center gap-4 px-4 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div className="border-b border-primary-foreground/10 bg-steel">
+          <div className="site-container flex flex-col items-center gap-4 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <h3 className="text-lg font-bold text-foreground">Admissions are open for the new session</h3>
-              <p className="text-sm text-muted-foreground">Apply online in minutes and track your application at every stage.</p>
+              <h3 className="text-lg font-bold text-primary-foreground">Admissions are open for the new session</h3>
+              <p className="text-sm text-primary-foreground/70">Apply online in minutes and track your application at every stage.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Button asChild className="rounded-full px-6">
+              <Button asChild variant="secondary" className="px-6">
                 <Link to="/website/admissions/apply">Apply Now</Link>
               </Button>
-              <Button variant="outline" asChild className="rounded-full px-6">
+              <Button variant="outline" asChild className="border-primary-foreground/30 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
                 <Link to="/website/track-application">Track Application</Link>
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-12">
+        <div className="site-container py-14 [&_h3]:text-primary-foreground [&_p]:text-primary-foreground/65 [&_li_a]:text-primary-foreground/65 [&_li_a:hover]:text-gold">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
             {/* School Info */}
             <div className="md:col-span-2">
@@ -250,7 +250,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               <p className="text-muted-foreground mb-4">{field('global.footer_tagline')}</p>
               <div className="flex space-x-4">
                 {socials.filter(([url]) => !!url).map(([url, label, Icon]) => (
-                  <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                   <a key={label} href={url} aria-label={label} target="_blank" rel="noopener noreferrer" className="text-primary-foreground/65 transition-colors hover:text-gold">
                     <Icon className="h-5 w-5" />
                   </a>
                 ))}
@@ -334,7 +334,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
+           <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-primary-foreground/10 pt-8 text-center text-sm text-primary-foreground/55 sm:flex-row sm:text-left">
             <p>&copy; {new Date().getFullYear()} {info.name}. All rights reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
               <Link to="/website/about" className="hover:text-primary transition-colors">About</Link>

@@ -212,7 +212,7 @@
   }
 }
 
-/* Public website keeps the original navy + lime light theme */
+/* Public website — iVintage modern academic editorial theme */
 .site-theme {
   --background: 0 0% 100%;
   --foreground: 219 37% 14%;
@@ -245,14 +245,14 @@
   --input: 216 20% 88%;
   --ring: 67 69% 45%;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
   --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(219 37% 24%));
 
   --shadow-card: 0 2px 8px -2px hsl(219 37% 12% / 0.12);
   --shadow-hover: 0 4px 16px -4px hsl(219 37% 12% / 0.18);
 
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 .site-theme h1,
@@ -261,5 +261,55 @@
 .site-theme h4,
 .site-theme h5,
 .site-theme h6 {
-  font-family: inherit;
+  font-family: 'Sora', sans-serif;
+  letter-spacing: 0;
+}
+
+@layer components {
+  .site-container {
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .site-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: hsl(var(--steel));
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .site-kicker::before {
+    content: '';
+    width: 2rem;
+    height: 0.2rem;
+    background: hsl(var(--gold));
+  }
+
+  .site-arch-image {
+    border-radius: 999px 999px 0.5rem 0.5rem;
+  }
+
+  .site-theme main > div > section:not(:first-child) {
+    scroll-margin-top: 6rem;
+  }
+
+  .site-theme .rounded-2xl {
+    border-radius: var(--radius);
+  }
+
+  .site-theme .rounded-xl {
+    border-radius: var(--radius);
+  }
+}
+
+@media (min-width: 768px) {
+  .site-container {
+    padding-inline: 3rem;
+  }
 }

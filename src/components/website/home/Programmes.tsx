@@ -40,37 +40,37 @@ export const Programmes: React.FC = () => {
   if (!programmes?.length) return null;
 
   return (
-    <section className="py-16 sm:py-20">
-      <div className="container mx-auto px-18">
-        <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Programmes</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{heading}</h2>
-          <p className="mt-4 text-lg text-muted-foreground">{intro}</p>
+    <section className="py-16 sm:py-24">
+      <div className="site-container">
+        <Reveal className="mb-12 grid items-end gap-6 lg:grid-cols-[1.35fr_.65fr]">
+          <div>
+            <p className="site-kicker">Programmes</p>
+            <h2 className="mt-4 max-w-3xl text-3xl font-bold leading-tight text-foreground lg:text-5xl">{heading}</h2>
+          </div>
+          <p className="text-base leading-relaxed text-muted-foreground">{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {programmes.map((p, i) => (
             <Reveal key={p.title} delay={i * 80}>
               <Link
                 to={p.href || '/website/school-life'}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="group relative flex min-h-[23rem] overflow-hidden rounded-lg bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <div className="relative h-40 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden">
                   <img
                     src={p.image || '/campus.png'}
                     alt={`${p.title} at iVintage College`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <h3 className="text-lg font-bold text-white">{p.title}</h3>
-                    <p className="text-xs uppercase tracking-wide text-white/80">{p.ages}</p>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/25 to-transparent" />
                 </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                <div className="relative z-10 mt-auto p-6 text-primary-foreground">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-gold">{p.ages}</p>
+                  <h3 className="mt-2 text-2xl font-bold">{p.title}</h3>
+                  <p className="mt-2 max-w-lg text-sm leading-relaxed text-primary-foreground/75">{p.description}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-gold">
                     Explore <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>

@@ -12,8 +12,8 @@ interface SectionBandProps {
 
 const TONES: Record<NonNullable<SectionBandProps['tone']>, string> = {
   default: 'bg-background',
-  muted: 'bg-muted/40',
-  accent: 'bg-gradient-to-br from-primary/10 via-background to-accent/10',
+  muted: 'border-y border-border bg-muted/55',
+  accent: 'border-y border-border bg-gold-soft/45',
 };
 
 const SIZES: Record<NonNullable<SectionBandProps['size']>, string> = {
@@ -30,7 +30,7 @@ export const SectionBand: React.FC<SectionBandProps> = ({
   id,
 }) => (
   <section id={id} className={`${TONES[tone]} ${SIZES[size]} ${className}`}>
-    <div className="container mx-auto px-4">{children}</div>
+    <div className="site-container">{children}</div>
   </section>
 );
 
@@ -51,13 +51,13 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   className = '',
 }) => (
   <Reveal
-    className={`mb-12 max-w-2xl ${align === 'center' ? 'mx-auto text-center' : 'text-left'} ${className}`}
+    className={`mb-12 ${align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl text-left'} ${className}`}
   >
     {eyebrow && (
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
+      <p className={align === 'center' ? 'text-xs font-extrabold uppercase tracking-[0.18em] text-steel' : 'site-kicker'}>{eyebrow}</p>
     )}
-    <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground lg:text-4xl">{title}</h2>
-    {intro && <p className="mt-4 text-lg text-muted-foreground">{intro}</p>}
+    <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground lg:text-4xl">{title}</h2>
+    {intro && <p className="mt-4 text-base leading-relaxed text-muted-foreground lg:text-lg">{intro}</p>}
   </Reveal>
 );
 
