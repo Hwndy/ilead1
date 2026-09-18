@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route, useParams } from 'react-router-dom';
 import { WebsiteLayout } from '@/components/website/WebsiteLayout';
 import { ScrollToTop } from '@/components/website/ScrollToTop';
 import { HomePage } from './HomePage';
@@ -17,6 +17,11 @@ import { TestimonialsPage } from './TestimonialsPage';
 import { CareersPage } from './CareersPage';
 import { NotFoundPage } from './NotFoundPage';
 
+const OfferRedirect = () => {
+  const { token = '' } = useParams();
+  return <Navigate to={`/accept-offer/${encodeURIComponent(token)}`} replace />;
+};
+
 export const WebsiteRouter = () => {
   return (
     <WebsiteLayout>
@@ -28,7 +33,7 @@ export const WebsiteRouter = () => {
         <Route path="/admissions" element={<AdmissionsPage />} />
         <Route path="/admissions/apply" element={<ApplyPage />} />
         <Route path="/track-application" element={<TrackApplicationPage />} />
-        <Route path="/accept-offer/:token" element={<AcceptOfferPage />} />
+        <Route path="/accept-offer/:token" element={<OfferRedirect />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:slug" element={<NewsPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
