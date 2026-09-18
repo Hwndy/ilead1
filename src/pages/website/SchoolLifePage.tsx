@@ -115,19 +115,22 @@ export const SchoolLifePage = () => {
           intro="Modern infrastructure supporting effective teaching and learning."
         />
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2">
-          {facilities.map((facility, index) => (
-            <Reveal key={facility.title} delay={(index % 2) * 90}>
-              <article className="flex h-full items-start gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <facility.icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{facility.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{facility.description}</p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+          {facilities.map((facility, index) => {
+            const Icon = FACILITY_ICONS[index % FACILITY_ICONS.length];
+            return (
+              <Reveal key={`${facility.title}-${index}`} delay={(index % 2) * 90}>
+                <article className="flex h-full items-start gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">{facility.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{facility.description}</p>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
         <div className="mt-10 text-center">
           <Button variant="outline" className="rounded-full px-6" asChild>
