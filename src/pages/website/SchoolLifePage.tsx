@@ -32,49 +32,60 @@ export const SchoolLifePage = () => {
       />
       {/* Hero Section */}
       <PageHero
-        eyebrow="School Life at iVintage"
-        title="Academic Excellence &"
-        highlight="Holistic Development"
-        subtitle="Experience a vibrant school life that combines rigorous academics with character development, extracurricular activities, and a supportive community environment."
+        eyebrow={field('school_life.hero_eyebrow')}
+        title={field('school_life.hero_title')}
+        highlight={field('school_life.hero_highlight')}
+        subtitle={field('school_life.hero_subtitle')}
         crumbs={[{ label: 'School Life' }]}
       />
 
       {/* Academic programmes */}
-      <SectionBand>
-        <SectionHeading
-          eyebrow="Curriculum"
-          title="Academic programmes"
-          intro="Comprehensive tracks designed to prepare students for higher education and career success."
-        />
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {academicPrograms.map((program, index) => (
-            <Reveal key={program.title} delay={index * 90}>
-              <article className="relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                <span className="absolute right-6 top-5 text-5xl font-bold leading-none text-primary/10">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <program.icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold text-foreground">{program.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{program.description}</p>
-                <div className="mt-5 border-t border-border pt-4">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                    Core subjects
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {program.subjects.map((subject) => (
-                      <Badge key={subject} variant="secondary" className="rounded-full text-xs font-normal">
-                        {subject}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </SectionBand>
+      {isVisible('programmes') && academicPrograms.length ? (
+        <SectionBand>
+          <SectionHeading
+            eyebrow="Curriculum"
+            title={field('school_life.programmes_title')}
+            intro={field('school_life.programmes_intro')}
+          />
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {academicPrograms.map((program, index) => {
+              const Icon = PROGRAMME_ICONS[index % PROGRAMME_ICONS.length];
+              const subjects = String(program.subjects || '')
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean);
+              return (
+                <Reveal key={`${program.title}-${index}`} delay={index * 90}>
+                  <article className="relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <span className="absolute right-6 top-5 text-5xl font-bold leading-none text-primary/10">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="mt-5 text-xl font-semibold text-foreground">{program.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{program.description}</p>
+                    {subjects.length ? (
+                      <div className="mt-5 border-t border-border pt-4">
+                        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                          Core subjects
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {subjects.map((subject) => (
+                            <Badge key={subject} variant="secondary" className="rounded-full text-xs font-normal">
+                              {subject}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </SectionBand>
+      ) : null}
 
       {/* Class structure */}
       <SectionBand tone="muted">
