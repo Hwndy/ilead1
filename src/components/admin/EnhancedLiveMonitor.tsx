@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { logAuditEvent } from '@/lib/audit';
 
 interface LiveSession {
   id: string;
@@ -75,6 +76,7 @@ export const EnhancedLiveMonitor: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [investigating, setInvestigating] = useState<SuspiciousActivity | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
