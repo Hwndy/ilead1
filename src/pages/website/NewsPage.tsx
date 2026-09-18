@@ -57,6 +57,7 @@ function downloadIcs(item: NewsItem) {
 }
 
 const NewsList: React.FC = () => {
+  const { field } = useSiteFields();
   const [tab, setTab] = useState<'news' | 'events'>('news');
   const [cat, setCat] = useState<Cat>('all');
   const [q, setQ] = useState('');
