@@ -7,6 +7,7 @@ import { SEO } from '@/components/website/SEO';
 import { PageHero } from '@/components/website/PageHero';
 import { SectionBand, SectionHeading } from '@/components/website/Section';
 import { Reveal } from '@/components/website/Reveal';
+import { useSiteFields, useSectionControls } from '@/hooks/useCms';
 
 const PROGRAMME_ICONS = [Microscope, Calculator, Palette, BookOpen];
 const FACILITY_ICONS = [BookOpen, Microscope, Globe, Trophy];
