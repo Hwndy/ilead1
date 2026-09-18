@@ -10,12 +10,10 @@ export const GalleryHighlights: React.FC = () => {
 
   return (
     <section className="py-20 bg-card/30">
-      <div className="container mx-auto px-4">
+      <div className="site-container">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-              <span className="h-px w-8 bg-gold" /> Campus Snapshots
-            </div>
+            <div className="site-kicker">Campus snapshots</div>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground flex items-center gap-3">
               <Camera className="h-8 w-8 text-primary" /> From the Gallery
             </h2>
@@ -30,7 +28,7 @@ export const GalleryHighlights: React.FC = () => {
             <Link
               key={it.id}
               to="/website/gallery"
-              className={`relative block overflow-hidden rounded-xl border border-border bg-muted group ${i === 0 ? 'row-span-2 col-span-2 md:col-span-1 md:row-span-2 aspect-square md:aspect-auto' : 'aspect-square'}`}
+               className={`group relative block overflow-hidden rounded-lg border border-border bg-muted ${i === 0 ? 'row-span-2 col-span-2 md:col-span-1 md:row-span-2 aspect-square md:aspect-auto' : 'aspect-square'}`}
             >
               <img
                 src={it.image_url}

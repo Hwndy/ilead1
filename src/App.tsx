@@ -179,7 +179,7 @@ const App = () => (
                   
                   {/* Website routes - publicly accessible */}
                   <Route path="/website/*" element={<WebsiteRouter />} />
-                  <Route path="/track-application" element={<TrackApplicationPage />} />
+                  <Route path="/track-application" element={<Navigate to="/website/track-application" replace />} />
                   <Route path="/accept-offer/:token" element={<AcceptOfferPage />} />
                   
                   {/* Redirect old super-admin route to dashboard */}

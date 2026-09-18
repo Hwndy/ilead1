@@ -17,7 +17,7 @@ import { Achievements } from '@/components/website/home/Achievements';
 import { VisitUs } from '@/components/website/home/VisitUs';
 import { WhyChooseUs } from '@/components/website/home/WhyChooseUs';
 import { usePrefersReducedMotion } from '@/components/website/Reveal';
-import { useWebsiteSettings, useSchoolInfo, settingValue } from '@/hooks/useCms';
+import { useWebsiteSettings, settingValue } from '@/hooks/useCms';
 
 // Fallback hero image slideshow when nothing is configured in the CMS.
 const DEFAULT_HERO_IMAGES = [
@@ -31,7 +31,6 @@ export const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [paused, setPaused] = useState(false);
   const { settings } = useWebsiteSettings();
-  const { info } = useSchoolInfo();
   const reducedMotion = usePrefersReducedMotion();
 
   const heroImages = useMemo(() => {
@@ -91,7 +90,7 @@ export const HomePage = () => {
         })}</script>
       </Helmet>
 
-      <section className="overflow-hidden bg-muted/55">
+      <section className="relative overflow-hidden bg-muted/55">
         <div className="site-container grid min-h-[42rem] p-0 lg:grid-cols-[.9fr_1.1fr] lg:pr-0">
           <div className="relative z-10 flex flex-col justify-center px-5 py-14 md:px-12 lg:px-0 lg:py-20 lg:pr-16">
             <p className="site-kicker">{heroBadge}</p>

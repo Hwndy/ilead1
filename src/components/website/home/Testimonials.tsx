@@ -7,14 +7,10 @@ export const Testimonials: React.FC = () => {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-20 bg-gradient-to-br from-primary/5 via-background to-gold/5">
-      <div className="container mx-auto px-4">
+    <section className="border-y border-border bg-muted/55 py-20">
+      <div className="site-container">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            <span className="h-px w-8 bg-gold" />
-            Voices of iVintage
-            <span className="h-px w-8 bg-gold" />
-          </div>
+          <div className="text-xs font-extrabold uppercase tracking-[0.18em] text-steel">Voices of iVintage</div>
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             Trusted by families, championed by alumni
           </h2>
@@ -24,7 +20,7 @@ export const Testimonials: React.FC = () => {
           {items.slice(0, 3).map((t) => (
             <figure
               key={t.id}
-              className="relative rounded-2xl bg-card border border-border p-8 shadow-sm hover:shadow-lg transition-shadow"
+               className="relative border-l-4 border-l-gold bg-card p-8 shadow-sm transition-shadow hover:shadow-lg"
             >
               <Quote className="absolute top-6 right-6 h-8 w-8 text-gold/30" />
               {t.rating ? (
@@ -41,7 +37,7 @@ export const Testimonials: React.FC = () => {
                 "{t.content}"
               </blockquote>
               <figcaption className="flex items-center gap-3 pt-4 border-t border-border">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-primary-foreground font-semibold overflow-hidden">
+                 <div className="flex h-10 w-10 items-center justify-center overflow-hidden bg-primary font-semibold text-primary-foreground">
                   {t.image_url ? (
                     <img src={t.image_url} alt={t.name} className="h-full w-full object-cover" loading="lazy" />
                   ) : (
