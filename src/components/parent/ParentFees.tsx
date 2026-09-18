@@ -63,7 +63,6 @@ export const ParentFees: React.FC = () => {
   const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
   const [creditBalance, setCreditBalance] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [paying, setPaying] = useState<string | null>(null);
   const [receiptFor, setReceiptFor] = useState<FeePayment | null>(null);
 
   useEffect(() => {
@@ -113,32 +112,6 @@ export const ParentFees: React.FC = () => {
     .filter(p => p.status === 'completed' && !p.fee_structure_id && !p.fee_installment_id)
     .reduce((s, p) => s + Number(p.amount_paid || 0), 0);
 
-  const pay = async (opts: { fee_structure_id?: string; fee_installment_id?: string; invoice_id?: string; amount: number; label: string }) => {
-    if (!selectedChild) return;
-    setPaying(opts.fee_structure_id || opts.fee_installment_id || opts.invoice_id || 'x');
-    try {
-      const { data, error } = await supabase.functions.invoke('initialize-fee-payment', {
-        body: {
-          student_id: selectedChild.student_id,
-          fee_structure_id: opts.fee_structure_id,
-          fee_installment_id: opts.fee_installment_id,
-          invoice_id: opts.invoice_id,
-          amount: opts.amount,
-          label: opts.label,
-          callback_url: `${window.location.origin}/fees/payment-callback`,
-        },
-      });
-      if (error) throw error;
-      if (data?.authorization_url) {
-        window.location.href = data.authorization_url;
-      } else {
-        throw new Error('No authorization URL returned');
-      }
-    } catch (e: any) {
-      toast({ title: 'Payment error', description: e.message || 'Could not start payment', variant: 'destructive' });
-      setPaying(null);
-    }
-  };
 
   if (!selectedChild) {
     return (
