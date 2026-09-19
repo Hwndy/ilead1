@@ -119,14 +119,14 @@ export const HomePage = () => {
               />
             ))}
             <div className="pointer-events-none absolute left-0 top-0 h-3 w-24 bg-gold xl:h-4 xl:w-32" />
-            <div className="absolute bottom-4 left-4 right-4 border-l-4 border-gold bg-primary p-4 pr-24 text-primary-foreground sm:bottom-6 sm:left-auto sm:right-6 sm:w-[22rem] sm:p-5 sm:pr-24">
+            <div className="absolute bottom-4 left-4 right-4 border-l-4 border-gold bg-primary p-4 text-primary-foreground sm:bottom-6 sm:left-auto sm:right-6 sm:w-[22rem] sm:p-5">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-gold">The iVintage difference</p>
               <p className="mt-2 font-bold leading-snug">Academic excellence rooted in faith and character.</p>
             </div>
 
             {/* Slide controls */}
             {heroImages.length > 1 && (
-              <div className="absolute bottom-7 right-7 z-20 flex items-center gap-2 sm:bottom-9 sm:right-9">
+              <div className="absolute right-4 top-4 z-20 flex items-center gap-2 bg-primary/85 px-3 py-2 backdrop-blur-sm sm:right-6 sm:top-6">
                 <div className="flex items-center gap-1.5" aria-label="Slideshow navigation">
                   {heroImages.map((_, index) => (
                     <button
