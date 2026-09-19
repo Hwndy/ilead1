@@ -47,7 +47,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   };
 
   return (
-    <section className={`relative overflow-hidden border-b border-border ${onImage ? 'min-h-[28rem]' : 'bg-muted/55 py-16 sm:py-24'}`}>
+    <section className={`relative overflow-hidden border-b border-border ${onImage ? 'min-h-[24rem] sm:min-h-[28rem]' : 'bg-muted/55 py-12 sm:py-20 lg:py-24'}`}>
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       </Helmet>
@@ -60,7 +60,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
         </div>
       )}
 
-      <div className={`site-container relative z-10 ${onImage ? 'flex min-h-[28rem] flex-col justify-center py-16' : ''}`}>
+      <div className={`site-container relative z-10 ${onImage ? 'flex min-h-[24rem] flex-col justify-center py-12 sm:min-h-[28rem] sm:py-16' : ''}`}>
         {/* Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="mb-8 flex">
           <ol className={`flex flex-wrap items-center gap-1 text-xs sm:text-sm ${onImage ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
@@ -86,7 +86,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             <p className={`site-kicker mb-5 ${onImage ? '[&]:text-gold' : ''}`}>{eyebrow}</p>
           )}
           <h1
-            className={`text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl ${
+            className={`max-w-full break-words text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl ${
               onImage ? 'text-primary-foreground' : 'text-foreground'
             }`}
           >

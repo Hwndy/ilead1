@@ -273,6 +273,28 @@
     padding-inline: 1.25rem;
   }
 
+  .site-theme,
+  .site-theme main,
+  .site-theme section,
+  .site-theme footer {
+    min-width: 0;
+  }
+
+  .site-theme img,
+  .site-theme video,
+  .site-theme iframe {
+    max-width: 100%;
+  }
+
+  .site-theme h1,
+  .site-theme h2,
+  .site-theme h3,
+  .site-theme p,
+  .site-theme a,
+  .site-theme span {
+    overflow-wrap: break-word;
+  }
+
   .site-kicker {
     display: inline-flex;
     align-items: center;
@@ -311,5 +333,11 @@
 @media (min-width: 768px) {
   .site-container {
     padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-container {
+    padding-inline: 4rem;
   }
 }

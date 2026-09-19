@@ -91,25 +91,25 @@ export const HomePage = () => {
       </Helmet>
 
       <section className="relative overflow-hidden bg-muted/55">
-        <div className="site-container grid min-h-[42rem] p-0 lg:grid-cols-[.9fr_1.1fr] lg:pr-0">
-          <div className="relative z-10 flex flex-col justify-center px-5 py-14 md:px-12 lg:px-0 lg:py-20 lg:pr-16">
+        <div className="site-container grid p-0 xl:min-h-[40rem] xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:pr-0">
+          <div className="relative z-10 flex min-w-0 flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 md:px-12 xl:px-0 xl:py-20 xl:pr-16">
             <p className="site-kicker">{heroBadge}</p>
-            <h1 className="mt-5 max-w-[14ch] text-4xl font-bold leading-[1.06] text-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 max-w-[15ch] break-words text-4xl font-bold leading-[1.08] text-foreground sm:text-5xl xl:text-6xl">
               {heroTitle}
               <span className="mt-1 block text-steel">{heroTitleHighlight}</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{heroSubtitle}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" variant="secondary" className="px-7" asChild>
+            <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
+              <Button size="lg" variant="secondary" className="w-full px-7 sm:w-auto" asChild>
                 <Link to="/website/admissions/apply">{heroCtaPrimary} <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
-              <Button variant="outline" size="lg" className="px-7" asChild>
+              <Button variant="outline" size="lg" className="w-full px-7 sm:w-auto" asChild>
                 <Link to="/website/about">{heroCtaSecondary}</Link>
               </Button>
             </div>
           </div>
 
-          <div className="relative min-h-[24rem] overflow-hidden lg:min-h-[42rem]">
+          <div className="relative min-h-[22rem] overflow-hidden sm:min-h-[30rem] md:min-h-[34rem] xl:min-h-[40rem]">
             {heroImages.map((imageSrc, index) => (
               <img
                 key={imageSrc}
@@ -118,44 +118,41 @@ export const HomePage = () => {
                 className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
               />
             ))}
-            <div className="pointer-events-none absolute -left-36 -top-16 hidden h-[42rem] w-80 rounded-t-full bg-muted lg:block" />
-            <div className="pointer-events-none absolute -left-28 -top-8 hidden h-[36rem] w-64 rounded-tl-full border-l-[12px] border-t-[12px] border-gold lg:block" />
-            <div className="absolute bottom-6 left-5 right-5 border-l-4 border-gold bg-primary p-5 text-primary-foreground md:left-auto md:right-8 md:w-80">
+            <div className="pointer-events-none absolute left-0 top-0 h-3 w-24 bg-gold xl:h-4 xl:w-32" />
+            <div className="absolute bottom-4 left-4 right-4 border-l-4 border-gold bg-primary p-4 text-primary-foreground sm:bottom-6 sm:left-auto sm:right-6 sm:w-[22rem] sm:p-5">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-gold">The iVintage difference</p>
               <p className="mt-2 font-bold leading-snug">Academic excellence rooted in faith and character.</p>
             </div>
+
+            {/* Slide controls */}
+            {heroImages.length > 1 && (
+              <div className="absolute right-4 top-4 z-20 flex items-center gap-2 bg-primary/85 px-3 py-2 backdrop-blur-sm sm:right-6 sm:top-6">
+                <div className="flex items-center gap-1.5" aria-label="Slideshow navigation">
+                  {heroImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground ${index === currentSlide ? 'w-5 bg-gold' : 'w-2 bg-primary-foreground/45 hover:bg-primary-foreground'}`}
+                      aria-label={`Go to slide ${index + 1}`}
+                      aria-current={index === currentSlide}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={() => setPaused((p) => !p)}
+                  className="text-primary-foreground/70 transition-colors hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
+                  aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
+                >
+                  {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Slide controls */}
-        {heroImages.length > 1 && (
-          <div className="absolute bottom-2 right-2 z-20 flex items-center gap-3 rounded-full border border-primary-foreground/15 bg-primary/60 px-3 py-2 backdrop-blur-sm lg:bottom-6 lg:right-6">
-            <div className="flex space-x-2">
-              {heroImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                    index === currentSlide ? 'w-6 bg-gold' : 'w-2 bg-primary-foreground/50 hover:bg-primary-foreground'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                  aria-current={index === currentSlide}
-                />
-              ))}
-            </div>
-            <button
-              onClick={() => setPaused((p) => !p)}
-              className="text-primary-foreground/80 transition-colors hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground"
-              aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
-            >
-              {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
-            </button>
-          </div>
-        )}
       </section>
 
       <nav aria-label="Explore iVintage" className="bg-primary text-primary-foreground">
-        <div className="site-container grid grid-cols-2 p-0 lg:grid-cols-4">
+        <div className="site-container grid grid-cols-1 p-0 sm:grid-cols-2 xl:grid-cols-4">
           {['Day School', 'Boarding', 'Tahfeedh', 'ICT & Coding'].map((label) => (
             <Link key={label} to="/website/school-life" className="flex items-center justify-between border-b border-r border-primary-foreground/10 px-5 py-5 text-sm font-bold transition-colors hover:bg-steel">
               {label}<ArrowRight className="h-4 w-4 text-gold" />
