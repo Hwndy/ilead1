@@ -17,9 +17,9 @@ const TONES: Record<NonNullable<SectionBandProps['tone']>, string> = {
 };
 
 const SIZES: Record<NonNullable<SectionBandProps['size']>, string> = {
-  sm: 'py-12',
-  md: 'py-16 sm:py-20',
-  lg: 'py-20 sm:py-24',
+  sm: 'py-10 sm:py-12',
+  md: 'py-12 sm:py-16 lg:py-20',
+  lg: 'py-14 sm:py-20 lg:py-24',
 };
 
 export const SectionBand: React.FC<SectionBandProps> = ({
@@ -51,12 +51,12 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   className = '',
 }) => (
   <Reveal
-    className={`mb-12 ${align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl text-left'} ${className}`}
+    className={`mb-8 sm:mb-12 ${align === 'center' ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl text-left'} ${className}`}
   >
     {eyebrow && (
       <p className={align === 'center' ? 'text-xs font-extrabold uppercase tracking-[0.18em] text-steel' : 'site-kicker'}>{eyebrow}</p>
     )}
-    <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground lg:text-4xl">{title}</h2>
+    <h2 className="mt-4 break-words text-3xl font-bold leading-tight text-foreground lg:text-4xl">{title}</h2>
     {intro && <p className="mt-4 text-base leading-relaxed text-muted-foreground lg:text-lg">{intro}</p>}
   </Reveal>
 );

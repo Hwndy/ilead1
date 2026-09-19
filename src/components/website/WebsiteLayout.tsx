@@ -83,7 +83,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
         }`}
       >
         {/* Top bar with contact info */}
-        <div className="hidden bg-primary text-primary-foreground md:block">
+        <div className="hidden bg-primary text-primary-foreground sm:block">
           <div className="site-container py-2">
             <div className="flex flex-wrap justify-between items-center gap-y-1 gap-x-4 text-xs">
               <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 text-primary-foreground/75">
@@ -120,17 +120,17 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
 
         {/* Main navigation */}
         <div className="site-container">
-          <div className="flex h-[5.25rem] items-center justify-between gap-3">
+            <div className="flex h-[4.5rem] items-center justify-between gap-3 sm:h-[5.25rem]">
             <Link to="/website" className="flex items-center gap-3 min-w-0 shrink-0">
               <Logo size="md" showText={false} />
-              <div className="min-w-0 hidden sm:block">
+              <div className="hidden min-w-0 sm:block">
                 <span className="block text-[15px] font-bold text-foreground leading-tight whitespace-nowrap">{info.name || 'iVintage College'}</span>
-                 <span className="block truncate text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground leading-tight">{info.motto || 'Knowledge. Character. Excellence.'}</span>
+                 <span className="block max-w-[16rem] truncate text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground leading-tight lg:max-w-[20rem]">{info.motto || 'Knowledge. Character. Excellence.'}</span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden xl:flex items-center gap-1">
               {primaryNav.map((item) => (
                 <Link
                   key={item.name}
@@ -168,7 +168,7 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
               {/* Mobile menu */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
+                  <Button variant="ghost" size="icon" className="xl:hidden" aria-label="Open menu">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
@@ -237,9 +237,9 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
         </div>
 
         <div className="site-container py-14 [&_h3]:text-primary-foreground [&_p]:text-primary-foreground/65 [&_li_a]:text-primary-foreground/65 [&_li_a:hover]:text-gold">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
+          <div className="grid min-w-0 grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {/* School Info */}
-            <div className="md:col-span-2">
+            <div className="min-w-0 sm:col-span-2">
               <div className="flex items-center space-x-4 mb-4">
                 <Logo size="md" />
                 <div>
