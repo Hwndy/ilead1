@@ -12,7 +12,7 @@
 ## Public website responsiveness (Sept 19)
 - [x] Audit homepage at phone, tablet, laptop, desktop, and wide-screen widths
 - [x] Rebuild the homepage opening and shared public-site responsive rules
-- [ ] Verify every public route and interactive public flow across viewport sizes
+- [x] Verify every public route and interactive public flow across viewport sizes
 
 ## Phase 1 — Finance reliability and money coming in
 - [x] Shared class resolution helper used by all finance screens
