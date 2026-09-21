@@ -16,10 +16,8 @@ INSERT INTO public.school_info (info_key, info_value, category) VALUES
   ('school_name', 'iVintage College', 'general'),
   ('motto', 'Knowledge. Character. Excellence.', 'general'),
   ('phone', '+234 813 419 7710', 'contact'),
-  ('phone_alt', '+234 802 322 6806', 'contact'),
-  ('phone_alt2', '+234 705 427 3127', 'contact'),
-  ('email', 'iVintagevintagecollege@gmail.com', 'contact'),
-  ('address', 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos', 'contact'),
+  ('email', 'ivintagecollege@gmail.com', 'contact'),
+  ('address', 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact'),
   ('logo_url', '/ivintage_logo.png', 'branding'),
   ('student_count', '500+', 'statistics'),
   ('teacher_count', '50+', 'statistics'),
@@ -34,9 +32,9 @@ DELETE FROM public.school_info WHERE info_key IN ('established', 'facebook', 'tw
 INSERT INTO public.website_settings (setting_key, setting_value, description) VALUES
   ('site_title', '"iVintage College - Day School, Boarding & Tahfeedh"', 'Main site title'),
   ('site_tagline', '"Day School | Boarding | Tahfeedh"', 'Site tagline/motto'),
-  ('contact_email', '"iVintagevintagecollege@gmail.com"', 'Main contact email'),
+  ('contact_email', '"ivintagecollege@gmail.com"', 'Main contact email'),
   ('contact_phone', '"+234 813 419 7710"', 'Main contact phone'),
-  ('contact_address', '"Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos"', 'Campus address'),
+  ('contact_address', '"iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos"', 'Campus address'),
   ('logo_url', '"/ivintage_logo.png"', 'School logo'),
   ('school_colors', '{"primary": "#141C2B", "secondary": "#C6D92D", "accent": "#C6D92D"}', 'School brand colors')
 ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, description = EXCLUDED.description;
@@ -45,9 +43,9 @@ ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, 
 INSERT INTO public.school_info (info_key, info_value, category) VALUES
   ('motto', '…redefining western and Islamic intellectualism', 'general'),
   ('address', 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact'),
-  ('address_alt', '28, Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos', 'contact'),
-  ('contact_phone_alt', '0705 427 3127, 0802 322 6806', 'contact'),
-  ('contact_email_alt', 'info@iVintagecollege.com', 'contact')
+  ('address_alt', '', 'contact'),
+  ('contact_phone_alt', '', 'contact'),
+  ('contact_email_alt', '', 'contact')
 ON CONFLICT (info_key) DO UPDATE SET info_value = EXCLUDED.info_value, category = EXCLUDED.category;
 
 INSERT INTO public.website_settings (setting_key, setting_value, description) VALUES
@@ -62,8 +60,12 @@ INSERT INTO public.website_settings (setting_key, setting_value, description) VA
   ('home_pillars_intro', '"Four pillars shape every child who passes through iVintage College  with coding a major component."', 'Pillars intro'),
   ('home_pillars', '[{"title":"Academic excellence","description":"Sound, highly qualitative western education, with distinction scores maintained in both internal and external examinations.","image":"/img1.png"},{"title":"ICT and coding","description":"Proficiency in Microsoft Office (Word, Excel, PowerPoint, Access), basic programming and coding, and robotics.","image":"/img3.png"},{"title":"Hifdhul Qur’an, Islamic education and Arabic","description":"Qur’an memorisation  at least a quarter of the whole Qur’an  Arabic literacy and proficiency, very sound morals, and a high level of understanding of Islamic beliefs and values.","image":"/img2.png"},{"title":"Leadership development","description":"Leadership training classes, mentoring and coaching programmes, clubs and associations (literacy and debating, book readers, karate and more), plus guidance and counselling.","image":"/campus.png"}]', 'Home pillars'),
   ('home_key_dates_note', '"Entrance examinations hold every Saturday at 10am prompt. Apply early  places in each class are limited."', 'Admissions note'),
-  ('home_key_dates', '[{"label":"Applications","value":"Now open","icon":"ClipboardList"},{"label":"Entrance examination","value":"Every Saturday, 10am prompt","icon":"FileCheck2"},{"label":"Enquiry lines","value":"+234 818 803 2057, +234 805 317 1279","icon":"CalendarDays"},{"label":"New session begins","value":"September","icon":"GraduationCap"}]', 'Admissions key dates')
+  ('home_key_dates', '[{"label":"Applications","value":"Now open","icon":"ClipboardList"},{"label":"Entrance examination","value":"Every Saturday, 10am prompt","icon":"FileCheck2"},{"label":"Enquiry line","value":"+234 813 419 7710","icon":"CalendarDays"},{"label":"New session begins","value":"September","icon":"GraduationCap"}]', 'Admissions key dates')
 ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, description = EXCLUDED.description;
+
+UPDATE public.school_info
+SET is_active = false, info_value = '', category = 'contact'
+WHERE info_key IN ('address_alt', 'contact_phone_alt', 'contact_email_alt', 'phone_alt', 'phone_alt2');
 
 -- --- Student testimonials from the previous site ----------------------------
 INSERT INTO public.testimonials (name, role, content, rating, is_featured, is_published, created_by)

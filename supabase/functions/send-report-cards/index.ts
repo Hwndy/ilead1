@@ -8,14 +8,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
-const DEFAULT_REPLY_TO_EMAIL = "suleayo04@gmail.com";
+const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 
 function safeSender(): string {
   const v = Deno.env.get("SENDER_EMAIL")?.trim() || DEFAULT_SENDER_EMAIL;
-  const domain = v.split("@").pop()?.toLowerCase();
-  return domain === ALLOWED_EMAIL_DOMAIN ? v : DEFAULT_SENDER_EMAIL;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? v : DEFAULT_SENDER_EMAIL;
 }
 function safeReplyTo(): string {
   const v = Deno.env.get("REPLY_TO_EMAIL")?.trim() || DEFAULT_REPLY_TO_EMAIL;

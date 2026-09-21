@@ -167,7 +167,7 @@ export const SITE_PAGES: SitePage[] = [
             default: [
               { label: 'Applications', value: 'Now open' },
               { label: 'Entrance examination', value: 'Every Saturday, 10am prompt' },
-              { label: 'Enquiry lines', value: '+234 818 803 2057, +234 805 317 1279' },
+              { label: 'Enquiry line', value: '+234 813 419 7710' },
               { label: 'New session begins', value: 'September' },
             ],
           },
@@ -370,7 +370,7 @@ export const SITE_PAGES: SitePage[] = [
             ],
             default: [
               { label: 'Admissions office', value: '+234 813 419 7710' },
-              { label: 'Email', value: 'admissions@ivintagecollege.com' },
+              { label: 'Email', value: 'ivintagecollege@gmail.com' },
               { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
             ],
           },

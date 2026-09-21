@@ -17,9 +17,8 @@ const corsHeaders = {
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ivintage.vercel.app").replace(/\/+$/, "");
 // Official letterhead artwork + email strips live in the shared module.
-const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
+const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 const MAX_RETRIES = 3;
@@ -27,10 +26,9 @@ const RETRY_DELAY_MS = 1000;
 
 function getSafeSchoolEmail(envName: string, fallback: string): string {
   const configured = Deno.env.get(envName)?.trim() || fallback;
-  const domain = configured.split("@").pop()?.toLowerCase();
 
-  if (domain !== ALLOWED_EMAIL_DOMAIN) {
-    console.error(`${envName} is misconfigured. Expected @${ALLOWED_EMAIL_DOMAIN}, received @${domain || "unknown"}. Falling back to ${fallback}.`);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(configured)) {
+    console.error(`${envName} is not a valid email (${configured}). Falling back to ${fallback}.`);
     return fallback;
   }
 
@@ -517,7 +515,7 @@ serve(async (req) => {
       <p style="margin:0 0 18px 0;">
         The signed offer letter, on the official school letterhead, is attached to this message as a PDF. Any question about
         the offer should be sent to
-        <a href="mailto:admissions@ivintagecollege.com" style="color:#141C2B;">admissions@ivintagecollege.com</a>.
+        <a href="mailto:ivintagecollege@gmail.com" style="color:#141C2B;">ivintagecollege@gmail.com</a>.
       </p>
 
       <p style="margin:0 0 8px 0;">Yours faithfully,<br><br>

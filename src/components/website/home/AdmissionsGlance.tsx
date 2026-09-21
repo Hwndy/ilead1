@@ -21,7 +21,7 @@ const ICONS: Record<string, React.ComponentType<any>> = {
 const DEFAULT_DATES: KeyDate[] = [
   { label: 'Applications', value: 'Now open', icon: 'ClipboardList' },
   { label: 'Entrance examination', value: 'Every Saturday, 10am prompt', icon: 'FileCheck2' },
-  { label: 'Enquiry lines', value: '+234 818 803 2057, +234 805 317 1279', icon: 'CalendarDays' },
+  { label: 'Enquiry line', value: '+234 813 419 7710', icon: 'CalendarDays' },
   { label: 'New session begins', value: 'September', icon: 'GraduationCap' },
 ];
 

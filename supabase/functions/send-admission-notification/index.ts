@@ -5,18 +5,16 @@ import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
-const ALLOWED_EMAIL_DOMAIN = "ivintage.vercel.app";
-const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
-const DEFAULT_REPLY_TO_EMAIL = "admissions@ivintagecollege.com";
+const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
 
 function getSafeSchoolEmail(envName: string, fallback: string): string {
   const configured = Deno.env.get(envName)?.trim() || fallback;
-  const domain = configured.split("@").pop()?.toLowerCase();
 
-  if (domain !== ALLOWED_EMAIL_DOMAIN) {
-    console.error(`${envName} is misconfigured. Expected @${ALLOWED_EMAIL_DOMAIN}, received @${domain || "unknown"}. Falling back to ${fallback}.`);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(configured)) {
+    console.error(`${envName} is not a valid email (${configured}). Falling back to ${fallback}.`);
     return fallback;
   }
 
