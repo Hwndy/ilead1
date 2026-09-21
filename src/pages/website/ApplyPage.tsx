@@ -42,7 +42,7 @@ export const ApplyPage = () => {
                 admissions@ivintagecollege.com
               </a>
               {' '}or call{' '}
-              <a href="tel:+2348134187710" className="text-primary hover:underline whitespace-nowrap">
+              <a href="tel:+2348134197710" className="text-primary hover:underline whitespace-nowrap">
                 +234 813 418 7710
               </a>
             </p>

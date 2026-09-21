@@ -23,7 +23,7 @@ INSERT INTO public.school_info (info_key, info_value, category, is_active) VALUE
   ('address', 'Lagos, Nigeria', 'contact', true),
   ('contact_phone', '+234 813 418 7710', 'contact', true),
   ('contact_email', 'info@albari.com.ng', 'contact', true),
-  ('whatsapp_number', '2348134187710', 'contact', true),
+  ('whatsapp_number', '2348134197710', 'contact', true),
   ('facebook_url', '', 'social', true),
   ('twitter_url', '', 'social', true),
   ('instagram_url', '', 'social', true),

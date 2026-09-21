@@ -23,7 +23,7 @@ const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
   contact_phone_alt: '0705 427 3127, 0802 322 6806',
   contact_email: 'iVintagevintagecollege@gmail.com',
   contact_email_alt: 'info@iVintagecollege.com',
-  whatsapp_number: '2348134187710',
+  whatsapp_number: '2348134197710',
   facebook_url: '',
   twitter_url: '',
   instagram_url: '',
