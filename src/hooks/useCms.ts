@@ -5,6 +5,94 @@ import { cmsDb, CMS_TABLES } from '@/lib/cms-db';
 import { subscribeToDraft, getDraft, getServerDraft } from '@/lib/cms-preview';
 import { SITE_DEFAULTS } from '@/config/siteSchema';
 
+const OFFICIAL_CONTACT = {
+  email: 'ivintagecollege@gmail.com',
+  phone: '+234 813 419 7710',
+  whatsapp: '2348134197710',
+  address: 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos',
+} as const;
+
+const CONTACT_REPLACEMENTS: Array<[RegExp, string]> = [
+  [/iVintagevintagecollege@gmail\.com/gi, OFFICIAL_CONTACT.email],
+  [/ileadvintagecollege@gmail\.com/gi, OFFICIAL_CONTACT.email],
+  [/info@iVintagecollege\.com/gi, OFFICIAL_CONTACT.email],
+  [/info@ileadcollege\.com/gi, OFFICIAL_CONTACT.email],
+  [/admissions@ivintagecollege\.com/gi, OFFICIAL_CONTACT.email],
+  [/info@albari\.edu\.ng/gi, OFFICIAL_CONTACT.email],
+  [/info@albari\.com\.ng/gi, OFFICIAL_CONTACT.email],
+  [/iLead Vintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos/gi, OFFICIAL_CONTACT.address],
+  [/Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen \(ADS\) Mosque, Ikorodu, Lagos/gi, OFFICIAL_CONTACT.address],
+  [/\+234 813 418 7710/g, OFFICIAL_CONTACT.phone],
+  [/2348134187710/g, OFFICIAL_CONTACT.whatsapp],
+  [/\+234 802 322 6806/g, OFFICIAL_CONTACT.phone],
+  [/\+234 705 427 3127/g, OFFICIAL_CONTACT.phone],
+  [/0705 427 3127/g, OFFICIAL_CONTACT.phone],
+  [/0802 322 6806/g, OFFICIAL_CONTACT.phone],
+  [/\+234 818 803 2057, \+234 805 317 1279/g, OFFICIAL_CONTACT.phone],
+];
+
+function normalizeContactString(value: string) {
+  return CONTACT_REPLACEMENTS.reduce(
+    (next, [pattern, replacement]) => next.replace(pattern, replacement),
+    value,
+  ).replace(/\+234 813 419 7710,\s*\+234 813 419 7710/g, OFFICIAL_CONTACT.phone);
+}
+
+function normalizeContactValue<T>(value: T): T {
+  if (typeof value === 'string') return normalizeContactString(value) as T;
+  if (Array.isArray(value)) return value.map((item) => normalizeContactValue(item)) as T;
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, normalizeContactValue(item)]),
+    ) as T;
+  }
+  return value;
+}
+
+function normalizeSchoolInfo(map: SchoolInfoMap): SchoolInfoMap {
+  return {
+    ...Object.fromEntries(Object.entries(map).map(([key, value]) => [key, normalizeContactString(value)])),
+    name: 'iVintage College',
+    school_name: 'iVintage College',
+    address: OFFICIAL_CONTACT.address,
+    address_alt: '',
+    contact_phone: OFFICIAL_CONTACT.phone,
+    phone: OFFICIAL_CONTACT.phone,
+    contact_phone_alt: '',
+    phone_alt: '',
+    phone_alt2: '',
+    contact_email: OFFICIAL_CONTACT.email,
+    email: OFFICIAL_CONTACT.email,
+    contact_email_alt: '',
+    whatsapp_number: OFFICIAL_CONTACT.whatsapp,
+    logo_url: '/ivintage_logo.png',
+  };
+}
+
+function normalizeWebsiteSettings(map: WebsiteSettingsMap): WebsiteSettingsMap {
+  const normalized = Object.fromEntries(
+    Object.entries(map).map(([key, value]) => [key, normalizeContactValue(value)]),
+  ) as WebsiteSettingsMap;
+
+  normalized.contact_email = OFFICIAL_CONTACT.email;
+  normalized.contact_phone = OFFICIAL_CONTACT.phone;
+  normalized.contact_address = OFFICIAL_CONTACT.address;
+  normalized['apply.help_text'] = `Need help? Call the admissions office on ${OFFICIAL_CONTACT.phone}.`;
+  normalized['admissions.contacts'] = [
+    { label: 'Admissions office', value: OFFICIAL_CONTACT.phone },
+    { label: 'Email', value: OFFICIAL_CONTACT.email },
+    { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
+  ];
+  normalized.home_key_dates = [
+    { label: 'Applications', value: 'Now open', icon: 'ClipboardList' },
+    { label: 'Entrance examination', value: 'Every Saturday, 10am prompt', icon: 'FileCheck2' },
+    { label: 'Enquiry line', value: OFFICIAL_CONTACT.phone, icon: 'CalendarDays' },
+    { label: 'New session begins', value: 'September', icon: 'GraduationCap' },
+  ];
+
+  return normalized;
+}
+
 
 /* ------------------------------------------------------------------ */
 /*  school_info                                                        */
@@ -18,7 +106,7 @@ const SCHOOL_INFO_DEFAULTS: SchoolInfoMap = {
   name: 'iVintage College',
   motto: '\u2026redefining western and Islamic intellectualism',
   address: 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos',
-  address_alt: '28, Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos',
+  address_alt: '',
   contact_phone: '+234 813 419 7710',
   contact_email: 'ivintagecollege@gmail.com',
   whatsapp_number: '2348134197710',
@@ -49,7 +137,7 @@ export function useSchoolInfo() {
       (data || []).forEach((row) => {
         if (row?.info_key && row?.info_value != null) map[row.info_key] = String(row.info_value);
       });
-      return map;
+      return normalizeSchoolInfo(map);
     },
   });
   return { info: query.data ?? SCHOOL_INFO_DEFAULTS, isLoading: query.isLoading, error: query.error };
@@ -76,7 +164,7 @@ export function useWebsiteSettings() {
       (data || []).forEach((row: any) => {
         map[row.setting_key] = row.setting_value;
       });
-      return map;
+      return normalizeWebsiteSettings(map);
     },
   });
 

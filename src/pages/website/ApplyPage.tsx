@@ -38,8 +38,8 @@ export const ApplyPage = () => {
           <div className="mt-6 sm:mt-8 text-center text-xs sm:text-sm text-muted-foreground px-2">
             <p>
               Need help? Contact our admissions office at{' '}
-              <a href="mailto:admissions@ivintagecollege.com" className="text-primary hover:underline break-all">
-                admissions@ivintagecollege.com
+              <a href="mailto:ivintagecollege@gmail.com" className="text-primary hover:underline break-all">
+                ivintagecollege@gmail.com
               </a>
               {' '}or call{' '}
               <a href="tel:+2348134197710" className="text-primary hover:underline whitespace-nowrap">

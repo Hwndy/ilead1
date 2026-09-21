@@ -71,17 +71,16 @@ export const SchoolInfoEditor = () => {
   }
 
   const generalFields = [
-    { key: 'school_name', label: 'School Name' },
-    { key: 'school_motto', label: 'School Motto' },
+    { key: 'name', label: 'School Name' },
+    { key: 'motto', label: 'School Motto' },
     { key: 'established_year', label: 'Established Year' },
     { key: 'principal_name', label: 'Principal Name' },
   ];
 
   const contactFields = [
-    { key: 'phone_primary', label: 'Primary Phone' },
-    { key: 'phone_secondary', label: 'Secondary Phone' },
-    { key: 'email_primary', label: 'Primary Email' },
-    { key: 'email_admissions', label: 'Admissions Email' },
+    { key: 'contact_phone', label: 'Contact Phone' },
+    { key: 'whatsapp_number', label: 'WhatsApp Number' },
+    { key: 'contact_email', label: 'Contact Email' },
     { key: 'address', label: 'Physical Address' },
   ];
 

@@ -301,16 +301,10 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <span>{info.address}</span>
                   </div>
                 )}
-                {info.address_alt && (
-                  <div className="flex items-start space-x-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                    <span>{info.address_alt}</span>
-                  </div>
-                )}
                 {info.contact_phone && (
                   <div className="flex items-center space-x-2">
                     <Phone className="h-4 w-4 text-gold" />
-                    <span>{[info.contact_phone, info.contact_phone_alt].filter(Boolean).join(', ')}</span>
+                    <span>{info.contact_phone}</span>
                   </div>
                 )}
                 {info.contact_email && (
@@ -319,13 +313,6 @@ export const WebsiteLayout: React.FC<WebsiteLayoutProps> = ({ children }) => {
                     <span className="break-all">{info.contact_email}</span>
                   </div>
                 )}
-                {info.contact_email_alt && (
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-gold" />
-                    <span className="break-all">{info.contact_email_alt}</span>
-                  </div>
-                )}
-
                 <div className="flex items-start space-x-2">
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                   <span>{field('office_hours')}</span>
