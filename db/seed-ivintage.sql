@@ -15,7 +15,7 @@ ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value;
 INSERT INTO public.school_info (info_key, info_value, category) VALUES
   ('school_name', 'iVintage College', 'general'),
   ('motto', 'Knowledge. Character. Excellence.', 'general'),
-  ('phone', '+234 813 418 7710', 'contact'),
+  ('phone', '+234 813 419 7710', 'contact'),
   ('phone_alt', '+234 802 322 6806', 'contact'),
   ('phone_alt2', '+234 705 427 3127', 'contact'),
   ('email', 'iVintagevintagecollege@gmail.com', 'contact'),
@@ -35,7 +35,7 @@ INSERT INTO public.website_settings (setting_key, setting_value, description) VA
   ('site_title', '"iVintage College - Day School, Boarding & Tahfeedh"', 'Main site title'),
   ('site_tagline', '"Day School | Boarding | Tahfeedh"', 'Site tagline/motto'),
   ('contact_email', '"iVintagevintagecollege@gmail.com"', 'Main contact email'),
-  ('contact_phone', '"+234 813 418 7710"', 'Main contact phone'),
+  ('contact_phone', '"+234 813 419 7710"', 'Main contact phone'),
   ('contact_address', '"Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos"', 'Campus address'),
   ('logo_url', '"/ivintage_logo.png"', 'School logo'),
   ('school_colors', '{"primary": "#141C2B", "secondary": "#C6D92D", "accent": "#C6D92D"}', 'School brand colors')

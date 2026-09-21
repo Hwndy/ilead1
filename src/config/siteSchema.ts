@@ -369,7 +369,7 @@ export const SITE_PAGES: SitePage[] = [
               { key: 'value', label: 'Value', type: 'text' },
             ],
             default: [
-              { label: 'Admissions office', value: '+234 813 418 7710' },
+              { label: 'Admissions office', value: '+234 813 419 7710' },
               { label: 'Email', value: 'admissions@ivintagecollege.com' },
               { label: 'Office hours', value: 'Mon – Fri, 8AM – 4PM' },
             ],
@@ -605,7 +605,7 @@ export const SITE_PAGES: SitePage[] = [
         fields: [
           { key: 'apply.title', label: 'Headline', type: 'text', default: 'Application for admission' },
           { key: 'apply.intro', label: 'Intro', type: 'textarea', default: 'Complete every section. You will receive an application number to track progress.' },
-          { key: 'apply.help_text', label: 'Help note', type: 'textarea', default: 'Need help? Call the admissions office on +234 813 418 7710.' },
+          { key: 'apply.help_text', label: 'Help note', type: 'textarea', default: 'Need help? Call the admissions office on +234 813 419 7710.' },
           { key: 'apply.success_text', label: 'Text after submitting', type: 'textarea', default: 'Your application has been received. Keep your application number safe — you will need it to track your application.' },
         ],
       },

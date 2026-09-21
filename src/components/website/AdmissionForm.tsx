@@ -548,7 +548,7 @@ export const AdmissionForm = () => {
               <p>• Your application goes straight to our admissions team for review</p>
               <p>• You will receive a confirmation email within 24 hours</p>
               <p>• Entrance examination dates will be communicated via email/phone</p>
-              <p>• Contact our admissions office for any inquiries: +234 813 418 7710</p>
+              <p>• Contact our admissions office for any inquiries: +234 813 419 7710</p>
             </div>
           </CardContent>
         </Card>
