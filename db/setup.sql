@@ -1671,7 +1671,7 @@ CREATE INDEX IF NOT EXISTS idx_exam_sessions_student_id ON public.exam_sessions(
 
 -- ===== 20250923140603_692c61d6-0b61-4dd3-ae1c-6a2f1d782612.sql =====
 
--- Create website CMS tables for Al-Bari Group of Schools Website
+-- Create website CMS tables for iVintage College Website
 
 -- Website pages for static content management
 CREATE TABLE public.website_pages (
@@ -1876,25 +1876,25 @@ CREATE TRIGGER update_website_settings_updated_at
 
 -- Insert initial school information
 INSERT INTO public.school_info (info_key, info_value, category) VALUES
-('school_name', 'Al-Bari Group of Schools', 'general'),
+('school_name', 'iVintage College', 'general'),
 ('phone', '+234 813 419 7710', 'contact'),
-('email', 'info@albari.edu.ng', 'contact'),
-('address', 'Lagos, Nigeria', 'contact'),
+('email', 'ivintagecollege@gmail.com', 'contact'),
+('address', 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact'),
 ('established', '2010', 'general'),
 ('student_count', '500+', 'statistics'),
 ('teacher_count', '50+', 'statistics'),
 ('success_rate', '98%', 'statistics'),
-('facebook', 'https://facebook.com/albariGroup of Schools', 'social'),
-('twitter', 'https://twitter.com/albariGroup of Schools', 'social'),
-('instagram', 'https://instagram.com/albariGroup of Schools', 'social');
+('facebook', 'https://facebook.com/ivintagecollege', 'social'),
+('twitter', 'https://twitter.com/ivintagecollege', 'social'),
+('instagram', 'https://instagram.com/ivintagecollege', 'social');
 
 -- Insert initial website settings
 INSERT INTO public.website_settings (setting_key, setting_value, description) VALUES
-('site_title', '"Al-Bari Group of Schools - Excellence in Education"', 'Main site title'),
+('site_title', '"iVintage College - Excellence in Education"', 'Main site title'),
 ('site_tagline', '"Building Tomorrow''s Leaders Today"', 'Site tagline/motto'),
-('contact_email', '"info@albari.edu.ng"', 'Main contact email'),
+('contact_email', '"ivintagecollege@gmail.com"', 'Main contact email'),
 ('contact_phone', '"+234 813 419 7710"', 'Main contact phone'),
-('social_links', '{"facebook": "https://facebook.com/albariGroup of Schools", "twitter": "https://twitter.com/albariGroup of Schools", "instagram": "https://instagram.com/albariGroup of Schools"}', 'Social media links'),
+('social_links', '{"facebook": "https://facebook.com/ivintagecollege", "twitter": "https://twitter.com/ivintagecollege", "instagram": "https://instagram.com/ivintagecollege"}', 'Social media links'),
 ('school_colors', '{"primary": "#22c55e", "secondary": "#16a34a", "accent": "#15803d"}', 'School brand colors');
 
 
@@ -7948,11 +7948,11 @@ GRANT ALL ON public.website_sections TO service_role;
 
 -- Seed default school_info keys (do nothing on conflict)
 INSERT INTO public.school_info (info_key, info_value, category, is_active) VALUES
-  ('name', 'Al-Bari Group of Schools', 'general', true),
+  ('name', 'iVintage College', 'general', true),
   ('motto', 'Building Tomorrow''s Leaders Today', 'general', true),
-  ('address', 'Lagos, Nigeria', 'contact', true),
+  ('address', 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact', true),
   ('contact_phone', '+234 813 419 7710', 'contact', true),
-  ('contact_email', 'info@albari.com.ng', 'contact', true),
+  ('contact_email', 'ivintagecollege@gmail.com', 'contact', true),
   ('whatsapp_number', '2348134197710', 'contact', true),
   ('facebook_url', '', 'social', true),
   ('twitter_url', '', 'social', true),
@@ -7963,7 +7963,7 @@ INSERT INTO public.school_info (info_key, info_value, category, is_active) VALUE
   ('stat_teachers', '40+', 'statistics', true),
   ('stat_years', '22+', 'statistics', true),
   ('stat_success_rate', '98%', 'statistics', true),
-  ('logo_url', '/albari_logo.jpg', 'general', true)
+  ('logo_url', '/ivintage_logo.png', 'general', true)
 ON CONFLICT (info_key) DO NOTHING;
 
 -- Seed default website_settings keys
@@ -7971,14 +7971,14 @@ INSERT INTO public.website_settings (setting_key, setting_value, description) VA
   ('hero_badge', to_jsonb('Excellence in Education Since 2004'::text), 'Homepage hero badge text'),
   ('hero_title', to_jsonb('Building Tomorrow''s'::text), 'Homepage hero title'),
   ('hero_title_highlight', to_jsonb('Leaders Today'::text), 'Highlighted portion of hero title'),
-  ('hero_subtitle', to_jsonb('At Al-Bari Group of Schools, we are committed to nurturing young minds and developing future leaders through innovative education, character building, and academic excellence.'::text), 'Homepage hero subtitle'),
+  ('hero_subtitle', to_jsonb('At iVintage College, we are committed to nurturing young minds and developing future leaders through innovative education, character building, and academic excellence.'::text), 'Homepage hero subtitle'),
   ('hero_cta_primary_label', to_jsonb('Apply Now'::text), 'Primary hero CTA label'),
   ('hero_cta_secondary_label', to_jsonb('Learn More'::text), 'Secondary hero CTA label'),
-  ('hero_images', '["/albari-campus.png","/img1.png","/img2.png","/img3.png"]'::jsonb, 'Rotating hero background images'),
+  ('hero_images', '["/campus.png","/img1.png","/img2.png","/img3.png"]'::jsonb, 'Rotating hero background images'),
   ('principal_name', to_jsonb('Dr. Awe'::text), 'Principal display name'),
   ('principal_title', to_jsonb('Director of Studies'::text), 'Principal title'),
   ('principal_photo_url', to_jsonb('/awe.png'::text), 'Principal portrait URL'),
-  ('principal_message', to_jsonb('For over two decades, Al-Bari Group of Schools has been a sanctuary where bright minds are nurtured into principled leaders. We believe that true education is the marriage of intellectual rigour and moral clarity, and every child who walks through our gates is treated as a future custodian of that vision.\n\nWelcome to a community that will challenge, support and celebrate your child.'::text), 'Principal welcome message'),
+  ('principal_message', to_jsonb('For over two decades, iVintage College has been a sanctuary where bright minds are nurtured into principled leaders. We believe that true education is the marriage of intellectual rigour and moral clarity, and every child who walks through our gates is treated as a future custodian of that vision.\n\nWelcome to a community that will challenge, support and celebrate your child.'::text), 'Principal welcome message'),
   ('accreditations', '[
     {"name":"WAEC","desc":"West African Examinations Council","icon":"Award"},
     {"name":"NECO","desc":"National Examinations Council","icon":"ShieldCheck"},
@@ -7997,7 +7997,7 @@ INSERT INTO public.website_settings (setting_key, setting_value, description) VA
     {"title":"Teacher Portal","description":"Manage classes, create exams, track student performance and communicate with parents","icon":"UserCheck","link":"/login?portal=true&role=teacher","features":["Class Management","Exam Creation","Grade Reports","Student Records"],"enabled":true},
     {"title":"Admin Portal","description":"Comprehensive school management system for administrators and staff","icon":"Shield","link":"/login?portal=true&role=admin","features":["User Management","System Settings","Reports","School Analytics"],"enabled":true}
   ]'::jsonb, 'Portal cards for /portals page'),
-  ('about_history', to_jsonb('Al-Bari Group of Schools was founded in 2004 with a vision to provide quality education that combines academic excellence with moral values. What started as a small institution with just 50 students has grown into one of Lagos'' most respected educational establishments.\n\nOver the years, we have consistently maintained our commitment to excellence, producing graduates who have gone on to achieve success in various fields including medicine, engineering, law, and business.\n\nOur journey has been marked by continuous innovation in teaching methodologies, infrastructure development, and the integration of modern technology into traditional learning approaches.'::text), 'About page history'),
+  ('about_history', to_jsonb('iVintage College was founded in 2004 with a vision to provide quality education that combines academic excellence with moral values. What started as a small institution with just 50 students has grown into one of Lagos'' most respected educational establishments.\n\nOver the years, we have consistently maintained our commitment to excellence, producing graduates who have gone on to achieve success in various fields including medicine, engineering, law, and business.\n\nOur journey has been marked by continuous innovation in teaching methodologies, infrastructure development, and the integration of modern technology into traditional learning approaches.'::text), 'About page history'),
   ('about_vision', to_jsonb('To be the leading educational institution in Nigeria, recognized for academic excellence, character development, and the production of well-rounded individuals who contribute positively to society.'::text), 'Vision statement'),
   ('about_mission', to_jsonb('To provide quality education that nurtures intellectual growth, moral development, and practical skills, preparing students to excel in their chosen careers while maintaining the highest ethical standards.'::text), 'Mission statement'),
   ('facilities_intro', to_jsonb('Modern infrastructure designed to support effective teaching, learning, and character development'::text), 'Facilities page intro'),
@@ -9813,7 +9813,7 @@ ALTER TABLE public.admission_applications ADD COLUMN IF NOT EXISTS login_email t
 CREATE UNIQUE INDEX IF NOT EXISTS admission_applications_login_email_uidx ON public.admission_applications (lower(login_email)) WHERE login_email IS NOT NULL;
 
 INSERT INTO public.app_settings (setting_key, setting_value)
-VALUES ('student_login_domain', '"students.albari.com.ng"'::jsonb)
+VALUES ('student_login_domain', '"students.ivintagecollege.com"'::jsonb)
 ON CONFLICT (setting_key) DO NOTHING;
 
 
