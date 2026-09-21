@@ -20,7 +20,7 @@ export const CareersManager: React.FC = () => {
   const [rows, setRows] = useState<any[]>([]);
   const [form, setForm] = useState({
     title: '', department: '', employment_type: 'full_time', location: '',
-    description: '', requirements: '', apply_email: 'careers@ilead1..app', closes_on: '',
+    description: '', requirements: '', apply_email: 'careers@iVintage1..app', closes_on: '',
   });
 
   const load = async () => {

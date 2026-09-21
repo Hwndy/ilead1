@@ -491,9 +491,9 @@ export const SITE_PAGES: SitePage[] = [
             key: 'facilities', label: 'Facilities', type: 'list',
             itemFields: textItem([{ key: 'image', label: 'Image', type: 'image' }]),
             default: [
-              { title: 'iLead Vintage College (Day School)', description: 'Purpose-built classrooms on the Akinsanya Estate campus, with small class sizes and dedicated subject teachers.' },
-              { title: 'iLead Vintage Boarding House', description: 'Supervised boarding with structured prep, morning and evening prayers, and full-time house parents.' },
-              { title: 'iLead Tahfeedh School', description: 'Dedicated Qur’an memorisation and Arabic programme running alongside the academic curriculum.' },
+              { title: 'iVintage College (Day School)', description: 'Purpose-built classrooms on the Akinsanya Estate campus, with small class sizes and dedicated subject teachers.' },
+              { title: 'iVintage Boarding House', description: 'Supervised boarding with structured prep, morning and evening prayers, and full-time house parents.' },
+              { title: 'iVintage Tahfeedh School', description: 'Dedicated Qur’an memorisation and Arabic programme running alongside the academic curriculum.' },
               { title: 'ICT and Coding Laboratory', description: 'Networked computer lab where every student learns digital literacy, coding and problem solving.' },
               { title: 'Science Laboratories', description: 'Equipped Biology, Chemistry and Physics laboratories for practical work and WAEC/NECO preparation.' },
               { title: 'Library and Resource Centre', description: 'Reference books, past questions and quiet study space for private and supervised reading.' },

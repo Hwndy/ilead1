@@ -6,9 +6,9 @@ Replace all Al-Bari branding across the website, portals, printed documents, ema
 
 - Name: **iVintage College**
 - Address: Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos
-- Email: ileadvintagecollege@gmail.com
+- Email: iVintagevintagecollege@gmail.com
 - Phones: +234 813 418 7710, +234 802 322 6806, +234 705 427 3127
-- Facilities: iLead Vintage College (Day School), iLead Vintage Boarding House, iLead Tahfeedh School
+- Facilities: iVintage College (Day School), iVintage Boarding House, iVintage Tahfeedh School
 
 ## 1. Logo and favicon
 

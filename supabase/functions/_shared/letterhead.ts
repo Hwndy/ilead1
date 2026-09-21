@@ -4,7 +4,7 @@
 
 // The published Lovable host serves /__l5e/* assets. A custom domain may not,
 // so this stays pinned unless LETTERHEAD_BASE_URL explicitly overrides it.
-const ASSET_BASE_URL = (Deno.env.get("LETTERHEAD_BASE_URL") || "https://ilead1.lovable.app")
+const ASSET_BASE_URL = (Deno.env.get("LETTERHEAD_BASE_URL") || "https://iVintage1.lovable.app")
   .replace(/\/+$/, "");
 
 export const LETTERHEAD_FULL_URL =

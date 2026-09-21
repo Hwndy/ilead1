@@ -4,7 +4,7 @@
 Create a new GitHub repository for this project and sync the current codebase into it, once the user authorizes their GitHub account. No further codebase work requested.
 
 ## Constraint
-This action cannot be performed from chat. Creating a GitHub repository and authorizing a GitHub account require the user's own GitHub login, which only the user can complete. Lovable's Git sync can only **create a new** repository — it cannot attach this project to the existing `github.com/Hwndy/ilead1` repo.
+This action cannot be performed from chat. Creating a GitHub repository and authorizing a GitHub account require the user's own GitHub login, which only the user can complete. Lovable's Git sync can only **create a new** repository — it cannot attach this project to the existing `github.com/Hwndy/iVintage1` repo.
 
 ## Steps the user performs (in the Lovable editor)
 1. Open **Project Settings → Git → GitHub** (or the **+** menu next to the chat input → **GitHub**).

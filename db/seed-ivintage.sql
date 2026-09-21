@@ -18,7 +18,7 @@ INSERT INTO public.school_info (info_key, info_value, category) VALUES
   ('phone', '+234 813 418 7710', 'contact'),
   ('phone_alt', '+234 802 322 6806', 'contact'),
   ('phone_alt2', '+234 705 427 3127', 'contact'),
-  ('email', 'ileadvintagecollege@gmail.com', 'contact'),
+  ('email', 'iVintagevintagecollege@gmail.com', 'contact'),
   ('address', 'Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos', 'contact'),
   ('logo_url', '/ivintage_logo.png', 'branding'),
   ('student_count', '500+', 'statistics'),
@@ -34,7 +34,7 @@ DELETE FROM public.school_info WHERE info_key IN ('established', 'facebook', 'tw
 INSERT INTO public.website_settings (setting_key, setting_value, description) VALUES
   ('site_title', '"iVintage College - Day School, Boarding & Tahfeedh"', 'Main site title'),
   ('site_tagline', '"Day School | Boarding | Tahfeedh"', 'Site tagline/motto'),
-  ('contact_email', '"ileadvintagecollege@gmail.com"', 'Main contact email'),
+  ('contact_email', '"iVintagevintagecollege@gmail.com"', 'Main contact email'),
   ('contact_phone', '"+234 813 418 7710"', 'Main contact phone'),
   ('contact_address', '"Akinsanya Estate, Owode-Ibeshe Road, beside Ansar-Ud-Deen (ADS) Mosque, Ikorodu, Lagos"', 'Campus address'),
   ('logo_url', '"/ivintage_logo.png"', 'School logo'),
@@ -44,10 +44,10 @@ ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, 
 -- --- Website copy from the school's previous site ---------------------------
 INSERT INTO public.school_info (info_key, info_value, category) VALUES
   ('motto', '…redefining western and Islamic intellectualism', 'general'),
-  ('address', 'iLead Vintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact'),
+  ('address', 'iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos', 'contact'),
   ('address_alt', '28, Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos', 'contact'),
   ('contact_phone_alt', '0705 427 3127, 0802 322 6806', 'contact'),
-  ('contact_email_alt', 'info@ileadcollege.com', 'contact')
+  ('contact_email_alt', 'info@iVintagecollege.com', 'contact')
 ON CONFLICT (info_key) DO UPDATE SET info_value = EXCLUDED.info_value, category = EXCLUDED.category;
 
 INSERT INTO public.website_settings (setting_key, setting_value, description) VALUES
@@ -70,9 +70,9 @@ INSERT INTO public.testimonials (name, role, content, rating, is_featured, is_pu
 SELECT v.name, v.role, v.content, 5, true, true,
        (SELECT ur.user_id FROM public.user_roles ur WHERE ur.role = 'admin' ORDER BY ur.created_at LIMIT 1)
 FROM (VALUES
-  ('Orelesi Al Aameen', 'Student', 'iLead is a school of many experiences for everyone; it is one of the best schools in Ikorodu.'),
-  ('Lekki Farraj', 'Student', 'iLead College is a school of prestige  a place for diverse Islamic intellectualism and a fountain of knowledge beyond measure.'),
-  ('Oreagba Abd Hamid', 'Student', 'iLead College is a school filled with lots of experiences and outcomes. It teaches good morals, leadership skills and outstanding western educational knowledge.'),
-  ('Agbaje Fatia', 'Student', 'iLead is a group of schools located in different locations. A good moralistic, disciplined, interactive and educational academy  a great school where we are taught islamically coupled with westernism, and teachers focus on students'' all-round excellent performance.')
+  ('Orelesi Al Aameen', 'Student', 'iVintage is a school of many experiences for everyone; it is one of the best schools in Ikorodu.'),
+  ('Lekki Farraj', 'Student', 'iVintage College is a school of prestige  a place for diverse Islamic intellectualism and a fountain of knowledge beyond measure.'),
+  ('Oreagba Abd Hamid', 'Student', 'iVintage College is a school filled with lots of experiences and outcomes. It teaches good morals, leadership skills and outstanding western educational knowledge.'),
+  ('Agbaje Fatia', 'Student', 'iVintage is a group of schools located in different locations. A good moralistic, disciplined, interactive and educational academy  a great school where we are taught islamically coupled with westernism, and teachers focus on students'' all-round excellent performance.')
 ) AS v(name, role, content)
 WHERE NOT EXISTS (SELECT 1 FROM public.testimonials t WHERE t.name = v.name);

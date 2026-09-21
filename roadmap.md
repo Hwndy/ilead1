@@ -49,7 +49,7 @@
 
 ## Blocked / needs the user
 - Authenticated portal visual verification requires a signed-in preview session.
-- GitHub project sync cannot be attached to the existing `Hwndy/ilead1` repository by the agent; Lovable's Git settings can reconnect only by creating a new repository.
+- GitHub project sync cannot be attached to the existing `Hwndy/iVintage1` repository by the agent; Lovable's Git settings can reconnect only by creating a new repository.
 
 ## Full-app audit (Sept 18)
 - [x] Bare tab addresses (students, classes, subjects, exams, etc.) resolve to correct sections via alias map

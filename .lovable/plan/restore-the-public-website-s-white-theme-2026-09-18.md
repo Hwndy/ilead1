@@ -14,5 +14,5 @@
 
 ## Repository status
 - The project is currently stored in Lovable’s private repository with project ID `e8206054-d204-4810-9570-cc61b0b83582`.
-- It is not currently connected to `https://github.com/Hwndy/ilead1`.
+- It is not currently connected to `https://github.com/Hwndy/iVintage1`.
 - GitHub project sync must be configured from Lovable’s Project Settings → Git; Lovable cannot attach this existing project directly to an already-existing GitHub repository.

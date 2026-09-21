@@ -1,4 +1,4 @@
-# Bring the old iLead website content into the platform
+# Bring the old iVintage website content into the platform
 
 The client has no WordPress site to migrate technically  only screenshots. So this is a content transfer: lift the real copy from the old site into the website section already built here, replacing placeholder defaults.
 
@@ -25,8 +25,8 @@ The client has no WordPress site to migrate technically  only screenshots. So th
 - Orelesi Al Aameen, Lekki Farraj, Oreagba Abd Hamid, Agbaje Fatia  quotes used verbatim.
 
 **Contact / footer**
-- Phones 0705 427 3127, 0802 322 6806; email info@ileadcollege.com
-- Two locations: 28 Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos; and iLead Vintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos.
+- Phones 0705 427 3127, 0802 322 6806; email info@iVintagecollege.com
+- Two locations: 28 Olayinka Jumbo Street, off Noah Junction, Ebutte, Ikorodu, Lagos; and iVintage College Complex, Akinsanya Estate, beside ADS Mosque, Ibeshe Road, Ikorodu, Lagos.
 
 Old-site photos are low quality and carry the orange theme, so they are not imported; existing imagery and the navy/lime brand stay.
 
@@ -35,7 +35,7 @@ Old-site photos are low quality and carry the orange theme, so they are not impo
 1. **Home page**  pillars, programme blurbs, admissions-at-a-glance (Saturday entrance exam + enquiry lines), and hero tagline use the real copy.
 2. **About page**  vision, mission and the network target replace the placeholder text; history paragraphs rewritten around the blend of western/Islamic education and ICT.
 3. **Testimonials**  the four student quotes seeded so the section is no longer empty.
-4. **Footer / contact info**  second campus address, the additional phone numbers, and info@ileadcollege.com added alongside the current ones.
+4. **Footer / contact info**  second campus address, the additional phone numbers, and info@iVintagecollege.com added alongside the current ones.
 
 ## Technical notes
 
@@ -46,4 +46,4 @@ Old-site photos are low quality and carry the orange theme, so they are not impo
 
 ## Open item
 
-The old site lists info@ileadcollege.com while the app currently uses ileadvintagecollege@gmail.com. Both are kept unless you say which is primary.
+The old site lists info@iVintagecollege.com while the app currently uses iVintagevintagecollege@gmail.com. Both are kept unless you say which is primary.

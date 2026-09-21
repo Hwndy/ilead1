@@ -8,7 +8,7 @@
 - Check every public route at desktop and phone widths for contrast, overflow, readability, and interaction states.
 
 ## GitHub project sync
-- Reconnect this Lovable project to `Hwndy/ilead1` using Lovable’s project GitHub sync, not the GitHub API connector.
+- Reconnect this Lovable project to `Hwndy/iVintage1` using Lovable’s project GitHub sync, not the GitHub API connector.
 - Confirm the repository link and two-way synchronization after authorization.
 - Preserve the current project as the source of truth during reconnection so completed work is not overwritten.
 
