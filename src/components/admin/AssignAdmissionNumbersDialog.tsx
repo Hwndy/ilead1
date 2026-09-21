@@ -31,7 +31,7 @@ export const AssignAdmissionNumbersDialog: React.FC<Props> = ({
   open, onOpenChange, singleStudent, onDone,
 }) => {
   const { toast } = useToast();
-  const [prefix, setPrefix] = useState('ALB');
+  const [prefix, setPrefix] = useState('IV');
   const [year, setYear] = useState(String(new Date().getFullYear()));
   const [pad, setPad] = useState(4);
   const [startFrom, setStartFrom] = useState(1);

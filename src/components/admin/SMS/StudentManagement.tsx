@@ -266,7 +266,7 @@ export const StudentManagement = () => {
   const generateAdmissionNumber = () => {
     const year = new Date().getFullYear();
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `ALB${year}${random}`;
+    return `IV${year}${random}`;
   };
 
   return (

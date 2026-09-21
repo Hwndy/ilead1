@@ -20,7 +20,7 @@ const makeTempPassword = () => {
   const digits = '23456789';
   const pick = (src: string, n: number) =>
     Array.from({ length: n }, () => src[Math.floor(Math.random() * src.length)]).join('');
-  return `Alb${pick(letters, 5)}${pick(digits, 3)}`;
+  return `IV${pick(letters, 5)}${pick(digits, 3)}`;
 };
 
 const initials = (n?: string) =>

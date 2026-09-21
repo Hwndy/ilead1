@@ -10,7 +10,7 @@ const alphabet = "abcdefghjkmnpqrstuvwxyz";
 const digits = "23456789";
 const pick = (src: string, n: number) =>
   Array.from({ length: n }, () => src[Math.floor(Math.random() * src.length)]).join("");
-const tempPassword = () => `Alb${pick(alphabet, 5)}${pick(digits, 3)}`;
+const tempPassword = () => `IV${pick(alphabet, 5)}${pick(digits, 3)}`;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });

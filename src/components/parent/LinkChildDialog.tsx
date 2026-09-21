@@ -58,7 +58,7 @@ export const LinkChildDialog: React.FC<Props> = ({ open, onOpenChange }) => {
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="admno">Admission number</Label>
-            <Input id="admno" placeholder="ALB/2025/0001" value={admissionNumber} onChange={e => setAdmissionNumber(e.target.value)} />
+            <Input id="admno" placeholder="IV/2025/0001" value={admissionNumber} onChange={e => setAdmissionNumber(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="dob">Date of birth</Label>

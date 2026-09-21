@@ -606,7 +606,7 @@ export const StaffManagement = () => {
               <Input
                 value={formData.employee_id}
                 onChange={(e) => setFormData({ ...formData, employee_id: e.target.value })}
-                placeholder="Leave blank to auto-generate (ALB/STF/0001)"
+                placeholder="Leave blank to auto-generate (IV/STF/0001)"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
