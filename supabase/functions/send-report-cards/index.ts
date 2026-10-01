@@ -8,7 +8,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 
 function safeSender(): string {

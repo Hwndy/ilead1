@@ -5,7 +5,7 @@ import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
-const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);

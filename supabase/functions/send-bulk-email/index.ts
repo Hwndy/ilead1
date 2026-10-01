@@ -5,7 +5,7 @@ import { wrapEmailInLetterhead } from "../_shared/letterhead.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 
 function getSafeSchoolEmail(envName: string, fallback: string): string {
