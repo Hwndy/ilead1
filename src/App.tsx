@@ -28,6 +28,7 @@ import { UpdateAvailable } from '@/components/pwa/UpdateAvailable';
 import { ScanStation } from '@/components/attendance/ScanStation';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
+import { StudentLoginPage } from '@/pages/StudentLoginPage';
 
 const queryClient = new QueryClient();
 
@@ -100,6 +101,7 @@ const App = () => (
                     
                     {/* Login route */}
                     <Route path="/login" element={<AuthPage />} />
+                    <Route path="/login/students" element={<StudentLoginPage />} />
                     <Route path="/reset-password" element={<ResetPasswordPage />} />
                     
                     {/* Install page for PWA */}
