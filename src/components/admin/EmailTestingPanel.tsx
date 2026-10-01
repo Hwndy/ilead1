@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { supabase } from '@/integrations/supabase/client';
+import { invokeFunction } from '@/lib/functions';
 import { useToast } from '@/hooks/use-toast';
 import { Mail, Send } from 'lucide-react';
 
@@ -29,19 +29,14 @@ export const EmailTestingPanel = () => {
       // Create a dummy application for testing
       const dummyApplicationId = crypto.randomUUID();
       
-      const { data, error } = await supabase.functions.invoke('send-admission-notification', {
-        body: {
-          application_id: dummyApplicationId,
-          notification_type: emailType,
-          additional_data: {
-            // Override the email for testing
-            test_email: email,
-            test_mode: true,
-          },
+      await invokeFunction('send-admission-notification', {
+        application_id: dummyApplicationId,
+        notification_type: emailType,
+        additional_data: {
+          test_email: email.trim(),
+          test_mode: true,
         },
       });
-
-      if (error) throw error;
 
       toast({
         title: 'Test Email Sent',
