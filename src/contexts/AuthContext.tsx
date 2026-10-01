@@ -190,6 +190,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       throw new Error('Your account setup is incomplete. Please contact the school administrator.');
     }
 
+    // Students sign in with their admission number on the student page only.
+    if (roles.every((r) => r.role === 'student')) {
+      await supabase.auth.signOut();
+      setIsLoading(false);
+      throw new Error('Students sign in with their admission number at /login/students.');
+    }
+
     // Sprint E: force password change on first login for admin-provisioned accounts.
     const { data: prof } = await supabase
       .from('profiles')

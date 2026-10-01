@@ -82,7 +82,7 @@ export const PortalsPage = () => {
                   </ul>
                   <div className="mt-auto">
                     <Button asChild className="w-full">
-                      <Link to={LOGIN_PATH}>
+                      <Link to={portal.title.toLowerCase().includes('student') ? '/login/students' : LOGIN_PATH}>
                         Enter portal <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>

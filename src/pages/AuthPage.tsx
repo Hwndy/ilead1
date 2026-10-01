@@ -85,6 +85,12 @@ export const AuthPage = () => {
               onToggleMode={() => setMode('register')}
               onForgotPassword={() => setMode('forgot-password')}
             />
+            <div className="mt-4 rounded-lg border bg-card p-4 text-center">
+              <p className="text-sm text-muted-foreground">Student?</p>
+              <a href="/login/students" className="mt-1 inline-block text-sm font-medium text-primary hover:underline">
+                Sign in with your admission number
+              </a>
+            </div>
             <div className="mt-4 rounded-lg border bg-card/50 p-4 text-center">
               <p className="text-sm text-muted-foreground">
                 Are you a parent? Create an account to follow your children's progress and pay fees.

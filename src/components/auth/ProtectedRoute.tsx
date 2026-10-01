@@ -33,7 +33,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Admin-provisioned / newly enrolled accounts must set their own password first.
-  if (mustChangePassword && location.pathname !== '/reset-password') {
+  if (mustChangePassword && user.role !== 'student' && location.pathname !== '/reset-password') {
     return <Navigate to="/reset-password" replace />;
   }
 
