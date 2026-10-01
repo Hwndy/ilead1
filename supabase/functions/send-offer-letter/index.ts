@@ -17,7 +17,7 @@ const corsHeaders = {
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const FRONTEND_URL = (Deno.env.get("FRONTEND_URL") || "https://ivintage.vercel.app").replace(/\/+$/, "");
 // Official letterhead artwork + email strips live in the shared module.
-const DEFAULT_SENDER_EMAIL = "ivintagecollege@gmail.com";
+const DEFAULT_SENDER_EMAIL = "admissions@ivintagecollege.com";
 const DEFAULT_REPLY_TO_EMAIL = "ivintagecollege@gmail.com";
 const SENDER_EMAIL = getSafeSchoolEmail("SENDER_EMAIL", DEFAULT_SENDER_EMAIL);
 const REPLY_TO = getReplyToEmail("REPLY_TO_EMAIL", DEFAULT_REPLY_TO_EMAIL);
@@ -545,7 +545,7 @@ serve(async (req) => {
       const pdfBase64 = btoa(pdfBinary);
       
       emailResult = await sendEmailWithRetry({
-        from: `iVintage College <${SENDER_EMAIL}>`,
+        from: `iVintage College Admissions <${SENDER_EMAIL}>`,
         to: [application.email],
         reply_to: REPLY_TO,
         subject: emailSubject,

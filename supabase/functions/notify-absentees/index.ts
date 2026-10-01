@@ -31,7 +31,7 @@ serve(async (req) => {
     const { data: parents } = parentIds.length ? await supabase.from("parents").select("id, user_id").in("id", parentIds) : { data: [] as any };
     const parentUidById = new Map((parents || []).map((p: any) => [p.id, p.user_id]));
 
-    const from = `iVintage College <ivintagecollege@gmail.com>`;
+    const from = `iVintage College <${Deno.env.get("SENDER_EMAIL")?.trim() || "admissions@ivintagecollege.com"}>`;
     const replyTo = Deno.env.get("REPLY_TO_EMAIL")?.trim() || "ivintagecollege@gmail.com";
     let sent = 0;
 
