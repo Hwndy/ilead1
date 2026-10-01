@@ -291,18 +291,63 @@ serve(async (req) => {
 
     console.log(`Sending ${notification_type} notification for application:`, application_id);
 
-    // Get application details
-    const { data: application, error: appError } = await supabase
-      .from("admission_applications")
-      .select(`
-        *,
-        classes:applying_for_class_id (name)
-      `)
-      .eq("id", application_id)
-      .single();
+    const isTest = Boolean((additional_data as any)?.test_mode && (additional_data as any)?.test_email);
+    let application: any;
 
-    if (appError || !application) {
-      throw new Error("Application not found");
+    if (isTest) {
+      // Test mode: admins only, uses a sample applicant.
+      const token = (req.headers.get("Authorization") || "").replace("Bearer ", "").trim();
+      const { data: userData } = token ? await supabase.auth.getUser(token) : { data: null as any };
+      const uid = userData?.user?.id;
+      const { data: roleRow } = uid
+        ? await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle()
+        : { data: null };
+      if (!roleRow) {
+        return new Response(JSON.stringify({ error: "Only administrators can send test emails." }), {
+          status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const testEmail = String((additional_data as any).test_email).trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail)) {
+        return new Response(JSON.stringify({ error: "Please enter a valid email address." }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (!emailTemplates[notification_type]) {
+        return new Response(JSON.stringify({ error: `Unknown email type: ${notification_type}` }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      application = {
+        id: null,
+        email: testEmail,
+        first_name: "Test",
+        last_name: "Applicant",
+        full_name: "Test Applicant",
+        student_name: "Test Applicant",
+        application_number: "IVC-TEST-0001",
+        classes: { name: "JSS 1" },
+        interview_date: new Date(Date.now() + 7 * 86400000).toISOString(),
+        interview_time: "10:00 AM",
+        admission_number: "IVINTAGE//TEST",
+        username: "IVINTAGE//TEST",
+        password: "(sample)",
+      };
+    } else {
+      const { data, error: appError } = await supabase
+        .from("admission_applications")
+        .select(`
+          *,
+          classes:applying_for_class_id (name)
+        `)
+        .eq("id", application_id)
+        .maybeSingle();
+      if (appError || !data) {
+        return new Response(JSON.stringify({ error: "Application not found" }), {
+          status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      application = data;
     }
 
     // Admin-editable enrollment email content
@@ -332,7 +377,7 @@ serve(async (req) => {
       recipient_email: application.email,
       email_type: `admission_${notification_type}`,
       subject: template.subject,
-      application_id: application_id,
+      application_id: isTest ? null : application_id,
       status: 'pending' as const,
     };
 
