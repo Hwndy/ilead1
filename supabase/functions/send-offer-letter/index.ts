@@ -545,7 +545,7 @@ serve(async (req) => {
       const pdfBase64 = btoa(pdfBinary);
       
       emailResult = await sendEmailWithRetry({
-        from: `iVintage College <${SENDER_EMAIL}>`,
+        from: `iVintage College Admissions <${SENDER_EMAIL}>`,
         to: [application.email],
         reply_to: REPLY_TO,
         subject: emailSubject,

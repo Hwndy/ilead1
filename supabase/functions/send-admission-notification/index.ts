@@ -340,7 +340,7 @@ serve(async (req) => {
     try {
       // Send email with retry
       emailResult = await sendEmailWithRetry(resend, {
-        from: `iVintage College <${SENDER_EMAIL}>`,
+        from: `iVintage College Admissions <${SENDER_EMAIL}>`,
         to: [application.email],
         reply_to: REPLY_TO,
         subject: template.subject,
